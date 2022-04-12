@@ -25,7 +25,8 @@ config :parzival, ParzivalWeb.Endpoint,
   secret_key_base: "lYM3f4htWz3udVfEIAFIkTfh+Y8scBD+0sY9fOFoK9SI0/xwIO5fXCsNg7QBGdIU",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
