@@ -8,7 +8,9 @@ defmodule ParzivalWeb.HomeLive.Index do
   end
 
   def handle_params(params, _url, socket) do
-    {:noreply, socket}
+    {:noreply,
+     socket
+     |> assign(:current_page, :home)}
   end
 
 end
