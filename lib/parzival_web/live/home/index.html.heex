@@ -12,11 +12,15 @@
                 <div class="sm:flex sm:items-center sm:justify-between">
                   <div class="sm:flex sm:space-x-5">
                     <div class="flex-shrink-0">
-                      <img class="mx-auto h-20 w-20 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                      <span class="inline-flex justify-center items-center w-20 h-20 bg-primary shadow-md rounded-full">
+                        <span class="text-4xl font-medium leading-none text-white">
+                          <%= extract_initials(@current_user.name) %>
+                        </span>
+                      </span>
                     </div>
                     <div class="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                       <p class="text-sm font-medium text-gray-600">Welcome back,</p>
-                      <p class="text-xl font-bold text-gray-900 sm:text-2xl">Filipe Felício</p>
+                      <p class="text-xl font-bold text-gray-900 sm:text-2xl"><%= @current_user.name %></p>
                       <p class="text-sm font-medium text-gray-600">3º ano Licenciatura em Engenharia Informática</p>
                     </div>
                   </div>
@@ -62,7 +66,7 @@
                             <span class="ml-2 flex-1 w-0 truncate"> resume_front_end_developer.pdf </span>
                           </div>
                           <div class="ml-4 flex-shrink-0">
-                            <a href="#" class="font-medium text-red-600 hover:text-red-500"> Download </a>
+                            <a href="#" class="font-medium text-primary hover:text-red-500"> Download </a>
                           </div>
                         </li>
 
@@ -75,7 +79,7 @@
                             <span class="ml-2 flex-1 w-0 truncate"> coverletter_front_end_developer.pdf </span>
                           </div>
                           <div class="ml-4 flex-shrink-0">
-                            <a href="#" class="font-medium text-red-600 hover:text-red-500"> Download </a>
+                            <a href="#" class="font-medium text-primary hover:text-red-500"> Download </a>
                           </div>
                         </li>
                       </ul>
