@@ -1,5 +1,31 @@
-<main class="container">
-  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-  <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-  <%= @inner_content %>
-</main>
+<body class="bg-gradient-to-l from-primary via-secondary to-primary px-[200px]" >
+  <header>
+    <div class="flex justify-between">
+      <div class="hidden sm:flex sm:space-x-8 text-white pt-20 font-semibold uppercase">
+        <a href="#" class="inline-flex items-center px-1 text-sm "> Home </a>
+        <p> | </p>
+        <a href="#" class="inline-flex items-center px-1 text-sm "> Schedule </a>
+        <p> | </p>
+        <a href="#" class="inline-flex items-center px-1 text-sm "> Hackathon </a>
+        <p> | </p>
+        <a href="#" class="inline-flex items-center px-1 text-sm "> Speakers </a>
+        <p> | </p>
+        <a href="#" class="inline-flex items-center px-1 text-sm "> Faqs </a>
+        <p> | </p>
+        <a href="#" class="inline-flex items-center px-1 text-sm "> Team </a>
+        <p> | </p>
+        <a href="#" class="inline-flex items-center px-1 text-sm "> Login </a>
+      </div>
+      <div class="flex items-center justify-center gap-x-8 pt-20">
+        <%= link to: "https://cesium.di.uminho.pt/" do %> <img class="w-20 h-auto text-white" src={Routes.static_path(@conn, "/images/logos/cesium.svg")} alt="CeSIUM Logo"/> <% end %>
+        <%= link to: "https://necc.di.uminho.pt/" do %> <img class="w-6 h-auto text-white" src={Routes.static_path(@conn, "/images/logos/necc.svg")} alt="NECC Logo"/> <% end %>
+        <%= link to: "https://nefum.di.uminho.pt/" do %> <img class="w-16 h-auto text-white" src={Routes.static_path(@conn, "/images/logos/nefum.svg")} alt="NEFUM Logo"/> <% end %>
+      </div>
+    </div>
+  </header>
+  <main>
+    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <%= @inner_content %>
+  </main>
+</body>
