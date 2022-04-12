@@ -97,6 +97,7 @@ defmodule ParzivalWeb do
 
       import ParzivalWeb.ErrorHelpers
       import ParzivalWeb.Gettext
+      import ParzivalWeb.ViewUtils
       alias ParzivalWeb.Router.Helpers, as: Routes
     end
   end
