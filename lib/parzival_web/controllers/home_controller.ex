@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.PageController do
+defmodule ParzivalWeb.HomeController do
   use ParzivalWeb, :controller
 
   def index(conn, _params) do

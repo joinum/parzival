@@ -14,7 +14,7 @@
         <p> | </p>
         <a href="#" class="inline-flex items-center px-1 text-sm "> Team </a>
         <p> | </p>
-        <a href="#" class="inline-flex items-center px-1 text-sm "> Login </a>
+        <%= live_patch "Login", to: Routes.user_session_path(@conn, :new), class: "inline-flex items-center px-1 text-sm" %>
       </div>
       <div class="flex items-center justify-center gap-x-8 pt-20">
         <%= link to: "https://cesium.di.uminho.pt/" do %> <img class="w-20 h-auto text-white" src={Routes.static_path(@conn, "/images/logos/cesium.svg")} alt="CeSIUM Logo"/> <% end %>
