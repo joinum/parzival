@@ -77,7 +77,7 @@ defmodule ParzivalWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     live_session :logged_in, on_mount: [{ParzivalWeb.Hooks, :current_user}] do
-      live "/profile/", ProfileLive.Index, :index
+      live "/home/", HomeLive.Index, :index
     end
 
     get "/users/settings", UserSettingsController, :edit

@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.ProfileLive.Index do
+defmodule ParzivalWeb.HomeLive.Index do
   use ParzivalWeb, :live_view
 
 
