@@ -1,56 +1,34 @@
-<div class="min-h-full">
-  <header class="pb-24 bg-gradient-to-r from-primary via-secondary to-primary">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-      <div class="relative flex flex-wrap items-center justify-center lg:justify-between">
-        <!-- Logo -->
-        <div class="hidden lg:block absolute left-0 py-5 flex-shrink-0 lg:static">
-          <img class="w-[100px] h-auto" src={Routes.static_path(@socket, "/images/logo.svg")} alt="JOIN Logo"/>
-        </div>
-
-        <!-- Right section on desktop -->
-        <div class="hidden lg:ml-4 lg:flex lg:items-center lg:py-5 lg:pr-0.5">
-          <!-- Profile dropdown -->
-          <div class="ml-4 relative flex-shrink-0">
-            <div>
-              <%= link to: Routes.user_session_path(@socket, :delete), method: :delete, class: "rounded-full flex text-sm ring-2 ring-white ring-opacity-20 focus:outline-none focus:ring-opacity-100" do %>
-                <span class="sr-only">Open user menu</span>
-                <span class="inline-flex justify-center items-center w-10 h-10 rounded-full">
-                  <span class="text-lg font-medium leading-none text-white">
-                    <%= extract_initials(@current_user.name) %>
-                  </span>
-                </span>
-              <% end %>
-            </div>
+<div class="fixed top-0 left-0 w-1/2 h-full bg-white" aria-hidden="true"></div>
+<div class="fixed top-0 right-0 w-1/2 h-full bg-gray-50" aria-hidden="true"></div>
+<div class="relative min-h-full flex flex-col">
+  <!-- Navbar -->
+  <nav class="flex-shrink-0 bg-secondary">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+      <div class="relative flex items-center justify-between h-16">
+        <!-- Logo section -->
+        <div class="flex items-center px-2 lg:px-0 xl:w-64">
+          <div class="flex-shrink-0">
+            <img class="w-[100px] h-auto" src={Routes.static_path(@socket, "/images/logo.svg")} alt="JOIN Logo"/>
           </div>
         </div>
 
-        <div class="w-full py-5">
-          <div class="lg:grid lg:grid-cols-3 lg:gap-8 lg:items-center">
-            <!-- Left nav -->
-            <div class="hidden lg:block lg:col-span-2">
-              <nav class="flex space-x-4">
-                <%= for page <- ParzivalWeb.Config.pages(@socket, @current_user) do %>
-                  <%= live_redirect page.title, to: page.url, class: "#{page.key == @current_page && "font-bold"} text-white text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10"%>
-                <% end %>
-              </nav>
-            </div>
-          </div>
-        </div>
-
-        <!-- Menu button -->
-        <div class="absolute right-0 flex-shrink-0 lg:hidden">
+        <div class="flex lg:hidden">
           <!-- Mobile menu button -->
-          <button type="button" class="bg-transparent p-2 rounded-md inline-flex items-center justify-center text-white hover:bg-white hover:bg-opacity-10 focus:outline-none focus:ring-2 focus:ring-white" aria-expanded="false">
+          <button type="button" class="bg-white inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
             <!--
-              Heroicon name: outline/menu
+              Icon when menu is closed.
+
+              Heroicon name: outline/menu-alt-1
 
               Menu open: "hidden", Menu closed: "block"
             -->
             <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
             <!--
+              Icon when menu is open.
+
               Heroicon name: outline/x
 
               Menu open: "block", Menu closed: "hidden"
@@ -60,29 +38,71 @@
             </svg>
           </button>
         </div>
+        <!-- Links section -->
+        <div class="hidden lg:block lg:w-80">
+          <div class="flex items-center justify-end">
+            <div class="flex">
+              <%= for page <- ParzivalWeb.Config.pages(@socket, @current_user) do %>
+                <%= live_redirect page.title, to: page.url, class: "#{page.key == @current_page && "font-bold"} px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white"%>
+              <% end %>
+            </div>
+            <!-- Profile dropdown -->
+            <div class="ml-4 relative flex-shrink-0">
+              <div>
+                <%= link to: Routes.user_session_path(@socket, :delete), method: :delete, class: "rounded-full flex text-sm ring-2 ring-white ring-opacity-20 focus:outline-none focus:ring-opacity-100" do %>
+                  <span class="sr-only">Open user menu</span>
+                  <span class="inline-flex justify-center items-center w-10 h-10 rounded-full">
+                    <span class="text-lg font-medium leading-none text-white">
+                      <%= extract_initials(@current_user.name) %>
+                    </span>
+                  </span>
+                <% end %>
+              </div>
+
+              <!--
+                Dropdown menu, show/hide based on menu state.
+
+                Entering: "transition ease-out duration-100"
+                  From: "transform opacity-0 scale-95"
+                  To: "transform opacity-100 scale-100"
+                Leaving: "transition ease-in duration-75"
+                  From: "transform opacity-100 scale-100"
+                  To: "transform opacity-0 scale-95"
+              -->
+              <%# <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                <!-- Active: "bg-gray-100", Not Active: "" -->
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+              </div> %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-  </header>
-  <main class="-mt-24 pb-8">
-    <%= @inner_content %>
-  </main>
-  <footer class="lg:mx-80 lg:px-8 lg:flex lg:justify-between">
-    <div class="flex items-center justify-center gap-x-4 text-white font-bold text-xl">
-      <%= link to: "https://www.instagram.com/join_uminho/" do %>
-        <svg class="fill-black opacity-30 hover:fill-primary w-5 h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
-      <% end %>
-      <%= link to: "" do %>
-        <svg class="fill-black opacity-30 hover:fill-primary w-5 h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
-      <% end %>
-      <%= link to: "https://github.com/joinum/" do %>
-        <svg class="fill-black opacity-30 hover:fill-primary w-5 h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
-      <% end %>
-    </div>
-    <div class="mb-6 lg:mb-0 flex items-center justify-center gap-x-4 mt-6">
-      <%= link to: "https://cesium.di.uminho.pt/" do %> <img class="opacity-30 w-16 h-auto" src={Routes.static_path(@socket, "/images/logos/black/cesium.svg")} alt="CeSIUM Logo"/> <% end %>
-      <%= link to: "https://necc.di.uminho.pt/" do %> <img class="opacity-30 w-5 h-auto" src={Routes.static_path(@socket, "/images/logos/black/necc.svg")} alt="NECC Logo"/> <% end %>
-      <%= link to: "https://nefum.di.uminho.pt/" do %> <img class="opacity-30 w-14 h-auto" src={Routes.static_path(@socket, "/images/logos/black/nefum.svg")} alt="NEFUM Logo"/> <% end %>
-    </div>
-  </footer>
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <%# <div class="lg:hidden" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <!-- Current: "text-white bg-indigo-800", Default: "text-indigo-200 hover:text-indigo-100 hover:bg-indigo-600" -->
+        <a href="#" class="text-white bg-indigo-800 block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
+
+        <a href="#" class="text-indigo-200 hover:text-indigo-100 hover:bg-indigo-600 block px-3 py-2 rounded-md text-base font-medium">Domains</a>
+      </div>
+      <div class="pt-4 pb-3 border-t border-indigo-800">
+        <div class="px-2 space-y-1">
+          <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-indigo-200 hover:text-indigo-100 hover:bg-indigo-600">Your Profile</a>
+
+          <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-indigo-200 hover:text-indigo-100 hover:bg-indigo-600">Settings</a>
+
+          <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-indigo-200 hover:text-indigo-100 hover:bg-indigo-600">Sign out</a>
+        </div>
+      </div>
+    </div> %>
+  </nav>
+  
+  <%= @inner_content %>
+
 </div>
