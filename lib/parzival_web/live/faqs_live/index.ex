@@ -2,11 +2,11 @@ defmodule ParzivalWeb.FaqsLive.Index do
   use ParzivalWeb, :live_view
 
   alias Parzival.Tools
-  alias Parzival.Tools.Faqs
+  alias Parzival.Tools.Faq
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :faqs_collection, list_faqs())}
+    {:ok, assign(socket, :faqs, list_faqs())}
   end
 
   @impl true
@@ -19,26 +19,26 @@ defmodule ParzivalWeb.FaqsLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Faqs")
-    |> assign(:faqs, Tools.get_faqs!(id))
+    |> assign(:page_title, "Edit Faq")
+    |> assign(:faq, Tools.get_faq!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Faqs")
-    |> assign(:faqs, %Faqs{})
+    |> assign(:page_title, "New Faq")
+    |> assign(:faq, %Faq{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Listing Faqs")
-    |> assign(:faqs, nil)
+    |> assign(:faq, nil)
   end
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    faqs = Tools.get_faqs!(id)
-    {:ok, _} = Tools.delete_faqs(faqs)
+    faq = Tools.get_faq!(id)
+    {:ok, _} = Tools.delete_faq(faq)
 
     {:noreply, assign(socket, :faqs_collection, list_faqs())}
   end

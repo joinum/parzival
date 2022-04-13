@@ -13,7 +13,7 @@ defmodule ParzivalWeb.FaqsLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:faqs, Tools.get_faqs!(id))}
+     |> assign(:faq, Tools.get_faq!(id))}
   end
 
   defp page_title(:show), do: "Show Faqs"

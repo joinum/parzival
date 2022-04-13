@@ -4,9 +4,9 @@ defmodule Parzival.Tools do
   """
 
   import Ecto.Query, warn: false
-  alias Parzival.Repo
 
-  alias Parzival.Tools.Faqs
+  alias Parzival.Repo
+  alias Parzival.Tools.Faq
 
   @doc """
   Returns the list of faqs.
@@ -18,7 +18,7 @@ defmodule Parzival.Tools do
 
   """
   def list_faqs do
-    Repo.all(Faqs)
+    Repo.all(Faq)
   end
 
   @doc """
@@ -35,7 +35,7 @@ defmodule Parzival.Tools do
       ** (Ecto.NoResultsError)
 
   """
-  def get_faqs!(id), do: Repo.get!(Faqs, id)
+  def get_faq!(id), do: Repo.get!(Faq, id)
 
   @doc """
   Creates a faqs.
@@ -49,9 +49,9 @@ defmodule Parzival.Tools do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_faqs(attrs \\ %{}) do
-    %Faqs{}
-    |> Faqs.changeset(attrs)
+  def create_faq(attrs \\ %{}) do
+    %Faq{}
+    |> Faq.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -67,9 +67,9 @@ defmodule Parzival.Tools do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_faqs(%Faqs{} = faqs, attrs) do
-    faqs
-    |> Faqs.changeset(attrs)
+  def update_faq(%Faq{} = faq, attrs) do
+    faq
+    |> Faq.changeset(attrs)
     |> Repo.update()
   end
 
@@ -85,8 +85,8 @@ defmodule Parzival.Tools do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_faqs(%Faqs{} = faqs) do
-    Repo.delete(faqs)
+  def delete_faq(%Faq{} = faq) do
+    Repo.delete(faq)
   end
 
   @doc """
@@ -98,7 +98,7 @@ defmodule Parzival.Tools do
       %Ecto.Changeset{data: %Faqs{}}
 
   """
-  def change_faqs(%Faqs{} = faqs, attrs \\ %{}) do
-    Faqs.changeset(faqs, attrs)
+  def change_faq(%Faq{} = faq, attrs \\ %{}) do
+    Faq.changeset(faq, attrs)
   end
 end

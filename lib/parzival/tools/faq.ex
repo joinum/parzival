@@ -1,4 +1,4 @@
-defmodule Parzival.Tools.Faqs do
+defmodule Parzival.Tools.Faq do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -10,8 +10,8 @@ defmodule Parzival.Tools.Faqs do
   end
 
   @doc false
-  def changeset(faqs, attrs) do
-    faqs
+  def changeset(faq, attrs) do
+    faq
     |> cast(attrs, [:question, :answer])
     |> validate_required([:question, :answer])
   end

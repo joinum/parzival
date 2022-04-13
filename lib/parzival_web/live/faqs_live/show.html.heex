@@ -1,14 +1,14 @@
 <h1>Show Faqs</h1>
 
 <%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.faqs_show_path(@socket, :show, @faqs)}>
+  <.modal return_to={Routes.faqs_show_path(@socket, :show, @faq)}>
     <.live_component
       module={ParzivalWeb.FaqsLive.FormComponent}
-      id={@faqs.id}
+      id={@faq.id}
       title={@page_title}
       action={@live_action}
-      faqs={@faqs}
-      return_to={Routes.faqs_show_path(@socket, :show, @faqs)}
+      faq={@faq}
+      return_to={Routes.faqs_show_path(@socket, :show, @faq)}
     />
   </.modal>
 <% end %>
@@ -17,15 +17,15 @@
 
   <li>
     <strong>Question:</strong>
-    <%= @faqs.question %>
+    <%= @faq.question %>
   </li>
 
   <li>
     <strong>Answer:</strong>
-    <%= @faqs.answer %>
+    <%= @faq.answer %>
   </li>
 
 </ul>
 
-<span><%= live_patch "Edit", to: Routes.faqs_show_path(@socket, :edit, @faqs), class: "button" %></span> |
+<span><%= live_patch "Edit", to: Routes.faqs_show_path(@socket, :edit, @faq), class: "button" %></span> |
 <span><%= live_redirect "Back", to: Routes.faqs_index_path(@socket, :index) %></span>
