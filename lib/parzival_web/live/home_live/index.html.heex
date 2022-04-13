@@ -32,8 +32,8 @@
                 </div>
                 <!-- Action buttons -->
                 <div class="flex flex-col sm:flex-row xl:flex-col">
-                  <button type="button" class="inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary xl:w-full">New Project</button>
-                  <button type="button" class="mt-3 inline-flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary sm:mt-0 sm:ml-3 xl:ml-0 xl:mt-3 xl:w-full">Invite Team</button>
+                  <button type="button" class="inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full">New Project</button>
+                  <button type="button" class="mt-3 inline-flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 sm:mt-0 sm:ml-3 xl:ml-0 xl:mt-3 xl:w-full">Invite Team</button>
                 </div>
               </div>
               <!-- Meta info -->
@@ -64,7 +64,7 @@
           <div class="flex items-center">
             <h1 class="flex-1 text-lg font-medium">Curriculum</h1>
             <div class="relative">
-              <button type="button" class="w-full bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
+              <button type="button" class="w-full bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
                 <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                 </svg>
@@ -124,7 +124,7 @@
           <div class="flex items-center">
             <h1 class="flex-1 text-lg font-medium">Missions</h1>
             <div class="relative">
-              <button type="button" class="w-full bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
+              <button type="button" class="w-full bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
                 <!-- Heroicon name: solid/sort-ascending -->
                 <svg class="mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z" />
@@ -183,7 +183,7 @@
               <div class="hidden sm:flex flex-col flex-shrink-0 items-end space-y-3">
                 <p class="flex items-center space-x-4">
                   <a href="#" class="relative text-sm text-gray-500 hover:text-gray-900 font-medium"> Visit site </a>
-                  <button type="button" class="relative bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button type="button" class="relative bg-white rounded-full">
                     <span class="sr-only">Add to favorites</span>
                     <!--
                       Heroicon name: solid/star
@@ -379,82 +379,102 @@
         </ul>
       </div>
     </div>
-    <!-- Activity feed -->
-    <div class="bg-gray-50 pr-4 sm:pr-6 lg:pr-8 lg:flex-shrink-0 lg:border-l lg:border-gray-200 xl:pr-0">
+    <!-- Announcements -->
+    <div class="bg-white pr-4 sm:pr-6 lg:pr-8 lg:flex-shrink-0 lg:border-l lg:border-gray-200 xl:pr-0">
       <div class="pl-6 lg:w-80">
-        <div class="pt-6 pb-2">
-          <h2 class="text-sm font-semibold"> Announcements </h2>
-        </div>
-        <div>
-          <ul role="list" class="divide-y divide-gray-200">
-            <li class="py-4">
-              <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">
-                <%#= announcement.title %>
-                Titulo
-              </h3>
-              <article class="mt-1 text-sm text-gray-600 line-clamp-2">
-                <%#= raw(Earmark.as_html!(announcement.text) %>
-                Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-              </article>
-              <div class="flex flex-shrink-0 justify-between mt-4">
-                <div class="flex items-center">
-                  <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
-                    <span class="text-xs font-medium leading-none text-white">
-                      <%#= extract_initials(announcement.author.name) %>
-                      <%= extract_initials("Filipe Felicio") %>
-                    </span>
-                  </span>
-                  <p class="text-sm text-gray-500">
-                    <%#= announcement.author.name %>
-                    Filipe Felicio
-                  </p>
-                </div>
-                <div class="flex">
-                  <%# <Heroicons.Solid.calendar class="w-5 h-5 text-gray-500" /> %>
-                  <p class="block pl-1.5 text-sm text-gray-600">
-                    date
-                    <%#= relative_datetime(announcement.inserted_at) %>
-                  </p>
-                </div>
+        <section aria-labelledby="announcements-title">
+          <div class="overflow-hidden">
+            <div class="">
+              <h2 class="text-base font-medium text-gray-900 pt-6" id="announcements-title">
+                <%#= gettext("Announcements") %>
+                Announcements
+              </h2>
+              <div class="flow-root mt-6">
+                <ul role="list" class="-my-5 divide-y divide-gray-200">
+                  <%#= for announcement <- @announcements do %>
+                    <li class="py-5">
+                      <%#= live_patch to: Routes.announcements_show_path(@socket, :show, announcement), class: "group" do %>
+                        <div>
+                          <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">
+                            <%#= announcement.title %>
+                            Dinheiro gratis
+                          </h3>
+                          <article class="mt-1 text-sm text-gray-600 line-clamp-2">
+                            <%#= raw(Earmark.as_html!(announcement.text) %>
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                          </article>
+                          <div class="flex flex-shrink-0 justify-between mt-4">
+                            <div class="flex items-center">
+                              <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
+                                <span class="text-xs font-medium leading-none text-white">
+                                  <%#= extract_initials(announcement.author.name) %>
+                                  <%= extract_initials("Filipe Felicio") %>
+                                </span>
+                              </span>
+                              <p class="text-sm text-gray-500">
+                                <%#= announcement.author.name %>
+                                Filipe Felicio
+                              </p>
+                            </div>
+                            <div class="flex">
+                              <%# <Heroicons.Solid.calendar class="w-5 h-5 text-gray-500" /> %>
+                              <p class="block pl-1.5 text-sm text-gray-600">
+                                <%#= relative_datetime(announcement.inserted_at) %>
+                                13/04/2022
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      <%# end %>
+                    </li>
+                    <li class="py-5">
+                      <%#= live_patch to: Routes.announcements_show_path(@socket, :show, announcement), class: "group" do %>
+                        <div>
+                          <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">
+                            <%#= announcement.title %>
+                            Dinheiro gratis
+                          </h3>
+                          <article class="mt-1 text-sm text-gray-600 line-clamp-2">
+                            <%#= raw(Earmark.as_html!(announcement.text) %>
+                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                          </article>
+                          <div class="flex flex-shrink-0 justify-between mt-4">
+                            <div class="flex items-center">
+                              <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
+                                <span class="text-xs font-medium leading-none text-white">
+                                  <%#= extract_initials(announcement.author.name) %>
+                                  <%= extract_initials("Filipe Felicio") %>
+                                </span>
+                              </span>
+                              <p class="text-sm text-gray-500">
+                                <%#= announcement.author.name %>
+                                Filipe Felicio
+                              </p>
+                            </div>
+                            <div class="flex">
+                              <%# <Heroicons.Solid.calendar class="w-5 h-5 text-gray-500" /> %>
+                              <p class="block pl-1.5 text-sm text-gray-600">
+                                <%#= relative_datetime(announcement.inserted_at) %>
+                                13/04/2022
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      <%# end %>
+                    </li>
+                  <%# end %>
+                </ul>
               </div>
-            </li>
-            <li class="py-4">
-              <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">
-                <%#= announcement.title %>
-                Titulo
-              </h3>
-              <article class="mt-1 text-sm text-gray-600 line-clamp-2">
-                <%#= raw(Earmark.as_html!(announcement.text) %>
-                Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-              </article>
-              <div class="flex flex-shrink-0 justify-between mt-4">
-                <div class="flex items-center">
-                  <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
-                    <span class="text-xs font-medium leading-none text-white">
-                      <%#= extract_initials(announcement.author.name) %>
-                      <%= extract_initials("Filipe Felicio") %>
-                    </span>
-                  </span>
-                  <p class="text-sm text-gray-500">
-                    <%#= announcement.author.name %>
-                    Filipe Felicio
-                  </p>
-                </div>
-                <div class="flex">
-                  <%# <Heroicons.Solid.calendar class="w-5 h-5 text-gray-500" /> %>
-                  <p class="block pl-1.5 text-sm text-gray-600">
-                    date
-                    <%#= relative_datetime(announcement.inserted_at) %>
-                  </p>
-                </div>
+              <div class="mt-6">
+                <%#= live_patch to: Routes.announcements_index_path(@socket, :index), class: "w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" do %>
+                <%= live_patch to: "", class: "w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" do %>
+                  <%#= gettext("View all") %>
+                  View all
+                <% end %>
               </div>
-            </li>
-            <!-- More items... -->
-          </ul>
-          <div class="py-4 text-sm border-t border-gray-200">
-            <a href="#" class="text-secondary font-semibold hover:text-primary">View all announcements <span aria-hidden="true">&rarr;</span></a>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>
