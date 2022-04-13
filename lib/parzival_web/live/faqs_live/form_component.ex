@@ -4,8 +4,8 @@ defmodule ParzivalWeb.FaqsLive.FormComponent do
   alias Parzival.Tools
 
   @impl true
-  def update(%{faqs: faqs} = assigns, socket) do
-    changeset = Tools.change_faqs(faqs)
+  def update(%{faq: faq} = assigns, socket) do
+    changeset = Tools.change_faq(faq)
 
     {:ok,
      socket
@@ -14,25 +14,25 @@ defmodule ParzivalWeb.FaqsLive.FormComponent do
   end
 
   @impl true
-  def handle_event("validate", %{"faqs" => faqs_params}, socket) do
+  def handle_event("validate", %{"faq" => faq_params}, socket) do
     changeset =
-      socket.assigns.faqs
-      |> Tools.change_faqs(faqs_params)
+      socket.assigns.faq
+      |> Tools.change_faq(faq_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_event("save", %{"faqs" => faqs_params}, socket) do
-    save_faqs(socket, socket.assigns.action, faqs_params)
+  def handle_event("save", %{"faq" => faq_params}, socket) do
+    save_faq(socket, socket.assigns.action, faq_params)
   end
 
-  defp save_faqs(socket, :edit, faqs_params) do
-    case Tools.update_faqs(socket.assigns.faqs, faqs_params) do
+  defp save_faq(socket, :edit, faq_params) do
+    case Tools.update_faq(socket.assigns.faq, faq_params) do
       {:ok, _faqs} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Faqs updated successfully")
+         |> put_flash(:info, "Faq updated successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -40,9 +40,9 @@ defmodule ParzivalWeb.FaqsLive.FormComponent do
     end
   end
 
-  defp save_faqs(socket, :new, faqs_params) do
-    case Tools.create_faqs(faqs_params) do
-      {:ok, _faqs} ->
+  defp save_faq(socket, :new, faq_params) do
+    case Tools.create_faq(faq_params) do
+      {:ok, _faq} ->
         {:noreply,
          socket
          |> put_flash(:info, "Faqs created successfully")
