@@ -1,4 +1,4 @@
-# ![JOIN Banner](.github/brand/join-logo.svg)
+# ![JOIN Banner](.github/brand/join-logo.png)
 
 JOIN wich stands for "Jornadas de Informática" is a Job Shop aimed at students in the field of computing.
 
