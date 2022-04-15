@@ -2,9 +2,9 @@
   <header>
     <div class="flex justify-between">
       <div class="hidden sm:flex sm:space-x-8 text-white pt-20 font-semibold uppercase">
-        <a href="#" class="inline-flex items-center px-1 text-sm "> Home </a>
+        <%= live_patch "Home", to: Routes.home_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" %>
         <p> | </p>
-        <a href="#" class="inline-flex items-center px-1 text-sm "> Schedule </a>
+        <%= live_patch "Schedule", to: Routes.schedule_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" %>
         <p> | </p>
         <a href="#" class="inline-flex items-center px-1 text-sm "> Hackathon </a>
         <p> | </p>
