@@ -19,6 +19,11 @@ defmodule ParzivalWeb.Config do
         key: :faqs,
         title: "FAQs",
         url: Routes.faqs_index_path(conn, :index),
+      },
+      %{
+        key: :announcements,
+        title: "Announcements",
+        url: Routes.announcement_index_path(conn, :index),
       }
     ]
   end
