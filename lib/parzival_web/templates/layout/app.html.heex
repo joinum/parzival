@@ -6,13 +6,15 @@
         <p> | </p>
         <%= live_patch "Schedule", to: Routes.schedule_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" %>
         <p> | </p>
-        <a href="#" class="inline-flex items-center px-1 text-sm "> Hackathon </a>
+        <%= live_patch "Hackathon", to: Routes.hackathon_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" %>
         <p> | </p>
-        <a href="#" class="inline-flex items-center px-1 text-sm "> Speakers </a>
+        <%= live_patch "Missions", to: Routes.missions_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" %>
         <p> | </p>
-        <a href="#" class="inline-flex items-center px-1 text-sm "> Faqs </a>
+        <%= live_patch "Speakers", to: Routes.speakers_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" %>
         <p> | </p>
-        <a href="#" class="inline-flex items-center px-1 text-sm "> Team </a>
+        <%= live_patch "Faqs", to: Routes.faqs_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" %>
+        <p> | </p>
+        <%= live_patch "Team", to: Routes.team_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" %>
         <p> | </p>
         <%= live_patch "Login", to: Routes.user_session_path(@conn, :new), class: "inline-flex items-center px-1 text-sm" %>
       </div>

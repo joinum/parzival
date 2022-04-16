@@ -22,6 +22,11 @@ defmodule ParzivalWeb.Router do
 
     get "/", HomeController, :index
     get "/schedule", ScheduleController, :index
+    get "/hackathon", HackathonController, :index
+    get "/missions", MissionsController, :index
+    get "/speakers", SpeakersController, :index
+    get "/faqs", FaqsController, :index
+    get "/team", TeamController, :index
   end
 
   # Other scopes may use custom stacks.
