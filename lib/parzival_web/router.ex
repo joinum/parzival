@@ -84,9 +84,20 @@ defmodule ParzivalWeb.Router do
 
     live_session :logged_in, on_mount: [{ParzivalWeb.Hooks, :current_user}] do
       live "/home/", HomeLive.Index, :index
-      live "/faqs/", FaqsLive.Index, :index
-      live "/faqs/new", FaqsLive.Index, :new
-      live "/faqs/:id", FaqsLive.Index, :edit
+
+      scope "/tools" do
+        live "/faqs/", FaqsLive.Index, :index
+        live "/faqs/new", FaqsLive.Index, :new
+        live "/faqs/:id", FaqsLive.Index, :edit
+
+        live "/announcements", AnnouncementLive.Index, :index
+        live "/announcements/new", AnnouncementLive.Index, :new
+        live "/announcements/:id/edit", AnnouncementLive.Index, :edit
+
+        live "/announcements/:id", AnnouncementLive.Show, :show
+        live "/announcements/:id/show/edit", AnnouncementLive.Show, :edit
+      end
+
     end
 
     get "/users/settings", UserSettingsController, :edit
