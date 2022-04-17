@@ -18,4 +18,20 @@ defmodule Parzival.ToolsFixtures do
 
     faqs
   end
+
+
+  @doc """
+  Generate a announcement.
+  """
+  def announcement_fixture(attrs \\ %{}) do
+    {:ok, announcement} =
+      attrs
+      |> Enum.into(%{
+        text: "some text",
+        title: "some title"
+      })
+      |> Parzival.Tools.create_announcement()
+
+    announcement
+  end
 end

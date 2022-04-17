@@ -1,4 +1,4 @@
-defmodule Parzival.Announcements.Announcement do
+defmodule Parzival.Tools.Announcement do
   use Ecto.Schema
   import Ecto.Changeset
 
