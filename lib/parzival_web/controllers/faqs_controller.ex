@@ -1,7 +1,11 @@
 defmodule ParzivalWeb.FaqsController do
   use ParzivalWeb, :controller
 
+  alias Parzival.Tools
+
   def index(conn, _params) do
-    render(conn, "index.html")
+    conn
+    |> assign(:faqs, Tools.list_faqs())
+    |> render("index.html")
   end
 end
