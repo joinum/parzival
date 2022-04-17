@@ -45,7 +45,9 @@ defmodule ParzivalWeb.TeamController do
           twitter: "",
         }
       ]
+
     conn
+    |> assign(:current_page, "team")
     |> assign(:team, team)
     |> render("index.html")
   end

@@ -1,24 +1,38 @@
 <body class="px-8 md:px-20 bg-gradient-to-l from-primary via-secondary to-primary">
   <header>
     <div class="flex items-center justify-between w-full pt-14">
-      <div class="hidden w-full font-semibold text-white uppercase md:block">
+      <div class="hidden w-full text-white uppercase md:block">
         <div class="flex flex-col lg:flex-row ">
           <div class="flex flex-row items-center space-x-1">
-            <a href="#" class="inline-flex px-1 text-xs"> Home </a>
+            <span class= {"#{ @conn.assigns.current_page == "home" && "font-bold" } inline-flex px-1 text-xs"}>
+              <%= link("Home", to: Routes.home_path(@conn, :index)) %>
+            </span>
             <span> | </span>
-            <a href="#" class="inline-flex px-1 text-xs"> Schedule </a>
+            <span class= {"#{ @conn.assigns.current_page == "schedule" && "font-bold" } inline-flex px-1 text-xs"}>
+              <%= link("Schedule", to: Routes.schedule_path(@conn, :index), class: "inline-flex px-1 text-xs") %>
+            </span>
             <span> | </span>
-            <a href="#" class="inline-flex px-1 text-xs"> Hackathon </a>
+            <span class= {"#{ @conn.assigns.current_page == "hackathon" && "font-bold" } inline-flex px-1 text-xs"}>
+              <%= link("Hackathon", to: Routes.hackathon_path(@conn, :index), class: "inline-flex px-1 text-xs") %>
+            </span>
             <span> | </span>
-            <a href="#" class="inline-flex px-1 text-xs"> Missions </a>
+            <span class= {"#{ @conn.assigns.current_page == "missions" && "font-bold" } inline-flex px-1 text-xs"}>
+              <%= link("Missions", to: Routes.missions_path(@conn, :index), class: "inline-flex px-1 text-xs") %>
+            </span>
             <span> | </span>
           </div>
           <div class="flex flex-row items-center space-x-1 lg:pl-1">
-            <a href="#" class="inline-flex px-1 text-xs"> Speakers </a>
+            <span class= {"#{ @conn.assigns.current_page == "speakers" && "font-bold" } inline-flex px-1 text-xs"}>
+              <%= link("Speakers", to: Routes.speakers_path(@conn, :index), class: "inline-flex px-1 text-xs") %>
+            </span>
             <span> | </span>
-            <%= live_patch "Faqs", to: Routes.faqs_path(@conn, :index), class: "inline-flex items-center px-1 text-xs" %>
+            <span class= {"#{ @conn.assigns.current_page == "faqs" && "font-bold" } inline-flex px-1 text-xs"}> %>
+              <%= live_patch "Faqs", to: Routes.faqs_path(@conn, :index), class: "inline-flex px-1 text-xs" %>
+            </span> %>
             <span> | </span>
-            <%= live_patch "Team", to: Routes.team_path(@conn, :index), class: "inline-flex items-center px-1 text-xs" %>
+            <span class= {"#{ @conn.assigns.current_page == "team" && "font-bold" } inline-flex px-1 text-xs"}>
+              <%= link("Team", to: Routes.team_path(@conn, :index), class: "inline-flex px-1 text-xs") %>
+            </span>
             <span> | </span>
             <%= live_patch "Login", to: Routes.user_session_path(@conn, :new), class: "inline-flex items-center px-1 text-xs" %>
           </div>

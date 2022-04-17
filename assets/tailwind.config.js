@@ -21,7 +21,10 @@ module.exports = {
       fontFamily: {
         montserrat: ["Montserrat"],
       },
+      screens: {
+        "xs": "500px",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],
-}; 
+};
