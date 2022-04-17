@@ -58,14 +58,38 @@
             Schedule
         </span>
     </div>
-    <div class="relative w-full">
-        <img class="absolute hidden xl:block -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@conn, "/images/cords/schedule_cords.svg")} alt="hero cords"/>
-        <div class="absolute right-0 grid grid-cols-5 p-10 gap-x-8 gap-y-6 top-32">
-        <%= for _n <- 0..14 do %>
-            <div class="bg-white w-36 h-44 rounded-3xl opacity-10">
+    <div class="relative hidden w-full 0.5xl:block">
+        <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@conn, "/images/cords/schedule_cords.svg")} alt="hero cords"/>
 
+        <%= for {day, index} <- Enum.with_index(@conn.assigns.event_dates) do %>
+            <div class={"bg-[#BB2A22] absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do "right-[704px]" else if index == 1 do "right-[433px]" else "right-40" end end}  top-5"}>
+                <%= Calendar.strftime(day, "%d of %B") %>
             </div>
         <% end %>
-    </div>
+
+        <div class="absolute right-0 grid grid-cols-5 p-10 gap-x-8 gap-y-6 top-32">
+            <%= for activity <- hd(@conn.assigns.schedule) do %>
+                <div class={"#{if NaiveDateTime.compare(NaiveDateTime.utc_now(), activity.hours) == :lt do "bg-[#E0483F]" else "bg-[#BB2A22]" end} w-36 h-44 rounded-3xl relative -z-10"}>
+                    <span class="text-white">
+                        <p class="absolute w-32 text-sm font-light top-4 left-3">
+                            <%= if String.length(activity.title) < 30 do activity.title else String.slice(activity.title, 0..30) <> "... "  end %>
+                        </p>
+                        <p class="absolute w-32 font-bold text-md top-[105px] left-3">
+                            <%= Calendar.strftime(activity.hours, "%Hh%M") %>
+                        </p>
+                        <%= if activity.speaker do %>
+                            <p class="absolute w-32 font-light text-sm top-[131px] left-3">
+                                <%= activity.speaker %>
+                            </p>
+                        <% end %>
+                        <%= if activity.company do %>
+                            <p class="absolute w-32 font-light text-sm top-[145px] left-3">
+                                <%= if String.length(activity.company) < 19 do activity.company else String.slice(activity.company, 0..17) <> "... "  end %>
+                            </p>
+                        <% end %>
+                    </span>
+                </div>
+            <% end %>
+        </div>
     </div>
 </div>
