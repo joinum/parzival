@@ -16,7 +16,7 @@
           <div class="flex flex-row items-center space-x-1 lg:pl-1">
             <a href="#" class="inline-flex px-1 text-xs"> Speakers </a>
             <span> | </span>
-            <a href="#" class="inline-flex px-1 text-xs"> Faqs </a>
+            <%= live_patch "Faqs", to: Routes.faqs_path(@conn, :index), class: "inline-flex items-center px-1 text-xs" %>
             <span> | </span>
             <a href="#" class="inline-flex px-1 text-xs"> Team </a>
             <span> | </span>
