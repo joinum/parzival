@@ -20,6 +20,7 @@ module.exports = {
       },
       fontFamily: {
         montserrat: ["Montserrat"],
+        fredoka: ["Fredoka One","cursive"],
       },
       screens: {
         "0.5md": "850px",
