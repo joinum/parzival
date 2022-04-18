@@ -3,9 +3,11 @@ defmodule Parzival.Repo.Seeds.Tools do
   alias Parzival.Repo
 
   alias Parzival.Tools.Faq
+  alias Parzival.Tools.Announcement
 
   def run do
     seed_faqs()
+    seed_announcements()
   end
 
   def seed_faqs do
@@ -49,6 +51,32 @@ defmodule Parzival.Repo.Seeds.Tools do
         Mix.shell().error("Found faqs, aborting seeding faqs.")
     end
   end
+
+  def seed_announcements do
+    # admins = Repo.all(where(User, role: :admin))
+
+    case Repo.all(Announcement) do
+      [] ->
+        [
+          %{
+            title: "Welcome to the JOIN Platform",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tincidunt massa. Nunc mi enim, blandit quis condimentum vel, tincidunt ac dolor. Curabitur placerat justo eros, sit amet vulputate nulla vulputate a. Interdum et malesuada fames ac ante ipsum primis in faucibus",
+            # author_id: Enum.random(admins).id
+          },
+          %{
+            title: "Hackathon registrations are closed",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tincidunt massa. Nunc mi enim, blandit quis condimentum vel, tincidunt ac dolor. Curabitur placerat justo eros, sit amet vulputate nulla vulputate a. Interdum et malesuada fames ac ante ipsum primis in faucibus",
+            # author_id: Enum.random(admins).id
+          }
+        ]
+        |> Enum.each(&Repo.insert!(Announcement.changeset(%Announcement{}, &1)))
+
+      _ ->
+        Mix.shell().error("Found announcements, aborting seeding announcements.")
+    end
+  end
+
+
 end
 
 Parzival.Repo.Seeds.Tools.run()

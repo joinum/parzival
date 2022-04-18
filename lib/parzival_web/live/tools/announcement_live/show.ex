@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.FaqsLive.Show do
+defmodule ParzivalWeb.AnnouncementLive.Show do
   use ParzivalWeb, :live_view
 
   alias Parzival.Tools
@@ -12,10 +12,11 @@ defmodule ParzivalWeb.FaqsLive.Show do
   def handle_params(%{"id" => id}, _, socket) do
     {:noreply,
      socket
+     |> assign(:current_page, :tools)
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:faq, Tools.get_faq!(id))}
+     |> assign(:announcement, Tools.get_announcement!(id))}
   end
 
-  defp page_title(:show), do: "Show Faqs"
-  defp page_title(:edit), do: "Edit Faqs"
+  defp page_title(:show), do: "Show Announcement"
+  defp page_title(:edit), do: "Edit Announcement"
 end

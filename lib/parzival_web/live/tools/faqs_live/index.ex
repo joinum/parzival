@@ -13,7 +13,7 @@ defmodule ParzivalWeb.FaqsLive.Index do
   def handle_params(params, _url, socket) do
     {:noreply,
       socket
-      |> assign(:current_page, :faqs)
+      |> assign(:current_page, :tools)
       |> apply_action(socket.assigns.live_action, params)}
   end
 
