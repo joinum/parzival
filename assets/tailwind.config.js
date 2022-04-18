@@ -23,7 +23,8 @@ module.exports = {
       },
       screens: {
         "0.5md": "850px",
-        "0.5xl": "1370px",
+        "0.25xl": "1550px",
+        "1.5xl": "1370px",
       },
     },
   },
