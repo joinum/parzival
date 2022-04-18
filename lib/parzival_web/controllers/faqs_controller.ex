@@ -5,6 +5,7 @@ defmodule ParzivalWeb.FaqsController do
 
   def index(conn, _params) do
     conn
+    |> assign(:current_page, "faqs")
     |> assign(:faqs, Tools.list_faqs())
     |> render("index.html")
   end

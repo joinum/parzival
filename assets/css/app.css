@@ -14,7 +14,7 @@ body {
   font-size: 80px;
   letter-spacing: -0.05em;
   text-transform: uppercase;
-  -webkit-text-stroke: 3px white;
+  -webkit-text-stroke: 2px white;
   color: transparent;
   opacity: 0.15;
 }
@@ -23,11 +23,13 @@ body {
 @media (min-width: 1024px) {
   .title {
     font-size: 100px;
+    -webkit-text-stroke: 3px white;
   }
 }
 
 @media (min-width: 1280px) {
   .title {
     font-size: 120px;
+    -webkit-text-stroke: 3px white;
   }
 }

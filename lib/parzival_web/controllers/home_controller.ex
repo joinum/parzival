@@ -51,6 +51,8 @@ defmodule ParzivalWeb.HomeController do
       %{name: "Filipe Felício", job: "Slave", company: "CeSIUM"},
     ]
 
+    partners = ["Haribo","Haribo","Haribo","Haribo"]
+
     conn
      |> assign(:current_page, "home")
      |> assign(:event_dates, event_dates)
@@ -58,6 +60,7 @@ defmodule ParzivalWeb.HomeController do
      |> assign(:sponsors, sponsors)
      |> assign(:sponsors_table, sponsors_table)
      |> assign(:speakers, speakers)
+     |> assign(:partners, partners)
      |> render("index.html")
   end
 end
