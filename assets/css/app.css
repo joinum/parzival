@@ -14,7 +14,7 @@ body {
   font-size: 80px;
   letter-spacing: -0.05em;
   text-transform: uppercase;
-  -webkit-text-stroke: 4.2px white;
+  -webkit-text-stroke: 3px white;
   color: transparent;
   opacity: 0.15;
 }

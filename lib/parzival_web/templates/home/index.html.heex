@@ -52,8 +52,8 @@
     </div>
 </div>
 
-<div class="flex flex-row mt-10 sm:mt-20 lg:mt-48">
-    <div class="absolute transform -rotate-90 -translate-x-40 md:-translate-x-44 translate-y-44 ">
+<div class="flex flex-row mt-10 sm:mt-20 lg:mt-48 h-[740px]">
+    <div class="absolute transform -rotate-90 -translate-x-40 translate-y-48 md:-translate-x-44">
         <span class="title">
             Schedule
         </span>
@@ -88,6 +88,84 @@
                             </p>
                         <% end %>
                     </span>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<div class="flex flex-row mt-10 sm:mt-20 lg:mt-48">
+    <div class="absolute transform -rotate-90 -translate-x-40 translate-y-40 md:-translate-x-44">
+        <span class="title">
+            Sponsors
+        </span>
+    </div>
+    <div class="relative flex flex-row-reverse w-full ml-20 lg:hidden sm:ml-24">
+        <div class="flex flex-col w-full">
+            <%= for {sponsors, index} <- Enum.with_index(@conn.assigns.sponsors) do %>
+                <div class="bg-[#E0483F] flex flex-col rounded-3xl pt-4 pb-6 px-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] my-4">
+                    <span class="text-2xl font-bold text-white">
+                        <%= if index == 0 do "Exclusive" else if index == 1 do "Gold" else if index == 2 do "Silver" else "Bronze" end end end %>
+                    </span>
+                    <div class={"grid gap-4 mt-2 #{if index == 0 do "grid-cols-1" else if index == 3 do "grid-cols-2 sm:grid-cols-3" else "grid-cols-2" end end}"}>
+                        <%= for sponsor <- sponsors do %>
+                            <img class={"#{if index == 0 do "w-56" else if index == 1 do "w-40" else if index == 2 do "w-32" else "w-24 sm:w-28" end end end}"} src={Routes.static_path(@conn, "/images/sponsors/#{sponsor}.svg")} alt={sponsor}/>
+                        <% end %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <div class="relative flex-row-reverse hidden w-full -mt-4 lg:flex ml-36 xl:ml-52">
+        <div class="flex flex-row w-full">
+            <%= for {sponsor_table, table_index} <- Enum.with_index(@conn.assigns.sponsors_table) do %>
+                <div class="flex flex-col w-full ml-2 xl:mx-2">
+                    <%= for {sponsor_box, box_index} <- Enum.with_index(sponsor_table) do %>
+                        <div class={"bg-[#E0483F] flex flex-col rounded-3xl pt-4 pb-6 px-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] mx-2 xl:mx-4 mb-4 #{if table_index == 1 && box_index == 0 do "mt-24" end}"}>
+                            <span class="text-2xl font-bold text-white">
+                                <%= if table_index == 0 && box_index == 0 do "Exclusive" else if table_index == 1 && box_index == 0 do "Gold" else if table_index == 0 && box_index == 1 do "Silver" else "Bronze" end end end %>
+                            </span>
+                            <div class={"grid #{if table_index == 0 && box_index == 0 do "grid-cols-1" else if table_index == 1 && box_index == 1 do "grid-cols-2 sm:grid-cols-3" else "grid-cols-2" end end} gap-4 mt-2"}>
+                                <%= for sponsor <- sponsor_box do %>
+                                    <img class={"#{if table_index == 0 && box_index == 0 do "w-56" else if table_index == 1 && box_index == 0 do "w-40" else if table_index == 0 && box_index == 1 do "w-32" else "w-28" end end end}"} src={Routes.static_path(@conn, "/images/sponsors/#{sponsor}.svg")} alt={sponsor}/>
+                                <% end %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<div class="flex flex-row mt-10 sm:mt-20 lg:mt-48">
+    <div class="absolute transform -rotate-90 -translate-x-40 translate-y-40 md:-translate-x-44">
+        <span class="title">
+            Speakers
+        </span>
+    </div>
+    <div class="relative flex flex-row-reverse w-full ml-20 sm:ml-24">
+        <div class="grid grid-cols-2 px-0 lg:px-6 gap-x-2 sm:gap-x-10 lg:gap-x-16 gap-y-6 lg:grid-cols-3 0.5xl:grid-cols-4">
+            <%= for speaker <- @conn.assigns.speakers do %>
+                <div class="flex flex-col w-auto group">
+                    <div class="relative">
+                        <img class="w-auto" src={Routes.static_path(@conn, "/images/cords/speakers_cords.svg")} alt="speaker cords"/>
+                        <div class="absolute h-[95%] md:h-[96%] bg-secondary opacity-50 group-hover:opacity-20 w-[95%] md:w-[96%] -z-10 right-0 bottom-0 rounded-2xl sm:rounded-3xl" />
+                        <img class="absolute w-[95%] md:w-[96%] -z-20 right-0 bottom-0 rounded-2xl sm:rounded-3xl" src={Routes.static_path(@conn, "/images/speakers/#{String.replace(speaker.name," ","_")}.png")} alt={speaker.name}/>
+                    </div>
+                    <div class="pt-2 pl-2 text-white sm:pl-6">
+                        <p class="overflow-hidden text-base font-bold sm:text-lg text-ellipsis whitespace-nowrap">
+                            <%= speaker.name %>
+                        </p>
+                        <p class="-mt-1 overflow-hidden text-xs sm:text-sm text-ellipsis">
+                            <%= speaker.job %>
+                        </p>
+                        <%= if speaker.company do %>
+                            <p class="-mt-1 overflow-hidden text-xs sm:text-sm text-ellipsis">
+                                <%= speaker.company %>
+                            </p>
+                        <% end %>
+                    </div>
                 </div>
             <% end %>
         </div>

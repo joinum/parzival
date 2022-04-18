@@ -26,10 +26,38 @@ defmodule ParzivalWeb.HomeController do
       []
     ]
 
+    sponsors = [
+      ["Cesium"],
+      ["Cesium", "Cesium", "Cesium", "Cesium", "Cesium"],
+      ["Cesium", "Cesium", "Cesium", "Cesium", "Cesium", "Cesium", "Cesium"],
+      ["Cesium", "Cesium", "Cesium", "Cesium", "Cesium", "Cesium", "Cesium", "Cesium", "Cesium", "Cesium", "Cesium", "Cesium"]
+    ]
+
+    sponsors_table = sponsors
+        |> Stream.with_index
+        |> Enum.reduce([[], []], fn ({x, i}, [evens, odds]) ->
+          case rem(i, 2) do
+            0 -> [evens ++ [x], odds]
+            _ -> [evens, odds ++ [x]]
+          end
+        end)
+
+    speakers = [
+      %{name: "Luis Araújo", job: "Slave", company: "CeSIUM"},
+      %{name: "Luis Araújo", job: "Slave", company: "CeSIUM"},
+      %{name: "Luis Araújo", job: "Slave", company: "CeSIUM"},
+      %{name: "Filipe Felício", job: "Slave", company: "CeSIUM"},
+      %{name: "Filipe Felício", job: "Slave", company: "CeSIUM"},
+      %{name: "Filipe Felício", job: "Slave", company: "CeSIUM"},
+    ]
+
     conn
      |> assign(:current_page, "home")
      |> assign(:event_dates, event_dates)
      |> assign(:schedule, schedule)
+     |> assign(:sponsors, sponsors)
+     |> assign(:sponsors_table, sponsors_table)
+     |> assign(:speakers, speakers)
      |> render("index.html")
   end
 end

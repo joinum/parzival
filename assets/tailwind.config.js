@@ -22,7 +22,7 @@ module.exports = {
         montserrat: ["Montserrat"],
       },
       screens: {
-        "xs": "500px",
+        "0.5md": "850px",
         "0.5xl": "1370px",
       },
     },
