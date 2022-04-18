@@ -18,7 +18,7 @@
             <span> | </span>
             <%= live_patch "Faqs", to: Routes.faqs_path(@conn, :index), class: "inline-flex items-center px-1 text-xs" %>
             <span> | </span>
-            <a href="#" class="inline-flex px-1 text-xs"> Team </a>
+            <%= live_patch "Team", to: Routes.team_path(@conn, :index), class: "inline-flex items-center px-1 text-xs" %>
             <span> | </span>
             <%= live_patch "Login", to: Routes.user_session_path(@conn, :new), class: "inline-flex items-center px-1 text-xs" %>
           </div>
