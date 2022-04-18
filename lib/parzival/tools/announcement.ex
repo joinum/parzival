@@ -4,11 +4,11 @@ defmodule Parzival.Tools.Announcement do
 
   alias Parzival.Accounts
 
-  @required_fields ~w(title text author_id)a
+  @required_fields ~w(title text)a
   @optional_fields []
   schema "announcements" do
-    field :text, :string
     field :title, :string
+    field :text, :string
 
     # belongs_to :author, Accounts.User
 

@@ -41,7 +41,27 @@
           <div class="flex items-center justify-end">
             <div class="flex">
               <%= for page <- ParzivalWeb.Config.pages(@socket, @current_user) do %>
-                <%= live_redirect page.title, to: page.url, class: "#{page.key == @current_page && "font-bold"} px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white"%>
+                <%= if page.tabs != [] do %>
+                  <div x-data="{ open: false }" @click.away="open = false">
+                    <button x-on:click="open = ! open" class={"#{page.key == @current_page && "font-bold"} flex px-3 gap-x-1 py-2 rounded-md text-sm font-medium text-white hover:text-white"}>
+                      <%= page.title %>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white my-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    <div x-bind:class="! open ? 'hidden' : 'z-50 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                      <div class="py-1" role="none">
+                        <%= for tab <- page.tabs do %>
+                          <%= live_redirect to: tab.url, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900" do %>
+                            <%= tab.title %>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                <% else %>
+                  <%= live_redirect page.title, to: page.url, class: "#{page.key == @current_page && "font-bold"} px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white"%>
+                <% end %>
               <% end %>
             </div>
             <!-- Profile dropdown -->

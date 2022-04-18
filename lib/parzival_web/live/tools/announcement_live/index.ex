@@ -13,7 +13,7 @@ defmodule ParzivalWeb.AnnouncementLive.Index do
   def handle_params(params, _url, socket) do
     {:noreply,
       socket
-      |> assign(:current_page, :announcements)
+      |> assign(:current_page, :tools)
       |> apply_action(socket.assigns.live_action, params)}
   end
 
