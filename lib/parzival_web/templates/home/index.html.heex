@@ -62,10 +62,11 @@
     <div x-data="{ date: new Date().getDay() < 2 || new Date().getDay() > 4 ? 2 : new Date().getDay() }" class="relative hidden w-full 1.5xl:block">
         <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@conn, "/images/cords/schedule_cords.svg")} alt="hero cords"/>
 
-        <%= for {day, index} <- Enum.with_index(@conn.assigns.event_dates) do %>
-            <button @click={" date = #{Calendar.strftime(day, "%u")} "} class={"bg-[#BB2A22] absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do "right-[704px]" else if index == 1 do "right-[433px]" else "right-40" end end}  top-5"}>
-                <%= Calendar.strftime(day, "%d of %B") %>
+        <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
+            <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F]' : 'bg-[#BB2A22]' " } class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do "right-[704px]" else if index == 1 do "right-[433px]" else "right-40" end end}  top-5"}>
+                <%= Calendar.strftime(hd(Map.get(@conn.assigns.schedule, day)).hours, "%d of %B") %>
             </button>
+
         <% end %>
 
         <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
