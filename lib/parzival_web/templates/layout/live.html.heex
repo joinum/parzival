@@ -67,14 +67,26 @@
             <!-- Profile dropdown -->
             <div class="ml-4 relative flex-shrink-0">
               <div>
-                <%= link to: Routes.user_session_path(@socket, :delete), method: :delete, class: "rounded-full flex text-sm ring-2 ring-white ring-opacity-20 focus:outline-none focus:ring-opacity-100" do %>
-                  <span class="sr-only">Open user menu</span>
-                  <span class="inline-flex justify-center items-center w-10 h-10 rounded-full">
-                    <span class="text-lg font-medium leading-none text-white">
-                      <%= extract_initials(@current_user.name) %>
+                <div x-data="{ open: false }" @click.away="open = false">
+                  <button x-on:click="open = ! open" class="rounded-full flex text-sm ring-2 ring-white ring-opacity-20 focus:outline-none focus:ring-opacity-100">
+                    <span class="sr-only">Open user menu</span>
+                    <span class="inline-flex justify-center items-center w-10 h-10 rounded-full">
+                      <span class="text-lg font-medium leading-none text-white">
+                        <%= extract_initials(@current_user.name) %>
+                      </span>
                     </span>
-                  </span>
-                <% end %>
+                  </button>
+                  <div x-bind:class="! open ? 'hidden' : 'z-50 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <div class="py-1" role="none">
+                      <%#= for tab <- ParzivalWeb.Config.tabs(@socket, @current_user) do %>
+                        <%#= live_redirect to: tab.url, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900" do %>
+                          <%#= tab.title %>
+                        <%# end %>
+                      <%# end %>
+                      <%= link "Sign Out", to: Routes.user_session_path(@socket, :delete), method: :delete, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900" %>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <!--
