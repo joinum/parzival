@@ -71,7 +71,6 @@
         <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
             <div x-show={"date == #{index + 2}"} class="absolute right-0 grid grid-cols-5 p-10 gap-x-8 gap-y-6 top-32">
                 <% next_activity = ParzivalWeb.HomeController.get_next_activity(@conn.assigns.schedule, day) %>
-                <%# <% next_activity = Enum.min_by( Enum.reduce( Map.get(@conn.assigns.schedule, day), [], fn x, acc -> if NaiveDateTime.compare(NaiveDateTime.utc_now(), x.hours) == :lt do acc ++ [x.hours] else acc end end ), &abs(NaiveDateTime.diff(&1,NaiveDateTime.utc_now()))) %>
                 <%= for activity <- Map.get(@conn.assigns.schedule, day) do %>
                     <div class={"#{if activity.hours == next_activity do "border-2 border-white" end} #{if NaiveDateTime.compare(NaiveDateTime.utc_now(), activity.hours) == :lt do "bg-[#E0483F]" else "bg-[#BB2A22]" end}  w-36 h-44 rounded-3xl relative -z-10"}>
                         <span class="text-white">
