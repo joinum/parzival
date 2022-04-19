@@ -386,22 +386,20 @@
           <div class="overflow-hidden">
             <div class="">
               <h2 class="text-base font-medium text-gray-900 pt-6" id="announcements-title">
-                <%#= gettext("Announcements") %>
                 Announcements
               </h2>
               <div class="flow-root mt-6">
                 <ul role="list" class="-my-5 divide-y divide-gray-200">
-                  <%#= for announcement <- @announcements do %>
+                  <%= for announcement <- @announcements do %>
                     <li class="py-5">
-                      <%#= live_patch to: Routes.announcements_show_path(@socket, :show, announcement), class: "group" do %>
+                      <%= live_patch to: Routes.announcement_show_path(@socket, :show, announcement), class: "group" do %>
                         <div>
                           <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">
-                            <%#= announcement.title %>
-                            Dinheiro gratis
+                            <%= announcement.title %>
                           </h3>
                           <article class="mt-1 text-sm text-gray-600 line-clamp-2">
                             <%#= raw(Earmark.as_html!(announcement.text) %>
-                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                            <%= announcement.text %>
                           </article>
                           <div class="flex flex-shrink-0 justify-between mt-4">
                             <div class="flex items-center">
@@ -417,58 +415,22 @@
                               </p>
                             </div>
                             <div class="flex">
-                              <%# <Heroicons.Solid.calendar class="w-5 h-5 text-gray-500" /> %>
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                              </svg>
                               <p class="block pl-1.5 text-sm text-gray-600">
-                                <%#= relative_datetime(announcement.inserted_at) %>
-                                13/04/2022
+                                <%= relative_datetime(announcement.inserted_at) %>
                               </p>
                             </div>
                           </div>
                         </div>
-                      <%# end %>
+                      <% end %>
                     </li>
-                    <li class="py-5">
-                      <%#= live_patch to: Routes.announcements_show_path(@socket, :show, announcement), class: "group" do %>
-                        <div>
-                          <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">
-                            <%#= announcement.title %>
-                            Dinheiro gratis
-                          </h3>
-                          <article class="mt-1 text-sm text-gray-600 line-clamp-2">
-                            <%#= raw(Earmark.as_html!(announcement.text) %>
-                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                          </article>
-                          <div class="flex flex-shrink-0 justify-between mt-4">
-                            <div class="flex items-center">
-                              <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
-                                <span class="text-xs font-medium leading-none text-white">
-                                  <%#= extract_initials(announcement.author.name) %>
-                                  <%= extract_initials("Filipe Felicio") %>
-                                </span>
-                              </span>
-                              <p class="text-sm text-gray-500">
-                                <%#= announcement.author.name %>
-                                Filipe Felicio
-                              </p>
-                            </div>
-                            <div class="flex">
-                              <%# <Heroicons.Solid.calendar class="w-5 h-5 text-gray-500" /> %>
-                              <p class="block pl-1.5 text-sm text-gray-600">
-                                <%#= relative_datetime(announcement.inserted_at) %>
-                                13/04/2022
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      <%# end %>
-                    </li>
-                  <%# end %>
+                  <% end %>
                 </ul>
               </div>
               <div class="mt-6">
-                <%#= live_patch to: Routes.announcements_index_path(@socket, :index), class: "w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" do %>
-                <%= live_patch to: "", class: "w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" do %>
-                  <%#= gettext("View all") %>
+                <%= live_patch to: Routes.announcement_index_path(@socket, :index), class: "w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" do %>
                   View all
                 <% end %>
               </div>

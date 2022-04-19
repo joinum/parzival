@@ -29,10 +29,6 @@
                     </a>
                   </div>
                 </div>
-                <!-- Action buttons -->
-                <div class="flex flex-col sm:flex-row xl:flex-col">
-                  <%= live_patch "New Announcement", to: Routes.announcement_index_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full" %>
-                </div>
               </div>
               <!-- Meta info -->
               <div class="flex flex-col space-y-6 sm:flex-row sm:space-y-0 sm:space-x-8 xl:flex-col xl:space-x-0 xl:space-y-6">
@@ -59,8 +55,12 @@
       <!-- Projects List -->
       <div class="bg-white lg:min-w-0 lg:flex-1">
         <div class="pl-4 pr-6 pt-5 pb-5 xl:border-r xl:border-gray-200 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
-          <div class="flex items-center">
+          <div class="flex items-center justify-between">
             <h1 class="flex-1 text-lg font-medium">Announcements</h1>
+            <!-- Action buttons -->
+            <div class="flex flex-col sm:flex-row xl:flex-col">
+              <%= live_patch "New Announcement", to: Routes.announcement_index_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full" %>
+            </div>
           </div>
         </div>
         <ul role="list" class="relative z-0 divide-y divide-gray-200 border-b xl:border-r border-gray-200">
