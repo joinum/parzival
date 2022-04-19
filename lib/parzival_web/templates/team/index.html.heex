@@ -1,4 +1,4 @@
-<div class="mt-20 mx-40 grid grid-cols-4">
+<div class="mt-20 lg:mx-40 2xl:mx-80 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
     <%= for member <- @team do %>
         <div class="relative w-full h-auto group">
             <img class="w-24 left-2 hidden group-hover:block z-50 absolute inset-0 top-2" src={Routes.static_path(@conn, "/images/logos/#{member.organization}.svg")} />
