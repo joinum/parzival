@@ -92,7 +92,9 @@ defmodule Parzival.ToolsTest do
       announcement = announcement_fixture()
       update_attrs = %{text: "some updated text", title: "some updated title"}
 
-      assert {:ok, %Announcement{} = announcement} = Tools.update_announcement(announcement, update_attrs)
+      assert {:ok, %Announcement{} = announcement} =
+               Tools.update_announcement(announcement, update_attrs)
+
       assert announcement.text == "some updated text"
       assert announcement.title == "some updated title"
     end

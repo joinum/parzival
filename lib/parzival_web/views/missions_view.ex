@@ -1,4 +1,3 @@
 defmodule ParzivalWeb.MissionsView do
-    use ParzivalWeb, :view
-  end
-  
+  use ParzivalWeb, :view
+end

@@ -1,0 +1,275 @@
+{
+  "tuesday": [
+    {
+      "title": "Sessão de abertura",
+      "hours": "2022-06-28T09:15Z",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "How to orchestrate the Trading platform",
+      "hours": "2022-06-28T10:00Z",
+      "speaker": "Marco Machado",
+      "company": "Eurotux"
+    },
+    {
+      "title": "WHAT IS A BLOCKCHAIN? UNDERSTANDING THE TECHNOLOGY, PURPOSE AND SCOPE.",
+      "hours": "2022-06-28T10:20Z",
+      "speaker": "Filipe Castro",
+      "company": null
+    },
+    {
+      "title": "COFFEE BREAK",
+      "hours": "2022-06-28T11:05Z",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "AI @ ACCENTURE - RPA & CHATBOTS",
+      "hours": "2022-06-28T11:35Z",
+      "speaker": "Rui Pires",
+      "company": "Accenture"
+    },
+    {
+      "title": "Almoço",
+      "hours": "2022-06-28T12:20Z",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "BUILDING A BLOCKCHAIN",
+      "hours": "2022-06-28T14:30Z",
+      "speaker": "Miguel Palhas",
+      "company": null
+    },
+    {
+      "title": "CARS, THE NEXT BIG THING IN THE INTERNET OF THINGS",
+      "hours": "2022-06-28T15:20Z",
+      "speaker": "João Esteves",
+      "company": "Critical Techworks"
+    },
+    {
+      "title": "COFFEE BREAK",
+      "hours": "2022-06-28T16:00Z",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-28T16:30Z",
+      "speaker": "Luís Fernandes",
+      "company": "Bold"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-28T16:40Z",
+      "speaker": "Andreia Gonçalves",
+      "company": "Kwan"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-28T16:50Z",
+      "speaker": "André Silva",
+      "company": "Prime IT"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-28T17:00Z",
+      "speaker": "Inês Monteiro",
+      "company": "Aubay"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-28T17:10Z",
+      "speaker": "Ernesto Pedrosa",
+      "company": "Automaise"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-28T17:20Z",
+      "speaker": "Filipe Duarte",
+      "company": "Winprovit"
+    }
+  ],
+  "wednesday": [
+    {
+      "title": "INTEGRAÇÕES CONTÍNUAS",
+      "hours": "2022-06-29T09:35Z",
+      "speaker": "Tiago Gomes",
+      "company": "Vilt"
+    },
+    {
+      "title": "O FANTÁSTICO MUNDO DO FRONTEND",
+      "hours": "2022-06-29T10:20Z",
+      "speaker": "Bruno Lourenço",
+      "company": null
+    },
+    {
+      "title": "COFFEE BREAK",
+      "hours": "2022-06-29T11:05Z",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "SHIFTING TO MICROSERVICES IN THE REAL WORLD",
+      "hours": "2022-06-29T11:35Z",
+      "speaker": "Luís Barbosa e Hugo Neto",
+      "company": "360 Imprimir"
+    },
+    {
+      "title": "ALMOÇO",
+      "hours": "2022-06-29T12:20Z",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "CONTINUOUS DELIVERY",
+      "hours": "2022-06-29T14:30Z",
+      "speaker": "Pedro Costa",
+      "company": null
+    },
+    {
+      "title": "O QUE AS EMPRESAS ESPERAM DE UM WEB DEVELOPER",
+      "hours": "2022-06-29T15:20Z",
+      "speaker": "Daniela Costa",
+      "company": "Eurotux"
+    },
+    {
+      "title": "ARE U A TECH BFF?",
+      "hours": "2022-06-29T15:40Z",
+      "speaker": "Jorge Ribeiro e Hugo Lourenço",
+      "company": "Primavera BSS"
+    },
+    {
+      "title": "COFFEE BREAK",
+      "hours": "2022-06-29T16:00Z",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-29T16:30Z",
+      "speaker": "Pedro Alves",
+      "company": "Wintouch"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-29T16:40Z",
+      "speaker": "Joana Gonçalves",
+      "company": "IT Sector"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-29T16:50Z",
+      "speaker": "Cláudia Gonçalves, Vasco Bessa",
+      "company": "Gfi Portugal"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-29T17:10Z",
+      "speaker": "Gabriela Moura",
+      "company": "Inova-Ria"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-29T17:20Z",
+      "speaker": "Carlos Viana",
+      "company": "GO Contact"
+    },
+    {
+      "title": "SUNSET",
+      "hours": "2022-06-29T18:30Z",
+      "speaker": "Restaurante Panorâmico",
+      "company": null
+    }
+  ],
+  "thursday": [
+    {
+      "title": "COMPUTER VISION- APTIV PRODUCTS AND PROCESS.",
+      "hours": "2022-06-30T10:00Z",
+      "speaker": "Luis Costa",
+      "company": "Aptiv"
+    },
+    {
+      "title": "COMPUTAÇÃO VISUAL PARA A INDÚSTRIA 4.0",
+      "hours": "2022-06-30T10:20Z",
+      "speaker": "Nuno Sousa",
+      "company": null
+    },
+    {"title": "COFFEE BREAK",
+      "hours": "2022-06-30T11:05Z",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "THE ILLUSION OF LIFE- MAKING 'THEBREADWINNER'",
+      "hours": "2022-06-30T11:35Z",
+      "speaker": "João Martins",
+      "company": "Smith Micro"
+    },
+    {"title": "ALMOÇO",
+      "hours": "2022-06-30T12:20Z",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "A ÁREA DA COMPUTAÇÃO GRÁFICA E OS SEUS ATUAIS DESAFIOS",
+      "hours": "2022-06-30T14:30Z",
+      "speaker": "António Ramires Fernandes",
+      "company": null
+    },
+    {
+      "title": "TBA",
+      "hours": "2022-06-30T15:20Z",
+      "speaker": "TBA",
+      "company": "Outsystems"
+    },
+    {
+      "title": "TBA",
+      "hours": "2022-06-30T15:40Z",
+      "speaker": "TBA",
+      "company": "Ordem dos Engenheiros - Região Norte"
+    },
+    {"title": "COFFEE BREAK",
+      "hours": "2022-06-30T16:00Z",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-30T16:30Z",
+      "speaker": "Filipe Ferreira",
+      "company": "Fujitsu"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-30T16:40Z",
+      "speaker": "Isabel Martins, Tiago Largato",
+      "company": "Johnson Controls"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-30T16:50Z",
+      "speaker": "TBA",
+      "company": "Logic Info"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-30T17:10Z",
+      "speaker": "Helena Castro",
+      "company": "EBanKit"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-30T17:20Z",
+      "speaker": "Ricardo Lopes",
+      "company": "Fast-mp - Live Marketplace"
+    },
+    {
+      "title": "PITCH",
+      "hours": "2022-06-30T17:30Z",
+      "speaker": "TBA",
+      "company": "Konk Consulting"
+    }
+  ]
+}

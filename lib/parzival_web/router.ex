@@ -76,7 +76,6 @@ defmodule ParzivalWeb.Router do
     post "/users/reset_password", UserResetPasswordController, :create
     get "/users/reset_password/:token", UserResetPasswordController, :edit
     put "/users/reset_password/:token", UserResetPasswordController, :update
-
   end
 
   scope "/", ParzivalWeb do
@@ -97,7 +96,6 @@ defmodule ParzivalWeb.Router do
         live "/announcements/:id", AnnouncementLive.Show, :show
         live "/announcements/:id/show/edit", AnnouncementLive.Show, :edit
       end
-
     end
 
     get "/users/settings", UserSettingsController, :edit

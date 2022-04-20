@@ -65,5 +65,4 @@ defmodule ParzivalWeb.ViewUtils do
     date
     |> Timex.format!("{h24}:{m}")
   end
-
 end

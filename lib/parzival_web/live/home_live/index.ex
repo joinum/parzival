@@ -15,5 +15,4 @@ defmodule ParzivalWeb.HomeLive.Index do
      |> assign(:announcements, Enum.take(Tools.list_announcements(), 3))
      |> assign(:current_page, :home)}
   end
-
 end
