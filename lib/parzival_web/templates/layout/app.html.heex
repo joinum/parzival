@@ -1,7 +1,7 @@
 <body class="overflow-x-hidden bg-gradient-to-l from-primary via-secondary to-primary" >
-  <header class="px-8 md:px-20">
-    <div class="flex items-center justify-between w-full pt-10 md:pt-14">
-      <div class="hidden w-full text-white uppercase md:block">
+  <header class="px-8 lg:px-14 xl:px-20">
+    <div class="flex items-center justify-between w-full pt-10 lg:pt-14">
+      <div class="hidden w-full text-white uppercase lg:block">
         <div class="flex flex-col lg:flex-row ">
           <div class="flex flex-row items-center space-x-1">
             <span class= {"#{ @conn.assigns.current_page == "home" && "font-bold" } inline-flex px-2"}>
@@ -40,24 +40,24 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-row justify-between w-full md:flex-row-reverse">
+      <div class="flex flex-row justify-between w-full lg:flex-row-reverse">
         <div class="flex items-center justify-center gap-x-4 sm:gap-x-8">
           <%= link to: "https://cesium.di.uminho.pt/" do %> <img class="w-16 h-auto text-white md:w-20" src={Routes.static_path(@conn, "/images/logos/cesium.svg")} alt="CeSIUM Logo"/> <% end %>
           <%= link to: "https://necc.di.uminho.pt/" do %> <img class="w-16 h-auto text-white md:w-20" src={Routes.static_path(@conn, "/images/logos/necc.svg")} alt="NECC Logo"/> <% end %>
           <%= link to: "https://nefum.di.uminho.pt/" do %> <img class="w-12 h-auto text-white md:w-16" src={Routes.static_path(@conn, "/images/logos/nefum.svg")} alt="NEFUM Logo"/> <% end %>
         </div>
-        <button class="md:hidden" type="button">
+        <button class="lg:hidden" type="button">
           <img class="w-5 sm:w-6" src={Routes.static_path(@conn, "/images/assets/hamburger.svg")} alt="Hamburger menu"/>
         </button>
       </div>
     </div>
   </header>
-  <main class="px-8 md:px-20">
+  <main class="px-8 md:px-14 xl:px-20">
     <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
     <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
     <%= @inner_content %>
   </main>
-  <footer class="relative px-8 pt-32 pb-5 sm:pb-10 md:px-20">
+  <footer class="relative px-8 pt-32 pb-5 sm:pb-10 md:px-14 xl:px-20">
     <img class="absolute bottom-0 right-0 hidden lg:block -z-10 w-96" src={Routes.static_path(@conn, "/images/cords/footer_cords.svg")} alt="footer cord"/>
     <div class="sm:hidden block absolute bottom-0 left-0 w-full rounded-t-[50px] h-[96px] -z-20 bg-secondary sm:bg-none drop-shadow-[0_35px_35px_rgba(0,0,0,0.75)]"/>
     <div class="flex flex-row items-center justify-between">
