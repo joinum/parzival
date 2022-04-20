@@ -3,7 +3,7 @@ defmodule ParzivalWeb.ScheduleController do
 
   def index(conn, _params) do
     conn
-     |> assign(:current_page, "schedule")
-     |> render("index.html")
+    |> assign(:current_page, "schedule")
+    |> render("index.html")
   end
 end

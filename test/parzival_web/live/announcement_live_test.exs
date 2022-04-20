@@ -70,7 +70,10 @@ defmodule ParzivalWeb.AnnouncementLiveTest do
     test "deletes announcement in listing", %{conn: conn, announcement: announcement} do
       {:ok, index_live, _html} = live(conn, Routes.announcement_index_path(conn, :index))
 
-      assert index_live |> element("#announcement-#{announcement.id} a", "Delete") |> render_click()
+      assert index_live
+             |> element("#announcement-#{announcement.id} a", "Delete")
+             |> render_click()
+
       refute has_element?(index_live, "#announcement-#{announcement.id}")
     end
   end
@@ -79,14 +82,16 @@ defmodule ParzivalWeb.AnnouncementLiveTest do
     setup [:create_announcement]
 
     test "displays announcement", %{conn: conn, announcement: announcement} do
-      {:ok, _show_live, html} = live(conn, Routes.announcement_show_path(conn, :show, announcement))
+      {:ok, _show_live, html} =
+        live(conn, Routes.announcement_show_path(conn, :show, announcement))
 
       assert html =~ "Show Announcement"
       assert html =~ announcement.text
     end
 
     test "updates announcement within modal", %{conn: conn, announcement: announcement} do
-      {:ok, show_live, _html} = live(conn, Routes.announcement_show_path(conn, :show, announcement))
+      {:ok, show_live, _html} =
+        live(conn, Routes.announcement_show_path(conn, :show, announcement))
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Announcement"

@@ -3,7 +3,7 @@ defmodule ParzivalWeb.SpeakersController do
 
   def index(conn, _params) do
     conn
-     |> assign(:current_page, "speakers")
-     |> render("index.html")
+    |> assign(:current_page, "speakers")
+    |> render("index.html")
   end
 end

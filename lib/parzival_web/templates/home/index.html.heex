@@ -12,7 +12,7 @@
         </div>
 
         <div>
-            <p class="text-sm font-bold text-white"> 2. Criptografia e Segurança </p>
+            <p class="text-sm font-bold text-white"> 2. Cryptography and Security </p>
             <p class="pt-2 text-xs font-light text-white"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet  </p>
         </div>
 
@@ -41,7 +41,7 @@
         </div>
 
         <div class="absolute right-[350px] pt-[65px] w-[220px]">
-            <p class="text-sm font-bold text-white"> 2. Criptografia e Segurança </p>
+            <p class="text-sm font-bold text-white"> 2. Cryptography and Security </p>
             <p class="pt-2 text-xs font-light text-white"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet  </p>
         </div>
 
@@ -52,27 +52,26 @@
     </div>
 </div>
 
-<div class="flex flex-row mt-10 sm:mt-20 lg:mt-48 h-[740px]">
+<div x-data={"{ date: new Date().toISOString() >= '#{(hd(Map.get(@schedule, :tuesday)).hours)}.to_iso8601!()' && new Date().toISOString() <= '#{(List.last(Map.get(@schedule, :thursday)).hours)}.to_iso8601!()' ? new Date().getDay() : 2 }"} x-init={"console.log(new Date().toISOString() >= '#{~N[2021-06-28 10:15:00.000000]}.to_iso8601!()')"} class="flex flex-row mt-10 sm:mt-20 lg:mt-48 h-[740px] mb">
     <div class="absolute transform -rotate-90 -translate-x-40 translate-y-48 md:-translate-x-44">
         <span class="title">
             Schedule
         </span>
     </div>
 
-    <div x-data="{ date: new Date().getDay() < 2 || new Date().getDay() > 4 ? 2 : new Date().getDay() }" class="relative hidden w-full 1.5xl:block">
+    <div class="relative hidden w-full 1.5xl:block">
         <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@conn, "/images/cords/schedule_cords.svg")} alt="hero cords"/>
 
         <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
-            <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F]' : 'bg-[#BB2A22]' " } class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do "right-[704px]" else if index == 1 do "right-[433px]" else "right-40" end end}  top-5"}>
-                <%= Calendar.strftime(hd(Map.get(@conn.assigns.schedule, day)).hours, "%d of %B") %>
+            <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F] font-bold' : 'bg-[#BB2A22]' " } class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do "right-[704px]" else if index == 1 do "right-[433px]" else "right-40" end end}  top-5"}>
+                <%= Calendar.strftime(hd(Map.get(@schedule, day)).hours, "%d of %B") %>
             </button>
-
         <% end %>
 
         <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
             <div x-show={"date == #{index + 2}"} class="absolute right-0 grid grid-cols-5 p-10 gap-x-8 gap-y-6 top-32">
-                <% next_activity = ParzivalWeb.HomeController.get_next_activity(@conn.assigns.schedule, day) %>
-                <%= for activity <- Map.get(@conn.assigns.schedule, day) do %>
+                <% next_activity = get_next_activity(@schedule, day) %>
+                <%= for activity <- Map.get(@schedule, day) do %>
                     <div class={"#{if activity.hours == next_activity do "border-2 border-white" end} #{if NaiveDateTime.compare(NaiveDateTime.utc_now(), activity.hours) == :lt do "bg-[#E0483F]" else "bg-[#BB2A22]" end}  w-36 h-44 rounded-3xl relative -z-10"}>
                         <span class="text-white">
                             <p class="absolute w-32 text-sm font-light top-4 left-3">
@@ -97,9 +96,46 @@
             </div>
         <% end %>
     </div>
+    <div class="relative 1.5xl:hidden w-full flex flex-row-reverse mt-10 ml-20">
+        <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
+            <div x-show={"date == #{index + 2}"} class="flex flex-col w-full sm:w-96 md:w-[450px] lg:w-[500px]">
+                <div class="flex flex-row items-center justify-between px-6 pt-4 pb-10">
+                    <button @click="date = date > 2 ? date - 1 : date">
+                        <svg class={"#{if day == :tuesday do 'fill-transparent' else 'fill-white' end} w-4 sm:w-6"} viewBox="0 0 13 23" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.35957 11.1753L5.08221 11.5L5.35957 11.8247L12.3108 19.9632L9.86131 22.2757L0.657558 11.5L9.86131 0.724325L12.3108 3.03679L5.35957 11.1753Z" stroke="white"/>
+                        </svg>
+                    </button>
+                    <span class="text-xl font-bold text-white sm:text-3xl">
+                        <%= Calendar.strftime(hd(Map.get(@schedule, day)).hours, "%d of %B") %>
+                    </span>
+                    <button @click="date = date < 4 ? date + 1 : date">
+                        <svg class={"#{if day == :thursday do 'fill-transparent' else 'fill-white' end} w-4 transform rotate-180 sm:w-6"} viewBox="0 0 13 23" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.35957 11.1753L5.08221 11.5L5.35957 11.8247L12.3108 19.9632L9.86131 22.2757L0.657558 11.5L9.86131 0.724325L12.3108 3.03679L5.35957 11.1753Z" stroke="white"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="relative flex flex-col gap-y-4">
+                    <div class="absolute h-[106%] bg-gradient-to-b to-[#EA3B2D] from-[#F9AEA9] opacity-25 rounded-full -top-[2.5%] w-[60px] md:w-[70px] right-0 -z-10"/>
+                    <% next_activity = get_next_activity(@schedule, day) %>
+                    <%= for activity <- Map.get(@schedule, day) do %>
+                        <div class="flex flex-row-reverse">
+                            <div class={"flex flex-row gap-x-8 items-center #{if activity.hours == next_activity do 'font-bold py-4 text-[13px] md:text-[17px]' else 'font-thin text-[12px] md:text-[16px] opacity-50' end} text-white"}>
+                                <span class="w-40 text-right sm:w-96 md:w-[420px]">
+                                    <%= activity.title %>
+                                </span>
+                                <span class="w-[60px] text-center md:w-[70px]">
+                                    <%= Calendar.strftime(activity.hours, "%Hh%M") %>
+                                </span>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        <% end %>
+    </div>
 </div>
 
-<div class="flex flex-row mt-10 sm:mt-20 lg:mt-48">
+<div class="flex flex-row mt-20 lg:mt-48">
     <div class="absolute transform -rotate-90 -translate-x-40 translate-y-40 md:-translate-x-44">
         <span class="title">
             Sponsors
@@ -107,7 +143,7 @@
     </div>
     <div class="relative flex flex-row-reverse w-full ml-20 lg:hidden sm:ml-24">
         <div class="flex flex-col w-full">
-            <%= for {sponsors, index} <- Enum.with_index(@conn.assigns.sponsors) do %>
+            <%= for {sponsors, index} <- Enum.with_index(@sponsors) do %>
                 <div class="bg-[#E0483F] flex flex-col rounded-3xl pt-4 pb-6 px-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.4)] my-4">
                     <span class="text-2xl font-bold text-white">
                         <%= if index == 0 do "Exclusive" else if index == 1 do "Gold" else if index == 2 do "Silver" else "Bronze" end end end %>
@@ -123,7 +159,7 @@
     </div>
     <div class="relative flex-row-reverse hidden w-full -mt-4 lg:flex ml-36 xl:ml-52">
         <div class="flex flex-row w-full">
-            <%= for {sponsor_table, table_index} <- Enum.with_index(@conn.assigns.sponsors_table) do %>
+            <%= for {sponsor_table, table_index} <- Enum.with_index(@sponsors_table) do %>
                 <div class="flex flex-col w-full ml-2 xl:mx-2">
                     <%= for {sponsor_box, box_index} <- Enum.with_index(sponsor_table) do %>
                         <div class={"bg-[#E0483F] flex flex-col rounded-3xl pt-4 pb-6 px-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.4)] mx-2 xl:mx-4 mb-4 #{if table_index == 1 && box_index == 0 do "mt-24" end}"}>
@@ -151,23 +187,24 @@
     </div>
     <div class="relative flex flex-row-reverse w-full ml-20 sm:ml-24">
         <div class="grid grid-cols-2 px-0 lg:px-6 gap-x-2 sm:gap-x-10 lg:gap-x-16 gap-y-6 lg:grid-cols-3 2xl:grid-cols-4">
-            <%= for speaker <- @conn.assigns.speakers do %>
+            <%= for speaker <- @speakers do %>
+
                 <div class="flex flex-col w-auto group">
                     <div class="relative">
                         <img class="w-auto" src={Routes.static_path(@conn, "/images/cords/speakers_cords.svg")} alt="speaker cords"/>
                         <div class="absolute h-[95%] md:h-[96%] bg-secondary opacity-50 group-hover:opacity-20 w-[95%] md:w-[96%] -z-10 right-0 bottom-0 rounded-2xl sm:rounded-3xl" />
-                        <img class="absolute w-[95%] md:w-[96%] -z-20 right-0 bottom-0 rounded-2xl sm:rounded-3xl" src={Routes.static_path(@conn, "/images/speakers/#{String.replace(speaker.name," ","_")}.png")} alt={speaker.name}/>
+                        <img class="absolute w-[95%] md:w-[96%] -z-20 right-0 bottom-0 rounded-2xl sm:rounded-3xl" src={Routes.static_path(@conn, "/images/speakers/#{speaker[:photo]}.png")} alt={speaker[:name]}/>
                     </div>
                     <div class="pt-2 pl-2 text-white sm:pl-6">
                         <p class="overflow-hidden text-base font-bold sm:text-lg text-ellipsis whitespace-nowrap">
-                            <%= speaker.name %>
+                            <%= speaker[:name] %>
                         </p>
                         <p class="-mt-1 overflow-hidden text-xs sm:text-sm text-ellipsis">
-                            <%= speaker.job %>
+                            <%= speaker[:job] %>
                         </p>
-                        <%= if speaker.company do %>
+                        <%= if speaker[:company] do %>
                             <p class="-mt-1 overflow-hidden text-xs sm:text-sm text-ellipsis">
-                                <%= speaker.company %>
+                                <%= speaker[:company] %>
                             </p>
                         <% end %>
                     </div>
@@ -185,7 +222,7 @@
     </div>
     <div class="relative grid w-full grid-cols-1 mt-12 ml-20 sm:grid-cols-2 sm:ml-28 gap-y-12 h-min">
         <div class="grid grid-cols-2 gap-6 justify-items-center sm:grid-cols-1 auto-rows-min">
-            <%= for partner <- @conn.assigns.partners do %>
+            <%= for partner <- @partners do %>
                 <img class="w-auto sm:w-40" src={Routes.static_path(@conn, "/images/partners/#{partner}.png")} alt={partner}/>
             <% end %>
         </div>

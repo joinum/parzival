@@ -3,7 +3,7 @@ defmodule ParzivalWeb.HackathonController do
 
   def index(conn, _params) do
     conn
-     |> assign(:current_page, "hackathon")
-     |> render("index.html")
+    |> assign(:current_page, "hackathon")
+    |> render("index.html")
   end
 end
