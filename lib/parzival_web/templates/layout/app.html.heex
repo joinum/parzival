@@ -11,10 +11,10 @@
             <span class= {"#{ @conn.assigns.current_page == "schedule" && "font-bold" } inline-flex px-2"}>
               <%= link("Schedule", to: Routes.schedule_path(@conn, :index), class: "inline-flex text-xs xl:text-base") %>
             </span>
-            <span class="select-none"> | </span>
-            <span class= {"#{ @conn.assigns.current_page == "hackathon" && "font-bold" } inline-flex px-2"}>
-              <%= link("Hackathon", to: Routes.hackathon_path(@conn, :index), class: "inline-flex text-xs xl:text-base") %>
-            </span>
+            <%# <span class="select-none"> | </span> %>
+            <%# <span class= {"#{ @conn.assigns.current_page == "hackathon" && "font-bold" } inline-flex px-2"}> %>
+              <%#= link("Hackathon", to: Routes.hackathon_path(@conn, :index), class: "inline-flex text-xs xl:text-base") %>
+            <%# </span> %>
             <span class="select-none"> | </span>
             <span class= {"#{ @conn.assigns.current_page == "missions" && "font-bold" } inline-flex px-2"}>
               <%= link("Missions", to: Routes.missions_path(@conn, :index), class: "inline-flex text-xs xl:text-base") %>
@@ -33,10 +33,10 @@
             <span class= {"#{ @conn.assigns.current_page == "team" && "font-bold" } inline-flex px-2"}>
               <%= link("Team", to: Routes.team_path(@conn, :index), class: "inline-flex text-xs xl:text-base") %>
             </span>
-            <span class="select-none"> | </span>
-            <span class="inline-flex px-2">
-            <%= live_patch "Login", to: Routes.user_session_path(@conn, :new), class: "inline-flex items-center text-xs xl:text-base" %>
-            </span>
+            <%# <span class="select-none"> | </span> %>
+            <%# <span class="inline-flex px-2"> %>
+            <%#= live_patch "Login", to: Routes.user_session_path(@conn, :new), class: "inline-flex items-center text-xs xl:text-base" %>
+            <%# </span> %>
           </div>
         </div>
       </div>
