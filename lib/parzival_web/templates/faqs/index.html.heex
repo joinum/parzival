@@ -1,4 +1,4 @@
-<div class="mt-20">
+<div class="mt-28">
   <div class="relative w-full h-[300px] sm:h-[350px] lg:h-[400px]">
       <div class="absolute -rotate-90 -left-16 top-10 lg:top-20 md:-left-10 lg:-left-24">
           <span class="title">
@@ -9,15 +9,15 @@
           Have <span class="underline decoration-4 sm:decoration-8">all</span> your questions answered.
       </div>
   </div>
-  
-  <div class="grid grid-cols-1 gap-y-8 px-0 lg:px-40 2xl:px-80">
+
+  <div class="grid grid-cols-1 px-0 gap-y-8 lg:px-40 2xl:px-80">
       <%= for faq <- @faqs do %>
-          <div x-data="{ open: false }" class="bg-tertiary shadow-xl rounded-3xl py-6 px-10">
-              <button x-on:click="open = ! open" class="w-full flex justify-between">
-                 <h3 class="text-lg sm:text-xl xl:text-2xl font-semibold text-white">
+          <div x-data="{ open: false }" class="px-10 py-6 shadow-xl bg-tertiary rounded-3xl">
+              <button x-on:click="open = ! open" class="flex justify-between w-full">
+                 <h3 class="text-lg font-semibold text-white sm:text-xl xl:text-2xl">
                    <%= faq.question %>
                  </h3>
-                 <svg xmlns="http://www.w3.org/2000/svg" x-bind:class="open ? 'rotate-90' : 'rotate-0'" class="text-white h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                 <svg xmlns="http://www.w3.org/2000/svg" x-bind:class="open ? 'rotate-90' : 'rotate-0'" class="w-8 h-8 text-white" viewBox="0 0 20 20" fill="currentColor">
                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                  </svg>
               </button>
@@ -27,5 +27,5 @@
           </div>
       <% end %>
   </div>
-  
+
 </div>

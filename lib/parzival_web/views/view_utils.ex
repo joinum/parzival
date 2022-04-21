@@ -72,8 +72,8 @@ defmodule ParzivalWeb.ViewUtils do
     schedule
     |> Map.get(day)
     |> Enum.reduce([], fn x, acc ->
-      if NaiveDateTime.compare(now, x.hours) == :lt do
-        acc ++ [x.hours]
+      if NaiveDateTime.compare(now, x["hours"]) == :lt do
+        acc ++ [x["hours"]]
       else
         acc
       end
