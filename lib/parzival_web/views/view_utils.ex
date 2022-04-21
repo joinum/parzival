@@ -80,5 +80,4 @@ defmodule ParzivalWeb.ViewUtils do
     end)
     |> Enum.min_by(&abs(NaiveDateTime.diff(&1, now)))
   end
-
 end
