@@ -1,93 +1,93 @@
 <div class="mt-20">
   
-  <div class="relative w-full h-[300px] sm:h-[350px] lg:h-[400px]">
-      <div class="absolute -rotate-90 top-32 lg:top-40 -left-40 md:-left-32 lg:-left-24">
-          <span class="title">
-              Schedule
-          </span>
-      </div>
-      <div class="mr-10 md:mr-40 lg:mx-[300px] 2xl:mx-80 font-extrabold xl:text-[90px] lg:text-[78px] sm:text-[60px] text-[30px] text-white ml-24 md:ml-36 uppercase leading-none">
-          Join us for a week full of <span class="underline decoration-4 sm:decoration-8"> surprises</span>.
-      </div>
-  </div>
-
-  <div x-data={"{ date: new Date().toISOString() >= '#{(hd(Map.get(@schedule, :tuesday)).hours)}.to_iso8601!()' && new Date().toISOString() <= '#{(List.last(Map.get(@schedule, :thursday)).hours)}.to_iso8601!()' ? new Date().getDay() : 2 }"} x-init={"console.log(new Date().toISOString() >= '#{~N[2021-06-28 10:15:00.000000]}.to_iso8601!()')"} class="flex flex-row mt-10 sm:mt-20 lg:mt-48 h-[740px] mb-20">
-    
-    <div class="relative hidden w-full 1.5xl:block">
-        <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@conn, "/images/cords/schedule_cords.svg")} alt="hero cords"/>
-
-        <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
-            <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F] font-bold' : 'bg-[#BB2A22]' " } class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do "right-[704px]" else if index == 1 do "right-[433px]" else "right-40" end end}  top-5"}>
-                <%= Calendar.strftime(hd(Map.get(@schedule, day)).hours, "%d of %B") %>
-            </button>
-        <% end %>
-
-        <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
-            <div x-show={"date == #{index + 2}"} class="absolute right-0 grid grid-cols-5 p-10 gap-x-8 gap-y-6 top-32">
-                <% next_activity = get_next_activity(@schedule, day) %>
-                <%= for activity <- Map.get(@schedule, day) do %>
-                    <div class={"#{if activity.hours == next_activity do "border-2 border-white" end} #{if NaiveDateTime.compare(NaiveDateTime.utc_now(), activity.hours) == :lt do "bg-[#E0483F]" else "bg-[#BB2A22]" end}  w-36 h-44 rounded-3xl relative -z-10"}>
-                        <span class="text-white">
-                            <p class="absolute w-32 text-sm font-light top-4 left-3">
-                                <%= if String.length(activity.title) < 50 do activity.title else String.slice(activity.title, 0..48) <> "... "  end %>
-                            </p>
-                            <p class="absolute w-32 font-bold text-md top-[105px] left-3">
-                                <%= Calendar.strftime(activity.hours, "%Hh%M") %>
-                            </p>
-                            <%= if activity.speaker do %>
-                                <p class="absolute w-32 font-light text-sm top-[131px] left-3">
-                                    <%= if String.length(activity.speaker) < 16 do activity.speaker else String.slice(activity.speaker, 0..14) <> "... "  end %>
-                                </p>
-                            <% end %>
-                            <%= if activity.company do %>
-                                <p class="absolute w-32 font-light text-sm top-[145px] left-3">
-                                    <%= if String.length(activity.company) < 16 do activity.company else String.slice(activity.company, 0..14) <> "... "  end %>
-                                </p>
-                            <% end %>
-                        </span>
-                    </div>
-                <% end %>
-            </div>
-        <% end %>
+    <div class="relative w-full h-[300px] sm:h-[350px] lg:h-[400px]">
+        <div class="absolute -rotate-90 top-32 lg:top-40 -left-40 md:-left-32 lg:-left-24">
+            <span class="title">
+                Schedule
+            </span>
+        </div>
+        <div class="mr-10 md:mr-40 lg:mx-[300px] 2xl:mx-80 font-extrabold xl:text-[90px] lg:text-[78px] sm:text-[60px] text-[30px] text-white ml-24 md:ml-36 uppercase leading-none">
+            Join us for a week full of <span class="underline decoration-4 sm:decoration-8"> surprises</span>.
+        </div>
     </div>
-    <div class="relative 1.5xl:hidden w-full flex flex-row-reverse mt-10">
-        <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
-            <div x-show={"date == #{index + 2}"} class="flex flex-col w-full sm:w-96 md:w-[450px] lg:w-[500px]">
-                <div class="flex flex-row items-center justify-between px-6 pt-4 pb-10">
-                    <button @click="date = date > 2 ? date - 1 : date">
-                        <svg class={"#{if day == :tuesday do 'fill-transparent' else 'fill-white' end} w-4 sm:w-6"} viewBox="0 0 13 23" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.35957 11.1753L5.08221 11.5L5.35957 11.8247L12.3108 19.9632L9.86131 22.2757L0.657558 11.5L9.86131 0.724325L12.3108 3.03679L5.35957 11.1753Z" stroke="white"/>
-                        </svg>
-                    </button>
-                    <span class="text-xl font-bold text-white sm:text-3xl">
-                        <%= Calendar.strftime(hd(Map.get(@schedule, day)).hours, "%d of %B") %>
-                    </span>
-                    <button @click="date = date < 4 ? date + 1 : date">
-                        <svg class={"#{if day == :thursday do 'fill-transparent' else 'fill-white' end} w-4 transform rotate-180 sm:w-6"} viewBox="0 0 13 23" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.35957 11.1753L5.08221 11.5L5.35957 11.8247L12.3108 19.9632L9.86131 22.2757L0.657558 11.5L9.86131 0.724325L12.3108 3.03679L5.35957 11.1753Z" stroke="white"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="relative flex flex-col gap-y-4">
-                    <div class="absolute h-[106%] bg-gradient-to-b to-[#EA3B2D] from-[#F9AEA9] opacity-25 rounded-full -top-[2.5%] w-[60px] md:w-[70px] right-0 -z-10"/>
+
+    <div x-data={"{ date: new Date().toISOString() >= '#{(hd(Map.get(@schedule, :tuesday)).hours)}.to_iso8601!()' && new Date().toISOString() <= '#{(List.last(Map.get(@schedule, :thursday)).hours)}.to_iso8601!()' ? new Date().getDay() : 2 }"} x-init={"console.log(new Date().toISOString() >= '#{~N[2021-06-28 10:15:00.000000]}.to_iso8601!()')"} class="flex flex-row mt-10 sm:mt-20 h-[740px] mb-10 md:mb-20">
+    
+        <div class="relative hidden w-full 1.5xl:block">
+            <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@conn, "/images/cords/schedule_cords.svg")} alt="hero cords"/>
+    
+            <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
+                <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F] font-bold' : 'bg-[#BB2A22]' " } class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do "right-[704px]" else if index == 1 do "right-[433px]" else "right-40" end end}  top-5"}>
+                    <%= Calendar.strftime(hd(Map.get(@schedule, day)).hours, "%d of %B") %>
+                </button>
+            <% end %>
+    
+            <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
+                <div x-show={"date == #{index + 2}"} class="absolute right-0 grid grid-cols-5 p-10 gap-x-8 gap-y-6 top-32">
                     <% next_activity = get_next_activity(@schedule, day) %>
                     <%= for activity <- Map.get(@schedule, day) do %>
-                        <div class="flex flex-row-reverse">
-                            <div class={"flex flex-row gap-x-8 items-center #{if activity.hours == next_activity do 'font-bold py-4 text-[13px] md:text-[17px]' else 'font-thin text-[12px] md:text-[16px] opacity-50' end} text-white"}>
-                                <span class="w-40 text-right sm:w-96 md:w-[420px]">
-                                    <%= activity.title %>
-                                </span>
-                                <span class="w-[60px] text-center md:w-[70px]">
+                        <div class={"#{if activity.hours == next_activity do "border-2 border-white" end} #{if NaiveDateTime.compare(NaiveDateTime.utc_now(), activity.hours) == :lt do "bg-[#E0483F]" else "bg-[#BB2A22]" end}  w-36 h-44 rounded-3xl relative -z-10"}>
+                            <span class="text-white">
+                                <p class="absolute w-32 text-sm font-light top-4 left-3">
+                                    <%= if String.length(activity.title) < 50 do activity.title else String.slice(activity.title, 0..48) <> "... "  end %>
+                                </p>
+                                <p class="absolute w-32 font-bold text-md top-[105px] left-3">
                                     <%= Calendar.strftime(activity.hours, "%Hh%M") %>
-                                </span>
-                            </div>
+                                </p>
+                                <%= if activity.speaker do %>
+                                    <p class="absolute w-32 font-light text-sm top-[131px] left-3">
+                                        <%= if String.length(activity.speaker) < 16 do activity.speaker else String.slice(activity.speaker, 0..14) <> "... "  end %>
+                                    </p>
+                                <% end %>
+                                <%= if activity.company do %>
+                                    <p class="absolute w-32 font-light text-sm top-[145px] left-3">
+                                        <%= if String.length(activity.company) < 16 do activity.company else String.slice(activity.company, 0..14) <> "... "  end %>
+                                    </p>
+                                <% end %>
+                            </span>
                         </div>
                     <% end %>
                 </div>
-            </div>
-        <% end %>
+            <% end %>
+        </div>
+        <div class="relative 1.5xl:hidden w-full flex flex-row-reverse mt-10">
+            <%= for {day, index} <- Enum.with_index([:tuesday,:wednesday,:thursday]) do %>
+                <div x-show={"date == #{index + 2}"} class="flex flex-col w-full sm:w-96 md:w-[450px] lg:w-[500px]">
+                    <div class="flex flex-row items-center justify-between px-6 pt-4 pb-10">
+                        <button @click="date = date > 2 ? date - 1 : date">
+                            <svg class={"#{if day == :tuesday do 'fill-transparent' else 'fill-white' end} w-4 sm:w-6"} viewBox="0 0 13 23" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.35957 11.1753L5.08221 11.5L5.35957 11.8247L12.3108 19.9632L9.86131 22.2757L0.657558 11.5L9.86131 0.724325L12.3108 3.03679L5.35957 11.1753Z" stroke="white"/>
+                            </svg>
+                        </button>
+                        <span class="text-xl font-bold text-white sm:text-3xl">
+                            <%= Calendar.strftime(hd(Map.get(@schedule, day)).hours, "%d of %B") %>
+                        </span>
+                        <button @click="date = date < 4 ? date + 1 : date">
+                            <svg class={"#{if day == :thursday do 'fill-transparent' else 'fill-white' end} w-4 transform rotate-180 sm:w-6"} viewBox="0 0 13 23" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.35957 11.1753L5.08221 11.5L5.35957 11.8247L12.3108 19.9632L9.86131 22.2757L0.657558 11.5L9.86131 0.724325L12.3108 3.03679L5.35957 11.1753Z" stroke="white"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="relative flex flex-col gap-y-4">
+                        <div class="absolute h-[106%] bg-gradient-to-b to-[#EA3B2D] from-[#F9AEA9] opacity-25 rounded-full -top-[2.5%] w-[60px] md:w-[70px] right-0 -z-10"/>
+                        <% next_activity = get_next_activity(@schedule, day) %>
+                        <%= for activity <- Map.get(@schedule, day) do %>
+                            <div class="flex flex-row-reverse">
+                                <div class={"flex flex-row gap-x-8 items-center #{if activity.hours == next_activity do 'font-bold py-4 text-[13px] md:text-[17px]' else 'font-thin text-[12px] md:text-[16px] opacity-50' end} text-white"}>
+                                    <span class="w-40 text-right sm:w-96 md:w-[420px]">
+                                        <%= activity.title %>
+                                    </span>
+                                    <span class="w-[60px] text-center md:w-[70px]">
+                                        <%= Calendar.strftime(activity.hours, "%Hh%M") %>
+                                    </span>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
     </div>
-</div>
 
 
 </div> 
