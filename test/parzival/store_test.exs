@@ -64,4 +64,60 @@ defmodule Parzival.StoreTest do
       assert %Ecto.Changeset{} = Store.change_product(product)
     end
   end
+
+  describe "prizes" do
+    alias Parzival.Store.Prize
+
+    import Parzival.StoreFixtures
+
+    @invalid_attrs %{quantity: nil, redeemed: nil}
+
+    test "list_prizes/0 returns all prizes" do
+      prize = prize_fixture()
+      assert Store.list_prizes() == [prize]
+    end
+
+    test "get_prize!/1 returns the prize with given id" do
+      prize = prize_fixture()
+      assert Store.get_prize!(prize.id) == prize
+    end
+
+    test "create_prize/1 with valid data creates a prize" do
+      valid_attrs = %{quantity: 42, redeemed: 42}
+
+      assert {:ok, %Prize{} = prize} = Store.create_prize(valid_attrs)
+      assert prize.quantity == 42
+      assert prize.redeemed == 42
+    end
+
+    test "create_prize/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Store.create_prize(@invalid_attrs)
+    end
+
+    test "update_prize/2 with valid data updates the prize" do
+      prize = prize_fixture()
+      update_attrs = %{quantity: 43, redeemed: 43}
+
+      assert {:ok, %Prize{} = prize} = Store.update_prize(prize, update_attrs)
+      assert prize.quantity == 43
+      assert prize.redeemed == 43
+    end
+
+    test "update_prize/2 with invalid data returns error changeset" do
+      prize = prize_fixture()
+      assert {:error, %Ecto.Changeset{}} = Store.update_prize(prize, @invalid_attrs)
+      assert prize == Store.get_prize!(prize.id)
+    end
+
+    test "delete_prize/1 deletes the prize" do
+      prize = prize_fixture()
+      assert {:ok, %Prize{}} = Store.delete_prize(prize)
+      assert_raise Ecto.NoResultsError, fn -> Store.get_prize!(prize.id) end
+    end
+
+    test "change_prize/1 returns a prize changeset" do
+      prize = prize_fixture()
+      assert %Ecto.Changeset{} = Store.change_prize(prize)
+    end
+  end
 end

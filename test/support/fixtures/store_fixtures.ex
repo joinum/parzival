@@ -21,4 +21,19 @@ defmodule Parzival.StoreFixtures do
 
     product
   end
+
+  @doc """
+  Generate a prize.
+  """
+  def prize_fixture(attrs \\ %{}) do
+    {:ok, prize} =
+      attrs
+      |> Enum.into(%{
+        quantity: 42,
+        redeemed: 42
+      })
+      |> Parzival.Store.create_prize()
+
+    prize
+  end
 end

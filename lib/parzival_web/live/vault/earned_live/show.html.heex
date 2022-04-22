@@ -1,0 +1,31 @@
+<h1>Show earned</h1>
+
+<%#= if @live_action in [:edit] do %>
+  <%# <.modal return_to={Routes.earned_show_path(@socket, :show, @earned)}>
+    <.live_component
+      module={ParzivalWeb.earnedLive.FormComponent}
+      id={@earned.id}
+      title={@page_title}
+      action={@live_action}
+      earned={@earned}
+      return_to={Routes.earned_show_path(@socket, :show, @earned)}
+    />
+  </.modal> %>
+<%# end %>
+
+<ul>
+
+  <li>
+    <strong>Quantity:</strong>
+    <%= @earned.quantity %>
+  </li>
+
+  <li>
+    <strong>Redeemed:</strong>
+    <%= @earned.redeemed %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.earned_show_path(@socket, :edit, @earned), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.earned_index_path(@socket, :index) %></span>
