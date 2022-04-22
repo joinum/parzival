@@ -96,6 +96,14 @@ defmodule ParzivalWeb.Router do
         live "/announcements/:id", AnnouncementLive.Show, :show
         live "/announcements/:id/show/edit", AnnouncementLive.Show, :edit
       end
+
+      live "/store/", ProductLive.Index, :index
+      live "/store/new", ProductLive.Index, :new
+      live "/store/:id/edit", ProductLive.Index, :edit
+
+      live "/store/:id", ProductLive.Show, :show
+      live "/store/:id/show/edit", ProductLive.Show, :edit
+
     end
 
     get "/users/settings", UserSettingsController, :edit
