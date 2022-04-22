@@ -17,6 +17,12 @@ defmodule ParzivalWeb.Config do
         tabs: []
       },
       %{
+        key: :store,
+        title: "Store",
+        url: Routes.product_index_path(conn, :index),
+        tabs: []
+      },
+      %{
         key: :tools,
         title: "Tools",
         url: Routes.faqs_index_path(conn, :index),
