@@ -3,7 +3,7 @@
     <!-- Left sidebar & main wrapper -->
     <div class="flex-1 min-w-0 bg-white xl:flex">
       <!-- Account profile -->
-      <div class="xl:h-screen xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-white">
+      <div class="xl:h-full xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-white">
         <div class="pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
           <div class="flex items-center justify-between">
             <div class="flex-1 space-y-8">
@@ -53,8 +53,8 @@
       </div>
 
       <!-- Projects List -->
-      <div class="bg-white lg:min-w-0 lg:flex-1">
-        <div class="pl-4 pr-6 pt-5 pb-5 xl:border-r xl:border-gray-200 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
+      <div class="bg-white lg:min-w-0 lg:flex-1 xl:border-r xl:border-gray-200">
+        <div class="pl-4 pr-6 pt-5 pb-5 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
           <div class="flex items-center justify-between">
             <h1 class="flex-1 text-lg font-medium">Announcements</h1>
             <!-- Action buttons -->
@@ -63,7 +63,7 @@
             </div>
           </div>
         </div>
-        <ul role="list" class="relative z-0 divide-y divide-gray-200 border-b xl:border-r border-gray-200">
+        <ul role="list" class="relative z-0 divide-y divide-gray-200">
           <%= for announcement <- @announcements do %>
             <span><%#= live_redirect "Show", to: Routes.faqs_show_path(@socket, :show, faqs) %></span>
             <span><%#= live_patch "Edit", to: Routes.faqs_index_path(@socket, :edit, faqs) %></span>
@@ -82,8 +82,6 @@
             </li>
           <% end %>
         </ul>
-        <div role="list" class="hidden xl:block xl:h-screen relative z-0 divide-y divide-gray-200 border-b xl:border-r xl:border-gray-200  border-gray-200">
-        </div>
       </div>
     </div>
   </div>
