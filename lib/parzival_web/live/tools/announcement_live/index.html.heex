@@ -78,6 +78,28 @@
                     <%= announcement.text %>
                   </article>
                 </div>
+                <div class="flex flex-shrink-0 justify-between mt-1">
+                  <div class="flex items-center">
+                    <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
+                      <span class="text-xs font-medium leading-none text-white">
+                        <%#= extract_initials(announcement.author.name) %>
+                        <%= extract_initials("Filipe Felicio") %>
+                      </span>
+                    </span>
+                    <p class="text-sm text-gray-500">
+                      <%#= announcement.author.name %>
+                      Filipe Felicio
+                    </p>
+                  </div>
+                  <div class="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                    </svg>
+                    <p class="block pl-1.5 text-sm text-gray-600">
+                      <%= relative_datetime(announcement.inserted_at) %>
+                    </p>
+                  </div>
+                </div>
               <% end %>
             </li>
           <% end %>
