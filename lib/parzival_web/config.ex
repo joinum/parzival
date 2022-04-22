@@ -38,6 +38,23 @@ defmodule ParzivalWeb.Config do
             url: Routes.announcement_index_path(conn, :index)
           }
         ]
+      },
+      %{
+        key: :vault,
+        title: "Vault",
+        url: Routes.purchased_index_path(conn, :index),
+        tabs: [
+          %{
+            key: :purchased,
+            title: "Purchased",
+            url: Routes.purchased_index_path(conn, :index)
+          },
+          %{
+            key: :earned,
+            title: "Earned",
+            url: Routes.earned_index_path(conn, :index)
+          }
+        ]
       }
     ]
   end

@@ -1,0 +1,41 @@
+<h1>Listing earneds</h1>
+
+<%#= if @live_action in [:new, :edit] do %>
+  <%# <.modal return_to={Routes.earned_index_path(@socket, :index)}>
+    <.live_component
+      module={ParzivalWeb.earnedLive.FormComponent}
+      id={@earned.id || :new}
+      title={@page_title}
+      action={@live_action}
+      earned={@prize}
+      return_to={Routes.earned_index_path(@socket, :index)}
+    />
+  </.modal> %>
+<%# end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Quantity</th>
+      <th>Redeemed</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="earneds">
+    <%= for prize <- @prizes do %>
+      <tr id={"earned-#{prize.id}"}>
+        <td><%= prize.quantity %></td>
+        <td><%= prize.redeemed %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.earned_show_path(@socket, :show, prize) %></span>
+          <span><%= live_patch "Edit", to: Routes.earned_index_path(@socket, :edit, prize) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: prize.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New earned", to: Routes.earned_index_path(@socket, :new) %></span>

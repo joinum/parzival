@@ -1,0 +1,31 @@
+<h1>Show Prize</h1>
+
+<%#= if @live_action in [:edit] do %>
+  <%# <.modal return_to={Routes.prize_show_path(@socket, :show, @prize)}>
+    <.live_component
+      module={ParzivalWeb.PrizeLive.FormComponent}
+      id={@prize.id}
+      title={@page_title}
+      action={@live_action}
+      prize={@prize}
+      return_to={Routes.prize_show_path(@socket, :show, @prize)}
+    />
+  </.modal> %>
+<%# end %>
+
+<ul>
+
+  <li>
+    <strong>Quantity:</strong>
+    <%= @prize.quantity %>
+  </li>
+
+  <li>
+    <strong>Redeemed:</strong>
+    <%= @prize.redeemed %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.purchased_show_path(@socket, :edit, @prize), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.purchased_index_path(@socket, :index) %></span>
