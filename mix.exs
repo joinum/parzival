@@ -1,9 +1,15 @@
 defmodule Parzival.MixProject do
   use Mix.Project
 
+  @name "JOIN"
+  @description "Jornadas de Informática"
+
+
   def project do
     [
       app: :parzival,
+      name: @name,
+      description: @description,
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -63,8 +69,10 @@ defmodule Parzival.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup"],
+      setup: ["deps.get", "ecto.setup", "cmd --cd assets npm install"],
+      format: ["cmd ./assets/node_modules/rustywind/bin/rustywind --write .", "format"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.seed": ["run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
