@@ -17,7 +17,7 @@
                       </span>
                     </span>
                   </div>
-                  <div class="space-y-1">
+                 <div class="space-y-1">
                     <div class="text-sm font-medium text-gray-900">
                       <%= @current_user.name %>
                     </div>
@@ -63,7 +63,7 @@
             </div>
           </div>
         </div>
-        <ul role="list" class="relative z-0 divide-y divide-gray-200">
+        <ul role="list" class="relative z-0 divide-y divide-gray-200 border-b xl:border-r border-gray-200">
           <%= for announcement <- @announcements do %>
             <span><%#= live_redirect "Show", to: Routes.faqs_show_path(@socket, :show, faqs) %></span>
             <span><%#= live_patch "Edit", to: Routes.faqs_index_path(@socket, :edit, faqs) %></span>
