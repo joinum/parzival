@@ -49,7 +49,7 @@ defmodule ParzivalWeb.TeamController do
   def index(conn, _params) do
 
     conn
-    |> assign(:current_page, "team")
+    |> assign(:current_page, "Team")
     |> assign(:team, @team)
     |> assign(:organizers, @organizers)
     |> render("index.html")

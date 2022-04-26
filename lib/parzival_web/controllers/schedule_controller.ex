@@ -8,7 +8,7 @@ defmodule ParzivalWeb.ScheduleController do
   def index(conn, _params) do
 
     conn
-    |> assign(:current_page, "schedule")
+    |> assign(:current_page, "Schedule")
     |> assign(:schedule, @schedule)
     |> render("index.html")
   end
