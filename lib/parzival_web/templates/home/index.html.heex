@@ -66,11 +66,9 @@
             <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F] font-bold' : 'bg-[#BB2A22]' " } class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do "right-[704px]" else if index == 1 do "right-[433px]" else "right-40" end end}  top-5"}>
                 <%= Calendar.strftime(hd(Map.get(@schedule, day))["hours"], "%d of %B") %>
             </button>
-        <% end %>
 
-        <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
             <div x-show={"date == #{index + 2}"} class="absolute right-0 grid grid-cols-5 p-10 gap-x-8 gap-y-6 top-32">
-                <% next_activity = get_next_activity(@schedule, day) %>
+                <% next_activity = if Calendar.strftime(NaiveDateTime.utc_now(), "%j") == Calendar.strftime(hd(Map.get(@schedule, day))["hours"], "%j") do get_next_activity(@schedule, day) else nil end %>
                 <%= for activity <- Map.get(@schedule, day) do %>
                     <div class={"#{if activity["hours"] == next_activity do "border-2 border-white" end} #{if NaiveDateTime.compare(NaiveDateTime.utc_now(), activity["hours"]) == :lt do "bg-[#E0483F]" else "bg-[#BB2A22]" end}  w-36 h-44 rounded-3xl relative -z-10"}>
                         <span class="text-white">
@@ -116,7 +114,7 @@
                 </div>
                 <div class="relative flex flex-col gap-y-4">
                     <div class="absolute h-[106%] bg-gradient-to-b to-[#EA3B2D] from-[#F9AEA9] opacity-25 rounded-full -top-[2.5%] w-[60px] md:w-[70px] right-0 -z-10"/>
-                    <% next_activity = get_next_activity(@schedule, day) %>
+                    <% next_activity = if Calendar.strftime(NaiveDateTime.utc_now(), "%j") == Calendar.strftime(hd(Map.get(@schedule, day))["hours"], "%j") do get_next_activity(@schedule, day) else nil end %>
                     <%= for activity <- Map.get(@schedule, day) do %>
                         <div class="flex flex-row-reverse">
                             <div class={"flex flex-row gap-x-8 items-center #{if activity["hours"] == next_activity do 'font-bold py-4 text-[13px] md:text-[17px]' else 'font-thin text-[12px] md:text-[16px] opacity-50' end} text-white"}>

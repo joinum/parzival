@@ -44,10 +44,9 @@ defmodule ParzivalWeb.TeamController do
     }
   ]
 
-  @organizers ["cesium","necc","nefum","di"]
+  @organizers ["cesium", "necc", "nefum", "di"]
 
   def index(conn, _params) do
-
     conn
     |> assign(:current_page, "Team")
     |> assign(:team, @team)

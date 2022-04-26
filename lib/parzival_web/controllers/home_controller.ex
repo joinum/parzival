@@ -2,8 +2,13 @@ defmodule ParzivalWeb.HomeController do
   use ParzivalWeb, :controller
 
   @schedule Jason.decode!(File.read!("data/schedule.json"))
-      |> Enum.map(fn ({key,value}) -> {key, Enum.map(value, fn x -> update_in(x, ["hours"], &(Timex.parse!(&1, "{0D}/{0M}/{YYYY} {h12}:{m} {AM}"))) end )} end)
-      |> Enum.into(%{})
+            |> Enum.map(fn {key, value} ->
+              {key,
+               Enum.map(value, fn x ->
+                 update_in(x, ["hours"], &Timex.parse!(&1, "{0D}/{0M}/{YYYY} {h12}:{m} {AM}"))
+               end)}
+            end)
+            |> Enum.into(%{})
 
   @sponsors Jason.decode!(File.read!("data/sponsors.json"))
 
