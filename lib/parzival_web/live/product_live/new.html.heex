@@ -1,0 +1,9 @@
+<div>
+    <.live_component
+    module={ParzivalWeb.ProductLive.FormComponent}
+    id={:id}
+    title={@page_title}
+    action={@live_action}
+    product={@product}
+    return_to={Routes.product_index_path(@socket, :index)} />
+</div>
