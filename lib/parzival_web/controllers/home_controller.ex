@@ -22,7 +22,7 @@ defmodule ParzivalWeb.HomeController do
 
   def index(conn, _params) do
     conn
-    |> assign(:current_page, "home")
+    |> assign(:current_page, "Home")
     |> assign(:schedule, @schedule)
     |> assign(:sponsors, @sponsors)
     |> assign(:sponsors_table, @sponsors_table)

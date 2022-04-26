@@ -1,0 +1,26 @@
+<div class="flex items-center justify-between w-full pt-10 lg:pt-14">
+  <div class="hidden w-full text-white uppercase lg:block">
+    <div class="flex flex-col lg:flex-row ">
+      <div class="flex flex-row items-center space-x-1">
+        <%= for {page,index} <- Enum.with_index(ParzivalWeb.Config.pages(@conn)) do %>
+          <%= if index != 0 do %>
+            <span class="select-none"> | </span>
+          <% end %>
+          <span class={"#{ @conn.assigns.current_page == page.title && "font-bold" } inline-flex px-2"}>
+            <%= link(page.title, to: page.url, class: "inline-flex px-1 text-xs xl:text-base") %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-row justify-between w-full lg:flex-row-reverse">
+    <div class="flex items-center justify-center gap-x-4 sm:gap-x-8">
+      <%= link to: "https://cesium.di.uminho.pt/" do %> <img class="w-16 h-auto text-white md:w-20" src={Routes.static_path(@conn, "/images/logos/cesium.svg")} alt="CeSIUM Logo"/> <% end %>
+      <%= link to: "https://necc.di.uminho.pt/" do %> <img class="w-16 h-auto text-white md:w-20" src={Routes.static_path(@conn, "/images/logos/necc.svg")} alt="NECC Logo"/> <% end %>
+      <%= link to: "https://nefum.di.uminho.pt/" do %> <img class="w-12 h-auto text-white md:w-16" src={Routes.static_path(@conn, "/images/logos/nefum.svg")} alt="NEFUM Logo"/> <% end %>
+    </div>
+    <button class="lg:hidden" type="button" @click="navbar = !navbar">
+      <img class="w-5 sm:w-6" src={Routes.static_path(@conn, "/images/assets/hamburger.svg")} alt="Hamburger menu"/>
+    </button>
+  </div>
+</div>

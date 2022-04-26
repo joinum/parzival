@@ -13,13 +13,13 @@
         <div class="grid w-[85%] grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 lg:w-full">
             <%= for member <- @team do %>
                 <div class="relative w-full h-auto overflow-hidden group">
-                    <img class="absolute inset-0 z-50 hidden w-12 sm:w-20 left-2 group-hover:block top-2" src={Routes.static_path(@conn, "/images/logos/#{member.organization}.svg")} />
-                    <div class="absolute inset-0 z-50 transition duration-200 ease-in bg-gradient-to-b from-transparent via-primary to-primary opacity-70 group-hover:rounded-t-[50px] group-hover:translate-y-20" />
+                    <img class="absolute inset-0 z-40 hidden w-12 sm:w-20 left-2 group-hover:block top-2" src={Routes.static_path(@conn, "/images/logos/#{member.organization}.svg")} />
+                    <div class="absolute inset-0 z-40 transition duration-200 ease-in bg-gradient-to-b from-transparent via-primary to-primary opacity-70 group-hover:rounded-t-[50px] group-hover:translate-y-20" />
                     <img class="w-full" src={Routes.static_path(@conn, "/images/team/#{member.photo}.png")} />
-                    <p class="absolute inset-x-0 z-50 hidden text-sm font-medium text-center text-white sm:font-bold sm:text-lg md:text-xl group-hover:block bottom-8 sm:bottom-10">
+                    <p class="absolute inset-x-0 z-40 hidden text-sm font-medium text-center text-white sm:font-bold sm:text-lg md:text-xl group-hover:block bottom-8 sm:bottom-10">
                         <%= member.name %>
                     </p>
-                    <div class="absolute inset-x-0 z-50 justify-center hidden gap-4 group-hover:flex bottom-2">
+                    <div class="absolute inset-x-0 z-40 justify-center hidden gap-4 group-hover:flex bottom-2">
                         <%= link to: member.linkedin  do %>
                             <svg class="w-4 h-auto sm:w-5 fill-white hover:fill-tertiary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
                         <% end %>
