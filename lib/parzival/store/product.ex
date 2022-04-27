@@ -32,4 +32,12 @@ defmodule Parzival.Store.Product do
     |> cast_attachments(attrs, [:image])
     |> validate_required(@required_fields)
   end
+
+  def stock_changeset(product, attrs) do
+    product
+    |> cast(attrs, [:stock])
+    |> validate_required([:stock])
+    |> validate_number(:stock, greater_than_or_equal_to: 0)
+  end
+
 end

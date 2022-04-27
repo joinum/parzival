@@ -15,22 +15,26 @@ defmodule Parzival.Repo.Seeds.Accounts do
           %{
             name: "Filipe Felício",
             email: "felicio@cesium.pt",
-            password: "Password1234"
+            password: "Password1234",
+            balance: 5000
           },
           %{
             name: "Luís Araújo",
             email: "laraujo@cesium.pt",
-            password: "Password1234"
+            password: "Password1234",
+            balance: 5000
           },
           %{
             name: "David Machado",
             email: "david@necc.pt",
-            password: "Password1234"
+            password: "Password1234",
+            balance: 5000
           },
           %{
             name: "Maria João Portela",
             email: "mj@nefum.pt",
-            password: "Password1234"
+            password: "Password1234",
+            balance: 5000
           },
         ]
         |> Enum.each(&insert_admin/1)

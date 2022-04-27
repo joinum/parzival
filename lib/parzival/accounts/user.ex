@@ -9,6 +9,8 @@ defmodule Parzival.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
+    field :balance, :integer, default: 0
+
     field :name, :string
 
     has_many :orders, Order
@@ -35,7 +37,7 @@ defmodule Parzival.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password, :name])
+    |> cast(attrs, [:email, :password, :name, :balance])
     |> validate_email()
     |> validate_password(opts)
   end
@@ -57,6 +59,12 @@ defmodule Parzival.Accounts.User do
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
     # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
     |> maybe_hash_password(opts)
+  end
+
+  defp validate_balance(changeset) do
+    changeset
+    |> validate_required([:balance])
+    |> validate_number(:balance, greater_than_or_equal_to: 0)
   end
 
   defp maybe_hash_password(changeset, opts) do
@@ -106,6 +114,12 @@ defmodule Parzival.Accounts.User do
     |> cast(attrs, [:password])
     |> validate_confirmation(:password, message: "does not match password")
     |> validate_password(opts)
+  end
+
+  def balance_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:balance])
+    |> validate_balance()
   end
 
   @doc """

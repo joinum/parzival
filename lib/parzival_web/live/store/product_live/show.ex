@@ -15,7 +15,17 @@ defmodule ParzivalWeb.ProductLive.Show do
      socket
      |> assign(:current_page, :store)
      |> assign(:page_title, page_title(socket.assigns.live_action))
+     |> assign(:redeem_quantity, redeem_quantity(socket.assigns.current_user.id, id))
      |> assign(:product, Store.get_product!(id))}
+  end
+
+  def redeem_quantity(user_id, product_id) do
+    order = Store.get_order_by_user_and_product(user_id, product_id)
+    case order do
+      nil ->  Store.get_product!(product_id).max_per_user
+      _ ->  Store.get_product!(product_id).max_per_user - order.quantity
+    end
+
   end
 
   @impl true
@@ -24,7 +34,15 @@ defmodule ParzivalWeb.ProductLive.Show do
     {:noreply, push_redirect(socket, to: Routes.product_index_path(socket, :index))}
   end
 
+  @impl true
+  def handle_event("purchase", _payload, socket) do
 
+    product = socket.assigns.product
+    current_user = socket.assigns.current_user
+
+    Store.purchase(current_user, product)
+
+  end
 
   defp page_title(:show), do: "Show Product"
   defp page_title(:edit), do: "Edit Product"
