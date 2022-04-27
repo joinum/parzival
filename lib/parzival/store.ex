@@ -102,99 +102,99 @@ defmodule Parzival.Store do
     Product.changeset(product, attrs)
   end
 
-  alias Parzival.Store.Prize
+  alias Parzival.Store.Order
 
   @doc """
-  Returns the list of prizes.
+  Returns the list of orders.
 
   ## Examples
 
-      iex> list_prizes()
-      [%Prize{}, ...]
+      iex> list_orders()
+      [%Order{}, ...]
 
   """
-  def list_prizes do
-    Repo.all(Prize)
+  def list_orders do
+    Repo.all(Order)
   end
 
   @doc """
-  Gets a single prize.
+  Gets a single order.
 
-  Raises `Ecto.NoResultsError` if the Prize does not exist.
+  Raises `Ecto.NoResultsError` if the Order does not exist.
 
   ## Examples
 
-      iex> get_prize!(123)
-      %Prize{}
+      iex> get_order!(123)
+      %Order{}
 
-      iex> get_prize!(456)
+      iex> get_order!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_prize!(id), do: Repo.get!(Prize, id)
+  def get_order!(id), do: Repo.get!(Order, id)
 
   @doc """
-  Creates a prize.
+  Creates a order.
 
   ## Examples
 
-      iex> create_prize(%{field: value})
-      {:ok, %Prize{}}
+      iex> create_order(%{field: value})
+      {:ok, %Order{}}
 
-      iex> create_prize(%{field: bad_value})
+      iex> create_order(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_prize(attrs \\ %{}) do
-    %Prize{}
-    |> Prize.changeset(attrs)
-    |> Repo.insert()
+  def create_order(attrs \\ %{}) do
+    %Order{}
+    |> Order.changeset(attrs)
+    |> Order.insert()
   end
 
   @doc """
-  Updates a prize.
+  Updates a order.
 
   ## Examples
 
-      iex> update_prize(prize, %{field: new_value})
-      {:ok, %Prize{}}
+      iex> update_order(order, %{field: new_value})
+      {:ok, %Order{}}
 
-      iex> update_prize(prize, %{field: bad_value})
+      iex> update_order(order, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_prize(%Prize{} = prize, attrs) do
-    prize
-    |> Prize.changeset(attrs)
+  def update_order(%Order{} = order, attrs) do
+    order
+    |> Order.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a prize.
+  Deletes a order.
 
   ## Examples
 
-      iex> delete_prize(prize)
-      {:ok, %Prize{}}
+      iex> delete_order(order)
+      {:ok, %Order{}}
 
-      iex> delete_prize(prize)
+      iex> delete_order(order)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_prize(%Prize{} = prize) do
-    Repo.delete(prize)
+  def delete_order(%Order{} = order) do
+    Repo.delete(order)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking prize changes.
+  Returns an `%Ecto.Changeset{}` for tracking order changes.
 
   ## Examples
 
-      iex> change_prize(prize)
-      %Ecto.Changeset{data: %Prize{}}
+      iex> change_order(order)
+      %Ecto.Changeset{data: %Order{}}
 
   """
-  def change_prize(%Prize{} = prize, attrs \\ %{}) do
-    Prize.changeset(prize, attrs)
+  def change_order(%Order{} = order, attrs \\ %{}) do
+    Order.changeset(order, attrs)
   end
 end

@@ -2,6 +2,17 @@ defmodule ParzivalWeb.ProductLive.FormComponent do
   use ParzivalWeb, :live_component
 
   alias Parzival.Store
+  alias Parzival.Uploaders
+
+  @extensions_whitelist ~w(.jpg .jpeg .gif .png)
+
+  @impl true
+  def mount(socket) do
+    {:ok,
+     socket
+     |> allow_upload(:image, accept: @extensions_whitelist, max_entries: 1)}
+  end
+
 
   @impl true
   def update(%{product: product} = assigns, socket) do
@@ -38,6 +49,10 @@ defmodule ParzivalWeb.ProductLive.FormComponent do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
     end
+  end
+
+  def handle_event("cancel-image", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :image, ref)}
   end
 
   defp save_product(socket, :new, product_params) do

@@ -1,13 +1,26 @@
 defmodule Parzival.Store.Product do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Parzival.Schema
+
+  alias Parzival.Store.Order
+  alias Parzival.Uploaders
+
+  @required_fields ~w(name description
+                      price stock
+                      max_per_user)a
+
+  @optional_fields [
+  ]
 
   schema "products" do
-    field :description, :string
-    field :max_per_user, :integer
     field :name, :string
+    field :description, :string
     field :price, :integer
     field :stock, :integer
+    field :max_per_user, :integer
+
+    field :image, Uploaders.ProductImage.Type
+
+    has_many :orders, Order
 
     timestamps()
   end
@@ -15,7 +28,8 @@ defmodule Parzival.Store.Product do
   @doc false
   def changeset(product, attrs) do
     product
-    |> cast(attrs, [:name, :description, :price, :stock, :max_per_user])
-    |> validate_required([:name, :description, :price, :stock, :max_per_user])
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> cast_attachments(attrs, [:image])
+    |> validate_required(@required_fields)
   end
 end

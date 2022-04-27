@@ -1,6 +1,5 @@
 defmodule Parzival.Accounts.UserToken do
-  use Ecto.Schema
-  import Ecto.Query
+  use Parzival.Schema
 
   @hash_algorithm :sha256
   @rand_size 32

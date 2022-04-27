@@ -1,6 +1,5 @@
 defmodule Parzival.Tools.Faq do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Parzival.Schema
 
   schema "faqs" do
     field :answer, :string

@@ -3,6 +3,7 @@ defmodule ParzivalWeb.ProductLive.Index do
 
   alias Parzival.Store
   alias Parzival.Store.Product
+  alias Parzival.Uploaders
 
   @impl true
   def mount(_params, _session, socket) do
@@ -33,14 +34,6 @@ defmodule ParzivalWeb.ProductLive.Index do
     socket
     |> assign(:page_title, "Listing Products")
     |> assign(:product, nil)
-  end
-
-  @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    product = Store.get_product!(id)
-    {:ok, _} = Store.delete_product(product)
-
-    {:noreply, assign(socket, :products, list_products())}
   end
 
   defp list_products do
