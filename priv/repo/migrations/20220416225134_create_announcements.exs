@@ -2,7 +2,8 @@ defmodule Parzival.Repo.Migrations.CreateAnnouncements do
   use Ecto.Migration
 
   def change do
-    create table(:announcements) do
+    create table(:announcements, primary_key: false) do
+      add :id, :binary_id, primary_key: true
       add :title, :string
       add :text, :text
 

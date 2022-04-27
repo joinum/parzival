@@ -1,6 +1,5 @@
 defmodule Parzival.Tools.Announcement do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Parzival.Schema
 
   alias Parzival.Accounts
 

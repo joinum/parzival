@@ -98,11 +98,9 @@ defmodule ParzivalWeb.Router do
       end
 
       live "/store/", ProductLive.Index, :index
-      live "/store/new", ProductLive.Index, :new
-      live "/store/:id/edit", ProductLive.Index, :edit
-
+      live "/store/new", ProductLive.New, :new
       live "/store/:id", ProductLive.Show, :show
-      live "/store/:id/show/edit", ProductLive.Show, :edit
+      live "/store/:id/edit", ProductLive.Edit, :edit
 
       scope "/vault" do
         live "/earned", EarnedLive.Index, :index

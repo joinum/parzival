@@ -2,11 +2,11 @@ defmodule ParzivalWeb.PurchasedLive.Index do
   use ParzivalWeb, :live_view
 
   alias Parzival.Store
-  alias Parzival.Store.Prize
+  alias Parzival.Store.Order
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :prizes, list_prizes())}
+    {:ok, assign(socket, :orders, list_orders())}
   end
 
   @impl true
@@ -19,31 +19,31 @@ defmodule ParzivalWeb.PurchasedLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Prize")
-    |> assign(:prize, Store.get_prize!(id))
+    |> assign(:page_title, "Edit order")
+    |> assign(:order, Store.get_order!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Prize")
-    |> assign(:prize, %Prize{})
+    |> assign(:page_title, "New order")
+    |> assign(:order, %Order{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Prizes")
-    |> assign(:prize, nil)
+    |> assign(:page_title, "Listing orders")
+    |> assign(:order, nil)
   end
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    prize = Store.get_prize!(id)
-    {:ok, _} = Store.delete_prize(prize)
+    order = Store.get_order!(id)
+    {:ok, _} = Store.delete_order(order)
 
-    {:noreply, assign(socket, :prizes, list_prizes())}
+    {:noreply, assign(socket, :orders, list_orders())}
   end
 
-  defp list_prizes do
-    Store.list_prizes()
+  defp list_orders do
+    Store.list_orders()
   end
 end

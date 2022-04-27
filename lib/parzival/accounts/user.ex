@@ -1,6 +1,7 @@
 defmodule Parzival.Accounts.User do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Parzival.Schema
+
+  alias Parzival.Store.Order
 
   schema "users" do
     field :email, :string
@@ -9,6 +10,8 @@ defmodule Parzival.Accounts.User do
     field :confirmed_at, :naive_datetime
 
     field :name, :string
+
+    has_many :orders, Order
 
     timestamps()
   end
@@ -40,7 +43,7 @@ defmodule Parzival.Accounts.User do
   defp validate_email(changeset) do
     changeset
     |> validate_required([:email])
-    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
+    |> validate_email_address(:email)
     |> validate_length(:email, max: 160)
     |> unsafe_validate_unique(:email, Parzival.Repo)
     |> unique_constraint(:email)

@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.PrizeLiveTest do
+defmodule ParzivalWeb.OrderLiveTest do
   use ParzivalWeb.ConnCase
 
   import Phoenix.LiveViewTest
@@ -8,98 +8,98 @@ defmodule ParzivalWeb.PrizeLiveTest do
   @update_attrs %{quantity: 43, redeemed: 43}
   @invalid_attrs %{quantity: nil, redeemed: nil}
 
-  defp create_prize(_) do
-    prize = prize_fixture()
-    %{prize: prize}
+  defp create_order(_) do
+    order = order_fixture()
+    %{order: order}
   end
 
   describe "Index" do
-    setup [:create_prize]
+    setup [:create_order]
 
-    test "lists all prizes", %{conn: conn} do
-      {:ok, _index_live, html} = live(conn, Routes.prize_index_path(conn, :index))
+    test "lists all orders", %{conn: conn} do
+      {:ok, _index_live, html} = live(conn, Routes.order_index_path(conn, :index))
 
-      assert html =~ "Listing Prizes"
+      assert html =~ "Listing orders"
     end
 
-    test "saves new prize", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, Routes.prize_index_path(conn, :index))
+    test "saves new order", %{conn: conn} do
+      {:ok, index_live, _html} = live(conn, Routes.order_index_path(conn, :index))
 
-      assert index_live |> element("a", "New Prize") |> render_click() =~
-               "New Prize"
+      assert index_live |> element("a", "New order") |> render_click() =~
+               "New order"
 
-      assert_patch(index_live, Routes.prize_index_path(conn, :new))
+      assert_patch(index_live, Routes.order_index_path(conn, :new))
 
       assert index_live
-             |> form("#prize-form", prize: @invalid_attrs)
+             |> form("#order-form", order: @invalid_attrs)
              |> render_change() =~ "can&#39;t be blank"
 
       {:ok, _, html} =
         index_live
-        |> form("#prize-form", prize: @create_attrs)
+        |> form("#order-form", order: @create_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.prize_index_path(conn, :index))
+        |> follow_redirect(conn, Routes.order_index_path(conn, :index))
 
-      assert html =~ "Prize created successfully"
+      assert html =~ "order created successfully"
     end
 
-    test "updates prize in listing", %{conn: conn, prize: prize} do
-      {:ok, index_live, _html} = live(conn, Routes.prize_index_path(conn, :index))
+    test "updates order in listing", %{conn: conn, order: order} do
+      {:ok, index_live, _html} = live(conn, Routes.order_index_path(conn, :index))
 
-      assert index_live |> element("#prize-#{prize.id} a", "Edit") |> render_click() =~
-               "Edit Prize"
+      assert index_live |> element("#order-#{order.id} a", "Edit") |> render_click() =~
+               "Edit order"
 
-      assert_patch(index_live, Routes.prize_index_path(conn, :edit, prize))
+      assert_patch(index_live, Routes.order_index_path(conn, :edit, order))
 
       assert index_live
-             |> form("#prize-form", prize: @invalid_attrs)
+             |> form("#order-form", order: @invalid_attrs)
              |> render_change() =~ "can&#39;t be blank"
 
       {:ok, _, html} =
         index_live
-        |> form("#prize-form", prize: @update_attrs)
+        |> form("#order-form", order: @update_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.prize_index_path(conn, :index))
+        |> follow_redirect(conn, Routes.order_index_path(conn, :index))
 
-      assert html =~ "Prize updated successfully"
+      assert html =~ "order updated successfully"
     end
 
-    test "deletes prize in listing", %{conn: conn, prize: prize} do
-      {:ok, index_live, _html} = live(conn, Routes.prize_index_path(conn, :index))
+    test "deletes order in listing", %{conn: conn, order: order} do
+      {:ok, index_live, _html} = live(conn, Routes.order_index_path(conn, :index))
 
-      assert index_live |> element("#prize-#{prize.id} a", "Delete") |> render_click()
-      refute has_element?(index_live, "#prize-#{prize.id}")
+      assert index_live |> element("#order-#{order.id} a", "Delete") |> render_click()
+      refute has_element?(index_live, "#order-#{order.id}")
     end
   end
 
   describe "Show" do
-    setup [:create_prize]
+    setup [:create_order]
 
-    test "displays prize", %{conn: conn, prize: prize} do
-      {:ok, _show_live, html} = live(conn, Routes.prize_show_path(conn, :show, prize))
+    test "displays order", %{conn: conn, order: order} do
+      {:ok, _show_live, html} = live(conn, Routes.order_show_path(conn, :show, order))
 
-      assert html =~ "Show Prize"
+      assert html =~ "Show order"
     end
 
-    test "updates prize within modal", %{conn: conn, prize: prize} do
-      {:ok, show_live, _html} = live(conn, Routes.prize_show_path(conn, :show, prize))
+    test "updates order within modal", %{conn: conn, order: order} do
+      {:ok, show_live, _html} = live(conn, Routes.order_show_path(conn, :show, order))
 
       assert show_live |> element("a", "Edit") |> render_click() =~
-               "Edit Prize"
+               "Edit order"
 
-      assert_patch(show_live, Routes.prize_show_path(conn, :edit, prize))
+      assert_patch(show_live, Routes.order_show_path(conn, :edit, order))
 
       assert show_live
-             |> form("#prize-form", prize: @invalid_attrs)
+             |> form("#order-form", order: @invalid_attrs)
              |> render_change() =~ "can&#39;t be blank"
 
       {:ok, _, html} =
         show_live
-        |> form("#prize-form", prize: @update_attrs)
+        |> form("#order-form", order: @update_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.prize_show_path(conn, :show, prize))
+        |> follow_redirect(conn, Routes.order_show_path(conn, :show, order))
 
-      assert html =~ "Prize updated successfully"
+      assert html =~ "order updated successfully"
     end
   end
 end
