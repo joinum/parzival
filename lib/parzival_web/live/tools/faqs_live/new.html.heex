@@ -1,0 +1,10 @@
+<div>
+    <.live_component
+        current_user={@current_user}
+        module={ParzivalWeb.FaqsLive.FormComponent}
+        id={:id}
+        title={@page_title}
+        action={@live_action}
+        faq={@faq}
+        return_to={Routes.faqs_index_path(@socket, :index)} />
+</div>
