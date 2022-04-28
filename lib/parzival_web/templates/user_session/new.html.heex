@@ -39,16 +39,16 @@
             
             <div>
               <label for="email-address" class="sr-only">Email address</label>
-              <%= email_input f, :email, required: true, class: "appearance-none rounded-3xl block w-full px-10 py-3 border border-gray-300 placeholder-gray-400 sm:text-sm focus:outline-none focus:ring-white focus:border-white" %>
+              <%= email_input f, :email, required: true, placeholder: "Email", class: "appearance-none rounded-3xl block w-full px-10 py-3 border border-gray-300 placeholder-gray-400 sm:text-sm focus:outline-none focus:ring-white focus:border-white" %>
             </div>
             <div>
               <label for="password" class="sr-only">Password</label>
-              <%= password_input f, :password, required: true, class: "appearance-none rounded-3xl block w-full px-10 py-3 border border-gray-300 shadow-sm placeholder-gray-400 sm:text-sm focus:outline-none focus:ring-white focus:border-white" %>
+              <%= password_input f, :password, placeholder: "Password", required: true, class: "appearance-none rounded-3xl block w-full px-10 py-3 border border-gray-300 shadow-sm placeholder-gray-400 sm:text-sm focus:outline-none focus:ring-white focus:border-white" %>
             </div>
   
             <div class="flex items-center justify-between">
               <div class="flex items-center">
-                <%= checkbox f, :remember_me, class: "h-4 w-4 text-tertiary border-gray-300 rounded focus:outline-none focus:ring-white" %>
+                <%= checkbox f, :remember_me, class: "h-4 w-4 text-tertiary border-gray-300 rounded ring-transparent" %>
                 <label for="remember-me" class="ml-2 block text-sm text-white"> Remember me </label>
               </div>
   
