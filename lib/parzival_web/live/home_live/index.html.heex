@@ -1,6 +1,6 @@
-<div class="flex flex-row">
+<div class="flex flex-col-reverse lg:flex-row">
     <!-- Left sidebar & main wrapper -->
-    <div class="flex flex-row bg-white md:flex-col">
+    <div class="flex flex-col bg-white lg:flex-row">
       <!-- Projects List -->
       <div class="bg-white lg:min-w-0 lg:flex-1">
         <div class="pt-4 pb-4 pl-4 pr-6 border-t border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
@@ -16,7 +16,7 @@
             </div>
           </div>
         </div>
-        <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+        <div class="px-4 py-5 sm:px-6">
           <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
             <div class="sm:col-span-1">
               <dt class="text-sm font-medium text-gray-500">Email address</dt>
@@ -78,15 +78,6 @@
                   <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
               </button>
-              <!-- Dropdown menu, show/hide based on menu state. -->
-              <%# <div class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="sort-menu-button" tabindex="-1">
-                <div class="py-1" role="none">
-                  <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="sort-menu-item-0">Name</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="sort-menu-item-1">Date modified</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="sort-menu-item-2">Date created</a>
-                </div>
-              </div> %>
             </div>
           </div>
         </div>
@@ -323,8 +314,8 @@
       </div>
     </div>
     <!-- Announcements -->
-    <div class="pr-4 bg-white sm:pr-6 lg:pr-8 lg:flex-shrink-0 lg:border-l lg:border-gray-200 xl:pr-0">
-      <div class="pl-6 lg:w-80">
+    <%# relative top-0 flex flex-col justify-between py-10 pl-4 pr-6 max-w-[400px] md:h-screen md:fixed md:top-16 sm:pl-6 xl:pl-0 w-72 %>
+    <div class="w-full pb-6 pl-6 pr-4 bg-white border-t border-gray-200 md:border-t-0 sm:pr-6 lg:flex-shrink-0 lg:border-l lg:w-72 xl:pr-0 lg:pb-0">
         <section aria-labelledby="announcements-title">
           <div class="overflow-hidden">
             <div class="">
@@ -380,6 +371,5 @@
             </div>
           </div>
         </section>
-      </div>
     </div>
   </div>
