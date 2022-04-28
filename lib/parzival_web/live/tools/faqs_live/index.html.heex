@@ -1,16 +1,16 @@
       <div class="bg-white lg:min-w-0 lg:flex-1">
-        <div class="pl-4 pr-6 pt-5 pb-5 xl:border-r xl:border-gray-200 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
+        <div class="pt-5 pb-5 pl-4 pr-6 border-t border-gray-200 xl:border-r xl:border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
           <div class="flex items-center">
             <h1 class="flex-1 text-lg font-medium">Frequently Asked Questions</h1>
           </div>
         </div>
-        <ul role="list" class="relative z-0 divide-y divide-gray-200 border-b xl:border-r border-gray-200">
+        <ul role="list" class="relative z-0 border-b border-gray-200 divide-y divide-gray-200 xl:border-r">
           <%= for faq <- @faqs do %>
             <span><%#= live_redirect "Show", to: Routes.faqs_show_path(@socket, :show, faqs) %></span>
             <span><%#= live_patch "Edit", to: Routes.faqs_index_path(@socket, :edit, faqs) %></span>
             <span><%#= link "Delete", to: "#", phx_click: "delete", phx_value_id: faqs.id, data: [confirm: "Are you sure?"] %></span>
-            <li id={"faq-#{faq.id}"} class="relative pl-4 pr-6 py-5 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
-              <%#= live_patch to: Routes.announcements_show_path(@socket, :show, announcement), class: "group" do %>
+            <li id={"faq-#{faq.id}"} class="relative py-5 pl-4 pr-6 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
+              <%= live_patch to: Routes.faqs_show_path(@socket, :show, faq), class: "group" do %>
                 <div>
                   <h3 class="text-sm font-semibold text-gray-800 hover:underline focus:outline-none">
                     <%= faq.question %>
@@ -19,10 +19,11 @@
                     <%= faq.answer %>
                   </article>
                 </div>
-              <%# end %>
+              <% end %>
             </li>
           <% end %>
         </ul>
-        <div role="list" class="hidden xl:block xl:h-screen relative z-0 divide-y divide-gray-200 border-b xl:border-r xl:border-gray-200  border-gray-200">
+        <div role="list" class="relative z-0 hidden border-b border-gray-200 divide-y divide-gray-200 xl:block xl:h-screen xl:border-r xl:border-gray-200">
         </div>
+        <%# <%= live_patch "New", to: Routes.faqs_new_path(@socket, :new), class: "button" %>
       </div>
