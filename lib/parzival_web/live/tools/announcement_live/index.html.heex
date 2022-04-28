@@ -1,19 +1,16 @@
       <div class="bg-white lg:min-w-0 lg:flex-1 xl:border-r xl:border-gray-200">
-        <div class="pl-4 pr-6 pt-5 pb-5 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
+        <div class="pt-5 pb-5 pl-4 pr-6 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
           <div class="flex items-center justify-between">
             <h1 class="flex-1 text-lg font-medium">Announcements</h1>
             <!-- Action buttons -->
             <div class="flex flex-col sm:flex-row xl:flex-col">
-              <%= live_patch "New", to: Routes.announcement_index_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full" %>
+              <%= live_patch "New", to: Routes.announcement_new_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full" %>
             </div>
           </div>
         </div>
         <ul role="list" class="relative z-0 divide-y divide-gray-200">
           <%= for announcement <- @announcements do %>
-            <span><%#= live_redirect "Show", to: Routes.faqs_show_path(@socket, :show, faqs) %></span>
-            <span><%#= live_patch "Edit", to: Routes.faqs_index_path(@socket, :edit, faqs) %></span>
-            <span><%#= link "Delete", to: "#", phx_click: "delete", phx_value_id: faqs.id, data: [confirm: "Are you sure?"] %></span>
-            <li id={"announcement-#{announcement.id}"} class="relative pl-4 pr-6 py-5 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
+            <li id={"announcement-#{announcement.id}"} class="relative py-5 pl-4 pr-6 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
               <%= live_patch to: Routes.announcement_show_path(@socket, :show, announcement), class: "group" do %>
                 <div>
                   <h3 class="text-sm font-semibold text-gray-800 hover:underline focus:outline-none">
@@ -23,9 +20,9 @@
                     <%= announcement.text %>
                   </article>
                 </div>
-                <div class="flex flex-shrink-0 justify-between mt-1">
+                <div class="flex justify-between flex-shrink-0 mt-1">
                   <div class="flex items-center">
-                    <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
+                    <span class="inline-flex items-center justify-center w-6 h-6 mr-2 bg-gray-500 rounded-full">
                       <span class="text-xs font-medium leading-none text-white">
                         <%#= extract_initials(announcement.author.name) %>
                         <%= extract_initials("Filipe Felicio") %>
@@ -37,7 +34,7 @@
                     </p>
                   </div>
                   <div class="flex">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
                     </svg>
                     <p class="block pl-1.5 text-sm text-gray-600">
