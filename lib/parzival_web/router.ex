@@ -86,8 +86,9 @@ defmodule ParzivalWeb.Router do
 
       scope "/tools" do
         live "/faqs/", FaqsLive.Index, :index
-        live "/faqs/new", FaqsLive.Index, :new
-        live "/faqs/:id", FaqsLive.Index, :edit
+        live "/faqs/new", FaqsLive.New, :new
+        live "/faqs/:id", FaqsLive.Show, :show
+        live "/faqs/:id/edit", FaqsLive.Edit, :edit
 
         live "/announcements", AnnouncementLive.Index, :index
         live "/announcements/new", AnnouncementLive.Index, :new
