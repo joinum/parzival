@@ -17,6 +17,16 @@ defmodule ParzivalWeb.FaqsLive.Show do
      |> assign(:faq, Tools.get_faq!(id))}
   end
 
+  @impl true
+  def handle_event("delete", _args, socket) do
+    {:ok, _} = Tools.delete_faq(socket.assigns.faq)
+
+    {:noreply,
+     socket
+     |> put_flash(:info, gettext("Faq deleted successfully!"))
+     |> push_redirect(to: Routes.faqs_index_path(socket, :index))}
+  end
+
   defp page_title(:show), do: "Show Faqs"
   defp page_title(:edit), do: "Edit Faqs"
 end

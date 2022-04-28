@@ -7,14 +7,14 @@
     phx-change="validate"
     phx-submit="save">
 
-      <div class="bg-white lg:min-w-0 lg:flex-1 xl:border-r xl:border-gray-200 min-h-screen">
-        <div class="pl-4 pr-6 pt-5 pb-5 xl:border-gray-200 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0 xl:border-b">
+      <div>
+        <div class="pt-5 pb-5 pl-4 pr-6 border-gray-200 border-y sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6">
           <div class="flex items-center justify-between">
             <h1 class="flex-1 text-lg font-medium">Store</h1>
             <!-- Action buttons -->
             <div class="flex flex-col sm:flex-row xl:flex-col">
               <%= submit do %>
-                <div type="button" class="inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full">
+                <div type="button" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-secondary hover:bg-primary xl:w-full">
                   Save
                 </div>
               <% end %>
@@ -23,7 +23,7 @@
         </div>
 
         <div class="bg-white">
-          <div class="max-w-2xl mx-auto px-4 py-14 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
+          <div class="max-w-2xl px-4 mx-auto py-14 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
             <!-- Product details -->
             <div class="lg:max-w-lg lg:self-end">
 
@@ -31,36 +31,32 @@
                 <label for="street-address" class="block text-sm font-medium text-gray-700">Name</label>
                 <%= text_input f, :name, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
               </div>
-              <p class="text-red-500 text-xs"><%= error_tag f, :name %></p>
+              <p class="text-xs text-red-500"><%= error_tag f, :name %></p>
 
               <div class="mt-4">
                 <label for="street-address" class="block text-sm font-medium text-gray-700">Price</label>
                 <%= number_input f, :price, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
               </div>
-              <p class="text-red-500 text-xs"><%= error_tag f, :price %></p>
-              
+              <p class="text-xs text-red-500"><%= error_tag f, :price %></p>
               <div class="mt-4">
                 <label for="street-address" class="block text-sm font-medium text-gray-700">Description</label>
                 <%= textarea f, :description, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
               </div>
-              <p class="text-red-500 text-xs"><%= error_tag f, :description %></p>
-              
+              <p class="text-xs text-red-500"><%= error_tag f, :description %></p>
               <div class="mt-4">
                 <label for="street-address" class="block text-sm font-medium text-gray-700">Stock</label>
                 <%= number_input f, :stock, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
               </div>
-              <p class="text-red-500 text-xs"><%= error_tag f, :stock %></p>
-              
+              <p class="text-xs text-red-500"><%= error_tag f, :stock %></p>
               <div class="mt-4">
                 <label for="street-address" class="block text-sm font-medium text-gray-700">Maximum purchases per user</label>
                 <%= number_input f, :max_per_user, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
               </div>
-              <p class="text-red-500 text-xs"><%= error_tag f, :max_per_user %></p>
-            
+              <p class="text-xs text-red-500"><%= error_tag f, :max_per_user %></p>
             </div>
             <!-- Product image -->
             <div class="mt-10 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:self-center">
-              <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
+              <div class="overflow-hidden rounded-lg aspect-w-1 aspect-h-1">
                 <div class="flex flex-col 1.5xl:flex-row">
                   <div x-bind:class="px-4 py-5 sm:px-6 shrink-0 1.5xl:py-5 1.5xl:px-6 1.5xl:shrink-0">
                     <div class={"#{if length(@uploads.image.entries) != 0 do
@@ -69,7 +65,7 @@
                       <div class="mx-auto lg:w-[400px] sm:col-span-6">
                         <div class="flex justify-center px-6 my-[140px]">
                           <div class="space-y-1 text-center">
-                            <svg class="mx-auto w-12 h-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                            <svg class="w-12 h-12 mx-auto text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                               <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <div class="flex text-sm text-gray-600">
@@ -104,7 +100,7 @@
                               end %>
                             </figcaption>
                             <button phx-click="cancel-image" phx-value-ref={entry.ref} aria-label="cancel" class="pl-4">
-                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                               </svg>
                             </button>

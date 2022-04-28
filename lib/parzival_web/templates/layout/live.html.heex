@@ -96,7 +96,7 @@
   </nav>
 
   <div class="flex flex-col w-full mx-auto mt-16 md:flex-row max-w-[1380px] xl:px-8">
-    <div class="relative flex-shrink-0 bg-white md:border-r md:border-gray-200 max-w-[400px] w-72">
+    <div class="relative flex-shrink-0 bg-white max-w-[400px] w-72">
         <div class="relative top-0 flex flex-col justify-between py-10 pl-4 pr-6 max-w-[400px] md:h-screen md:fixed md:top-16 sm:pl-6 xl:pl-0 w-72">
           <div class="relative flex flex-col gap-y-4">
             <div class="block space-y-8">
@@ -153,8 +153,8 @@
         </div>
       </div>
 
-      <div class="w-full">
-      <%= @inner_content %>
+      <div class="w-full content-height md:border-l md:border-gray-200">
+        <%= @inner_content %>
       </div>
 
       <footer class="flex items-center justify-center mt-16 mb-4 md:hidden gap-x-4">

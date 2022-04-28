@@ -295,3 +295,13 @@ body {
     -webkit-text-stroke: 3px white;
   }
 }
+
+@media (min-width: 768px) {
+  .content-height {
+    min-height: calc(100vh - 64px);
+  }
+}
+
+.content-height {
+  height: auto;
+}
