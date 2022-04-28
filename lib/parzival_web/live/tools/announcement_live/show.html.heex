@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 35c5a79 (Add announcement pages)
 <div class="bg-white border-gray-200 lg:min-w-0 lg:flex-1 xl:border-r">
   <div class="pt-5 pb-5 pl-4 pr-6 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
     <div class="flex items-center justify-between">
@@ -14,6 +19,10 @@
       </div>
     </div>
   </div>
+<<<<<<< HEAD
+=======
+  <hr>
+>>>>>>> 35c5a79 (Add announcement pages)
   <div class="relative z-0 divide-y divide-gray-200 ">
       <div class="relative py-5 pl-4 pr-6 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
         <%= live_redirect "< Back", to: Routes.announcement_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap" %>
@@ -37,6 +46,7 @@
         <%#= announcement.author.name %>
         Filipe Felicio
       </p>
+<<<<<<< HEAD
     </div>
     <div class="flex">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
@@ -46,5 +56,16 @@
         <%= relative_datetime(@announcement.inserted_at) %>
       </p>
     </div>
+=======
+    </div>
+    <div class="flex">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+      </svg>
+      <p class="block pl-1.5 text-sm text-gray-600">
+        <%= relative_datetime(@announcement.inserted_at) %>
+      </p>
+    </div>
+>>>>>>> 35c5a79 (Add announcement pages)
   </div>
 </div>

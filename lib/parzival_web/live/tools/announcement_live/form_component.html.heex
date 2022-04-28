@@ -7,13 +7,13 @@
     phx-change="validate"
     phx-submit="save">
 
-    <div class="bg-white lg:min-w-0 lg:flex-1 xl:border-r xl:border-gray-200 md:min-h-screen h-auto">
-      <div class="pl-4 pr-6 pt-5 pb-5 xl:border-gray-200 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0 xl:border-b">
+    <div class="h-auto bg-white lg:min-w-0 lg:flex-1 xl:border-r xl:border-gray-200 md:min-h-screen">
+      <div class="pt-5 pb-5 pl-4 pr-6 border-t border-gray-200 xl:border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0 xl:border-b">
         <div class="flex items-center justify-between">
           <h1 class="flex-1 text-lg font-medium">Announcements</h1>
           <!-- Action buttons -->
           <%= submit do %>
-            <div type="button" class="inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full">
+            <div type="button" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-secondary hover:bg-primary xl:w-full">
               Save
             </div>
           <% end %>
@@ -23,17 +23,17 @@
         <!-- Announcement details -->
         <div class="lg:self-end">
           <%= live_redirect "< Back", to: Routes.announcement_show_path(@socket, :show, @announcement), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap" %>
-          <div class="mt-4 w-full">
+          <div class="w-full mt-4">
             <label for="street-address" class="block text-sm font-medium text-gray-700">Title</label>
             <%= text_input f, :title, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
           </div>
-          <p class="text-red-500 text-xs"><%= error_tag f, :title %></p>
+          <p class="text-xs text-red-500"><%= error_tag f, :title %></p>
 
-          <div class="mt-4 w-full">
+          <div class="w-full mt-4">
             <label for="street-address" class="block text-sm font-medium text-gray-700">Description</label>
             <%= textarea f, :text, rows: 12, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
           </div>
-          <p class="text-red-500 text-xs"><%= error_tag f, :text %></p>
+          <p class="text-xs text-red-500"><%= error_tag f, :text %></p>
         </div>
       </div>
   </div>
