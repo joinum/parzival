@@ -14,15 +14,13 @@
       </div>
     </div>
   </div>
-  <div class="pl-4 pr-6">
-    <div class="relative py-5 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
-      <%= live_redirect "< Back", to: Routes.faqs_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap" %>
-      <h3 class="mt-4 text-xl font-semibold text-gray-800">
-        <%= @faq.question %>
-      </h3>
-      <article class="mt-2 text-sm text-gray-600 line-clamp-3">
-        <%= @faq.answer %>
-      </article>
-    </div>
+  <div class="relative py-5 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
+    <%= live_redirect "< Back", to: Routes.faqs_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap" %>
+    <h3 class="mt-4 text-xl font-semibold text-gray-800">
+      <%= @faq.question %>
+    </h3>
+    <article class="mt-2 text-sm text-gray-600 line-clamp-3">
+      <%= @faq.answer %>
+    </article>
   </div>
 </div>
