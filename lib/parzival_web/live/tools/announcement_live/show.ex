@@ -17,6 +17,16 @@ defmodule ParzivalWeb.AnnouncementLive.Show do
      |> assign(:announcement, Tools.get_announcement!(id))}
   end
 
+  @impl true
+  def handle_event("delete", _args, socket) do
+    {:ok, _} = Tools.delete_announcement(socket.assigns.announcement)
+
+    {:noreply,
+     socket
+     |> put_flash(:info, gettext("Announcement deleted successfully!"))
+     |> push_redirect(to: Routes.announcement_index_path(socket, :index))}
+  end
+
   defp page_title(:show), do: "Show Announcement"
   defp page_title(:edit), do: "Edit Announcement"
 end

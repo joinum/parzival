@@ -24,8 +24,6 @@ defmodule ParzivalWeb.ProductLive.Show do
     {:noreply, push_redirect(socket, to: Routes.product_index_path(socket, :index))}
   end
 
-
-
   defp page_title(:show), do: "Show Product"
   defp page_title(:edit), do: "Edit Product"
 end
