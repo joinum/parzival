@@ -2,10 +2,13 @@ defmodule Parzival.Store do
   @moduledoc """
   The Store context.
   """
+  use Parzival.Context
 
   import Ecto.Query, warn: false
-  alias Parzival.Repo
+  alias Ecto.Multi
 
+  alias Parzival.Accounts.User
+  alias Parzival.Repo
   alias Parzival.Store.Product
 
   @doc """
@@ -117,6 +120,14 @@ defmodule Parzival.Store do
     Repo.all(Order)
   end
 
+  def list_orders_by_user(user, opts \\ []) do
+    from(o in Order,
+      where: o.user_id == ^user.id,
+    )
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single order.
 
@@ -133,6 +144,10 @@ defmodule Parzival.Store do
   """
   def get_order!(id), do: Repo.get!(Order, id)
 
+  def get_order_by_user_and_product(user_id, product_id) do
+    Repo.get_by(Order, user_id: user_id, product_id: product_id)
+  end
+
   @doc """
   Creates a order.
 
@@ -148,7 +163,7 @@ defmodule Parzival.Store do
   def create_order(attrs \\ %{}) do
     %Order{}
     |> Order.changeset(attrs)
-    |> Order.insert()
+    |> Repo.insert()
   end
 
   @doc """
@@ -197,4 +212,28 @@ defmodule Parzival.Store do
   def change_order(%Order{} = order, attrs \\ %{}) do
     Order.changeset(order, attrs)
   end
+
+  def purchase(user, product) do
+    Multi.new()
+    |> Multi.update(
+      :update_balance,
+      User.balance_changeset(user, %{balance: user.balance - product.price})
+    )
+    |> Multi.update(
+      :update_stock,
+      Product.stock_changeset(product, %{stock: product.stock - 1})
+    )
+    |> Multi.run(:order, fn _repo, _changes  ->
+        {
+          :ok,
+          get_order_by_user_and_product(user.id, product.id)
+          || %Order{user_id: user.id, product_id: product.id, quantity: 0}
+        }
+      end)
+    |> Multi.insert_or_update(:insert_or_update_order, fn %{order: order} ->
+        Order.changeset(order, %{quantity: order.quantity + 1})
+      end)
+    |> Repo.transaction()
+  end
+
 end
