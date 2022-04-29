@@ -104,7 +104,6 @@ defmodule ParzivalWeb.Router do
       live "/store/:id/edit", ProductLive.Edit, :edit
 
       live "/vault", OrderLive.Index, :index
-
     end
 
     get "/users/settings", UserSettingsController, :edit

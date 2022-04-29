@@ -49,7 +49,7 @@ defmodule ParzivalWeb.Config do
         title: "Team",
         url: Routes.team_path(conn, :index),
         tabs: []
-      },
+      }
     ]
   end
 

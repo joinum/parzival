@@ -13,7 +13,6 @@ defmodule ParzivalWeb.ProductLive.FormComponent do
      |> allow_upload(:image, accept: @extensions_whitelist, max_entries: 1)}
   end
 
-
   @impl true
   def update(%{product: product} = assigns, socket) do
     changeset = Store.change_product(product)

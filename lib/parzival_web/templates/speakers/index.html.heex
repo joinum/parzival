@@ -1,49 +1,48 @@
 <div class="mt-20 md:mt-28">
-    <div class="relative w-full h-[300px] sm:h-[350px] lg:h-[400px]">
-        <div class="absolute -rotate-90 top-24 lg:top-[186px] -left-[180px] md:-left-[147px] lg:-left-[121px]">
-            <span class="title">
-                Speakers
-            </span>
-        </div>
-        <div class="mr-10 lg:ml-[240px] 2xl:mx-80 font-extrabold xl:text-[90px] lg:text-[78px] sm:text-[60px] text-[35px] text-white ml-20 md:ml-36 uppercase leading-none">
-            Learn with <span class="underline decoration-4 sm:decoration-8"> the best </span> the market has to offer.
-        </div>
+  <div class="relative w-full h-[300px] sm:h-[350px] lg:h-[400px]">
+    <div class="absolute top-24 -rotate-90 -left-[180px] md:-left-[147px] lg:top-[186px] lg:-left-[121px]">
+      <span class="title">
+        Speakers
+      </span>
     </div>
+    <div class="mr-10 ml-20 font-extrabold leading-none text-white uppercase md:ml-36 2xl:mx-80 text-[35px] sm:text-[60px] lg:ml-[240px] lg:text-[78px] xl:text-[90px]">
+      Learn with <span class="underline decoration-4 sm:decoration-8">the best</span> the market has to offer.
+    </div>
+  </div>
 
-    <div class="lg:mx-20 xl:mx-40">
-        <%= for {day, index} <- Enum.with_index(@days) do %>
-            <div class="mt-20">
-                <p class={"flex #{Integer.is_even(index) && "flex-row-reverse" || "flex-row"} text-white px-0 lg:px-6 font-bold text-xl sm:text-3xl mb-4 sm:mb-10"}>
-                    <%= day.day %>
-                </p>
-                <div class={"relative flex #{Integer.is_even(index) && "flex-row-reverse" || "flex-row"} w-full"}>
-                    <div class="grid grid-cols-2 px-0 lg:px-6 gap-x-2 sm:gap-x-10 lg:gap-x-16 gap-y-6 lg:grid-cols-3">
-                        <%= for speaker <- day.speakers do %>
-
-                            <div class="flex flex-col w-auto group">
-                                <div class="relative">
-                                    <img class="w-auto" src={Routes.static_path(@conn, "/images/cords/speakers_cords.svg")} alt="speaker cords"/>
-                                    <div class="absolute h-[95%] md:h-[96%] bg-secondary opacity-50 group-hover:opacity-20 w-[95%] md:w-[96%] -z-10 right-0 bottom-0 rounded-2xl sm:rounded-3xl" />
-                                    <img class="absolute w-[95%] md:w-[96%] -z-20 right-0 bottom-0 rounded-2xl sm:rounded-3xl" src={Routes.static_path(@conn, "/images/speakers/#{speaker[:photo]}.png")} alt={speaker[:name]}/>
-                                </div>
-                                <div class="pt-2 pl-2 text-white sm:pl-6">
-                                    <p class="overflow-hidden text-base font-bold sm:text-lg text-ellipsis whitespace-nowrap">
-                                        <%= speaker[:name] %>
-                                    </p>
-                                    <p class="-mt-1 overflow-hidden text-xs sm:text-sm text-ellipsis">
-                                        <%= speaker[:job] %>
-                                    </p>
-                                    <%= if speaker[:company] do %>
-                                        <p class="-mt-1 overflow-hidden text-xs sm:text-sm text-ellipsis">
-                                            <%= speaker[:company] %>
-                                        </p>
-                                    <% end %>
-                                </div>
-                            </div>
-                        <% end %>
-                    </div>
+  <div class="lg:mx-20 xl:mx-40">
+    <%= for {day, index} <- Enum.with_index(@days) do %>
+      <div class="mt-20">
+        <p class={"flex #{(Integer.is_even(index) && "flex-row-reverse") || "flex-row"} text-white px-0 lg:px-6 font-bold text-xl sm:text-3xl mb-4 sm:mb-10"}>
+          <%= day.day %>
+        </p>
+        <div class={"relative flex #{(Integer.is_even(index) && "flex-row-reverse") || "flex-row"} w-full"}>
+          <div class="grid grid-cols-2 gap-x-2 gap-y-6 px-0 sm:gap-x-10 lg:grid-cols-3 lg:gap-x-16 lg:px-6">
+            <%= for speaker <- day.speakers do %>
+              <div class="flex flex-col w-auto group">
+                <div class="relative">
+                  <img class="w-auto" src={Routes.static_path(@conn, "/images/cords/speakers_cords.svg")} alt="speaker cords" />
+                  <div class="absolute h-[95%] md:h-[96%] bg-secondary opacity-50 group-hover:opacity-20 w-[95%] md:w-[96%] -z-10 right-0 bottom-0 rounded-2xl sm:rounded-3xl" />
+                  <img class="absolute w-[95%] md:w-[96%] -z-20 right-0 bottom-0 rounded-2xl sm:rounded-3xl" src={Routes.static_path(@conn, "/images/speakers/#{speaker[:photo]}.png")} alt={speaker[:name]} />
                 </div>
-            </div>
-        <% end %>
-    </div>
+                <div class="pt-2 pl-2 text-white sm:pl-6">
+                  <p class="overflow-hidden text-base font-bold whitespace-nowrap sm:text-lg text-ellipsis">
+                    <%= speaker[:name] %>
+                  </p>
+                  <p class="overflow-hidden -mt-1 text-xs sm:text-sm text-ellipsis">
+                    <%= speaker[:job] %>
+                  </p>
+                  <%= if speaker[:company] do %>
+                    <p class="overflow-hidden -mt-1 text-xs sm:text-sm text-ellipsis">
+                      <%= speaker[:company] %>
+                    </p>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
