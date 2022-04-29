@@ -18,6 +18,5 @@ defmodule Parzival.Repo.Migrations.CreateOrders do
     create index(:orders, [:user_id])
 
     create unique_index(:orders, [:user_id, :product_id])
-
   end
 end

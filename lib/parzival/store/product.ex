@@ -8,8 +8,7 @@ defmodule Parzival.Store.Product do
                       price stock
                       max_per_user)a
 
-  @optional_fields [
-  ]
+  @optional_fields []
 
   schema "products" do
     field :name, :string
@@ -39,5 +38,4 @@ defmodule Parzival.Store.Product do
     |> validate_required([:stock])
     |> validate_number(:stock, greater_than_or_equal_to: 0)
   end
-
 end

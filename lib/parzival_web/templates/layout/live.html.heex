@@ -1,18 +1,18 @@
-<div class="relative flex flex-col min-h-screen">
+<div class="flex relative flex-col min-h-screen">
   <!-- Navbar -->
   <nav class="fixed top-0 z-10 flex-shrink-0 w-full bg-secondary">
     <div class="px-2 mx-auto max-w-7xl sm:px-4 lg:px-8">
-      <div class="relative flex items-center justify-between h-16">
+      <div class="flex relative justify-between items-center h-16">
         <!-- Logo section -->
         <div class="flex items-center px-2 lg:px-0 xl:w-64">
           <div class="flex-shrink-0">
-            <img class="w-[100px] h-auto" src={Routes.static_path(@socket, "/images/logo.svg")} alt="JOIN Logo"/>
+            <img class="h-auto w-[100px]" src={Routes.static_path(@socket, "/images/logo.svg")} alt="JOIN Logo" />
           </div>
         </div>
 
         <div class="flex lg:hidden">
           <!-- Mobile menu button -->
-          <button type="button" class="inline-flex items-center justify-center p-2 text-white rounded-md hover:bg-primary" aria-controls="mobile-menu" aria-expanded="false">
+          <button type="button" class="inline-flex justify-center items-center p-2 text-white rounded-md hover:bg-primary" aria-controls="mobile-menu" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
             <!--
               Icon when menu is closed.
@@ -38,14 +38,14 @@
         </div>
         <!-- Links section -->
         <div class="hidden lg:block lg:w-80">
-          <div class="flex items-center justify-end">
+          <div class="flex justify-end items-center">
             <div class="flex">
               <%= for page <- ParzivalWeb.Config.pages(@socket, @current_user) do %>
                 <%= if page.tabs != [] do %>
                   <div x-data="{ open: false }" @click.away="open = false">
                     <button x-on:click="open = ! open" class={"#{page.key == @current_page && "font-bold"} flex px-3 gap-x-1 py-2 rounded-md text-sm font-medium text-white hover:text-white"}>
                       <%= page.title %>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 my-auto text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="my-auto w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                       </svg>
                     </button>
@@ -60,7 +60,7 @@
                     </div>
                   </div>
                 <% else %>
-                  <%= live_redirect page.title, to: page.url, class: "#{page.key == @current_page && "font-bold"} px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white"%>
+                  <%= live_redirect(page.title, to: page.url, class: "#{page.key == @current_page && "font-bold"} px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white") %>
                 <% end %>
               <% end %>
             </div>
@@ -68,9 +68,9 @@
             <div class="relative flex-shrink-0 ml-4">
               <div>
                 <div x-data="{ open: false }" @click.away="open = false">
-                  <button x-on:click="open = ! open" class="flex text-sm rounded-full ring-2 ring-white ring-opacity-20 focus:outline-none focus:ring-opacity-100">
+                  <button x-on:click="open = ! open" class="flex text-sm rounded-full ring-2 ring-white ring-opacity-20 focus:ring-opacity-100 focus:outline-none">
                     <span class="sr-only">Open user menu</span>
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full">
+                    <span class="inline-flex justify-center items-center w-10 h-10 rounded-full">
                       <span class="text-lg font-medium leading-none text-white">
                         <%= extract_initials(@current_user.name) %>
                       </span>
@@ -78,12 +78,7 @@
                   </button>
                   <div x-bind:class="! open ? 'hidden' : 'z-50 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <div class="py-1" role="none">
-                      <%#= for tab <- ParzivalWeb.Config.tabs(@socket, @current_user) do %>
-                        <%#= live_redirect to: tab.url, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900" do %>
-                          <%#= tab.title %>
-                        <%# end %>
-                      <%# end %>
-                      <%= link "Sign Out", to: Routes.user_session_path(@socket, :delete), method: :delete, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900" %>
+                      <%= link("Sign Out", to: Routes.user_session_path(@socket, :delete), method: :delete, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>
                     </div>
                   </div>
                 </div>
@@ -95,72 +90,84 @@
     </div>
   </nav>
 
-  <div class="flex flex-col w-full mx-auto mt-16 md:flex-row max-w-[1380px] xl:px-8">
-    <div class="relative flex-shrink-0 bg-white max-w-[400px] w-72">
-        <div class="relative top-0 flex flex-col justify-between py-10 pl-4 pr-6 max-w-[400px] md:h-screen md:fixed md:top-16 sm:pl-6 xl:pl-0 w-72">
-          <div class="relative flex flex-col gap-y-4">
-            <div class="block space-y-8">
-              <!-- Profile -->
-              <div class="flex flex-row items-center space-x-3">
-                <div class="flex-shrink-0 w-14 h-14">
-                  <span class="inline-flex items-center justify-center rounded-full w-14 h-14 bg-secondary">
-                    <span class="text-xl font-medium leading-none text-white">
-                      <%= extract_initials(@current_user.name) %>
-                    </span>
+  <div class="flex flex-col mx-auto mt-16 w-full md:flex-row xl:px-8 max-w-[1380px]">
+    <div class="relative flex-shrink-0 w-72 bg-white max-w-[400px]">
+      <div class="flex relative top-0 flex-col justify-between py-10 pr-6 pl-4 w-72 sm:pl-6 md:fixed md:top-16 md:h-screen xl:pl-0 max-w-[400px]">
+        <div class="flex relative flex-col gap-y-4">
+          <div class="block space-y-8">
+            <!-- Profile -->
+            <div class="flex flex-row items-center space-x-3">
+              <div class="flex-shrink-0 w-14 h-14">
+                <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
+                  <span class="text-xl font-medium leading-none text-white">
+                    <%= extract_initials(@current_user.name) %>
                   </span>
-                </div>
-                <div class="flex flex-col w-full overflow-hidden">
-                  <span class="inline-block w-full overflow-hidden text-base font-semibold text-gray-900 whitespace-nowrap text-ellipsis">
-                      <%= @current_user.name %>
-                  </span>
-                  <span class="inline-block w-full overflow-hidden text-sm text-gray-900 whitespace-nowrap text-ellipsis">
-                      Bachelors in Software Engineering
-                    </span>
-                </div>
+                </span>
               </div>
-            </div>
-            <div class="flex flex-col gap-y-1">
-              <span class="text-lg">
-                LVL 7
-              </span>
-              <div class="w-full h-6 overflow-hidden rounded-md bg-quaternary">
-                <div class="w-1/2 h-full bg-secondary" />
-              </div>
-              <span class="text-sm font-light text-right text-gray-300">
-                2300/4000 EXP
-              </span>
-            </div>
-            <span>
-              💰 <%= @current_user.balance %>
-            </span>
-            <div class="flex flex-col gap-y-2">
-              <div class="flex text-gray-300 select-none flew-row gap-x-4 hover:text-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                </svg>
-                <span class="">
-                  28 missions completed
+              <div class="flex overflow-hidden flex-col w-full">
+                <span class="inline-block overflow-hidden w-full text-base font-semibold text-gray-900 whitespace-nowrap text-ellipsis">
+                  <%= @current_user.name %>
+                </span>
+                <span class="inline-block overflow-hidden w-full text-sm text-gray-900 whitespace-nowrap text-ellipsis">
+                  Bachelors in Software Engineering
                 </span>
               </div>
             </div>
           </div>
-          <div class="items-center justify-center hidden mb-12 md:flex gap-x-2 lg:gap-x-4">
-            <%= link to: "https://cesium.di.uminho.pt/" do %> <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/cesium.svg")} alt="CeSIUM Logo"/> <% end %>
-            <%= link to: "https://necc.di.uminho.pt/" do %> <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/necc.svg")} alt="NECC Logo"/> <% end %>
-            <%= link to: "https://nefum.di.uminho.pt/" do %> <img  class="w-16 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/nefum.svg")} alt="NEFUM Logo"/> <% end %>
+          <div class="flex flex-col gap-y-1">
+            <span class="text-lg">
+              LVL 7
+            </span>
+            <div class="overflow-hidden w-full h-6 rounded-md bg-quaternary">
+              <div class="w-1/2 h-full bg-secondary" />
+            </div>
+            <span class="text-sm font-light text-right text-gray-300">
+              2300/4000 EXP
+            </span>
+          </div>
+          <span>
+            💰 <%= @current_user.balance %>
+          </span>
+          <div class="flex flex-col gap-y-2">
+            <div class="flex gap-x-4 text-gray-300 select-none hover:text-gray-400 flew-row">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span class="">
+                28 missions completed
+              </span>
+            </div>
           </div>
         </div>
+        <div class="hidden gap-x-2 justify-center items-center mb-12 md:flex lg:gap-x-4">
+          <%= link to: "https://cesium.di.uminho.pt/" do %>
+            <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/cesium.svg")} alt="CeSIUM Logo" />
+          <% end %>
+          <%= link to: "https://necc.di.uminho.pt/" do %>
+            <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/necc.svg")} alt="NECC Logo" />
+          <% end %>
+          <%= link to: "https://nefum.di.uminho.pt/" do %>
+            <img class="w-16 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/nefum.svg")} alt="NEFUM Logo" />
+          <% end %>
+        </div>
       </div>
+    </div>
 
-      <div class="w-full content-height md:border-l md:border-gray-200">
-        <%= @inner_content %>
-      </div>
+    <div class="w-full md:border-l md:border-gray-200 content-height">
+      <%= @inner_content %>
+    </div>
 
-      <footer class="flex items-center justify-center mt-16 mb-4 md:hidden gap-x-4">
-        <%= link to: "https://cesium.di.uminho.pt/" do %> <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/cesium.svg")} alt="CeSIUM Logo"/> <% end %>
-        <%= link to: "https://necc.di.uminho.pt/" do %> <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/necc.svg")} alt="NECC Logo"/> <% end %>
-        <%= link to: "https://nefum.di.uminho.pt/" do %> <img  class="w-16 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/nefum.svg")} alt="NEFUM Logo"/> <% end %>
-      </footer>
+    <footer class="flex gap-x-4 justify-center items-center mt-16 mb-4 md:hidden">
+      <%= link to: "https://cesium.di.uminho.pt/" do %>
+        <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/cesium.svg")} alt="CeSIUM Logo" />
+      <% end %>
+      <%= link to: "https://necc.di.uminho.pt/" do %>
+        <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/necc.svg")} alt="NECC Logo" />
+      <% end %>
+      <%= link to: "https://nefum.di.uminho.pt/" do %>
+        <img class="w-16 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/nefum.svg")} alt="NEFUM Logo" />
+      <% end %>
+    </footer>
   </div>
 </div>

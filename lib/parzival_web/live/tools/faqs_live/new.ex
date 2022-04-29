@@ -10,11 +10,10 @@ defmodule ParzivalWeb.FaqsLive.New do
 
   @impl true
   def handle_params(_params, _, socket) do
-      {:noreply,
-          socket
-          |> assign(:current_page, :faq)
-          |> assign(:page_title, "New Fq")
-          |> assign(:faq, %Faq{})
-      }
+    {:noreply,
+     socket
+     |> assign(:current_page, :faq)
+     |> assign(:page_title, "New Fq")
+     |> assign(:faq, %Faq{})}
   end
 end

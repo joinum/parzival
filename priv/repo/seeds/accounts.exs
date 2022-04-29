@@ -1,5 +1,4 @@
 defmodule Parzival.Repo.Seeds.Accounts do
-
   alias Parzival.Repo
 
   alias Parzival.Accounts.User
@@ -35,7 +34,7 @@ defmodule Parzival.Repo.Seeds.Accounts do
             email: "mj@nefum.pt",
             password: "Password1234",
             balance: 5000
-          },
+          }
         ]
         |> Enum.each(&insert_admin/1)
 
@@ -49,7 +48,6 @@ defmodule Parzival.Repo.Seeds.Accounts do
     |> User.registration_changeset(data)
     |> Repo.insert!()
   end
-
 end
 
 Parzival.Repo.Seeds.Accounts.run()

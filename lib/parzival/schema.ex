@@ -28,7 +28,7 @@ defmodule Parzival.Schema do
       def validate_naive_datetime(changeset, field, :future) do
         validate_change(changeset, field, fn _field, value ->
           if NaiveDateTime.compare(value, NaiveDateTime.utc_now()) == :lt do
-            [{field,"date in the past"}]
+            [{field, "date in the past"}]
           else
             []
           end
