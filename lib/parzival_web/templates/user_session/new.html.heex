@@ -2,7 +2,7 @@
 
   <header>
     <div class="flex justify-between pt-20">
-      
+
       <%= live_patch to: Routes.home_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" do %>
         <div class="flex items-center space-x-2 align-items font-bold text-lg text-white hover:underline">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -20,9 +20,9 @@
   </header>
 
   <main>
-    <.form let={f} 
+    <.form let={f}
          for={@conn}
-         action={Routes.user_session_path(@conn, :create)} 
+         action={Routes.user_session_path(@conn, :create)}
          as={:user}
     >
       <div class="mt-10 lg:mt-0 min-h-full flex items-center justify-center pt-10 px-4 sm:px-6 lg:px-8 mb-10 lg:mb-0">
@@ -36,7 +36,7 @@
           </div>
           <form class="mt-8" action="#" method="POST">
             <input type="hidden" name="remember" value="true">
-            
+
             <div>
               <label for="email-address" class="sr-only">Email address</label>
               <%= email_input f, :email, required: true, placeholder: "Email", class: "appearance-none rounded-3xl block w-full px-10 py-3 border border-gray-300 placeholder-gray-400 sm:text-sm focus:outline-none focus:ring-white focus:border-white" %>
