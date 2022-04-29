@@ -1,31 +1,28 @@
-<h1>Show Faqs</h1>
-
-<%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.faqs_show_path(@socket, :show, @faq)}>
-    <.live_component
-      module={ParzivalWeb.FaqsLive.FormComponent}
-      id={@faq.id}
-      title={@page_title}
-      action={@live_action}
-      faq={@faq}
-      return_to={Routes.faqs_show_path(@socket, :show, @faq)}
-    />
-  </.modal>
-<% end %>
-
-<ul>
-
-  <li>
-    <strong>Question:</strong>
-    <%= @faq.question %>
-  </li>
-
-  <li>
-    <strong>Answer:</strong>
-    <%= @faq.answer %>
-  </li>
-
-</ul>
-
-<%= live_patch "Edit", to: Routes.faqs_edit_path(@socket, :edit, @faq), class: "button" %>
-<span><%= live_redirect "Back", to: Routes.faqs_index_path(@socket, :index) %></span>
+<div class="h-full bg-white border-r border-gray-200">
+  <div class="pt-5 pb-5 pl-4 pr-6 border-gray-200 border-y sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6">
+    <div class="flex items-center justify-between">
+      <h1 class="flex-1 text-lg font-medium">Faqs</h1>
+      <!-- Action buttons -->
+      <div class="flex gap-x-4">
+        <%= live_patch to: Routes.faqs_edit_path(@socket, :edit, @faq), class: "w-full bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+            </svg>
+            Edit
+        <% end %>
+        <%= link("Delete", to: "#", phx_click: "delete", phx_value_id: @faq.id, data: [confirm: "Are you sure?"], class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+      </div>
+    </div>
+  </div>
+  <div class="pl-4 pr-6">
+    <div class="relative py-5 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
+      <%= live_redirect "< Back", to: Routes.faqs_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap" %>
+      <h3 class="mt-4 text-xl font-semibold text-gray-800">
+        <%= @faq.question %>
+      </h3>
+      <article class="mt-2 text-sm text-gray-600 line-clamp-3">
+        <%= @faq.answer %>
+      </article>
+    </div>
+  </div>
+</div>

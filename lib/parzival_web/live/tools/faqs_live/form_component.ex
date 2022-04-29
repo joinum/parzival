@@ -4,11 +4,6 @@ defmodule ParzivalWeb.FaqsLive.FormComponent do
   alias Parzival.Tools
 
   @impl true
-  def mount(socket) do
-    {:ok, socket}
-  end
-
-  @impl true
   def update(%{faq: faq} = assigns, socket) do
     changeset = Tools.change_faq(faq)
 
