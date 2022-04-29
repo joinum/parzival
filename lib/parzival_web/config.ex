@@ -68,6 +68,12 @@ defmodule ParzivalWeb.Config do
         tabs: []
       },
       %{
+        key: :vault,
+        title: "Vault",
+        url: Routes.order_index_path(conn, :index),
+        tabs: []
+      },
+      %{
         key: :tools,
         title: "Tools",
         url: Routes.faqs_index_path(conn, :index),
@@ -81,23 +87,6 @@ defmodule ParzivalWeb.Config do
             key: :announcements,
             title: "Announcements",
             url: Routes.announcement_index_path(conn, :index)
-          }
-        ]
-      },
-      %{
-        key: :vault,
-        title: "Vault",
-        url: Routes.purchased_index_path(conn, :index),
-        tabs: [
-          %{
-            key: :purchased,
-            title: "Purchased",
-            url: Routes.purchased_index_path(conn, :index)
-          },
-          %{
-            key: :earned,
-            title: "Earned",
-            url: Routes.earned_index_path(conn, :index)
           }
         ]
       }
