@@ -4,13 +4,13 @@
       <h1 class="flex-1 text-lg font-medium">Announcements</h1>
       <!-- Action buttons -->
       <div class="flex flex-col sm:flex-row xl:flex-col">
-        <%= live_patch "New", to: Routes.announcement_index_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full" %>
+        <%= live_patch "New", to: Routes.announcement_new_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full" %>
       </div>
     </div>
   </div>
-  <ul role="list" class="relative z-0">
+  <ul role="list" class="relative z-0 divide-y divide-gray-200">
     <%= for announcement <- @announcements do %>
-      <li id={"announcement-#{announcement.id}"} class="relative py-5 pl-4 pr-6 border-b border-gray-200 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
+      <li id={"announcement-#{announcement.id}"} class="relative py-5 pl-4 pr-6 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
         <%= live_patch to: Routes.announcement_show_path(@socket, :show, announcement), class: "group" do %>
           <div>
             <h3 class="text-sm font-semibold text-gray-800 hover:underline focus:outline-none">
