@@ -2,10 +2,6 @@ import Config
 
 # Configure your database
 config :parzival, Parzival.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "parzival_dev",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
