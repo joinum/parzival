@@ -63,9 +63,9 @@ while [ ! $# -eq 0 ]; do
   shift
 done
 
-log_info "setup" "Setting up the .env & .env.${ENV}..."
+log_info "setup" "Setting up the .env.${ENV}..."
 if [ ! -f ".env.${ENV}" ]; then
-  cp .env.sample ".env.${ENV}"
+  cp ".env.${ENV}.sample" ".env.${ENV}"
   log_success ".env.${ENV} file created, you might want to open .env and set the
     correct values. Make sure you export them into your environment before
     runing this script again."
