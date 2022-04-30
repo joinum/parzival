@@ -1,6 +1,10 @@
-# ![JOIN Banner](.github/brand/join-logo.png)
+<h1>
+    <div align="center">
+        <img alt="JOIN Logo" src=".github/brand/join-logo.png" width="700" >
+    </div>
+</h1>
 
-JOIN wich stands for "Jornadas de Informática" is a Job Shop aimed at students in the field of computing.
+JOIN wich stands for "**Jo**rnadas de **In**formática" is a Job Shop aimed at students in the field of computing.
 
 It's an annual event that aims to promote interaction between students from the three study cycles of this university with a strong IT component and the business world, regional or national, which has been its major employer.
 
@@ -30,7 +34,7 @@ required to be installed on your system.
 
 - [Erlang 24+](https://www.erlang.org/downloads)
 - [Elixir 1.13+](https://elixir-lang.org/install.html)
-- [PostgreSQL 13+](https://www.postgresql.org/download/)
+- [PostgreSQL 14+](https://www.postgresql.org/download/)
 
 We recommend using [asdf version
 manager](https://asdf-vm.com/) to install and
