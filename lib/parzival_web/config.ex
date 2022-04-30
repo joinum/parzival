@@ -4,7 +4,7 @@ defmodule ParzivalWeb.Config do
   """
   alias ParzivalWeb.Router.Helpers, as: Routes
 
-  def pages(conn, current_user) do
+  def pages(conn, _current_user) do
     live_pages(conn)
   end
 
@@ -49,7 +49,7 @@ defmodule ParzivalWeb.Config do
         title: "Team",
         url: Routes.team_path(conn, :index),
         tabs: []
-      },
+      }
     ]
   end
 

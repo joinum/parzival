@@ -41,5 +41,4 @@ defmodule Parzival.Uploaders.ProductImage do
   def default_url(version) do
     "/images/defaults/store/product_image_#{version}.png"
   end
-
 end

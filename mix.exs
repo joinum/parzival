@@ -4,7 +4,6 @@ defmodule Parzival.MixProject do
   @name "JOIN"
   @description "Jornadas de Informática"
 
-
   def project do
     [
       app: :parzival,
@@ -42,7 +41,6 @@ defmodule Parzival.MixProject do
       # uploads
       {:waffle, "~> 1.1"},
       {:waffle_ecto, "~> 0.0"},
-
       {:bcrypt_elixir, "~> 2.0"},
       {:phoenix, "~> 1.6.6"},
       {:phoenix_ecto, "~> 4.4"},

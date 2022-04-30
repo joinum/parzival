@@ -1,5 +1,4 @@
 defmodule Parzival.Repo.Seeds.Store do
-
   alias Parzival.Repo
 
   alias Parzival.Store.Product
@@ -17,21 +16,21 @@ defmodule Parzival.Repo.Seeds.Store do
             description: "É um saco",
             price: 200,
             stock: 5,
-            max_per_user: 2,
+            max_per_user: 2
           },
           %{
             name: "Caderno",
             description: "É um caderno",
             price: 200,
             stock: 5,
-            max_per_user: 2,
+            max_per_user: 2
           },
           %{
             name: "Caneta",
             description: "É uma caneta",
             price: 200,
             stock: 5,
-            max_per_user: 2,
+            max_per_user: 2
           }
         ]
         |> Enum.each(&insert_product/1)
@@ -46,7 +45,6 @@ defmodule Parzival.Repo.Seeds.Store do
     |> Product.changeset(data)
     |> Repo.insert!()
   end
-
 end
 
 Parzival.Repo.Seeds.Store.run()

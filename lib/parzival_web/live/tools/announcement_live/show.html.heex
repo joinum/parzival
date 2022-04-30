@@ -1,41 +1,38 @@
 <div class="h-full bg-white border-r border-gray-200">
-  <div class="pt-5 pb-5 pl-4 pr-6 border-gray-200 border-y sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6">
-    <div class="flex items-center justify-between">
+  <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+    <div class="flex justify-between items-center">
       <h1 class="flex-1 text-lg font-medium">Announcement</h1>
       <!-- Action buttons -->
       <div class="flex gap-x-4">
         <%= live_patch to: Routes.announcement_edit_path(@socket, :edit, @announcement), class: "w-full bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-            </svg>
-            Edit
+          <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+          </svg>
+          Edit
         <% end %>
         <%= link("Delete", to: "#", phx_click: "delete", phx_value_id: @announcement.id, data: [confirm: "Are you sure?"], class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
       </div>
     </div>
   </div>
-  <div class="relative z-0 divide-y divide-gray-200 ">
-      <div class="relative py-5 pl-4 pr-6 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
-        <%= live_redirect "< Back", to: Routes.announcement_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap" %>
-        <h3 class="mt-4 text-xl font-semibold text-gray-800">
-          <%= @announcement.title %>
-        </h3>
-        <article class="mt-2 text-sm text-gray-600 line-clamp-3">
-          <%= @announcement.text %>
-        </article>
-      </div>
+  <div class="relative z-0 divide-y divide-gray-200">
+    <div class="relative py-5 pr-6 pl-4 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
+      <%= live_redirect("< Back", to: Routes.announcement_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
+      <h3 class="mt-4 text-xl font-semibold text-gray-800">
+        <%= @announcement.title %>
+      </h3>
+      <article class="mt-2 text-sm text-gray-600 line-clamp-3">
+        <%= @announcement.text %>
+      </article>
+    </div>
   </div>
-  <div class="flex justify-between flex-shrink-0 pl-4 pr-6 sm:pl-6 lg:pl-8 xl:pl-6">
+  <div class="flex flex-shrink-0 justify-between pr-6 pl-4 sm:pl-6 lg:pl-8 xl:pl-6">
     <div class="flex items-center">
-      <span class="inline-flex items-center justify-center w-6 h-6 mr-2 bg-gray-500 rounded-full">
+      <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
         <span class="text-xs font-medium leading-none text-white">
-          <%#= extract_initials(announcement.author.name) %>
           <%= extract_initials("Filipe Felicio") %>
         </span>
       </span>
-      <p class="text-sm text-gray-500">
-        <%#= announcement.author.name %>
-      </p>
+      <p class="text-sm text-gray-500"></p>
     </div>
     <div class="flex">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">

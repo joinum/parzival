@@ -27,5 +27,4 @@ defmodule Parzival.Store.Order do
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end
-
 end
