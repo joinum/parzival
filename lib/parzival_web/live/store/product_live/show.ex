@@ -39,7 +39,13 @@ defmodule ParzivalWeb.ProductLive.Show do
     product = socket.assigns.product
     current_user = socket.assigns.current_user
 
-    Store.purchase(current_user, product)
+    case Store.purchase(current_user, product) do
+      {:ok, _order} ->
+        {:noreply, socket}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, :changeset, changeset)}
+    end
   end
 
   defp page_title(:show), do: "Show Product"
