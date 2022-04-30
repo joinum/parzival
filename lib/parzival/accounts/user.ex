@@ -1,4 +1,7 @@
 defmodule Parzival.Accounts.User do
+  @moduledoc """
+  A user of the application capable of authenticating.
+  """
   use Parzival.Schema
 
   alias Parzival.Store.Order

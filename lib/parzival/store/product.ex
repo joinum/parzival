@@ -1,4 +1,7 @@
 defmodule Parzival.Store.Product do
+  @moduledoc """
+  A product.
+  """
   use Parzival.Schema
 
   alias Parzival.Store.Order

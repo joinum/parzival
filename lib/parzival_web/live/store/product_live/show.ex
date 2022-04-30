@@ -1,4 +1,5 @@
 defmodule ParzivalWeb.ProductLive.Show do
+  @moduledoc false
   use ParzivalWeb, :live_view
 
   alias Parzival.Store

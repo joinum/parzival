@@ -1,4 +1,5 @@
 defmodule ParzivalWeb.FaqsLive.Show do
+  @moduledoc false
   use ParzivalWeb, :live_view
 
   alias Parzival.Tools

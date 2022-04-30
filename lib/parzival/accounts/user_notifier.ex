@@ -1,4 +1,7 @@
 defmodule Parzival.Accounts.UserNotifier do
+  @moduledoc """
+  A module responsible to notify users on important transactions.
+  """
   import Swoosh.Email
 
   alias Parzival.Mailer

@@ -1,4 +1,7 @@
 defmodule Parzival.Store.Order do
+  @moduledoc """
+  A order of a product from a user.
+  """
   use Parzival.Schema
 
   alias Parzival.Accounts.User

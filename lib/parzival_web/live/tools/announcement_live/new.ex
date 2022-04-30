@@ -1,4 +1,5 @@
 defmodule ParzivalWeb.AnnouncementLive.New do
+  @moduledoc false
   use ParzivalWeb, :live_view
 
   alias Parzival.Tools.Announcement

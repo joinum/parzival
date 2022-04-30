@@ -2,6 +2,7 @@ defmodule Parzival.Uploaders.ProductImage do
   @moduledoc """
   ProductImage is used for product images.
   """
+
   use Waffle.Definition
   use Waffle.Ecto.Definition
 
