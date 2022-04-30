@@ -30,7 +30,7 @@ function display_help() {
 EOF
 }
 
-case ${1:-start} in
+case ${1:-docker} in
   -h | --help)
     display_help
     ;;
