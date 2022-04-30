@@ -28,7 +28,6 @@ required if you want to follow a Docker base approach.
 - [Docker 20+](https://docs.docker.com/desktop/)
 - [Docker Compose 2+](https://docs.docker.com/compose/)
 
-
 If you prefer a local setup (to have more control) the following software is
 required to be installed on your system.
 
@@ -54,7 +53,7 @@ If you only want to start the database run:
 docker-compose -f docker-compose.dev.yml -f {linux,darwin}.yml up db
 ```
 
-### ⚙️  Local Setup
+### ⚙️ Local Setup
 
 You need to setup the database beforehand and then run:
 

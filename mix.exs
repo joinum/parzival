@@ -10,7 +10,7 @@ defmodule Parzival.MixProject do
       name: @name,
       description: @description,
       version: "0.1.0",
-      elixir: "~> 1.12",
+      elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -73,8 +73,8 @@ defmodule Parzival.MixProject do
     [
       setup: ["deps.get", "ecto.setup", "cmd --cd assets npm install"],
       format: ["cmd ./assets/node_modules/rustywind/bin/rustywind --write .", "format"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.seed": ["run priv/repo/seeds.exs"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "ecto.seed"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]

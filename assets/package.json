@@ -4,5 +4,8 @@
   },
   "dependencies": {
     "alpinejs": "^3.9.6"
+  },
+  "devDependencies": {
+    "rustywind": "^0.15.0"
   }
 }

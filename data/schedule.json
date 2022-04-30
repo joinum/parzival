@@ -196,7 +196,8 @@
       "speaker": "Nuno Sousa",
       "company": null
     },
-    {"title": "COFFEE BREAK",
+    {
+      "title": "COFFEE BREAK",
       "hours": "30/06/2022 11:05 AM",
       "speaker": null,
       "company": null
@@ -207,7 +208,8 @@
       "speaker": "João Martins",
       "company": "Smith Micro"
     },
-    {"title": "ALMOÇO",
+    {
+      "title": "ALMOÇO",
       "hours": "30/06/2022 12:20 PM",
       "speaker": null,
       "company": null
@@ -230,7 +232,8 @@
       "speaker": "TBA",
       "company": "Ordem dos Engenheiros - Região Norte"
     },
-    {"title": "COFFEE BREAK",
+    {
+      "title": "COFFEE BREAK",
       "hours": "30/06/2022 04:00 PM",
       "speaker": null,
       "company": null
