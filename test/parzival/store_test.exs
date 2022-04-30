@@ -21,7 +21,13 @@ defmodule Parzival.StoreTest do
     end
 
     test "create_product/1 with valid data creates a product" do
-      valid_attrs = %{description: "some description", max_per_user: 42, name: "some name", price: 42, stock: 42}
+      valid_attrs = %{
+        description: "some description",
+        max_per_user: 42,
+        name: "some name",
+        price: 42,
+        stock: 42
+      }
 
       assert {:ok, %Product{} = product} = Store.create_product(valid_attrs)
       assert product.description == "some description"
@@ -37,7 +43,14 @@ defmodule Parzival.StoreTest do
 
     test "update_product/2 with valid data updates the product" do
       product = product_fixture()
-      update_attrs = %{description: "some updated description", max_per_user: 43, name: "some updated name", price: 43, stock: 43}
+
+      update_attrs = %{
+        description: "some updated description",
+        max_per_user: 43,
+        name: "some updated name",
+        price: 43,
+        stock: 43
+      }
 
       assert {:ok, %Product{} = product} = Store.update_product(product, update_attrs)
       assert product.description == "some updated description"
@@ -66,7 +79,7 @@ defmodule Parzival.StoreTest do
   end
 
   describe "orders" do
-    alias Parzival.Store.order
+    alias Parzival.Store.order()
 
     import Parzival.StoreFixtures
 

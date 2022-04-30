@@ -1,8 +1,6 @@
 defmodule Parzival.Tools.Announcement do
   use Parzival.Schema
 
-  alias Parzival.Accounts
-
   @required_fields ~w(title text)a
   @optional_fields []
   schema "announcements" do

@@ -121,9 +121,7 @@ defmodule Parzival.Store do
   end
 
   def list_orders_by_user(user, opts \\ []) do
-    from(o in Order,
-      where: o.user_id == ^user.id,
-    )
+    from(o in Order, where: o.user_id == ^user.id)
     |> apply_filters(opts)
     |> Repo.all()
   end
@@ -223,17 +221,16 @@ defmodule Parzival.Store do
       :update_stock,
       Product.stock_changeset(product, %{stock: product.stock - 1})
     )
-    |> Multi.run(:order, fn _repo, _changes  ->
-        {
-          :ok,
-          get_order_by_user_and_product(user.id, product.id)
-          || %Order{user_id: user.id, product_id: product.id, quantity: 0}
-        }
-      end)
+    |> Multi.run(:order, fn _repo, _changes ->
+      {
+        :ok,
+        get_order_by_user_and_product(user.id, product.id) ||
+          %Order{user_id: user.id, product_id: product.id, quantity: 0}
+      }
+    end)
     |> Multi.insert_or_update(:insert_or_update_order, fn %{order: order} ->
-        Order.changeset(order, %{quantity: order.quantity + 1})
-      end)
+      Order.changeset(order, %{quantity: order.quantity + 1})
+    end)
     |> Repo.transaction()
   end
-
 end

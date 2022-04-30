@@ -6,7 +6,7 @@
     x-transition:leave="transition-opacity ease-linear duration-300"
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0"
-    class="z-50 hidden sm:block sm:fixed sm:inset-0 sm:bg-gray-600 sm:bg-opacity-75"
+    class="hidden z-50 sm:block sm:fixed sm:inset-0 sm:bg-gray-600 sm:bg-opacity-75"
     aria-hidden="true"
     @click="navbar = false"
   />
@@ -18,14 +18,14 @@
     x-transition:leave="transition ease-in duration-150 sm:ease-in-out sm:duration-300"
     x-transition:leave-start="transform opacity-100 scale-100 sm:translate-x-0 sm:scale-100 sm:opacity-100"
     x-transition:leave-end="transform opacity-0 scale-110 sm:translate-x-full sm:scale-100 sm:opacity-100"
-    class="fixed inset-0 z-50 w-full h-full py-6 bg-primary sm:inset-y-0 sm:right-0 sm:left-auto sm:w-full sm:max-w-sm sm:shadow-lg"
+    class="fixed inset-0 z-50 py-6 w-full h-full sm:inset-y-0 sm:right-0 sm:left-auto sm:w-full sm:max-w-sm sm:shadow-lg bg-primary"
     aria-label="Global"
   >
-    <div class="flex items-center justify-between h-16 px-4 sm:px-6">
+    <div class="flex justify-between items-center px-4 h-16 sm:px-6">
       <a href="/">
-        <img class="w-28" src={Routes.static_path(@conn, "/images/logo.svg")} alt="JOIN Logo"/>
+        <img class="w-28" src={Routes.static_path(@conn, "/images/logo.svg")} alt="JOIN Logo" />
       </a>
-      <button @click="navbar = false" class="inline-flex items-center justify-center p-2 text-white">
+      <button @click="navbar = false" class="inline-flex justify-center items-center p-2 text-white">
         <span class="sr-only">Close main menu</span>
         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -33,19 +33,25 @@
       </button>
     </div>
 
-    <div class="flex flex-col items-center justify-center w-full mx-auto my-14 gap-y-8">
+    <div class="flex flex-col gap-y-8 justify-center items-center my-14 mx-auto w-full">
       <%= for page <- ParzivalWeb.Config.pages(@conn) do %>
         <%= live_redirect to: page.url do %>
-          <span @click="navbar = false" class={"#{ @conn.assigns.current_page == page.title && "font-bold" } text-white text-lg text-center hover:text-gray-300"}>
+          <span @click="navbar = false" class={"#{@conn.assigns.current_page == page.title && "font-bold"} text-white text-lg text-center hover:text-gray-300"}>
             <%= page.title %>
           </span>
         <% end %>
       <% end %>
     </div>
-    <div class="absolute flex items-center justify-between w-full px-8 mx-auto bottom-6">
-      <%= link to: "https://cesium.di.uminho.pt/" do %> <img class="w-[70px] h-auto text-white" src={Routes.static_path(@conn, "/images/logos/cesium.svg")} alt="CeSIUM Logo"/> <% end %>
-      <%= link to: "https://necc.di.uminho.pt/" do %> <img class="w-[70px] h-auto text-white" src={Routes.static_path(@conn, "/images/logos/necc.svg")} alt="NECC Logo"/> <% end %>
-      <%= link to: "https://nefum.di.uminho.pt/" do %> <img class="w-[70px] h-auto text-white" src={Routes.static_path(@conn, "/images/logos/nefum.svg")} alt="NEFUM Logo"/> <% end %>
+    <div class="flex absolute bottom-6 justify-between items-center px-8 mx-auto w-full">
+      <%= link to: "https://cesium.di.uminho.pt/" do %>
+        <img class="h-auto text-white w-[70px]" src={Routes.static_path(@conn, "/images/logos/cesium.svg")} alt="CeSIUM Logo" />
+      <% end %>
+      <%= link to: "https://necc.di.uminho.pt/" do %>
+        <img class="h-auto text-white w-[70px]" src={Routes.static_path(@conn, "/images/logos/necc.svg")} alt="NECC Logo" />
+      <% end %>
+      <%= link to: "https://nefum.di.uminho.pt/" do %>
+        <img class="h-auto text-white w-[70px]" src={Routes.static_path(@conn, "/images/logos/nefum.svg")} alt="NEFUM Logo" />
+      <% end %>
     </div>
   </nav>
 </div>

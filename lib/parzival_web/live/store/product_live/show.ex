@@ -21,11 +21,11 @@ defmodule ParzivalWeb.ProductLive.Show do
 
   def redeem_quantity(user_id, product_id) do
     order = Store.get_order_by_user_and_product(user_id, product_id)
-    case order do
-      nil ->  Store.get_product!(product_id).max_per_user
-      _ ->  Store.get_product!(product_id).max_per_user - order.quantity
-    end
 
+    case order do
+      nil -> Store.get_product!(product_id).max_per_user
+      _ -> Store.get_product!(product_id).max_per_user - order.quantity
+    end
   end
 
   @impl true
@@ -36,12 +36,10 @@ defmodule ParzivalWeb.ProductLive.Show do
 
   @impl true
   def handle_event("purchase", _payload, socket) do
-
     product = socket.assigns.product
     current_user = socket.assigns.current_user
 
     Store.purchase(current_user, product)
-
   end
 
   defp page_title(:show), do: "Show Product"

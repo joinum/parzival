@@ -7,6 +7,7 @@ defmodule ParzivalWeb.UserRegistrationController do
 
   def new(conn, _params) do
     changeset = Accounts.change_user_registration(%User{})
+
     conn
     |> put_layout(false)
     |> render("new.html", changeset: changeset)

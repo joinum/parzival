@@ -4,8 +4,20 @@ defmodule ParzivalWeb.ProductLiveTest do
   import Phoenix.LiveViewTest
   import Parzival.StoreFixtures
 
-  @create_attrs %{description: "some description", max_per_user: 42, name: "some name", price: 42, stock: 42}
-  @update_attrs %{description: "some updated description", max_per_user: 43, name: "some updated name", price: 43, stock: 43}
+  @create_attrs %{
+    description: "some description",
+    max_per_user: 42,
+    name: "some name",
+    price: 42,
+    stock: 42
+  }
+  @update_attrs %{
+    description: "some updated description",
+    max_per_user: 43,
+    name: "some updated name",
+    price: 43,
+    stock: 43
+  }
   @invalid_attrs %{description: nil, max_per_user: nil, name: nil, price: nil, stock: nil}
 
   defp create_product(_) do
