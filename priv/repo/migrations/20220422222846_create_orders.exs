@@ -8,7 +8,7 @@ defmodule Parzival.Repo.Migrations.CreateOrders do
       add :quantity, :integer
       add :redeemed, :integer
 
-      add :product_id, references(:products, on_delete: :delete_all, type: :binary_id)
+      add :product_id, references(:products, on_delete: :nothing, type: :binary_id)
       add :user_id, references(:users, on_delete: :delete_all, type: :binary_id)
 
       timestamps()

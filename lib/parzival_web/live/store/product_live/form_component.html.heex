@@ -1,12 +1,12 @@
 <div>
-  <.form let={f} for={@changeset} id="product-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+  <.form let={f} for={@changeset} id="product-form" phx-target={@myself} phx-submit="save">
     <div class="h-auto bg-white md:min-h-screen lg:flex-1 lg:min-w-0 xl:border-r xl:border-gray-200">
       <div class="pt-5 pr-6 pb-5 pl-4 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 xl:border-t-0 xl:border-b xl:border-gray-200">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center h-10">
           <h1 class="flex-1 text-lg font-medium">Store</h1>
           <!-- Action buttons -->
           <%= submit do %>
-            <div type="button" class="inline-flex justify-center items-center py-2 px-4 w-14 h-10 text-sm font-medium text-white rounded-md border-transparent shadow-sm xl:w-full bg-secondary hover:bg:primary">
+            <div type="button" class="inline-flex justify-center items-center py-2 px-4 w-14 text-sm font-medium text-white rounded-md border-transparent shadow-sm xl:w-full bg-secondary hover:bg:primary">
               Save
             </div>
           <% end %>
@@ -19,13 +19,13 @@
           <div class="lg:self-end lg:max-w-lg">
             <div class="">
               <label for="street-address" class="block text-sm font-medium text-gray-700">Name</label>
-              <%= text_input(f, :name, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+              <%= text_input(f, :name, phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :name) %></p>
 
             <div class="mt-4">
               <label for="street-address" class="block text-sm font-medium text-gray-700">Price</label>
-              <%= number_input(f, :price, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+              <%= number_input(f, :price, phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :price) %></p>
             <div class="mt-4">
