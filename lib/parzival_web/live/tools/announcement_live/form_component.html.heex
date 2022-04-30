@@ -1,12 +1,12 @@
 <div>
   <.form let={f} for={@changeset} id="announcement-form" phx-target={@myself} phx-change="validate" phx-submit="save">
     <div class="h-full bg-white border-r border-gray-200">
-      <div class="pt-5 pb-5 pl-4 pr-6 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
-        <div class="flex items-center justify-between h-10">
+      <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+        <div class="flex justify-between items-center h-10">
           <h1 class="flex-1 text-lg font-medium">Announcement</h1>
           <!-- Action buttons -->
           <%= submit do %>
-            <div type="button" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm xl:w-full bg-secondary hover:bg-primary">
+            <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
               Save
             </div>
           <% end %>

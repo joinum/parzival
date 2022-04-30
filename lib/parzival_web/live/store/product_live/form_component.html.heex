@@ -1,12 +1,12 @@
 <div>
   <.form let={f} for={@changeset} id="product-form" phx-target={@myself} phx-submit="save">
     <div class="h-auto bg-white md:min-h-screen lg:flex-1 lg:min-w-0 xl:border-r xl:border-gray-200">
-      <div class="pt-5 pb-5 pl-4 pr-6 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 xl:border-t-0 xl:border-b xl:border-gray-200">
-        <div class="flex items-center justify-between h-10">
+      <div class="pt-5 pr-6 pb-5 pl-4 border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 xl:border-t-0 xl:border-b xl:border-gray-200">
+        <div class="flex justify-between items-center h-10">
           <h1 class="flex-1 text-lg font-medium">Store</h1>
           <!-- Action buttons -->
           <%= submit do %>
-            <div type="button" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border-transparent rounded-md shadow-sm w-14 xl:w-full bg-secondary hover:bg:primary">
+            <div type="button" class="inline-flex justify-center items-center py-2 px-4 w-14 text-sm font-medium text-white rounded-md border-transparent shadow-sm xl:w-full bg-secondary hover:bg:primary">
               Save
             </div>
           <% end %>
@@ -14,7 +14,7 @@
       </div>
 
       <div class="bg-white">
-        <div class="max-w-2xl px-4 mx-auto py-14 sm:px-6 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:max-w-7xl">
+        <div class="py-14 px-4 mx-auto max-w-2xl sm:px-6 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:max-w-7xl">
           <!-- Product details -->
           <div class="lg:self-end lg:max-w-lg">
             <div class="">
@@ -25,7 +25,7 @@
 
             <div class="mt-4">
               <label for="street-address" class="block text-sm font-medium text-gray-700">Price</label>
-              <%= number_input(f, :price,phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+              <%= number_input(f, :price, phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :price) %></p>
             <div class="mt-4">
@@ -55,7 +55,7 @@
                     <div class="mx-auto sm:col-span-6 lg:w-[400px]">
                       <div class="flex justify-center px-6 my-[140px]">
                         <div class="space-y-1 text-center">
-                          <svg class="w-12 h-12 mx-auto text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                          <svg class="mx-auto w-12 h-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                             <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                           </svg>
                           <div class="flex text-sm text-gray-600">
