@@ -1,0 +1,58 @@
+name: CI build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+
+    strategy:
+      matrix:
+        otp: [24.x]
+        elixir: [1.13.x]
+        node: [16.x]
+
+    services:
+      db:
+        image: postgres:14.1
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USERNAME: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_HOSTNAME: 0.0.0.0
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.otp}}
+          elixir-version: ${{matrix.elixir}}
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+      - name: Install dependencies
+        run: mix deps.get --only prod
+
+      - name: Build the app
+        run: |
+          export SECRET_KEY_BASE=$(mix phx.gen.secret)
+          export DATABASE_URL="ecto://postgres:postgres@0.0.0.0:5432/join_prod"
+          MIX_ENV=prod mix compile

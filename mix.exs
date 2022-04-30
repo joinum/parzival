@@ -47,7 +47,6 @@ defmodule Parzival.MixProject do
       {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
-
       {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.6.6"},
       {:phoenix_ecto, "~> 4.4"},
@@ -63,7 +62,10 @@ defmodule Parzival.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+
+      # tools
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 

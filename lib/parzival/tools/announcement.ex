@@ -1,4 +1,7 @@
 defmodule Parzival.Tools.Announcement do
+  @moduledoc """
+  A announcement.
+  """
   use Parzival.Schema
 
   @required_fields ~w(title text)a

@@ -4,9 +4,9 @@ defmodule Parzival.Accounts do
   """
 
   import Ecto.Query, warn: false
-  alias Parzival.Repo
 
-  alias Parzival.Accounts.{User, UserToken, UserNotifier}
+  alias Parzival.Accounts.{User, UserNotifier, UserToken}
+  alias Parzival.Repo
 
   ## Database getters
 

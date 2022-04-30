@@ -1,4 +1,7 @@
 defmodule Parzival.Accounts.UserToken do
+  @moduledoc """
+  User Tokens to manage web sessions with full control.
+  """
   use Parzival.Schema
 
   @hash_algorithm :sha256

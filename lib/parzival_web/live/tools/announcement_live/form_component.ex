@@ -1,4 +1,5 @@
 defmodule ParzivalWeb.AnnouncementLive.FormComponent do
+  @moduledoc false
   use ParzivalWeb, :live_component
 
   alias Parzival.Tools

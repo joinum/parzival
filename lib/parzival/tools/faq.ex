@@ -1,4 +1,7 @@
 defmodule Parzival.Tools.Faq do
+  @moduledoc """
+  A faq.
+  """
   use Parzival.Schema
 
   schema "faqs" do
