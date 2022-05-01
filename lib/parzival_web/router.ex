@@ -63,6 +63,8 @@ defmodule ParzivalWeb.Router do
       end
 
       scope "/admin", Backoffice, as: :admin do
+        live "/accounts/", UserLive.Index, :index
+
         live "/store/new", ProductLive.New, :new
         live "/store/:id/edit", ProductLive.Edit, :edit
 

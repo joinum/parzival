@@ -1,4 +1,6 @@
 defmodule Parzival.Repo.Seeds.Tools do
+  import Ecto.Query
+
   alias Parzival.Repo
 
   alias Parzival.Accounts.User
@@ -54,8 +56,7 @@ defmodule Parzival.Repo.Seeds.Tools do
   end
 
   def seed_announcements do
-    # admins = Repo.all(where(User, role: :admin))
-    admins = Repo.all(User)
+    admins = Repo.all(where(User, role: :admin))
 
     case Repo.all(Announcement) do
       [] ->

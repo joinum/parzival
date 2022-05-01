@@ -6,8 +6,15 @@ defmodule ParzivalWeb.Config do
 
   @conn ParzivalWeb.Endpoint
 
-  def pages(conn, _current_user) do
-    live_pages(conn)
+  def pages(conn, current_user) do
+    live_pages(conn) ++ role_pages(conn, current_user.role)
+  end
+
+  def role_pages(conn, role) do
+    case role do
+      :admin -> admin_pages(conn)
+      :attendee -> attendee_pages(conn)
+    end
   end
 
   def pages do
@@ -62,7 +69,12 @@ defmodule ParzivalWeb.Config do
         title: "Home",
         url: Routes.home_index_path(conn, :index),
         tabs: []
-      },
+      }
+    ]
+  end
+
+  def attendee_pages(conn) do
+    [
       %{
         key: :store,
         title: "Store",
@@ -74,6 +86,59 @@ defmodule ParzivalWeb.Config do
         title: "Vault",
         url: Routes.order_index_path(conn, :index),
         tabs: []
+      }
+    ]
+  end
+
+  def admin_pages(conn) do
+    [
+      %{
+        key: :store,
+        title: "Store",
+        url: Routes.product_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :accounts,
+        title: "Accounts",
+        url:
+          Routes.admin_user_index_path(conn, :index, %{
+            "filters" => %{"0" => %{"field" => "role", "value" => "attendee"}}
+          }),
+        tabs: [
+          %{
+            key: :student,
+            title: "Attendees",
+            url:
+              Routes.admin_user_index_path(conn, :index, %{
+                "filters" => %{"0" => %{"field" => "role", "value" => "attendee"}}
+              })
+          },
+          %{
+            key: :admin,
+            title: "Admins",
+            url:
+              Routes.admin_user_index_path(conn, :index, %{
+                "filters" => %{"0" => %{"field" => "role", "value" => "admin"}}
+              })
+          },
+          %{
+            key: :staff,
+            title: "Staff",
+            url:
+              Routes.admin_user_index_path(conn, :index, %{
+                "filters" => %{"0" => %{"field" => "role", "value" => "staff"}}
+              })
+          },
+          %{
+            key: :company,
+            title: "Companies",
+            url:
+              Routes.admin_user_index_path(conn, :index, %{
+                "filters" => %{"0" => %{"field" => "role", "value" => "company"}}
+              })
+          }
+        ]
       },
       %{
         key: :tools,

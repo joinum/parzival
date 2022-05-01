@@ -6,6 +6,8 @@ defmodule Parzival.Accounts.User do
 
   alias Parzival.Store.Order
 
+  @roles ~w(admin staff attendee company)a
+
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true, redact: true
@@ -15,6 +17,7 @@ defmodule Parzival.Accounts.User do
     field :balance, :integer, default: 0
 
     field :name, :string
+    field :role, Ecto.Enum, values: @roles
 
     has_many :orders, Order
 
@@ -40,7 +43,7 @@ defmodule Parzival.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password, :name, :balance])
+    |> cast(attrs, [:email, :password, :name, :balance, :role])
     |> validate_email()
     |> validate_password(opts)
   end
