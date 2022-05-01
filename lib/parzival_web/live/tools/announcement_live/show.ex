@@ -14,7 +14,7 @@ defmodule ParzivalWeb.AnnouncementLive.Show do
      socket
      |> assign(:current_page, :tools)
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:announcement, Tools.get_announcement!(id))}
+     |> assign(:announcement, Tools.get_announcement!(id, :author))}
   end
 
   @impl true

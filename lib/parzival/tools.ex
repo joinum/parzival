@@ -3,6 +3,8 @@ defmodule Parzival.Tools do
   The Tools context.
   """
 
+  use Parzival.Context
+
   import Ecto.Query, warn: false
 
   alias Parzival.Repo
@@ -117,6 +119,12 @@ defmodule Parzival.Tools do
     Repo.all(Announcement)
   end
 
+  def list_announcements(opts \\ []) do
+    Announcement
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single announcement.
 
@@ -132,6 +140,9 @@ defmodule Parzival.Tools do
 
   """
   def get_announcement!(id), do: Repo.get!(Announcement, id)
+
+  def get_announcement!(id, preloads \\ []),
+    do: Repo.get!(Announcement, id) |> Repo.preload(preloads)
 
   @doc """
   Creates a announcement.
