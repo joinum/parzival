@@ -1,6 +1,8 @@
 defmodule Parzival.Repo.Seeds.Tools do
   alias Parzival.Repo
 
+  alias Parzival.Accounts.User
+
   alias Parzival.Tools.Faq
   alias Parzival.Tools.Announcement
 
@@ -53,6 +55,7 @@ defmodule Parzival.Repo.Seeds.Tools do
 
   def seed_announcements do
     # admins = Repo.all(where(User, role: :admin))
+    admins = Repo.all(User)
 
     case Repo.all(Announcement) do
       [] ->
@@ -60,14 +63,14 @@ defmodule Parzival.Repo.Seeds.Tools do
           %{
             title: "Welcome to the JOIN Platform",
             text:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tincidunt massa. Nunc mi enim, blandit quis condimentum vel, tincidunt ac dolor. Curabitur placerat justo eros, sit amet vulputate nulla vulputate a. Interdum et malesuada fames ac ante ipsum primis in faucibus"
-            # author_id: Enum.random(admins).id
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tincidunt massa. Nunc mi enim, blandit quis condimentum vel, tincidunt ac dolor. Curabitur placerat justo eros, sit amet vulputate nulla vulputate a. Interdum et malesuada fames ac ante ipsum primis in faucibus",
+            author_id: Enum.random(admins).id
           },
           %{
             title: "Hackathon registrations are closed",
             text:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tincidunt massa. Nunc mi enim, blandit quis condimentum vel, tincidunt ac dolor. Curabitur placerat justo eros, sit amet vulputate nulla vulputate a. Interdum et malesuada fames ac ante ipsum primis in faucibus"
-            # author_id: Enum.random(admins).id
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tincidunt massa. Nunc mi enim, blandit quis condimentum vel, tincidunt ac dolor. Curabitur placerat justo eros, sit amet vulputate nulla vulputate a. Interdum et malesuada fames ac ante ipsum primis in faucibus",
+            author_id: Enum.random(admins).id
           }
         ]
         |> Enum.each(&Repo.insert!(Announcement.changeset(%Announcement{}, &1)))

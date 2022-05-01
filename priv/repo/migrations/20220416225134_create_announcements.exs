@@ -7,7 +7,7 @@ defmodule Parzival.Repo.Migrations.CreateAnnouncements do
       add :title, :string
       add :text, :text
 
-      # add :author_id, references(:users, on_delete: :nilify_all, type: :binary_id)
+      add :author_id, references(:users, on_delete: :nilify_all, type: :binary_id)
 
       timestamps()
     end

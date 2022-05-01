@@ -25,6 +25,10 @@ defmodule ParzivalWeb.AnnouncementLive.FormComponent do
   end
 
   def handle_event("save", %{"announcement" => announcement_params}, socket) do
+    announcement_params =
+      announcement_params
+      |> Map.put("author_id", socket.assigns.current_user.id)
+
     save_announcement(socket, socket.assigns.action, announcement_params)
   end
 

@@ -13,7 +13,11 @@ defmodule ParzivalWeb.HomeLive.Index do
   def handle_params(_params, _url, socket) do
     {:noreply,
      socket
-     |> assign(:announcements, Enum.take(Tools.list_announcements(), 3))
+     |> assign(:announcements, list_announcements())
      |> assign(:current_page, :home)}
+  end
+
+  defp list_announcements do
+    Tools.list_announcements(preloads: [:author], limit: 3, order_by: [desc: :inserted_at])
   end
 end
