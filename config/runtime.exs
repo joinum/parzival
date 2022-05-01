@@ -8,23 +8,8 @@ import Config
 # The block below contains prod specific runtime configuration.
 
 # Start the phoenix server if environment is set and running in a release
-if System.get_env("PHX_SERVER") do
+if System.get_env("PHX_SERVER") && System.get_env("RELEASE_NAME") do
   config :parzival, ParzivalWeb.Endpoint, server: true
-end
-
-if config_env() in [:dev, :test] do
-  import Dotenvy
-  source([".env", ".env.#{config_env()}", ".env.#{config_env()}.local"])
-
-  config :parzival, Parzival.Repo,
-    username: env!("DB_USERNAME", :string, "postgres"),
-    password: env!("DB_PASSWORD", :string, "postgres"),
-    # The MIX_TEST_PARTITION environment variable can be used
-    # to provide built-in test partitioning in CI environment.
-    database:
-      env!("DB_NAME", :string, "join_#{config_env()}#{System.get_env("MIX_TEST_PARTITION")}"),
-    hostname: env!("DB_HOST", :string, "localhost"),
-    port: env!("DB_PORT", :integer, 5432)
 end
 
 if config_env() == :prod do
@@ -38,7 +23,7 @@ if config_env() == :prod do
   maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
   config :parzival, Parzival.Repo,
-    # ssl: true,
+    ssl: true,
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
