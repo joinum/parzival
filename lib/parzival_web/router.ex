@@ -83,6 +83,8 @@ defmodule ParzivalWeb.Router do
     get "/settings", UserSettingsController, :edit
     put "/settings", UserSettingsController, :update
     get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    get "/cv/:student_id", PdfController, :cv
+    get "/cv/preview", PdfController, :cv_preview
   end
 
   scope "/", ParzivalWeb do
