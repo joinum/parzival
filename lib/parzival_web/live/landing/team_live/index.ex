@@ -1,5 +1,6 @@
-defmodule ParzivalWeb.TeamController do
-  use ParzivalWeb, :controller
+defmodule ParzivalWeb.Landing.TeamLive.Index do
+  @moduledoc false
+  use ParzivalWeb, [:live_view, {ParzivalWeb.LayoutView, "landing.html"}]
 
   @team [
     %{
@@ -46,11 +47,12 @@ defmodule ParzivalWeb.TeamController do
 
   @organizers ["cesium", "necc", "nefum", "di"]
 
-  def index(conn, _params) do
-    conn
-    |> assign(:current_page, "Team")
-    |> assign(:team, @team)
-    |> assign(:organizers, @organizers)
-    |> render("index.html")
+  @impl true
+  def mount(_params, _session, socket) do
+    {:ok,
+     socket
+     |> assign(:current_page, "Team")
+     |> assign(:team, @team)
+     |> assign(:organizers, @organizers)}
   end
 end

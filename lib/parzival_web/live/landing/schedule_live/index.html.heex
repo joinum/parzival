@@ -11,7 +11,7 @@
   </div>
   <div x-data={"{ date: new Date().toISOString() >= '#{hd(@schedule["tuesday"])["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(@schedule["thursday"])["hours"]}.to_iso8601!()' ? new Date().getDay() : 2 }"} class="flex flex-row my-10 h-auto lg:my-20 1.5xl:h-[740px]">
     <div class="hidden relative w-full 1.5xl:block">
-      <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@conn, "/images/cords/schedule_cords.svg")} alt="hero cords" />
+      <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@socket, "/images/cords/schedule_cords.svg")} alt="hero cords" />
 
       <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
         <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F] font-bold' : 'bg-[#BB2A22]' "} class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do

@@ -10,11 +10,11 @@ defmodule ParzivalWeb.Config do
     live_pages(conn)
   end
 
-  def pages() do
+  def pages do
     base_pages()
   end
 
-  defp base_pages() do
+  defp base_pages do
     [
       %{
         key: :home,
@@ -25,31 +25,31 @@ defmodule ParzivalWeb.Config do
       %{
         key: :schedule,
         title: "Schedule",
-        url: Routes.schedule_path(@conn, :index),
+        url: Routes.landing_schedule_index_path(@conn, :index),
         tabs: []
       },
       %{
         key: :missions,
         title: "Missions",
-        url: Routes.missions_path(@conn, :index),
+        url: Routes.landing_missions_index_path(@conn, :index),
         tabs: []
       },
       %{
         key: :speakers,
         title: "Speakers",
-        url: Routes.speakers_path(@conn, :index),
+        url: Routes.landing_speakers_index_path(@conn, :index),
         tabs: []
       },
       %{
         key: :faqs,
         title: "Faqs",
-        url: Routes.faqs_path(@conn, :index),
+        url: Routes.landing_faqs_index_path(@conn, :index),
         tabs: []
       },
       %{
         key: :team,
         title: "Team",
-        url: Routes.team_path(@conn, :index),
+        url: Routes.landing_team_index_path(@conn, :index),
         tabs: []
       }
     ]

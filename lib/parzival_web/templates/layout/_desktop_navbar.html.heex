@@ -7,7 +7,7 @@
             <span class="select-none">|</span>
           <% end %>
           <span class={"#{@current_page == page.title && "font-bold"} inline-flex px-2"}>
-            <%= link(page.title, to: page.url, class: "inline-flex px-1 text-xs xl:text-base") %>
+            <%= live_redirect(page.title, to: page.url, class: "inline-flex px-1 text-xs xl:text-base") %>
           </span>
         <% end %>
       </div>

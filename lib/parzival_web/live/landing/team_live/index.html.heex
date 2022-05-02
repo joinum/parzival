@@ -13,9 +13,9 @@
     <div class="grid w-[85%] grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 lg:w-full">
       <%= for member <- @team do %>
         <div class="overflow-hidden relative w-full h-auto group">
-          <img class="hidden absolute inset-0 top-2 left-2 z-40 w-12 sm:w-20 group-hover:block" src={Routes.static_path(@conn, "/images/logos/#{member.organization}.svg")} />
+          <img class="hidden absolute inset-0 top-2 left-2 z-40 w-12 sm:w-20 group-hover:block" src={Routes.static_path(@socket, "/images/logos/#{member.organization}.svg")} />
           <div class="absolute inset-0 z-40 bg-gradient-to-b from-transparent opacity-70 transition duration-200 ease-in group-hover:translate-y-20 via-primary to-primary group-hover:rounded-t-[50px]" />
-          <img class="w-full" src={Routes.static_path(@conn, "/images/team/#{member.photo}.png")} />
+          <img class="w-full" src={Routes.static_path(@socket, "/images/team/#{member.photo}.png")} />
           <p class="hidden absolute inset-x-0 bottom-8 z-40 text-sm font-medium text-center text-white sm:bottom-10 sm:text-lg sm:font-bold md:text-xl group-hover:block">
             <%= member.name %>
           </p>
@@ -49,7 +49,7 @@
     </div>
     <div class="grid grid-cols-2 gap-x-5 gap-y-10 place-items-center">
       <%= for organizer <- @organizers do %>
-        <img class="w-2/3 max-h-32" src={Routes.static_path(@conn, "/images/logos/#{organizer}.svg")} />
+        <img class="w-2/3 max-h-32" src={Routes.static_path(@socket, "/images/logos/#{organizer}.svg")} />
       <% end %>
     </div>
   </div>

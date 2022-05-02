@@ -21,9 +21,9 @@
             <%= for speaker <- day.speakers do %>
               <div class="flex flex-col w-auto group">
                 <div class="relative">
-                  <img class="w-auto" src={Routes.static_path(@conn, "/images/cords/speakers_cords.svg")} alt="speaker cords" />
+                  <img class="w-auto" src={Routes.static_path(@socket, "/images/cords/speakers_cords.svg")} alt="speaker cords" />
                   <div class="absolute h-[95%] md:h-[96%] bg-secondary opacity-50 group-hover:opacity-20 w-[95%] md:w-[96%] -z-10 right-0 bottom-0 rounded-2xl sm:rounded-3xl" />
-                  <img class="absolute w-[95%] md:w-[96%] -z-20 right-0 bottom-0 rounded-2xl sm:rounded-3xl" src={Routes.static_path(@conn, "/images/speakers/#{speaker[:photo]}.png")} alt={speaker[:name]} />
+                  <img class="absolute w-[95%] md:w-[96%] -z-20 right-0 bottom-0 rounded-2xl sm:rounded-3xl" src={Routes.static_path(@socket, "/images/speakers/#{speaker[:photo]}.png")} alt={speaker[:name]} />
                 </div>
                 <div class="pt-2 pl-2 text-white sm:pl-6">
                   <p class="overflow-hidden text-base font-bold whitespace-nowrap sm:text-lg text-ellipsis">

@@ -23,7 +23,6 @@ defmodule ParzivalWeb do
 
       import Plug.Conn
       import ParzivalWeb.Gettext
-      import ParzivalWeb.ControllerUtils
       alias ParzivalWeb.Router.Helpers, as: Routes
     end
   end

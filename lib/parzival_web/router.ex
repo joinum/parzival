@@ -31,22 +31,17 @@ defmodule ParzivalWeb.Router do
   end
 
   scope "/", ParzivalWeb do
-    pipe_through :browser
-
-    get "/schedule", ScheduleController, :index
-    get "/hackathon", HackathonController, :index
-    get "/missions", MissionsController, :index
-    get "/speakers", SpeakersController, :index
-    get "/faqs", FaqsController, :index
-    get "/team", TeamController, :index
-  end
-
-  scope "/", ParzivalWeb do
     pipe_through [:browser]
 
     live_session :user, on_mount: [{ParzivalWeb.Hooks, :current_user}] do
       scope "/", Landing, as: :landing do
         live "/", HomeLive.Index, :index
+
+        live "/schedule", ScheduleLive.Index, :index
+        live "/missions", MissionsLive.Index, :index
+        live "/speakers", SpeakersLive.Index, :index
+        live "/faqs", FaqsLive.Index, :index
+        live "/team", TeamLive.Index, :index
       end
     end
   end

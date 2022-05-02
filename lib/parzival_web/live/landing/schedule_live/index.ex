@@ -1,5 +1,6 @@
-defmodule ParzivalWeb.ScheduleController do
-  use ParzivalWeb, :controller
+defmodule ParzivalWeb.Landing.ScheduleLive.Index do
+  @moduledoc false
+  use ParzivalWeb, [:live_view, {ParzivalWeb.LayoutView, "landing.html"}]
 
   @schedule Jason.decode!(File.read!("data/schedule.json"))
             |> Enum.map(fn {key, value} ->
@@ -10,10 +11,11 @@ defmodule ParzivalWeb.ScheduleController do
             end)
             |> Enum.into(%{})
 
-  def index(conn, _params) do
-    conn
-    |> assign(:current_page, "Schedule")
-    |> assign(:schedule, @schedule)
-    |> render("index.html")
+  @impl true
+  def mount(_params, _session, socket) do
+    {:ok,
+     socket
+     |> assign(:current_page, "Schedule")
+     |> assign(:schedule, @schedule)}
   end
 end

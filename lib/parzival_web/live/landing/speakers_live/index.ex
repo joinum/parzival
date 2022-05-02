@@ -1,5 +1,8 @@
-defmodule ParzivalWeb.SpeakersController do
-  use ParzivalWeb, :controller
+defmodule ParzivalWeb.Landing.SpeakersLive.Index do
+  @moduledoc false
+  use ParzivalWeb, [:live_view, {ParzivalWeb.LayoutView, "landing.html"}]
+
+  require Integer
 
   @days [
     %{
@@ -33,10 +36,11 @@ defmodule ParzivalWeb.SpeakersController do
     }
   ]
 
-  def index(conn, _params) do
-    conn
-    |> assign(:current_page, "Speakers")
-    |> assign(:days, @days)
-    |> render("index.html")
+  @impl true
+  def mount(_params, _session, socket) do
+    {:ok,
+     socket
+     |> assign(:current_page, "Speakers")
+     |> assign(:days, @days)}
   end
 end
