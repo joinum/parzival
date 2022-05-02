@@ -115,10 +115,6 @@ defmodule Parzival.Tools do
       [%Announcement{}, ...]
 
   """
-  def list_announcements do
-    Repo.all(Announcement)
-  end
-
   def list_announcements(opts \\ []) do
     Announcement
     |> apply_filters(opts)
@@ -139,8 +135,6 @@ defmodule Parzival.Tools do
       ** (Ecto.NoResultsError)
 
   """
-  def get_announcement!(id), do: Repo.get!(Announcement, id)
-
   def get_announcement!(id, preloads \\ []),
     do: Repo.get!(Announcement, id) |> Repo.preload(preloads)
 
