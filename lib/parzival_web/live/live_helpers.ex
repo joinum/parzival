@@ -15,7 +15,7 @@ defmodule ParzivalWeb.LiveHelpers do
 
       <.modal return_to={Routes.faqs_index_path(@socket, :index)}>
         <.live_component
-          module={ParzivalWeb.Platform.FaqsLive.FormComponent}
+          module={ParzivalWeb.Backoffice.FaqsLive.FormComponent}
           id={@faqs.id || :new}
           title={@page_title}
           action={@live_action}
