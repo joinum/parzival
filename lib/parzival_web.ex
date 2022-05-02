@@ -52,6 +52,15 @@ defmodule ParzivalWeb do
     end
   end
 
+  def live_view(layout) do
+    quote do
+      use Phoenix.LiveView,
+        layout: unquote(layout)
+
+      unquote(view_helpers())
+    end
+  end
+
   def live_component do
     quote do
       use Phoenix.LiveComponent
@@ -109,5 +118,9 @@ defmodule ParzivalWeb do
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
+  end
+
+  defmacro __using__(opts) when is_list(opts) do
+    apply(__MODULE__, hd(opts), tl(opts))
   end
 end

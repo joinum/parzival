@@ -1,5 +1,5 @@
 <div class="flex flex-col justify-center items-center pt-28 lg:pt-40">
-  <img class="h-auto w-[500px]" src={Routes.static_path(@conn, "/images/logo.svg")} alt="JOIN Logo" />
+  <img class="h-auto w-[500px]" src={Routes.static_path(@socket, "/images/logo.svg")} alt="JOIN Logo" />
   <p class="pt-4 font-semibold text-center text-white tracking-[6px] sm:tracking-[12px] md:tracking-[14px]">28, 29 e 30 de junho</p>
 </div>
 
@@ -41,7 +41,7 @@
     <% end %>
   </div>
   <div class="hidden -mt-2 lg:block">
-    <img class="absolute -right-2 h-auto w-[900px]" src={Routes.static_path(@conn, "/images/cords/hero_cords.svg")} alt="hero cords" />
+    <img class="absolute -right-2 h-auto w-[900px]" src={Routes.static_path(@socket, "/images/cords/hero_cords.svg")} alt="hero cords" />
 
     <div class="absolute right-12 pt-7 w-[200px]">
       <p class="text-sm font-bold text-white">3. Web3</p>
@@ -71,7 +71,7 @@
   </div>
 
   <div class="hidden relative w-full 1.5xl:block">
-    <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@conn, "/images/cords/schedule_cords.svg")} alt="hero cords" />
+    <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@socket, "/images/cords/schedule_cords.svg")} alt="hero cords" />
 
     <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
       <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F] font-bold' : 'bg-[#BB2A22]' "} class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do
@@ -251,7 +251,7 @@
                         "w-24 sm:w-28"
                       end
                     end
-                  end}"} src={Routes.static_path(@conn, "/images/sponsors/#{sponsor}.svg")} alt={sponsor} />
+                  end}"} src={Routes.static_path(@socket, "/images/sponsors/#{sponsor}.svg")} alt={sponsor} />
             <% end %>
           </div>
         </div>
@@ -303,7 +303,7 @@
                             "w-28"
                           end
                         end
-                      end}"} src={Routes.static_path(@conn, "/images/sponsors/#{sponsor}.svg")} alt={sponsor} />
+                      end}"} src={Routes.static_path(@socket, "/images/sponsors/#{sponsor}.svg")} alt={sponsor} />
                 <% end %>
               </div>
             </div>
@@ -325,9 +325,9 @@
       <%= for speaker <- @speakers do %>
         <div class="flex flex-col w-auto group">
           <div class="relative">
-            <img class="w-auto" src={Routes.static_path(@conn, "/images/cords/speakers_cords.svg")} alt="speaker cords" />
+            <img class="w-auto" src={Routes.static_path(@socket, "/images/cords/speakers_cords.svg")} alt="speaker cords" />
             <div class="absolute h-[95%] md:h-[96%] bg-secondary opacity-50 group-hover:opacity-20 w-[95%] md:w-[96%] -z-10 right-0 bottom-0 rounded-2xl sm:rounded-3xl" />
-            <img class="absolute w-[95%] md:w-[96%] -z-20 right-0 bottom-0 rounded-2xl sm:rounded-3xl" src={Routes.static_path(@conn, "/images/speakers/#{speaker["photo"]}.png")} alt={speaker["name"]} />
+            <img class="absolute w-[95%] md:w-[96%] -z-20 right-0 bottom-0 rounded-2xl sm:rounded-3xl" src={Routes.static_path(@socket, "/images/speakers/#{speaker["photo"]}.png")} alt={speaker["name"]} />
           </div>
           <div class="pt-2 pl-2 text-white sm:pl-6">
             <p class="overflow-hidden text-base font-bold whitespace-nowrap sm:text-lg text-ellipsis">
@@ -357,7 +357,7 @@
   <div class="grid relative grid-cols-1 gap-y-12 mt-12 ml-20 w-full sm:grid-cols-2 sm:ml-28 h-min">
     <div class="grid grid-cols-2 auto-rows-min gap-6 justify-items-center sm:grid-cols-1">
       <%= for partner <- @partners do %>
-        <img class="w-auto sm:w-40" src={Routes.static_path(@conn, "/images/partners/#{partner}.png")} alt={partner} />
+        <img class="w-auto sm:w-40" src={Routes.static_path(@socket, "/images/partners/#{partner}.png")} alt={partner} />
       <% end %>
     </div>
     <div class="flex items-center text-center sm:text-left">

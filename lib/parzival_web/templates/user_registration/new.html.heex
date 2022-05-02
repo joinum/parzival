@@ -1,7 +1,7 @@
 <body class="bg-gradient-to-l from-primary via-secondary to-tertiary lg:px-[200px]">
   <header>
     <div class="flex justify-between pt-20">
-      <%= live_patch to: Routes.home_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" do %>
+      <%= live_patch to: Routes.landing_home_index_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" do %>
         <div class="flex items-center space-x-2 text-lg font-bold text-white hover:underline align-items">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />

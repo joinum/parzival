@@ -1,5 +1,6 @@
-defmodule ParzivalWeb.HomeController do
-  use ParzivalWeb, :controller
+defmodule ParzivalWeb.Landing.HomeLive.Index do
+  @moduledoc false
+  use ParzivalWeb, [:live_view, {ParzivalWeb.LayoutView, "landing.html"}]
 
   @schedule Jason.decode!(File.read!("data/schedule.json"))
             |> Enum.map(fn {key, value} ->
@@ -25,14 +26,14 @@ defmodule ParzivalWeb.HomeController do
                     end
                   end)
 
-  def index(conn, _params) do
-    conn
-    |> assign(:current_page, "Home")
-    |> assign(:schedule, @schedule)
-    |> assign(:sponsors, @sponsors)
-    |> assign(:sponsors_table, @sponsors_table)
-    |> assign(:speakers, @speakers)
-    |> assign(:partners, @partners)
-    |> render("index.html")
+  def mount(_params, _session, socket) do
+    {:ok,
+     socket
+     |> assign(:current_page, "Home")
+     |> assign(:schedule, @schedule)
+     |> assign(:sponsors, @sponsors)
+     |> assign(:sponsors_table, @sponsors_table)
+     |> assign(:speakers, @speakers)
+     |> assign(:partners, @partners)}
   end
 end

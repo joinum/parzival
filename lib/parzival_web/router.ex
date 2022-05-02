@@ -18,18 +18,6 @@ defmodule ParzivalWeb.Router do
   end
 
   scope "/", ParzivalWeb do
-    pipe_through :browser
-
-    get "/", HomeController, :index
-    get "/schedule", ScheduleController, :index
-    get "/hackathon", HackathonController, :index
-    get "/missions", MissionsController, :index
-    get "/speakers", SpeakersController, :index
-    get "/faqs", FaqsController, :index
-    get "/team", TeamController, :index
-  end
-
-  scope "/", ParzivalWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     get "/register", UserRegistrationController, :new
@@ -40,6 +28,27 @@ defmodule ParzivalWeb.Router do
     post "/reset_password", UserResetPasswordController, :create
     get "/reset_password/:token", UserResetPasswordController, :edit
     put "/reset_password/:token", UserResetPasswordController, :update
+  end
+
+  scope "/", ParzivalWeb do
+    pipe_through :browser
+
+    get "/schedule", ScheduleController, :index
+    get "/hackathon", HackathonController, :index
+    get "/missions", MissionsController, :index
+    get "/speakers", SpeakersController, :index
+    get "/faqs", FaqsController, :index
+    get "/team", TeamController, :index
+  end
+
+  scope "/", ParzivalWeb do
+    pipe_through [:browser]
+
+    live_session :user, on_mount: [{ParzivalWeb.Hooks, :current_user}] do
+      scope "/", Landing, as: :landing do
+        live "/", HomeLive.Index, :index
+      end
+    end
   end
 
   scope "/", ParzivalWeb do
