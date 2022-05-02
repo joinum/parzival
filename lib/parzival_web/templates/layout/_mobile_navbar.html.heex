@@ -23,7 +23,7 @@
   >
     <div class="flex justify-between items-center px-4 h-16 sm:px-6">
       <a href="/">
-        <img class="w-28" src={Routes.static_path(@conn, "/images/logo.svg")} alt="JOIN Logo" />
+        <img class="w-28" src={Routes.static_path(ParzivalWeb.Endpoint, "/images/logo.svg")} alt="JOIN Logo" />
       </a>
       <button @click="navbar = false" class="inline-flex justify-center items-center p-2 text-white">
         <span class="sr-only">Close main menu</span>
@@ -34,9 +34,9 @@
     </div>
 
     <div class="flex flex-col gap-y-8 justify-center items-center my-14 mx-auto w-full">
-      <%= for page <- ParzivalWeb.Config.pages(@conn) do %>
+      <%= for page <- ParzivalWeb.Config.pages() do %>
         <%= live_redirect to: page.url do %>
-          <span @click="navbar = false" class={"#{@conn.assigns.current_page == page.title && "font-bold"} text-white text-lg text-center hover:text-gray-300"}>
+          <span @click="navbar = false" class={"#{@current_page == page.title && "font-bold"} text-white text-lg text-center hover:text-gray-300"}>
             <%= page.title %>
           </span>
         <% end %>
@@ -44,13 +44,13 @@
     </div>
     <div class="flex absolute bottom-6 justify-between items-center px-8 mx-auto w-full">
       <%= link to: "https://cesium.di.uminho.pt/" do %>
-        <img class="h-auto text-white w-[70px]" src={Routes.static_path(@conn, "/images/logos/cesium.svg")} alt="CeSIUM Logo" />
+        <img class="h-auto text-white w-[70px]" src={Routes.static_path(ParzivalWeb.Endpoint, "/images/logos/cesium.svg")} alt="CeSIUM Logo" />
       <% end %>
       <%= link to: "https://necc.di.uminho.pt/" do %>
-        <img class="h-auto text-white w-[70px]" src={Routes.static_path(@conn, "/images/logos/necc.svg")} alt="NECC Logo" />
+        <img class="h-auto text-white w-[70px]" src={Routes.static_path(ParzivalWeb.Endpoint, "/images/logos/necc.svg")} alt="NECC Logo" />
       <% end %>
       <%= link to: "https://nefum.di.uminho.pt/" do %>
-        <img class="h-auto text-white w-[70px]" src={Routes.static_path(@conn, "/images/logos/nefum.svg")} alt="NEFUM Logo" />
+        <img class="h-auto text-white w-[70px]" src={Routes.static_path(ParzivalWeb.Endpoint, "/images/logos/nefum.svg")} alt="NEFUM Logo" />
       <% end %>
     </div>
   </nav>

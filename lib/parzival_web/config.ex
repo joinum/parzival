@@ -4,50 +4,52 @@ defmodule ParzivalWeb.Config do
   """
   alias ParzivalWeb.Router.Helpers, as: Routes
 
+  @conn ParzivalWeb.Endpoint
+
   def pages(conn, _current_user) do
     live_pages(conn)
   end
 
-  def pages(conn) do
-    base_pages(conn)
+  def pages do
+    base_pages()
   end
 
-  defp base_pages(conn) do
+  defp base_pages do
     [
       %{
         key: :home,
         title: "Home",
-        url: Routes.home_path(conn, :index),
+        url: Routes.landing_home_index_path(@conn, :index),
         tabs: []
       },
       %{
         key: :schedule,
         title: "Schedule",
-        url: Routes.schedule_path(conn, :index),
+        url: Routes.landing_schedule_index_path(@conn, :index),
         tabs: []
       },
       %{
         key: :missions,
         title: "Missions",
-        url: Routes.missions_path(conn, :index),
+        url: Routes.landing_missions_index_path(@conn, :index),
         tabs: []
       },
       %{
         key: :speakers,
         title: "Speakers",
-        url: Routes.speakers_path(conn, :index),
+        url: Routes.landing_speakers_index_path(@conn, :index),
         tabs: []
       },
       %{
         key: :faqs,
         title: "Faqs",
-        url: Routes.faqs_path(conn, :index),
+        url: Routes.landing_faqs_index_path(@conn, :index),
         tabs: []
       },
       %{
         key: :team,
         title: "Team",
-        url: Routes.team_path(conn, :index),
+        url: Routes.landing_team_index_path(@conn, :index),
         tabs: []
       }
     ]
@@ -76,12 +78,12 @@ defmodule ParzivalWeb.Config do
       %{
         key: :tools,
         title: "Tools",
-        url: Routes.faqs_index_path(conn, :index),
+        url: Routes.admin_faqs_index_path(conn, :index),
         tabs: [
           %{
             key: :faqs,
             title: "FAQs",
-            url: Routes.faqs_index_path(conn, :index)
+            url: Routes.admin_faqs_index_path(conn, :index)
           },
           %{
             key: :announcements,

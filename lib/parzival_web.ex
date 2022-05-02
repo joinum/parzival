@@ -23,7 +23,6 @@ defmodule ParzivalWeb do
 
       import Plug.Conn
       import ParzivalWeb.Gettext
-      import ParzivalWeb.ControllerUtils
       alias ParzivalWeb.Router.Helpers, as: Routes
     end
   end
@@ -47,6 +46,15 @@ defmodule ParzivalWeb do
     quote do
       use Phoenix.LiveView,
         layout: {ParzivalWeb.LayoutView, "live.html"}
+
+      unquote(view_helpers())
+    end
+  end
+
+  def live_view(layout) do
+    quote do
+      use Phoenix.LiveView,
+        layout: unquote(layout)
 
       unquote(view_helpers())
     end
@@ -109,5 +117,9 @@ defmodule ParzivalWeb do
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
+  end
+
+  defmacro __using__(opts) when is_list(opts) do
+    apply(__MODULE__, hd(opts), tl(opts))
   end
 end
