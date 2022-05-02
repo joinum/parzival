@@ -1,0 +1,35 @@
+<div class="h-full bg-white border-r border-gray-200">
+  <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+    <div class="flex justify-between items-center h-10">
+      <h1 class="flex-1 text-lg font-medium">Store</h1>
+      <!-- Action buttons -->
+      <div class="flex flex-col sm:flex-row xl:flex-col">
+        <%= live_patch("New", to: Routes.admin_product_new_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+      </div>
+    </div>
+  </div>
+
+  <ul class="grid grid-cols-1 gap-x-6 px-10 pt-8 sm:grid-cols-2 lg:grid-cols-3 lg:px-4">
+    <%= for product <- @products do %>
+      <%= live_patch to: Routes.product_show_path(@socket, :show, product) do %>
+        <li class="relative mb-6 group" id={"product-#{product.id}"}>
+          <div class="overflow-hidden w-full bg-gray-200 rounded-md lg:h-80 group-hover:opacity-75 min-h-80 aspect-w-1 aspect-h-1 lg:aspect-none">
+            <img src={Uploaders.ProductImage.url({product.image, @product}, :medium)} class="object-cover object-center w-full h-full lg:w-full lg:h-full" />
+          </div>
+          <div class="flex flex-col justify-between pl-1 mt-4">
+            <h3 class="text-sm text-gray-700">
+              <span aria-hidden="true" class="absolute inset-0"></span>
+              <%= product.name %>
+            </h3>
+            <p class="mt-1 text-sm text-gray-500">
+              <%= product.description %>
+            </p>
+            <p class="relative right-1 text-sm font-medium text-gray-900">
+              💰 <span class="relative top-0.5"><%= product.price %></span>
+            </p>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

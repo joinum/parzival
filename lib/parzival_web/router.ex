@@ -29,6 +29,66 @@ defmodule ParzivalWeb.Router do
     get "/team", TeamController, :index
   end
 
+  scope "/", ParzivalWeb do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    get "/register", UserRegistrationController, :new
+    post "/register", UserRegistrationController, :create
+    get "/login", UserSessionController, :new
+    post "/login", UserSessionController, :create
+    get "/reset_password", UserResetPasswordController, :new
+    post "/reset_password", UserResetPasswordController, :create
+    get "/reset_password/:token", UserResetPasswordController, :edit
+    put "/reset_password/:token", UserResetPasswordController, :update
+  end
+
+  scope "/", ParzivalWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :logged_in, on_mount: [{ParzivalWeb.Hooks, :current_user}] do
+      scope "/app", App do
+        live "/", HomeLive.Index, :index
+
+        live "/store/", ProductLive.Index, :index
+        live "/store/:id", ProductLive.Show, :show
+
+        live "/vault", OrderLive.Index, :index
+
+        live "/announcements", AnnouncementLive.Index, :index
+        live "/announcements/:id", AnnouncementLive.Show, :show
+      end
+
+      scope "/admin", Backoffice, as: :admin do
+        live "/store/new", ProductLive.New, :new
+        live "/store/:id/edit", ProductLive.Edit, :edit
+
+        scope "/tools" do
+          live "/faqs/", FaqsLive.Index, :index
+          live "/faqs/new", FaqsLive.New, :new
+          live "/faqs/:id", FaqsLive.Show, :show
+          live "/faqs/:id/edit", FaqsLive.Edit, :edit
+
+          live "/announcements/new", AnnouncementLive.New, :new
+          live "/announcements/:id/edit", AnnouncementLive.Edit, :edit
+        end
+      end
+    end
+
+    get "/settings", UserSettingsController, :edit
+    put "/settings", UserSettingsController, :update
+    get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
+  end
+
+  scope "/", ParzivalWeb do
+    pipe_through [:browser]
+
+    delete "/log_out", UserSessionController, :delete
+    get "/confirm", UserConfirmationController, :new
+    post "/confirm", UserConfirmationController, :create
+    get "/confirm/:token", UserConfirmationController, :edit
+    post "/confirm/:token", UserConfirmationController, :update
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ParzivalWeb do
   #   pipe_through :api
@@ -61,61 +121,5 @@ defmodule ParzivalWeb.Router do
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
-  end
-
-  ## Authentication routes
-
-  scope "/", ParzivalWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
-
-    get "/users/register", UserRegistrationController, :new
-    post "/users/register", UserRegistrationController, :create
-    get "/users/log_in", UserSessionController, :new
-    post "/users/log_in", UserSessionController, :create
-    get "/users/reset_password", UserResetPasswordController, :new
-    post "/users/reset_password", UserResetPasswordController, :create
-    get "/users/reset_password/:token", UserResetPasswordController, :edit
-    put "/users/reset_password/:token", UserResetPasswordController, :update
-  end
-
-  scope "/", ParzivalWeb do
-    pipe_through [:browser, :require_authenticated_user]
-
-    live_session :logged_in, on_mount: [{ParzivalWeb.Hooks, :current_user}] do
-      live "/home/", HomeLive.Index, :index
-
-      scope "/tools" do
-        live "/faqs/", FaqsLive.Index, :index
-        live "/faqs/new", FaqsLive.New, :new
-        live "/faqs/:id", FaqsLive.Show, :show
-        live "/faqs/:id/edit", FaqsLive.Edit, :edit
-
-        live "/announcements", AnnouncementLive.Index, :index
-        live "/announcements/new", AnnouncementLive.New, :new
-        live "/announcements/:id", AnnouncementLive.Show, :show
-        live "/announcements/:id/edit", AnnouncementLive.Edit, :edit
-      end
-
-      live "/store/", ProductLive.Index, :index
-      live "/store/new", ProductLive.New, :new
-      live "/store/:id", ProductLive.Show, :show
-      live "/store/:id/edit", ProductLive.Edit, :edit
-
-      live "/vault", OrderLive.Index, :index
-    end
-
-    get "/users/settings", UserSettingsController, :edit
-    put "/users/settings", UserSettingsController, :update
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
-  end
-
-  scope "/", ParzivalWeb do
-    pipe_through [:browser]
-
-    delete "/users/log_out", UserSessionController, :delete
-    get "/users/confirm", UserConfirmationController, :new
-    post "/users/confirm", UserConfirmationController, :create
-    get "/users/confirm/:token", UserConfirmationController, :edit
-    post "/users/confirm/:token", UserConfirmationController, :update
   end
 end
