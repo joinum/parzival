@@ -52,6 +52,8 @@ defmodule Parzival.Repo.Seeds.Accounts do
             email: "matilde@mail.pt",
             password: "Password1234",
             role: :attendee,
+            course: "Medicine",
+            cycle: :Phd,
             balance: 1000
           },
           %{
@@ -59,6 +61,8 @@ defmodule Parzival.Repo.Seeds.Accounts do
             email: "carlos@mail.pt",
             password: "Password1234",
             role: :attendee,
+            course: "Software Engineering",
+            cycle: :Bachelors,
             balance: 1000
           },
           %{
@@ -66,6 +70,8 @@ defmodule Parzival.Repo.Seeds.Accounts do
             email: "maria@mail.pt",
             password: "Password1234",
             role: :attendee,
+            course: "Sociology",
+            cycle: :Masters,
             balance: 1000
           },
           %{
@@ -73,6 +79,8 @@ defmodule Parzival.Repo.Seeds.Accounts do
             email: "nelson@mail.pt",
             password: "Password1234",
             role: :attendee,
+            course: "Marketing",
+            cycle: :Phd,
             balance: 1000
           }
         ]

@@ -113,7 +113,7 @@
                 </span>
                 <span class="inline-block overflow-hidden w-full text-sm text-gray-900 whitespace-nowrap text-ellipsis">
                   <%= if @current_user.role == :attendee do %>
-                    Bachelors in Software Engineering
+                    <%= @current_user.cycle %> in <%= @current_user.course %>
                   <% else %>
                     <%= String.upcase(Atom.to_string(@current_user.role)) %>
                   <% end %>
