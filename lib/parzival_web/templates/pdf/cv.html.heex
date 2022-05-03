@@ -26,15 +26,16 @@
         margin-right: 0;
       }
 
-      table { page-break-inside: auto; border: none; border-left-style: none; border-right-style: none; border-top-style: none; border-bottom-style: none; }
-      tr { page-break-inside: avoid; page-break-after: auto; }
+      table { border: none; border-style: none; page-break-inside: auto; }
+      tr { page-break-inside: avoid; page-break-after: auto; display: inline-block; border: none; border-style: none;}
+      td { border: none; border-style: none; }
+
     </style>
   </head>
 
   <body style="background-color: white">
-    <div class="">
-      <div style="background-color: rgb(234,59,45); height: 34.13cm;" class="absolute py-16 px-10 w-1/3">
-        <img class="mx-auto w-48 rounded-full" src="http://localhost:4000/images/team/luis.png" alt="Profile image" />
+      <div style="background-color: rgb(234,59,45); height: 37.13cm;" class="absolute w-1/3 px-10 py-16">
+        <img class="w-48 mx-auto rounded-full" src="http://localhost:4000/images/team/luis.png" alt="Profile image" />
         <div style="color: white;" class="mt-12">
           <p class="text-4xl font-black"><%= @user.name %></p>
           <p class="mt-1">Bachelors in Software Engineering</p>
@@ -77,123 +78,124 @@
         <img class="absolute w-36 left-[90px] bottom-[64px]" src="http://localhost:4000/images/logo.png" alt="JOIN Logo" />
       </div>
       <div class="flex flex-col w-2/3 px-10 pt-12 ml-[33.333%]">
-        <table style="page-break-inside:avoid ! important; ">
-          <tr>
-            <section>
-              <p style="color: rgb(234,59,45);" class="text-2xl font-bold tracking-wider">ABOUT ME</p>
-              <p class="mt-5 font-light">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              </p>
-              <div class="mt-2 flexrow">
-                <p class="font-bold">
-                  Email: <span style="font-weight: 300;">laraujo@cesium.pt</span>
+        <table>
+          <tbody>
+            <tr class="w-full">
+              <td>
+                <p style="color: rgb(234,59,45);" class="text-2xl font-bold tracking-wider">ABOUT ME</p>
+                <p class="mt-5 font-light">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 </p>
-              </div>
-              <div class="flexrow">
-                <p class="font-bold">
-                  Phone Number: <span style="font-weight: 300;">+253 934674465</span>
-                </p>
-              </div>
-            </section>
-          </tr>
-
-          <tr>
-            <section class="mt-10">
-              <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EXPERIENCE</p>
-              <%= for experience <- [%{company: "CeSIUM", time: "2yrs 8mos", job: [%{job_title: "Collaborator", since: "Sep 2019", until: "Dec 2020"},%{job_title: "Image Department Co-director", since: "Dec 2020", until: "Oct 2021"},%{job_title: "Marketing & Content Department Director", since: "Oct 2021", until: "Present"}]}, %{company: "CoderDojo", time: "1yr 0mos", job: [%{job_title: "Collaborator", since: "Dec 2019", until: "Jun 2020"}]}] do %>
-                <div class="mt-4">
-                  <p class="text-xl font-medium">
-                    <%= experience.company %> <span style="color: rgb(156,163,175)" class="text-sm"><%= experience.time %></span>
+                <div class="mt-2 flexrow">
+                  <p class="font-bold">
+                    Email: <span style="font-weight: 300;">laraujo@cesium.pt</span>
                   </p>
-                  <div style="border-left: rgb(209,213,219) 1.5px solid; border-top-style: none; border-bottom-style: none; border-right-style: none;" class="mt-2 ml-2">
-                    <%= for job <- experience.job do %>
-                      <p class="ml-5">
-                        <%= job.job_title %> <span style="color: rgb(156,163,175)" class="text-sm"><%= job.since %> - <%= job.until %></span>
-                      </p>
+                </div>
+                <div class="flexrow">
+                  <p class="font-bold">
+                    Phone Number: <span style="font-weight: 300;">+253 934674465</span>
+                  </p>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="w-full mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EXPERIENCE</p>
+                <%= for experience <- [%{company: "CeSIUM", time: "2yrs 8mos", job: [%{job_title: "Collaborator", since: "Sep 2019", until: "Dec 2020"},%{job_title: "Image Department Co-director", since: "Dec 2020", until: "Oct 2021"},%{job_title: "Marketing & Content Department Director", since: "Oct 2021", until: "Present"}]}, %{company: "CoderDojo", time: "1yr 0mos", job: [%{job_title: "Collaborator", since: "Dec 2019", until: "Jun 2020"}]}] do %>
+                  <div class="mt-4">
+                    <p class="text-xl font-medium">
+                      <%= experience.company %> <span style="color: rgb(156,163,175)" class="text-sm"><%= experience.time %></span>
+                    </p>
+                    <div style="border-left: rgb(209,213,219) 1.5px solid; border-top-style: none; border-bottom-style: none; border-right-style: none;" class="mt-2 ml-2">
+                      <%= for job <- experience.job do %>
+                        <p class="ml-5">
+                          <%= job.job_title %> <span style="color: rgb(156,163,175)" class="text-sm"><%= job.since %> - <%= job.until %></span>
+                        </p>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+
+            <tr class="w-full mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EDUCATION</p>
+                <%= for education <- [%{title: "Master Degree Of Design", date: "JANUARY, 2007", body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit maxime laborum sequi, magni earum quo soluta sint velit numquam, ipsum illum! Nostrum possimus illo architecto praesentium ut aliquam dolorem."},%{title: "Bachelor Of Arts", date: "JUNE, 2004", body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit."}] do %>
+                  <div class="mt-4">
+                    <p class="text-xl font-medium">
+                      <%= education.title %>
+                    </p>
+                    <p style="color: rgb(156,163,175)" class="mb-2 text-sm">
+                      <%= education.date %>
+                    </p>
+                    <p class="text-sm">
+                      <%= education.body %>
+                    </p>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+
+            <tr class="w-full mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">VOLUNTEERING</p>
+                <%= for voluntary <- [%{title: "Master Degree Of Design", date: "JANUARY, 2007"},%{title: "Bachelor Of Arts", date: "JUNE, 2004"}] do %>
+                  <div class="mt-4">
+                    <p class="text-xl font-medium">
+                      <%= voluntary.title %>
+                    </p>
+                    <p style="color: rgb(156,163,175)" class="mb-2 text-sm">
+                      <%= voluntary.date %>
+                    </p>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+
+            <tr class="w-full mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="mb-5 text-2xl font-bold tracking-wider">SKILLS</p>
+                <%= for flexrow <- Enum.chunk_every(["Elixir","Haskell","C","Java","JavaScript","HTML","CSS","Python","MySQL","Photoshop","Illustrator","Blender"],4,4,[]) do %>
+                  <div class="mb-1 flexrow">
+                    <%= for skill <- flexrow do %>
+                      <div style="margin-right: 10%;" class="w-20">
+                        <span style="border-bottom: rgb(234,59,45) 1.5px solid; border-top-style: none; border-left-style: none; border-right-style: none;" class="mr-3">
+                          <%= if String.length(skill) <= 11 do
+                            skill
+                          else
+                            String.slice(skill, 0..10) <> "..."
+                          end %>
+                        </span>
+                      </div>
                     <% end %>
                   </div>
-                </div>
-              <% end %>
-            </section>
-          </tr>
+                <% end %>
+              </td>
+            </tr>
 
-          <tr>
-            <section class="mt-10">
-              <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EDUCATION</p>
-              <%= for education <- [%{title: "Master Degree Of Design", date: "JANUARY, 2007", body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit maxime laborum sequi, magni earum quo soluta sint velit numquam, ipsum illum! Nostrum possimus illo architecto praesentium ut aliquam dolorem."},%{title: "Bachelor Of Arts", date: "JUNE, 2004", body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit."}] do %>
-                <div class="mt-4">
-                  <p class="text-xl font-medium">
-                    <%= education.title %>
-                  </p>
-                  <p style="color: rgb(156,163,175)" class="mb-2 text-sm">
-                    <%= education.date %>
-                  </p>
-                  <p class="text-sm">
-                    <%= education.body %>
-                  </p>
-                </div>
-              <% end %>
-            </section>
-          </tr>
-
-          <tr>
-            <section class="mt-10">
-              <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">VOLUNTEERING</p>
-              <%= for voluntary <- [%{title: "Master Degree Of Design", date: "JANUARY, 2007"},%{title: "Bachelor Of Arts", date: "JUNE, 2004"}] do %>
-                <div class="mt-4">
-                  <p class="text-xl font-medium">
-                    <%= voluntary.title %>
-                  </p>
-                  <p style="color: rgb(156,163,175)" class="mb-2 text-sm">
-                    <%= voluntary.date %>
-                  </p>
-                </div>
-              <% end %>
-            </section>
-          </tr>
-
-          <tr>
-            <section class="mt-10">
-              <p style="color: rgb(234,59,45);" class="mb-5 text-2xl font-bold tracking-wider">SKILLS</p>
-              <%= for flexrow <- Enum.chunk_every(["Elixir","Haskell","C","Java","JavaScript","HTML","CSS","Python","MySQL","Photoshop","Illustrator","Blender"],4,4,[]) do %>
-                <div class="mb-1 flexrow">
-                  <%= for skill <- flexrow do %>
-                    <div style="margin-right: 10%;" class="w-20">
-                      <span style="border-bottom: rgb(234,59,45) 1.5px solid; border-top-style: none; border-left-style: none; border-right-style: none;" class="mr-3">
-                        <%= if String.length(skill) <= 11 do
-                          skill
-                        else
-                          String.slice(skill, 0..10) <> "..."
-                        end %>
-                      </span>
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
-            </section>
-          </tr>
-
-          <tr>
-            <section class="mt-10">
-              <p style="color: rgb(234,59,45);" class="mb-5 text-2xl font-bold tracking-wider">LANGUAGES</p>
-              <%= for flexrow <- Enum.chunk_every([%{title: "Portuguese", proficiency: "Native or bilingual proficiency"}, %{title: "English", proficiency: "Full professional proficiency"}, %{title: "Spanish", proficiency: "Professional working proficiency"}, %{title: "Italian", proficiency: "Limited working proficiency"}, %{title: "French", proficiency: "Elementary proficiency proficiency"}],2,2,[]) do %>
-                <div class="mb-1 flexrow">
-                  <%= for language <- flexrow do %>
-                    <div style="margin-right: 20%;">
-                      <p class="font-medium">
-                        <%= language.title %>
-                      </p>
-                      <p style="color: rgb(156,163,175)" class="mb-2 text-xs">
-                        <%= language.proficiency %>
-                      </p>
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
-            </section>
-          </tr>
+            <tr class="w-full mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="mb-5 text-2xl font-bold tracking-wider">LANGUAGES</p>
+                <%= for flexrow <- Enum.chunk_every([%{title: "Portuguese", proficiency: "Native or bilingual proficiency"}, %{title: "English", proficiency: "Full professional proficiency"}, %{title: "Spanish", proficiency: "Professional working proficiency"}, %{title: "Italian", proficiency: "Limited working proficiency"}, %{title: "French", proficiency: "Elementary proficiency proficiency"}],2,2,[]) do %>
+                  <div class="mb-1 flexrow">
+                    <%= for language <- flexrow do %>
+                      <div style="margin-right: 20%;">
+                        <p class="font-medium">
+                          <%= language.title %>
+                        </p>
+                        <p style="color: rgb(156,163,175)" class="mb-2 text-xs">
+                          <%= language.proficiency %>
+                        </p>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
-    </div>
   </body>
 </html>
