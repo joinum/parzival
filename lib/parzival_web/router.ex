@@ -53,6 +53,8 @@ defmodule ParzivalWeb.Router do
       scope "/app", App do
         live "/", HomeLive.Index, :index
 
+        live "/curriculum", CurriculumLive.Index, :index
+
         live "/store/", ProductLive.Index, :index
         live "/store/:id", ProductLive.Show, :show
 

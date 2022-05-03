@@ -4,6 +4,7 @@ defmodule Parzival.Accounts.User do
   """
   use Parzival.Schema
 
+  alias Parzival.Gamification.Curriculum
   alias Parzival.Store.Order
 
   @roles ~w(admin staff attendee company)a
@@ -13,7 +14,11 @@ defmodule Parzival.Accounts.User do
 
   @optional_fields [
     :course,
-    :cycle
+    :cycle,
+    :cellphone,
+    :linkedin,
+    :github,
+    :twitter
   ]
 
   @derive {
@@ -37,6 +42,12 @@ defmodule Parzival.Accounts.User do
     field :role, Ecto.Enum, values: @roles
     field :course, :string
     field :cycle, Ecto.Enum, values: @cycles
+    field :cellphone, :string
+    field :linkedin, :string
+    field :github, :string
+    field :twitter, :string
+
+    has_one :curriculum, Curriculum
 
     has_many :orders, Order
 
