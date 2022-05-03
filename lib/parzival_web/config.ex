@@ -54,9 +54,9 @@ defmodule ParzivalWeb.Config do
         tabs: []
       },
       %{
-        key: :team,
-        title: "Team",
-        url: Routes.landing_team_index_path(@conn, :index),
+        key: :login,
+        title: "Login",
+        url: Routes.user_session_path(@conn, :new),
         tabs: []
       }
     ]
