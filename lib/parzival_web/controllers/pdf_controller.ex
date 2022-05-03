@@ -1,16 +1,19 @@
 defmodule ParzivalWeb.PdfController do
   use ParzivalWeb, :controller
 
-  def cv(conn, %{}) do
+  alias Parzival.Accounts
+
+  def cv(conn, _params) do
+    current_user = Accounts.get_user!(conn.assigns.current_user.id)
 
     conn
-     |> render_document("cv", "cv_name")
+    |> assign(:user, current_user)
+    |> render_document("cv", "#{current_user.name} CV")
   end
 
   def cv_preview(conn, _params) do
     preview_document(conn, "cv_name")
   end
-
 
   defp render_document(conn, name, file_name) do
     conn
