@@ -4,10 +4,10 @@ defmodule Parzival.Repo.Seeds.Accounts do
   alias Parzival.Accounts.User
 
   def run do
-    seed_admins()
+    seed_users()
   end
 
-  def seed_admins do
+  def seed_users do
     case Repo.all(User) do
       [] ->
         [
@@ -15,35 +15,75 @@ defmodule Parzival.Repo.Seeds.Accounts do
             name: "Filipe Felício",
             email: "felicio@cesium.pt",
             password: "Password1234",
-            balance: 5000
+            role: :admin
           },
           %{
             name: "Luís Araújo",
             email: "laraujo@cesium.pt",
             password: "Password1234",
-            balance: 5000
+            role: :admin
           },
           %{
             name: "David Machado",
             email: "david@necc.pt",
             password: "Password1234",
-            balance: 5000
+            role: :admin
           },
           %{
             name: "Maria João Portela",
             email: "mj@nefum.pt",
             password: "Password1234",
-            balance: 5000
+            role: :admin
+          },
+          %{
+            name: "Beatriz Rocha",
+            email: "bea@cesium.pt",
+            password: "Password1234",
+            role: :staff
+          },
+          %{
+            name: "CeSIUM",
+            email: "geral@cesium.pt",
+            password: "Password1234",
+            role: :company
+          },
+          %{
+            name: "Matilde Bravo",
+            email: "matilde@mail.pt",
+            password: "Password1234",
+            role: :attendee,
+            balance: 1000
+          },
+          %{
+            name: "Carlos Ferreira",
+            email: "carlos@mail.pt",
+            password: "Password1234",
+            role: :attendee,
+            balance: 1000
+          },
+          %{
+            name: "Maria Pires",
+            email: "maria@mail.pt",
+            password: "Password1234",
+            role: :attendee,
+            balance: 1000
+          },
+          %{
+            name: "Nelson Estevao",
+            email: "nelson@mail.pt",
+            password: "Password1234",
+            role: :attendee,
+            balance: 1000
           }
         ]
-        |> Enum.each(&insert_admin/1)
+        |> Enum.each(&insert_user/1)
 
       _ ->
-        Mix.shell().error("Found users, aborting seeding admin users.")
+        Mix.shell().error("Found users, aborting seeding users.")
     end
   end
 
-  defp insert_admin(data) do
+  defp insert_user(data) do
     %User{}
     |> User.registration_changeset(data)
     |> Repo.insert!()

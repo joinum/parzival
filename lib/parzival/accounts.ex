@@ -2,11 +2,18 @@ defmodule Parzival.Accounts do
   @moduledoc """
   The Accounts context.
   """
+  use Parzival.Context
 
   import Ecto.Query, warn: false
 
   alias Parzival.Accounts.{User, UserNotifier, UserToken}
   alias Parzival.Repo
+
+  def list_users(opts) do
+    User
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
 
   ## Database getters
 

@@ -3,17 +3,19 @@
     <div class="flex justify-between items-center h-10">
       <h1 class="flex-1 text-lg font-medium">Store</h1>
       <!-- Action buttons -->
-      <div class="flex flex-row gap-x-4">
-        <%= live_patch to: Routes.admin_product_edit_path(@socket, :edit, @product), class: "button" do %>
-          <div type="button" class="inline-flex justify-center py-2 px-4 w-full text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-            </svg>
-            Edit
-          </div>
-        <% end %>
-        <%= link("Delete", to: "#", phx_click: "delete", data: [confirm: gettext("Are you sure?")], class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
-      </div>
+      <%= if @current_user.role == :admin do %>
+        <div class="flex flex-row gap-x-4">
+          <%= live_patch to: Routes.admin_product_edit_path(@socket, :edit, @product), class: "button" do %>
+            <div type="button" class="inline-flex justify-center py-2 px-4 w-full text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
+              Edit
+            </div>
+          <% end %>
+          <%= link("Delete", to: "#", phx_click: "delete", data: [confirm: gettext("Are you sure?")], class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+        </div>
+      <% end %>
     </div>
   </div>
 
@@ -52,14 +54,16 @@
           <h2 id="options-heading" class="sr-only">Product options</h2>
           <form>
             <div class="mt-10">
-              <%= if @product.stock > 0 && @redeem_quantity > 0 do %>
-                <button phx-click="purchase" type="submit" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
-                  Purchase
-                </button>
-              <% else %>
-                <div class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-white rounded-md border border-transparent shadow-sm opacity-50 bg-secondary">
-                  Purchase
-                </div>
+              <%= if @current_user.role == :attendee do %>
+                <%= if @product.stock > 0 && @redeem_quantity > 0 do %>
+                  <button phx-click="purchase" type="submit" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
+                    Purchase
+                  </button>
+                <% else %>
+                  <div class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-white rounded-md border border-transparent shadow-sm opacity-50 bg-secondary">
+                    Purchase
+                  </div>
+                <% end %>
               <% end %>
             </div>
           </form>
@@ -69,7 +73,11 @@
             <%= @product.stock %> available
           </p>
           <p class="text-sm text-gray-500">
-            You can redeem <%= @redeem_quantity %> more
+            <%= if @current_user.role == :attendee do %>
+              You can redeem <%= @redeem_quantity %> more
+            <% else %>
+              Each user can redeem up to <%= @product.max_per_user %> units
+            <% end %>
           </p>
         </div>
       </div>
