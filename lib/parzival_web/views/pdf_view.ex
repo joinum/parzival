@@ -13,7 +13,16 @@ defmodule ParzivalWeb.PdfView do
       delete_temporary: true,
       page_size: "A4",
       filename: "attendee.pdf",
-      shell_params: ["--margin-top", "0", "--margin-left", "0", "--margin-right", "0", "--margin-bottom", "0"]
+      shell_params: [
+        "--margin-top",
+        "0",
+        "--margin-left",
+        "0",
+        "--margin-right",
+        "0",
+        "--margin-bottom",
+        "0"
+      ]
     )
 
     # |> PdfGenerator.generate_binary!(delete_temporary: true, page_size: "A4", filename: "attendee.pdf", shell_params: ["--margin-top", "0", "--margin-left", "0", "--margin-right", "0", "--margin-bottom", "0"])
