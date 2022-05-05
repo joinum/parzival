@@ -9,10 +9,22 @@ defmodule Parzival.Accounts do
   alias Parzival.Accounts.{User, UserNotifier, UserToken}
   alias Parzival.Repo
 
-  def list_users(opts) do
+  def list_users(params \\ %{})
+
+  def list_users(opts) when is_list(opts) do
     User
     |> apply_filters(opts)
     |> Repo.all()
+  end
+
+  def list_users(flop) do
+    Flop.validate_and_run(User, flop, for: User)
+  end
+
+  def list_users(%{} = flop, opts) when is_list(opts) do
+    User
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: User)
   end
 
   ## Database getters
@@ -133,6 +145,28 @@ defmodule Parzival.Accounts do
     |> User.email_changeset(attrs)
     |> User.validate_current_password(password)
     |> Ecto.Changeset.apply_action(:update)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking user changes.
+  ## Examples
+      iex> change_user_registration(user)
+      %Ecto.Changeset{data: %User{}}
+  """
+  def change_user(%User{} = user, attrs \\ %{}) do
+    User.changeset(user, attrs, generate_password: false)
+  end
+
+  @doc """
+  Deletes a user.
+  ## Examples
+      iex> delete_user(user)
+      {:ok, %User{}}
+      iex> delete_user(user)
+      {:error, %Ecto.Changeset{}}
+  """
+  def delete_user(%User{} = user) do
+    Repo.delete(user)
   end
 
   @doc """

@@ -1,46 +1,76 @@
+<% roles = %{
+  admin: %{
+    title: "Admins",
+    url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "admin"}}})
+  },
+  staff: %{
+    title: "Staffs",
+    url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "staff"}}})
+  },
+  attendee: %{
+    title: "Ateendees",
+    url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "attendee"}}})
+  },
+  company: %{
+    title: "Companies",
+    url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "company"}}})
+  }
+} %>
+
 <div class="h-full bg-white border-r border-gray-200">
   <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
     <div class="flex justify-between items-center h-10">
-      <h1 class="flex-1 text-lg font-medium">Admins</h1>
+      <h1 class="flex-1 text-lg font-medium"><%= roles[@current_tab].title %></h1>
       <div class="flex flex-col sm:flex-row xl:flex-col">
-        <%= live_patch("New", to: "", class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+        <%= live_patch("New", to: Routes.admin_user_new_path(@socket, :new, %{role: @current_tab}), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
       </div>
+    </div>
+  </div>
+
+  <div class="flex flex-1 justify-center items-center">
+    <div class="w-full border-b border-gray-200">
+      <label for="search" class="sr-only">Search</label>
+      <form phx-submit="search" phx-change="search" class="relative" method="#">
+        <div class="flex absolute inset-y-0 left-0 items-center pl-6 pointer-events-none">
+          <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20">
+            <path fill="currentColor" fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8ZM2 8a6 6 0 1 1 10.89 3.476l4.817 4.817a1 1 0 0 1-1.414 1.414l-4.816-4.816A6 6 0 0 1 2 8Z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <%= text_input(:search, :query,
+          placeholder: "Search",
+          autofocus: true,
+          "phx-debounce": "300",
+          class: "block w-full py-3 pl-14 pr-3 leading-5 placeholder-gray-400 bg-white border-0 focus:ring-primary focus:ring-0 focus:outline-none"
+        ) %>
+      </form>
     </div>
   </div>
   <ul role="list" class="relative z-0">
     <%= for user <- @users do %>
-      <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
-        <div class="flex justify-between">
-          <div class="py-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6">
-            <div class="flex items-center">
-              <div class="flex-shrink-0 w-10 h-10">
-                <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
-                  <span class="text-lg font-medium leading-none text-white">
-                    <%= extract_initials(user.name) %>
+      <%= live_patch(to: Routes.admin_user_show_path(@socket, :show, user)) do %>
+        <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
+          <div class="flex justify-between">
+            <div class="py-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6">
+              <div class="flex items-center">
+                <div class="flex-shrink-0 w-10 h-10">
+                  <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                    <span class="text-lg font-medium leading-none text-white">
+                      <%= extract_initials(user.name) %>
+                    </span>
                   </span>
-                </span>
-              </div>
-              <div class="ml-4">
-                <div class="font-medium text-gray-900">
-                  <%= user.name %>
                 </div>
-                <div class="text-gray-500">lindsay.walton@example.com</div>
+                <div class="ml-4">
+                  <div class="font-medium text-gray-900">
+                    <%= user.name %>
+                  </div>
+                  <div class="hidden text-gray-500 md:block"><%= user.email %></div>
+                </div>
               </div>
             </div>
+            <div class="flex items-center py-4 px-3 text-sm text-gray-900 whitespace-nowrap">Front-end Developer</div>
           </div>
-          <div class="py-4 px-3 text-sm text-gray-500 whitespace-nowrap">
-            <div class="text-gray-900">Front-end Developer</div>
-            <div class="text-gray-500">Optimization</div>
-          </div>
-          <div class="py-4 px-3 text-sm text-gray-500 whitespace-nowrap">
-            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Active</span>
-          </div>
-          <div class="py-4 px-3 text-sm text-gray-500 whitespace-nowrap">Member</div>
-          <div class="relative py-4 pr-4 pl-3 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-          </div>
-        </div>
-      </li>
+        </li>
+      <% end %>
     <% end %>
   </ul>
 </div>

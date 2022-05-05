@@ -8,6 +8,15 @@ defmodule Parzival.Accounts.User do
 
   @roles ~w(admin staff attendee company)a
 
+  @derive {
+    Flop.Schema,
+    filterable: [:role, :search],
+    sortable: [:name, :email],
+    compound_fields: [search: [:email, :name]],
+    default_order_by: [:name, :email],
+    default_order_directions: [:asc, :asc]
+  }
+
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true, redact: true
@@ -48,6 +57,18 @@ defmodule Parzival.Accounts.User do
     |> validate_password(opts)
   end
 
+  def changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [
+      :name,
+      :email,
+      :role
+    ])
+    |> validate_required([:name])
+    |> validate_email()
+    |> generate_random_password(opts)
+  end
+
   defp validate_email(changeset) do
     changeset
     |> validate_required([:email])
@@ -85,6 +106,19 @@ defmodule Parzival.Accounts.User do
       |> delete_change(:password)
     else
       changeset
+    end
+  end
+
+  defp generate_random_password(changeset, opts) do
+    generate_password? = Keyword.get(opts, :generate_password, true)
+
+    if generate_password? do
+      changeset
+      |> put_change(:password, Base.encode64(:crypto.strong_rand_bytes(32)))
+      |> maybe_hash_password(hash_password: true)
+    else
+      changeset
+      |> put_change(:hashed_password, Base.encode64(:crypto.strong_rand_bytes(32)))
     end
   end
 
