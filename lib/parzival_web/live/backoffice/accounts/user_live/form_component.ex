@@ -2,7 +2,7 @@ defmodule ParzivalWeb.Backoffice.UserLive.FormComponent do
   @moduledoc false
   use ParzivalWeb, :live_component
 
-  alias Eegs.Accounts
+  alias Parzival.Accounts
 
   @impl true
   def update(%{user: user} = assigns, socket) do
