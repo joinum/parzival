@@ -60,6 +60,8 @@ defmodule ParzivalWeb.Router do
 
         live "/announcements", AnnouncementLive.Index, :index
         live "/announcements/:id", AnnouncementLive.Show, :show
+
+        live "/profile", ProfileLive.Index, :index
       end
 
       scope "/admin", Backoffice, as: :admin do
