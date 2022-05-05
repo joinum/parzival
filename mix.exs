@@ -59,6 +59,9 @@ defmodule Parzival.MixProject do
       {:waffle, "~> 1.1"},
       {:waffle_ecto, "~> 0.0"},
 
+      # pagination
+      {:flop, "~> 0.15.0"},
+
       # development
       {:dotenvy, "~> 0.6.0"},
       {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},

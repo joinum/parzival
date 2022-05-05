@@ -6,27 +6,66 @@ defmodule ParzivalWeb.Backoffice.UserLive.Index do
   alias Parzival.Accounts
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(params, _session, socket) do
+    {:ok, assign(socket, list_users(params))}
   end
 
   @impl true
   def handle_params(
-        %{"filters" => %{"0" => %{"field" => "role", "value" => _role}}} = params,
+        %{"filters" => %{"0" => %{"field" => "role", "value" => role}}} = params,
         _url,
         socket
       ) do
-    # tab =
-    #   case role do
-    #     "admin" -> :admin
-    #     "staff" -> :staff
-    #     "attendee" -> :attendee
-    #     "company" -> :company
-    #   end
+    tab =
+      case role do
+        "admin" -> :admin
+        "staff" -> :staff
+        "attendee" -> :attendee
+        "company" -> :company
+      end
 
     {:noreply,
      socket
      |> assign(:current_page, :accounts)
-     |> assign(:users, Accounts.list_users(params))}
+     |> assign(:current_tab, tab)
+     |> assign(:params, params)
+     |> assign(list_users(params))}
+  end
+
+  @impl true
+  def handle_params(_params, _url, socket) do
+    params = %{"filters" => %{"0" => %{"field" => "role", "value" => "attendee"}}}
+
+    {:noreply,
+     socket
+     |> assign(:current_page, :accounts)
+     |> assign(:current_tab, :attendee)
+     |> assign(:params, params)
+     |> assign(list_users(params))}
+  end
+
+  @impl true
+  def handle_event("search", %{"search" => %{"query" => query}}, socket) do
+    params = build_search_map(socket.assigns.params, query)
+
+    {:noreply, push_patch(socket, to: Routes.admin_user_index_path(socket, :index, params))}
+  end
+
+  defp list_users(params) do
+    case Accounts.list_users(params) do
+      {:ok, {users, meta}} ->
+        %{users: users, meta: meta}
+
+      {:error, flop} ->
+        %{users: [], meta: flop}
+    end
+  end
+
+  defp build_search_map(params, text) do
+    filters =
+      (params["filters"] || %{})
+      |> Map.put("1", %{"field" => "search", "value" => text, "op" => "ilike_or"})
+
+    Map.put(params, "filters", filters)
   end
 end

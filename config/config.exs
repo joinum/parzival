@@ -10,6 +10,10 @@ import Config
 config :parzival,
   ecto_repos: [Parzival.Repo]
 
+config :flop,
+  default_limit: 12,
+  repo: Parzival.Repo
+
 # Configures the endpoint
 config :parzival, ParzivalWeb.Endpoint,
   url: [host: "localhost"],
