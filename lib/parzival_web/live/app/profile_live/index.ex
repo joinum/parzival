@@ -11,8 +11,7 @@ defmodule ParzivalWeb.App.ProfileLive.Index do
   @impl true
   def handle_params(_params, _url, socket) do
     {:noreply,
-      socket
-      |> assign(:current_page, :profile)
-    }
+     socket
+     |> assign(:current_page, :profile)}
   end
 end
