@@ -17,7 +17,9 @@ defmodule ParzivalWeb.UserSessionController do
       UserAuth.log_in_user(conn, user, user_params)
     else
       # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
-      render(conn, "new.html", error_message: "Invalid email or password")
+      conn
+      |> put_layout(false)
+      |> render("new.html", error_message: "Invalid email or password")
     end
   end
 
