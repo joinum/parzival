@@ -24,8 +24,8 @@
   </header>
 
   <main>
-    <.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
-      <div class="flex justify-center items-center px-4 pt-10 mt-10 mb-10 min-h-full sm:px-6 lg:px-8 lg:mt-0 lg:mb-0">
+    <div>
+      <.form class="flex justify-center items-center px-4 pt-10 mt-10 mb-10 min-h-full sm:px-6 lg:px-8 lg:mt-0 lg:mb-0" let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
         <div class="space-y-8 w-full max-w-md">
           <div class="mb-10">
             <div class="flex flex-col justify-center items-center">
@@ -34,7 +34,12 @@
               <h2 class="pt-10 text-xl font-extrabold text-center text-white md:text-2xl lg:text-3xl">Sign in to your account</h2>
             </div>
           </div>
-          <form class="mt-8" action="#" method="POST">
+
+          <div class="flex justify-center text-red-900">
+            <%= @error_message %>
+          </div>
+
+          <form class="mt-8">
             <input type="hidden" name="remember" value="true" />
 
             <div>
@@ -80,7 +85,7 @@
             <% end %>
           </div>
         </div>
-      </div>
+      </.form>
 
       <div class="hidden absolute flex-col space-y-6 lg:flex bottom-[60px]">
         <%= link to: "https://www.instagram.com/join_uminho/" do %>
@@ -102,6 +107,6 @@
           </svg>
         <% end %>
       </div>
-    </.form>
+    </div>
   </main>
 </body>
