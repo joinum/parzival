@@ -3,9 +3,12 @@ defmodule Parzival.Repo.Migrations.CreateCurriculums do
 
   def change do
     create table(:curriculums, primary_key: false) do
+      add :id, :binary_id, primary_key: true
       add :summary, :text
 
-      add :user_id, references(:users, on_delete: :nilify_all, type: :binary_id)
+      add :experience, {:array, :map}, default: []
+
+      add :user_id, references(:users, on_delete: :delete_all, type: :binary_id)
 
       timestamps()
     end

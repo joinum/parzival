@@ -4,7 +4,7 @@ defmodule ParzivalWeb.PdfController do
   alias Parzival.Accounts
 
   def cv(conn, _params) do
-    current_user = Accounts.get_user!(conn.assigns.current_user.id)
+    current_user = Accounts.get_user!(conn.assigns.current_user.id, [:curriculum])
 
     conn
     |> assign(:user, current_user)

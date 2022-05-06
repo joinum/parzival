@@ -55,6 +55,9 @@ defmodule Parzival.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:timex, "~> 3.0"},
 
+      # testing
+      {:faker, "~> 0.17", only: [:dev, :test]},
+
       # uploads
       {:waffle, "~> 1.1"},
       {:waffle_ecto, "~> 0.0"},

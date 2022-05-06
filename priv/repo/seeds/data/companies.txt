@@ -1,0 +1,50 @@
+Walmart	Retail
+State Grid
+Amazon
+China National Petroleum
+Sinopec Group
+Apple
+CVS Health
+UnitedHealth
+Toyota
+Volkswagen
+Berkshire Hathaway
+McKesson	Healthcare
+China State Construction
+Saudi Aramco
+AmerisourceBergen	Healthcare
+Samsung Electronics
+Ping An Insurance	Financials
+BP
+Shell
+ICBC
+Alphabet
+Foxconn
+ExxonMobil
+Mercedes-Benz Group	Automotive
+China Construction Bank	Financials
+AT&T
+Microsoft
+Costco
+Cigna
+Agricultural Bank of China
+Cardinal Health	Healthcare
+Trafigura
+China Life Insurance
+Glencore
+China Railway Engineering Corporation	Construction
+Walgreens Boots Alliance	Retail
+Exor
+Allianz	Financials
+Bank of China	Financials
+Kroger
+Home Depot
+China Railway Construction
+JPMorgan Chase
+Huawei
+Verizon	Telecommunications
+AXA	Financials
+Ford
+Honda
+General Motors
+Anthem
