@@ -21,33 +21,43 @@ defmodule Parzival.Repo.Seeds.Curriculums do
           |> Repo.all()
 
         for attendee <- attendees do
-          n_experience = List.duplicate(:experience, Enum.random(1..4))
-          n_jobs = List.duplicate(:job, Enum.random(1..5))
-
           Curriculum.changeset(%Curriculum{}, %{
             summary: Faker.Lorem.sentence(20..40),
             user_id: attendee.id,
             experience:
-              Enum.reduce(n_experience, [], fn _n, acc ->
-                [
-                  %{
-                    company_name: Faker.Company.name(),
-                    job:
-                      Enum.reduce(n_jobs, [], fn _next, acc ->
-                        [
-                          %{
-                            job_title: Faker.Person.title(),
-                            start_date: Faker.DateTime.backward(1825),
-                            end_date: Faker.DateTime.backward(365),
-                            present: Enum.random([true, false])
-                          }
-                          | acc
-                        ]
-                      end)
-                  }
-                  | acc
-                ]
-              end)
+              Enum.reduce(
+                List.duplicate(:experience, Enum.random(1..3)),
+                [],
+                fn _n, acc ->
+                  [
+                    %{
+                      company_name: Faker.Company.name(),
+                      job:
+                        Enum.reduce(
+                          List.duplicate(:job, Enum.random(1..4)),
+                          [],
+                          fn _next, acc ->
+                            [
+                              %{
+                                job_title: Faker.Person.title(),
+                                start_date:
+                                  Faker.DateTime.between(~D[2018-04-11], ~D[2021-04-11]),
+                                end_date:
+                                  Faker.DateTime.between(
+                                    ~D[2021-04-11],
+                                    Date.utc_today()
+                                  ),
+                                present: Enum.random([true, false, false, false])
+                              }
+                              | acc
+                            ]
+                          end
+                        )
+                    }
+                    | acc
+                  ]
+                end
+              )
           })
           |> Repo.insert!()
         end

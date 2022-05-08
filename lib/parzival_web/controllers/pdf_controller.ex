@@ -2,12 +2,16 @@ defmodule ParzivalWeb.PdfController do
   use ParzivalWeb, :controller
 
   alias Parzival.Accounts
+  alias Parzival.Gamification
 
   def cv(conn, _params) do
-    current_user = Accounts.get_user!(conn.assigns.current_user.id, [:curriculum])
+    current_user = Accounts.get_user!(conn.assigns.current_user.id)
+
+    curriculum = Gamification.get_user_curriculum(current_user)
 
     conn
     |> assign(:user, current_user)
+    |> assign(:curriculum, curriculum)
     |> render_document("cv", "#{current_user.name} CV")
   end
 

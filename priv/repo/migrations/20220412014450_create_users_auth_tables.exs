@@ -15,6 +15,7 @@ defmodule Parzival.Repo.Migrations.CreateUsersAuthTables do
       add :course, :string
       add :cycle, :string
       add :cellphone, :string
+      add :website, :string
       add :linkedin, :string
       add :github, :string
       add :twitter, :string

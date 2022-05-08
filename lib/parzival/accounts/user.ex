@@ -16,6 +16,7 @@ defmodule Parzival.Accounts.User do
     :course,
     :cycle,
     :cellphone,
+    :website,
     :linkedin,
     :github,
     :twitter
@@ -43,6 +44,7 @@ defmodule Parzival.Accounts.User do
     field :course, :string
     field :cycle, Ecto.Enum, values: @cycles
     field :cellphone, :string
+    field :website, :string
     field :linkedin, :string
     field :github, :string
     field :twitter, :string

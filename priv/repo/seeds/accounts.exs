@@ -63,6 +63,11 @@ defmodule Parzival.Repo.Seeds.Accounts do
             role: :attendee,
             course: "Software Engineering",
             cycle: :Bachelors,
+            cellphone: "+253934674465",
+            website: "carl.os",
+            linkedin: "CarlosHSF99",
+            github: "CarlosHSF99",
+            twitter: "CarlosHSF99",
             balance: 1000
           },
           %{

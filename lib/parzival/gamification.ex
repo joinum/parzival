@@ -6,6 +6,7 @@ defmodule Parzival.Gamification do
   import Ecto.Query, warn: false
   alias Parzival.Repo
 
+  alias Parzival.Accounts.User
   alias Parzival.Gamification.Curriculum
 
   @doc """
@@ -36,6 +37,27 @@ defmodule Parzival.Gamification do
 
   """
   def get_curriculum!(id), do: Repo.get!(Curriculum, id)
+
+  def get_user_curriculum(%User{} = user, preloads \\ []) do
+    curriculum =
+      Repo.one(
+        from c in Curriculum,
+          where: c.user_id == ^user.id,
+          preload: ^preloads
+      )
+
+    %{
+      summary: curriculum.summary,
+      experience:
+        Enum.map(curriculum.experience, fn experience ->
+          %{
+            company_name: experience.company_name,
+            job: Enum.sort_by(experience.job, & &1.end_date, {:desc, Date})
+          }
+        end),
+      user: curriculum.user
+    }
+  end
 
   @doc """
   Creates a curriculum.
