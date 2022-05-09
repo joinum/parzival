@@ -23,7 +23,7 @@ defmodule ParzivalWeb.App.OfferLive.Index do
   defp list_offers(params, socket) do
     params =
       params
-      |> Map.put("limit", 7)
+      |> Map.put("page_size", 7)
 
     case socket.assigns.current_user.role do
       :recruiter ->

@@ -19,14 +19,14 @@ defmodule ParzivalWeb.App.CompanyLive.Show do
      |> assign(:page_title, "Show company")
      |> assign(:company, Companies.get_company!(id))
      |> assign(:params, params)
-     |> assign(list_offers(params))
-     |> assign(list_recruiters(params))}
+     |> assign(:recruiters, list_recruiters(params))
+     |> assign(list_offers(params))}
   end
 
   defp list_offers(%{"id" => id} = params) do
     params =
       params
-      |> Map.put("limit", 6)
+      |> Map.put("page_size", 6)
 
     case Companies.list_offers(
            params,
@@ -34,28 +34,17 @@ defmodule ParzivalWeb.App.CompanyLive.Show do
            where: [company_id: id]
          ) do
       {:ok, {offers, meta}} ->
-        %{offers: offers, meta: meta}
+        %{offers: offers, offers_meta: meta}
 
       {:error, flop} ->
-        %{offers: [], meta: flop}
+        %{offers: [], offers_meta: flop}
     end
   end
 
-  defp list_recruiters(%{"id" => id} = params) do
-    params =
-      params
-      |> Map.put("limit", 4)
-
-    case Accounts.list_users(
-           params,
-           preloads: :company,
-           where: [company_id: id]
-         ) do
-      {:ok, {recruiters, meta}} ->
-        %{recruiters: recruiters, meta: meta}
-
-      {:error, flop} ->
-        %{recruiters: [], meta: flop}
-    end
+  defp list_recruiters(%{"id" => id}) do
+    Accounts.list_users(
+      preloads: :company,
+      where: [company_id: id]
+    )
   end
 end

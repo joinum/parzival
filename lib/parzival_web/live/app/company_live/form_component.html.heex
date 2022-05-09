@@ -9,17 +9,17 @@
               <%= if @current_user.role in [:admin, :recruiter] do %>
                 <div class="flex mt-5 space-x-2 xl:mt-0 xl:ml-4">
                   <%= submit do %>
-                    <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
+                    <div type="button" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm xl:w-full bg-secondary hover:bg-primary">
                       Save
                     </div>
                   <% end %>
                 </div>
               <% end %>
             </div>
-            <div class="py-4 px-4 sm:px-0">
+            <div class="px-4 py-4 sm:px-0">
               <div class="mt-6 sm:flex sm:items-center">
                 <div class="flex-shrink-0 mb-4 sm:mr-4 sm:mb-0">
-                  <span class="inline-flex justify-center items-center w-24 h-24 rounded-full bg-secondary">
+                  <span class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-secondary">
                     <span class="text-5xl font-medium leading-none text-white">
                       <%= extract_initials(input_value(f, :name)) %>
                     </span>
