@@ -20,6 +20,8 @@ defmodule Parzival.Repo.Migrations.CreateMissions do
 
       add :title, :text
       add :description, :text
+      add :start_time, :datetime
+      add :end_time, :datetime
 
       add :mission_id, references(:missions, on_delete: :nothing, type: :binary_id)
 

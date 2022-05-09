@@ -244,7 +244,7 @@ defmodule Parzival.Missions do
   @doc """
   Marks a task as completed by a participant
 
-  TODO::Documentation
+  TODO::Documentation and verify user types
   """
   def give_task(%User{} = user, %User{} staff, %Task{} = task) do
     %Task_Completion{participant: user, staff: staff, task: task}
