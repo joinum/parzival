@@ -34,10 +34,10 @@
   </head>
 
   <body style="background-color: white">
-    <div style="background-color: rgb(234,59,45); height: 37.13cm;" class="absolute py-16 px-10 w-1/3">
-      <img class="mx-auto w-48 rounded-full" src="http://localhost:4000/images/team/luis.png" alt="Profile image" />
+    <div style="background-color: rgb(234,59,45); height: 37.13cm;" class="absolute w-1/3 px-10 py-16">
+      <img class="w-48 mx-auto rounded-full" src="http://localhost:4000/images/team/luis.png" alt="Profile image" />
       <div style="color: white;" class="mt-12">
-        <p class="text-4xl font-black"><%= extract_first_last_name(@user.name) %></p>
+        <p class="text-3xl font-black"><%= extract_first_last_name(@user.name) %></p>
         <p class="mt-1">
           <%= if @user.cycle && @user.course do %>
             <%= @user.cycle %> in <%= @user.course %>
@@ -119,7 +119,7 @@
       <table>
         <tbody>
           <%= if @curriculum.summary do %>
-            <tr class="mt-10">
+            <tr class="w-full mt-10">
               <td>
                 <p style="color: rgb(234,59,45);" class="text-2xl font-bold tracking-wider">SUMMARY</p>
                 <p class="mt-5 font-light">
@@ -129,24 +129,55 @@
             </tr>
           <% end %>
 
-          <%= if @curriculum.experiences do %>
-            <tr class="mt-10">
+          <%= if @curriculum.experience do %>
+            <tr class="w-full mt-10">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EXPERIENCE</p>
-                <%= for experience <- @curriculum.experiences do %>
+                <%= for experience <- @curriculum.experience do %>
+                  <% n_total_days =
+                    Enum.reduce(experience.positions, 0, fn position, acc ->
+                      if position.current do
+                        Timex.diff(Date.utc_today(), position.start, :days) + acc
+                      else
+                        Timex.diff(position.finish, position.start, :days) + acc
+                      end
+                    end) %>
                   <div class="mt-4">
                     <p class="text-xl font-medium">
-                      <%= experience.company_name %> <span style="color: rgb(156,163,175)" class="text-sm"></span>
+                      <%= experience.organization %>
+                      <span style="color: rgb(156,163,175)" class="ml-1 text-sm font-normal">
+                        <%= if Integer.floor_div(n_total_days,365) > 0 do %>
+                          <%= Integer.floor_div(n_total_days, 365) %>yrs
+                        <% end %>
+
+                        <%= if rem(Integer.floor_div(n_total_days,31),12) != 0 do %>
+                          <%= rem(Integer.floor_div(n_total_days, 31), 12) %>mos
+                        <% end %>
+                      </span>
                     </p>
                     <div style="border-left: rgb(209,213,219) 1.5px solid; border-top-style: none; border-bottom-style: none; border-right-style: none;" class="mt-2 ml-2">
-                      <%= for job <- experience.job do %>
+                      <%= for position <- experience.positions do %>
+                        <% n_days =
+                          if position.current do
+                            Timex.diff(Date.utc_today(), position.start, :days)
+                          else
+                            Timex.diff(position.finish, position.start, :days)
+                          end %>
                         <p class="ml-5">
-                          <%= job.job_title %>
+                          <%= position.title %>
                           <span style="color: rgb(156,163,175)" class="ml-2 text-sm">
-                            <%= if job.present do %>
-                              present -
+                            <%= Calendar.strftime(position.start, "%b %Y") %> -
+                            <%= if position.current do %>
+                              Current ·
+                            <% else %>
+                              <%= Calendar.strftime(position.finish, "%b %Y") %> ·
                             <% end %>
-                            <%= Timex.diff(job.end_date, job.start_date, :years) %>yrs <%= rem(Timex.diff(job.end_date, job.start_date, :months), 12) %>mos
+                            <%= if Integer.floor_div(n_days,365) > 0 do %>
+                              <%= Integer.floor_div(n_days, 365) %>yrs
+                            <% end %>
+                            <%= if rem(Integer.floor_div(n_days,31),12) != 0 do %>
+                              <%= rem(Integer.floor_div(n_days, 31), 12) %>mos
+                            <% end %>
                           </span>
                         </p>
                       <% end %>
@@ -157,20 +188,20 @@
             </tr>
           <% end %>
 
-          <%= if @curriculum.educations do %>
-            <tr class="mt-10">
+          <%= if @curriculum.education do %>
+            <tr class="w-full mt-8">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EDUCATION</p>
-                <%= for education <- @curriculum.educations do %>
+                <%= for education <- @curriculum.education do %>
                   <div class="mt-4">
                     <p class="text-xl font-medium">
-                      <%= education.education_title %>
-                    </p>
-                    <p style="color: rgb(156,163,175)" class="mb-2 text-sm">
-                      <%= Calendar.strftime(education.date, "%B, %Y") %>
+                      <%= education.institution %>
                     </p>
                     <p class="text-sm">
-                      <%= education.description %>
+                      <%= education.course %>
+                    </p>
+                    <p style="color: rgb(156,163,175)" class="text-sm">
+                      <%= Calendar.strftime(education.start, "%Y") %> - <%= Calendar.strftime(education.finish, "%Y") %>
                     </p>
                   </div>
                 <% end %>
@@ -178,17 +209,27 @@
             </tr>
           <% end %>
 
-          <%= if @curriculum.voluntaries do %>
-            <tr class="mt-10">
+          <%= if @curriculum.volunteering do %>
+            <tr class="w-full mt-10">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">VOLUNTEERING</p>
-                <%= for voluntary <- @curriculum.voluntaries do %>
+                <%= for voluntary <- @curriculum.volunteering do %>
                   <div class="mt-4">
                     <p class="text-xl font-medium">
-                      <%= voluntary.voluntary_title %>
+                      <%= voluntary.position %>
+                    </p>
+                    <p class="text-sm">
+                      <%= voluntary.institution %>
                     </p>
                     <p style="color: rgb(156,163,175)" class="text-sm">
-                      <%= Calendar.strftime(voluntary.date, "%B, %Y") %>
+                      <%= Calendar.strftime(voluntary.start, "%b %Y") %> - <%= Calendar.strftime(voluntary.finish, "%b %Y") %> ·
+                      <%= if Timex.diff(voluntary.finish, voluntary.start, :years) > 0 do %>
+                        <%= Timex.diff(voluntary.finish, voluntary.start, :years) %>yrs
+                      <% end %>
+
+                      <%= if rem(Timex.diff(voluntary.finish, voluntary.start, :months), 12) != 0 do %>
+                        <%= rem(Timex.diff(voluntary.finish, voluntary.start, :months), 12) %>mos
+                      <% end %>
                     </p>
                   </div>
                 <% end %>
@@ -197,13 +238,13 @@
           <% end %>
 
           <%= if @curriculum.skills do %>
-            <tr class="mt-10">
+            <tr class="w-full mt-10">
               <td>
-                <p style="color: rgb(234,59,45);" class="mb-5 text-2xl font-bold tracking-wider">SKILLS</p>
+                <p style="color: rgb(234,59,45);" class="mb-4 text-2xl font-bold tracking-wider">SKILLS</p>
                 <table>
                   <tbody>
                     <%= for chunk <- Enum.chunk_every(@curriculum.skills,4,4,[]) do %>
-                      <tr class="mb-1">
+                      <tr class="mt-1">
                         <%= for skill <- chunk do %>
                           <td class="w-36">
                             <span style="border-bottom: rgb(234,59,45) 1.5px solid; border-top-style: none; border-left-style: none; border-right-style: none;">
@@ -224,13 +265,13 @@
           <% end %>
 
           <%= if @curriculum.languages do %>
-            <tr class="mt-10">
+            <tr class="w-full mt-10">
               <td>
-                <p style="color: rgb(234,59,45);" class="mb-5 text-2xl font-bold tracking-wider">LANGUAGES</p>
+                <p style="color: rgb(234,59,45);" class="mb-4 text-2xl font-bold tracking-wider">LANGUAGES</p>
                 <table>
                   <tbody>
                     <%= for {chunk, index} <- Enum.with_index(Enum.chunk_every(@curriculum.languages,3,3,[])) do %>
-                      <tr class="mb-1">
+                      <tr class="mt-1">
                         <%= for language <- chunk do %>
                           <td style={"#{if rem(index, 3) != 0 do
                                 "padding-right: 1.25rem"

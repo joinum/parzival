@@ -1,4 +1,7 @@
-defmodule Parzival.Gamification.Curriculum.Skill do
+defmodule Parzival.Gamification.Curriculum.Skills do
+  @moduledoc """
+  A skill.
+  """
   use Parzival.Schema
   import Ecto.Changeset
 
@@ -13,8 +16,8 @@ defmodule Parzival.Gamification.Curriculum.Skill do
   end
 
   @doc false
-  def changeset(skill, attrs) do
-    skill
+  def changeset(skills, attrs) do
+    skills
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end

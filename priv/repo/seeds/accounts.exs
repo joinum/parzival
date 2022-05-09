@@ -3,6 +3,9 @@ defmodule Parzival.Repo.Seeds.Accounts do
 
   alias Parzival.Accounts.User
 
+  @attendees File.read!("priv/fake/attendees.txt") |> String.split("\n")
+  @courses File.read!("priv/fake/uminho_courses.txt") |> String.split("\n")
+
   def run do
     seed_users()
   end
@@ -10,6 +13,27 @@ defmodule Parzival.Repo.Seeds.Accounts do
   def seed_users do
     case Repo.all(User) do
       [] ->
+        for attendee <- @attendees do
+          first_last_name = String.downcase(attendee) |> String.replace(" ", "_")
+
+          %{
+            name: attendee,
+            email: first_last_name <> "@mail.pt",
+            password: "Password1234",
+            role: :attendee,
+            course: Enum.random(@courses),
+            cycle: Enum.random([:Bachelors, :Masters, :Phd]),
+            cellphone:
+              "+351 9#{Enum.random([1, 2, 3, 6])}#{for _ <- 1..7, do: Enum.random(0..9) |> Integer.to_string()}",
+            website: first_last_name <> "." <> Faker.Internet.domain_suffix(),
+            linkedin: first_last_name,
+            github: first_last_name,
+            twitter: first_last_name,
+            balance: Enum.random(100..999)
+          }
+          |> insert_user()
+        end
+
         [
           %{
             name: "Filipe Felício",
@@ -34,59 +58,6 @@ defmodule Parzival.Repo.Seeds.Accounts do
             email: "mj@nefum.pt",
             password: "Password1234",
             role: :admin
-          },
-          %{
-            name: "Beatriz Rocha",
-            email: "bea@cesium.pt",
-            password: "Password1234",
-            role: :staff
-          },
-          %{
-            name: "CeSIUM",
-            email: "geral@cesium.pt",
-            password: "Password1234",
-            role: :company
-          },
-          %{
-            name: "Matilde Bravo",
-            email: "matilde@mail.pt",
-            password: "Password1234",
-            role: :attendee,
-            course: "Medicine",
-            cycle: :Phd,
-            balance: 1000
-          },
-          %{
-            name: "Carlos Ferreira",
-            email: "carlos@mail.pt",
-            password: "Password1234",
-            role: :attendee,
-            course: "Software Engineering",
-            cycle: :Bachelors,
-            cellphone: "+253934674465",
-            website: "carl.os",
-            linkedin: "CarlosHSF99",
-            github: "CarlosHSF99",
-            twitter: "CarlosHSF99",
-            balance: 1000
-          },
-          %{
-            name: "Maria Pires",
-            email: "maria@mail.pt",
-            password: "Password1234",
-            role: :attendee,
-            course: "Sociology",
-            cycle: :Masters,
-            balance: 1000
-          },
-          %{
-            name: "Nelson Estevao",
-            email: "nelson@mail.pt",
-            password: "Password1234",
-            role: :attendee,
-            course: "Marketing",
-            cycle: :Phd,
-            balance: 1000
           }
         ]
         |> Enum.each(&insert_user/1)

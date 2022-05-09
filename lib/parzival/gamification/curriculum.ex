@@ -1,24 +1,26 @@
 defmodule Parzival.Gamification.Curriculum do
   @moduledoc """
-  A user of the application capable of authenticating.
+  A curriculum.
   """
   use Parzival.Schema
 
   alias Parzival.Accounts
   alias Parzival.Gamification.Curriculum
 
-  @required_fields ~w(user_id summary)a
+  @required_fields ~w(user_id)a
 
-  @optional_fields []
+  @optional_fields [
+    :summary
+  ]
 
   schema "curriculums" do
     field :summary, :string
 
-    embeds_many :experiences, Curriculum.Experience
-    embeds_many :educations, Curriculum.Education
-    embeds_many :voluntaries, Curriculum.Voluntary
-    embeds_many :skills, Curriculum.Skill
-    embeds_many :languages, Curriculum.Language
+    embeds_many :experience, Curriculum.Experience
+    embeds_many :education, Curriculum.Education
+    embeds_many :volunteering, Curriculum.Volunteering
+    embeds_many :skills, Curriculum.Skills
+    embeds_many :languages, Curriculum.Languages
 
     belongs_to :user, Accounts.User
 
@@ -33,33 +35,33 @@ defmodule Parzival.Gamification.Curriculum do
     |> unique_constraint(:user_id)
     |> validate_experience()
     |> validate_education()
-    |> validate_voluntary()
-    |> validate_skill()
-    |> validate_language()
+    |> validate_volunteering()
+    |> validate_skills()
+    |> validate_languages()
   end
 
   defp validate_experience(changeset) do
     changeset
-    |> cast_embed(:experiences, with: &Curriculum.Experience.changeset/2)
+    |> cast_embed(:experience, with: &Curriculum.Experience.changeset/2)
   end
 
   defp validate_education(changeset) do
     changeset
-    |> cast_embed(:educations, with: &Curriculum.Education.changeset/2)
+    |> cast_embed(:education, with: &Curriculum.Education.changeset/2)
   end
 
-  defp validate_voluntary(changeset) do
+  defp validate_volunteering(changeset) do
     changeset
-    |> cast_embed(:voluntaries, with: &Curriculum.Voluntary.changeset/2)
+    |> cast_embed(:volunteering, with: &Curriculum.Volunteering.changeset/2)
   end
 
-  defp validate_skill(changeset) do
+  defp validate_skills(changeset) do
     changeset
-    |> cast_embed(:skills, with: &Curriculum.Skill.changeset/2)
+    |> cast_embed(:skills, with: &Curriculum.Skills.changeset/2)
   end
 
-  defp validate_language(changeset) do
+  defp validate_languages(changeset) do
     changeset
-    |> cast_embed(:languages, with: &Curriculum.Language.changeset/2)
+    |> cast_embed(:languages, with: &Curriculum.Languages.changeset/2)
   end
 end

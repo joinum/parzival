@@ -5,8 +5,9 @@ defmodule Parzival.Repo.Seeds.Curriculums do
   alias Parzival.Accounts.User
   alias Parzival.Gamification.Curriculum
 
-  @education_titles File.read!("priv/repo/seeds/data/uminho_courses.txt") |> String.split("\n")
-  @languages File.read!("priv/repo/seeds/data/languages.txt") |> String.split("\n")
+  @education_titles File.read!("priv/fake/uminho_courses.txt") |> String.split("\n")
+  @languages File.read!("priv/fake/languages.txt") |> String.split("\n")
+  @universities File.read!("priv/fake/universities.txt") |> String.split("\n")
 
   def run do
     seed_curriculums()
@@ -22,35 +23,35 @@ defmodule Parzival.Repo.Seeds.Curriculums do
 
         education_titles = Enum.shuffle(@education_titles)
         laguanges = Enum.shuffle(@languages)
+        universities = Enum.shuffle(@universities)
 
         for attendee <- attendees do
           Curriculum.changeset(%Curriculum{}, %{
             summary: Faker.Lorem.sentence(20..40),
             user_id: attendee.id,
-            experiences:
+            experience:
               Enum.reduce(
                 List.duplicate(:experience, Enum.random(1..3)),
                 [],
                 fn _n, acc ->
                   [
                     %{
-                      company_name: Faker.Company.name(),
-                      job:
+                      organization: Faker.Company.name(),
+                      positions:
                         Enum.reduce(
-                          List.duplicate(:job, Enum.random(1..4)),
+                          List.duplicate(:position, Enum.random(1..4)),
                           [],
                           fn _next, acc ->
                             [
                               %{
-                                job_title: Faker.Person.title(),
-                                start_date:
-                                  Faker.DateTime.between(~D[2018-04-11], ~D[2021-04-11]),
-                                end_date:
+                                title: Faker.Person.title(),
+                                start: Faker.DateTime.between(~D[2018-04-11], ~D[2021-04-11]),
+                                finish:
                                   Faker.DateTime.between(
                                     ~D[2021-04-11],
                                     Date.utc_today()
                                   ),
-                                present: Enum.random([true, false, false, false])
+                                current: Enum.random([true, false, false, false])
                               }
                               | acc
                             ]
@@ -61,30 +62,41 @@ defmodule Parzival.Repo.Seeds.Curriculums do
                   ]
                 end
               ),
-            educations:
+            education:
               Enum.reduce(
                 List.duplicate(:education, Enum.random(1..2)),
                 [],
                 fn _n, acc ->
                   [
                     %{
-                      education_title: Enum.random(education_titles),
-                      date: Faker.DateTime.between(~D[2016-09-18], Date.utc_today()),
-                      description: Faker.Lorem.sentence(10..20)
+                      institution: Enum.random(universities),
+                      course: Enum.random(education_titles),
+                      start: Faker.DateTime.between(~D[2018-04-11], ~D[2021-04-11]),
+                      finish:
+                        Faker.DateTime.between(
+                          ~D[2021-04-11],
+                          Date.utc_today()
+                        )
                     }
                     | acc
                   ]
                 end
               ),
-            voluntaries:
+            volunteering:
               Enum.reduce(
                 List.duplicate(:voluntary, Enum.random(1..2)),
                 [],
                 fn _n, acc ->
                   [
                     %{
-                      voluntary_title: Faker.Company.name(),
-                      date: Faker.DateTime.between(~D[2016-09-18], Date.utc_today())
+                      institution: Faker.Company.name(),
+                      position: Faker.Person.title(),
+                      start: Faker.DateTime.between(~D[2018-04-11], ~D[2021-04-11]),
+                      finish:
+                        Faker.DateTime.between(
+                          ~D[2021-04-11],
+                          Date.utc_today()
+                        )
                     }
                     | acc
                   ]
@@ -125,12 +137,6 @@ defmodule Parzival.Repo.Seeds.Curriculums do
         Mix.shell().error("Found Curriculums, aborting seeding curriculums.")
     end
   end
-
-  # defp insert_curriculum(data) do
-  #   %Curriculum{}
-  #   |> Curriculum.changeset(data)
-  #   |> Repo.insert!()
-  # end
 end
 
 Parzival.Repo.Seeds.Curriculums.run()

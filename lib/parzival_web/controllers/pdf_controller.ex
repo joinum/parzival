@@ -4,6 +4,8 @@ defmodule ParzivalWeb.PdfController do
   alias Parzival.Accounts
   alias Parzival.Gamification
 
+  require Integer
+
   def cv(conn, _params) do
     current_user = Accounts.get_user!(conn.assigns.current_user.id)
 

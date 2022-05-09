@@ -1,26 +1,26 @@
-defmodule Parzival.Gamification.Curriculum.Education do
+defmodule Parzival.Gamification.Curriculum.Positions do
   @moduledoc """
-  An education.
+  A position.
   """
   use Parzival.Schema
   import Ecto.Changeset
 
-  @required_fields ~w(institution course start finish)a
+  @required_fields ~w(title start current)a
 
-  @optional_fields []
+  @optional_fields [:finish]
 
   embedded_schema do
-    field :institution, :string
-    field :course, :string
+    field :title, :string
     field :start, :date
     field :finish, :date
+    field :current, :boolean
 
     timestamps()
   end
 
   @doc false
-  def changeset(education, attrs) do
-    education
+  def changeset(position, attrs) do
+    position
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end

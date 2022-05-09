@@ -1,14 +1,19 @@
-defmodule Parzival.Gamification.Curriculum.Voluntary do
+defmodule Parzival.Gamification.Curriculum.Volunteering do
+  @moduledoc """
+  A voluntery work.
+  """
   use Parzival.Schema
   import Ecto.Changeset
 
-  @required_fields ~w(voluntary_title date)a
+  @required_fields ~w(institution position start finish)a
 
   @optional_fields []
 
   embedded_schema do
-    field :voluntary_title, :string
-    field :date, :date
+    field :institution, :string
+    field :position, :string
+    field :start, :date
+    field :finish, :date
 
     timestamps()
   end

@@ -1,4 +1,7 @@
-defmodule Parzival.Gamification.Curriculum.Language do
+defmodule Parzival.Gamification.Curriculum.Languages do
+  @moduledoc """
+  A language.
+  """
   use Parzival.Schema
   import Ecto.Changeset
 
@@ -16,8 +19,8 @@ defmodule Parzival.Gamification.Curriculum.Language do
   end
 
   @doc false
-  def changeset(language, attrs) do
-    language
+  def changeset(languages, attrs) do
+    languages
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end
