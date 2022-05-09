@@ -14,6 +14,7 @@ defmodule ParzivalWeb.Config do
     case role do
       :admin -> admin_pages(conn)
       :attendee -> attendee_pages(conn)
+      :recruiter -> recruiter_pages(conn)
     end
   end
 
@@ -82,6 +83,18 @@ defmodule ParzivalWeb.Config do
   def attendee_pages(conn) do
     [
       %{
+        key: :jobs,
+        title: "Jobs",
+        url: Routes.offer_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :companies,
+        title: "Companies",
+        url: Routes.company_index_path(conn, :index),
+        tabs: []
+      },
+      %{
         key: :curriculum,
         title: "Curriculum",
         url: Routes.curriculum_index_path(conn, :index),
@@ -102,8 +115,47 @@ defmodule ParzivalWeb.Config do
     ]
   end
 
+  def recruiter_pages(conn) do
+    [
+      %{
+        key: :jobs,
+        title: "Jobs",
+        url: Routes.offer_index_path(conn, :index),
+        tabs: []
+      }
+    ]
+  end
+
   def admin_pages(conn) do
     [
+      %{
+        key: :jobs,
+        title: "Jobs",
+        url: Routes.offer_index_path(conn, :index),
+        tabs: [
+          %{
+            key: :jobs,
+            title: "Offers",
+            url: Routes.offer_index_path(conn, :index)
+          },
+          %{
+            key: :jobs,
+            title: "Types",
+            url: Routes.admin_offer_type_index_path(conn, :index)
+          },
+          %{
+            key: :jobs,
+            title: "Times",
+            url: Routes.admin_offer_time_index_path(conn, :index)
+          }
+        ]
+      },
+      %{
+        key: :companies,
+        title: "Companies",
+        url: Routes.company_index_path(conn, :index),
+        tabs: []
+      },
       %{
         key: :store,
         title: "Store",
@@ -143,11 +195,11 @@ defmodule ParzivalWeb.Config do
               })
           },
           %{
-            key: :company,
-            title: "Companies",
+            key: :recruiter,
+            title: "Recruiters",
             url:
               Routes.admin_user_index_path(conn, :index, %{
-                "filters" => %{"0" => %{"field" => "role", "value" => "company"}}
+                "filters" => %{"0" => %{"field" => "role", "value" => "recruiter"}}
               })
           }
         ]
