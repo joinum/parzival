@@ -1,12 +1,10 @@
 defmodule Parzival.Gamification.Curriculum.Job do
-  use Ecto.Schema
+  use Parzival.Schema
   import Ecto.Changeset
 
-  @required_fields ~w(job_title)a
+  @required_fields ~w(job_title start_date end_date)a
 
   @optional_fields [
-    :start_date,
-    :end_date,
     :present
   ]
 
@@ -20,8 +18,8 @@ defmodule Parzival.Gamification.Curriculum.Job do
   end
 
   @doc false
-  def changeset(curriculum, attrs) do
-    curriculum
+  def changeset(job, attrs) do
+    job
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end

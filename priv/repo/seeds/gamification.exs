@@ -5,8 +5,8 @@ defmodule Parzival.Repo.Seeds.Curriculums do
   alias Parzival.Accounts.User
   alias Parzival.Gamification.Curriculum
 
-  # @companies File.read!("priv/repo/seeds/data/companies.txt") |> String.split("\n")
-  # @job_titles File.read!("priv/repo/seeds/data/job_titles.txt") |> String.split("\n")
+  @education_titles File.read!("priv/repo/seeds/data/uminho_courses.txt") |> String.split("\n")
+  @languages File.read!("priv/repo/seeds/data/languages.txt") |> String.split("\n")
 
   def run do
     seed_curriculums()
@@ -20,11 +20,14 @@ defmodule Parzival.Repo.Seeds.Curriculums do
           |> where(role: :attendee)
           |> Repo.all()
 
+        education_titles = Enum.shuffle(@education_titles)
+        laguanges = Enum.shuffle(@languages)
+
         for attendee <- attendees do
           Curriculum.changeset(%Curriculum{}, %{
             summary: Faker.Lorem.sentence(20..40),
             user_id: attendee.id,
-            experience:
+            experiences:
               Enum.reduce(
                 List.duplicate(:experience, Enum.random(1..3)),
                 [],
@@ -53,6 +56,62 @@ defmodule Parzival.Repo.Seeds.Curriculums do
                             ]
                           end
                         )
+                    }
+                    | acc
+                  ]
+                end
+              ),
+            educations:
+              Enum.reduce(
+                List.duplicate(:education, Enum.random(1..2)),
+                [],
+                fn _n, acc ->
+                  [
+                    %{
+                      education_title: Enum.random(education_titles),
+                      date: Faker.DateTime.between(~D[2016-09-18], Date.utc_today()),
+                      description: Faker.Lorem.sentence(10..20)
+                    }
+                    | acc
+                  ]
+                end
+              ),
+            voluntaries:
+              Enum.reduce(
+                List.duplicate(:voluntary, Enum.random(1..2)),
+                [],
+                fn _n, acc ->
+                  [
+                    %{
+                      voluntary_title: Faker.Company.name(),
+                      date: Faker.DateTime.between(~D[2016-09-18], Date.utc_today())
+                    }
+                    | acc
+                  ]
+                end
+              ),
+            skills:
+              Enum.reduce(
+                List.duplicate(:skill, Enum.random(6..12)),
+                [],
+                fn _n, acc ->
+                  [
+                    %{
+                      name: Faker.Beer.En.brand()
+                    }
+                    | acc
+                  ]
+                end
+              ),
+            languages:
+              Enum.reduce(
+                List.duplicate(:skill, Enum.random(2..4)),
+                [],
+                fn _n, acc ->
+                  [
+                    %{
+                      idiom: Enum.random(laguanges),
+                      proficiency: Enum.random([:Native, :Fluent, :Intermediary, :Basic])
                     }
                     | acc
                   ]

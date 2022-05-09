@@ -1,12 +1,12 @@
 defmodule Parzival.Gamification.Curriculum.Experience do
-  use Ecto.Schema
+  use Parzival.Schema
   import Ecto.Changeset
 
   alias Parzival.Gamification.Curriculum
 
-  @required_fields ~w()a
+  @required_fields ~w(company_name)a
 
-  @optional_fields [:company_name]
+  @optional_fields []
 
   embedded_schema do
     field :company_name, :string
@@ -17,8 +17,8 @@ defmodule Parzival.Gamification.Curriculum.Experience do
   end
 
   @doc false
-  def changeset(curriculum, attrs) do
-    curriculum
+  def changeset(experience, attrs) do
+    experience
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
     |> validate_job()

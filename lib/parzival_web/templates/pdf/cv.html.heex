@@ -37,7 +37,7 @@
     <div style="background-color: rgb(234,59,45); height: 37.13cm;" class="absolute py-16 px-10 w-1/3">
       <img class="mx-auto w-48 rounded-full" src="http://localhost:4000/images/team/luis.png" alt="Profile image" />
       <div style="color: white;" class="mt-12">
-        <p class="text-4xl font-black"><%= @user.name %></p>
+        <p class="text-4xl font-black"><%= extract_first_last_name(@user.name) %></p>
         <p class="mt-1">
           <%= if @user.cycle && @user.course do %>
             <%= @user.cycle %> in <%= @user.course %>
@@ -118,22 +118,22 @@
     <div class="flex flex-col w-2/3 px-10 ml-[33.333%]">
       <table>
         <tbody>
-          <tr class="mt-10">
-            <td>
-              <p style="color: rgb(234,59,45);" class="text-2xl font-bold tracking-wider">SUMMARY</p>
-              <p class="mt-5 font-light">
-                <%= if @curriculum.summary do
-                  @curriculum.summary
-                end %>
-              </p>
-            </td>
-          </tr>
+          <%= if @curriculum.summary do %>
+            <tr class="mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="text-2xl font-bold tracking-wider">SUMMARY</p>
+                <p class="mt-5 font-light">
+                  <%= @curriculum.summary %>
+                </p>
+              </td>
+            </tr>
+          <% end %>
 
-          <tr class="mt-10">
-            <td>
-              <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EXPERIENCE</p>
-              <%= if @curriculum.experience do %>
-                <%= for experience <- @curriculum.experience do %>
+          <%= if @curriculum.experiences do %>
+            <tr class="mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EXPERIENCE</p>
+                <%= for experience <- @curriculum.experiences do %>
                   <div class="mt-4">
                     <p class="text-xl font-medium">
                       <%= experience.company_name %> <span style="color: rgb(156,163,175)" class="text-sm"></span>
@@ -153,95 +153,103 @@
                     </div>
                   </div>
                 <% end %>
-              <% end %>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          <% end %>
 
-          <tr class="mt-10">
-            <td>
-              <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EDUCATION</p>
-              <%= for education <- [%{title: "Master Degree Of Design", date: "JANUARY, 2007", body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit maxime laborum sequi, magni earum quo soluta sint velit numquam, ipsum illum! Nostrum possimus illo architecto praesentium ut aliquam dolorem."},%{title: "Bachelor Of Arts", date: "JUNE, 2004", body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit."}] do %>
-                <div class="mt-4">
-                  <p class="text-xl font-medium">
-                    <%= education.title %>
-                  </p>
-                  <p style="color: rgb(156,163,175)" class="mb-2 text-sm">
-                    <%= education.date %>
-                  </p>
-                  <p class="text-sm">
-                    <%= education.body %>
-                  </p>
-                </div>
-              <% end %>
-            </td>
-          </tr>
+          <%= if @curriculum.educations do %>
+            <tr class="mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EDUCATION</p>
+                <%= for education <- @curriculum.educations do %>
+                  <div class="mt-4">
+                    <p class="text-xl font-medium">
+                      <%= education.education_title %>
+                    </p>
+                    <p style="color: rgb(156,163,175)" class="mb-2 text-sm">
+                      <%= Calendar.strftime(education.date, "%B, %Y") %>
+                    </p>
+                    <p class="text-sm">
+                      <%= education.description %>
+                    </p>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
 
-          <tr class="mt-10">
-            <td>
-              <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">VOLUNTEERING</p>
-              <%= for voluntary <- [%{title: "Master Degree Of Design", date: "JANUARY, 2007"},%{title: "Bachelor Of Arts", date: "JUNE, 2004"}] do %>
-                <div class="mt-4">
-                  <p class="text-xl font-medium">
-                    <%= voluntary.title %>
-                  </p>
-                  <p style="color: rgb(156,163,175)" class="text-sm">
-                    <%= voluntary.date %>
-                  </p>
-                </div>
-              <% end %>
-            </td>
-          </tr>
+          <%= if @curriculum.voluntaries do %>
+            <tr class="mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">VOLUNTEERING</p>
+                <%= for voluntary <- @curriculum.voluntaries do %>
+                  <div class="mt-4">
+                    <p class="text-xl font-medium">
+                      <%= voluntary.voluntary_title %>
+                    </p>
+                    <p style="color: rgb(156,163,175)" class="text-sm">
+                      <%= Calendar.strftime(voluntary.date, "%B, %Y") %>
+                    </p>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
 
-          <tr class="mt-10">
-            <td>
-              <p style="color: rgb(234,59,45);" class="mb-5 text-2xl font-bold tracking-wider">SKILLS</p>
-              <table>
-                <tbody>
-                  <%= for chunk <- Enum.chunk_every(["Elixir","Haskell","C","Java","JavaScript","HTML","CSS","Python","MySQL","Photoshop","Illustrator","Blender"],4,4,[]) do %>
-                    <tr class="mb-1">
-                      <%= for skill <- chunk do %>
-                        <td class="w-36">
-                          <span style="border-bottom: rgb(234,59,45) 1.5px solid; border-top-style: none; border-left-style: none; border-right-style: none;">
-                            <%= if String.length(skill) <= 11 do
-                              skill
-                            else
-                              String.slice(skill, 0..10) <> "..."
-                            end %>
-                          </span>
-                        </td>
-                      <% end %>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </td>
-          </tr>
+          <%= if @curriculum.skills do %>
+            <tr class="mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="mb-5 text-2xl font-bold tracking-wider">SKILLS</p>
+                <table>
+                  <tbody>
+                    <%= for chunk <- Enum.chunk_every(@curriculum.skills,4,4,[]) do %>
+                      <tr class="mb-1">
+                        <%= for skill <- chunk do %>
+                          <td class="w-36">
+                            <span style="border-bottom: rgb(234,59,45) 1.5px solid; border-top-style: none; border-left-style: none; border-right-style: none;">
+                              <%= if String.length(skill.name) <= 11 do %>
+                                <%= skill.name %>
+                              <% else %>
+                                <%= String.slice(skill.name, 0..10) <> "..." %>
+                              <% end %>
+                            </span>
+                          </td>
+                        <% end %>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          <% end %>
 
-          <tr class="mt-10">
-            <td>
-              <p style="color: rgb(234,59,45);" class="mb-5 text-2xl font-bold tracking-wider">LANGUAGES</p>
-              <table>
-                <tbody>
-                  <%= for {chunk, index} <- Enum.with_index(Enum.chunk_every([%{title: "Portuguese", proficiency: "Native"}, %{title: "English", proficiency: "Fluent"}, %{title: "Spanish", proficiency: "Intermediary"}, %{title: "Italian", proficiency: "Basic"}],3,3,[])) do %>
-                    <tr class="mb-1">
-                      <%= for language <- chunk do %>
-                        <td style={"#{if rem(index, 3) != 0 do
-                              "padding-right: 1.25rem"
-                            end}"} class="w-52">
-                          <p class="font-medium">
-                            <%= language.title %>
-                          </p>
-                          <p style="color: rgb(156,163,175)" class="text-xs">
-                            <%= language.proficiency %>
-                          </p>
-                        </td>
-                      <% end %>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </td>
-          </tr>
+          <%= if @curriculum.languages do %>
+            <tr class="mt-10">
+              <td>
+                <p style="color: rgb(234,59,45);" class="mb-5 text-2xl font-bold tracking-wider">LANGUAGES</p>
+                <table>
+                  <tbody>
+                    <%= for {chunk, index} <- Enum.with_index(Enum.chunk_every(@curriculum.languages,3,3,[])) do %>
+                      <tr class="mb-1">
+                        <%= for language <- chunk do %>
+                          <td style={"#{if rem(index, 3) != 0 do
+                                "padding-right: 1.25rem"
+                              end}"} class="w-52">
+                            <p class="font-medium">
+                              <%= language.idiom %>
+                            </p>
+                            <p style="color: rgb(156,163,175)" class="text-xs">
+                              <%= language.proficiency %>
+                            </p>
+                          </td>
+                        <% end %>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>
