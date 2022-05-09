@@ -1,0 +1,39 @@
+<div>
+  <.form let={f} for={@changeset} id="company-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+    <div class="min-h-full">
+      <div class="pt-8 pb-6">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 xl:flex xl:justify-between xl:items-center">
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between">
+              <%= live_redirect("< Back", to: @return_to, class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
+              <%= if @current_user.role in [:admin, :recruiter] do %>
+                <div class="flex mt-5 space-x-2 xl:mt-0 xl:ml-4">
+                  <%= submit do %>
+                    <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
+                      Save
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            <div class="py-4 px-4 sm:px-0">
+              <div class="mt-6 sm:flex sm:items-center">
+                <div class="flex-shrink-0 mb-4 sm:mr-4 sm:mb-0">
+                  <span class="inline-flex justify-center items-center w-24 h-24 rounded-full bg-secondary">
+                    <span class="text-5xl font-medium leading-none text-white">
+                      <%= extract_initials(input_value(f, :name)) %>
+                    </span>
+                  </span>
+                </div>
+                <div class="w-full">
+                  <%= text_input(f, :name, placeholder: "Choose title", phx_debounce: "blur", class: "mt-6 text-gray-800 text-2xl leading-7 text-gray-900 sm:text-3xl sm:truncate mt-1 font-bold focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+                  <%= textarea(f, :description, placeholder: "Choose description", rows: 3, phx_debounce: "blur", class: "mt-1 text-gray-500 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </.form>
+</div>

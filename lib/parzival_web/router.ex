@@ -54,6 +54,15 @@ defmodule ParzivalWeb.Router do
         live "/", HomeLive.Index, :index
 
         live "/curriculum", CurriculumLive.Index, :index
+        live "/offers/", OfferLive.Index, :index
+        live "/offers/new", OfferLive.New, :new
+        live "/offers/:id", OfferLive.Show, :show
+        live "/offers/:id/edit", OfferLive.Edit, :edit
+
+        live "/companies/", CompanyLive.Index, :index
+        live "/companies/new", CompanyLive.New, :new
+        live "/companies/:id", CompanyLive.Show, :show
+        live "/companies/:id/edit", CompanyLive.Edit, :edit
 
         live "/store/", ProductLive.Index, :index
         live "/store/:id", ProductLive.Show, :show
@@ -71,6 +80,11 @@ defmodule ParzivalWeb.Router do
         live "/accounts/new", UserLive.New, :new
         live "/accounts/:id", UserLive.Show, :show
         live "/accounts/:id/edit", UserLive.Edit, :edit
+
+        scope "/jobs" do
+          live "/types/", OfferTypeLive.Index, :index
+          live "/times/", OfferTimeLive.Index, :index
+        end
 
         live "/store/new", ProductLive.New, :new
         live "/store/:id/edit", ProductLive.Edit, :edit

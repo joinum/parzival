@@ -22,6 +22,8 @@ defmodule Parzival.Repo.Migrations.CreateUsersAuthTables do
 
       add :balance, :integer
 
+      add :company_id, references(:companies, on_delete: :nothing, type: :binary_id)
+
       timestamps()
     end
 

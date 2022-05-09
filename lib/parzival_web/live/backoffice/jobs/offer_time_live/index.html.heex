@@ -1,0 +1,28 @@
+<h1>Listing Offer times</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Color</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="offer_times">
+    <%= for offer_time <- @offer_times do %>
+      <tr id={"offer_time-#{offer_time.id}"}>
+        <td><%= offer_time.name %></td>
+        <td><%= offer_time.color %></td>
+
+        <td>
+          <span><%#= live_redirect("Show", to: Routes.offer_time_show_path(@socket, :show, offer_time)) %></span>
+          <span><%#= live_patch("Edit", to: Routes.offer_time_index_path(@socket, :edit, offer_time)) %></span>
+          <span><%#= link("Delete", to: "#", phx_click: "delete", phx_value_id: offer_time.id, data: [confirm: "Are you sure?"]) %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%#= live_patch("New Offer time", to: Routes.offer_time_index_path(@socket, :new)) %></span>

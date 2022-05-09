@@ -80,4 +80,50 @@ defmodule ParzivalWeb.ViewUtils do
     end)
     |> Enum.min_by(&abs(NaiveDateTime.diff(&1, now)))
   end
+
+  def text_800(color) do
+    case color do
+      :gray -> "text-gray-800"
+      :red -> "text-red-800"
+      :orange -> "text-orange-800"
+      :amber -> "text-amber-800"
+      :yellow -> "text-yellow-800"
+      :lime -> "text-lime-800"
+      :green -> "text-green-800"
+      :emerald -> "text-emerald-800"
+      :teal -> "text-teal-800"
+      :cyan -> "text-cyan-800"
+      :sky -> "text-sky-800"
+      :blue -> "text-blue-800"
+      :indigo -> "text-indigo-800"
+      :violet -> "text-violet-800"
+      :purple -> "text-purple-800"
+      :fuchsia -> "text-fuchsia-800"
+      :pink -> "text-pink-800"
+      :rose -> "text-rose-800"
+    end
+  end
+
+  def bg_100(color) do
+    case color do
+      :gray -> "bg-gray-100"
+      :red -> "bg-red-100"
+      :orange -> "bg-orange-100"
+      :amber -> "bg-amber-100"
+      :yellow -> "bg-yellow-100"
+      :lime -> "bg-lime-100"
+      :green -> "bg-green-100"
+      :emerald -> "bg-emerald-100"
+      :teal -> "bg-teal-100"
+      :cyan -> "bg-cyan-100"
+      :sky -> "bg-sky-100"
+      :blue -> "bg-blue-100"
+      :indigo -> "bg-indigo-100"
+      :violet -> "bg-violet-100"
+      :purple -> "bg-purple-100"
+      :fuchsia -> "bg-fuchsia-100"
+      :pink -> "bg-pink-100"
+      :rose -> "bg-rose-100"
+    end
+  end
 end

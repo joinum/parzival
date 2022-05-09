@@ -23,7 +23,7 @@ defmodule ParzivalWeb.Backoffice.UserLive.Index do
         "admin" -> :admin
         "staff" -> :staff
         "attendee" -> :attendee
-        "company" -> :company
+        "recruiter" -> :recruiter
       end
 
     {:noreply,
