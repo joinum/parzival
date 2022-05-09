@@ -11,9 +11,9 @@
     title: "Ateendees",
     url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "attendee"}}})
   },
-  company: %{
-    title: "Companies",
-    url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "company"}}})
+  recruiter: %{
+    title: "Recruiters",
+    url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "recruiter"}}})
   }
 } %>
 
