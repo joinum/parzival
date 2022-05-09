@@ -90,10 +90,13 @@
                   <%= @current_user.name %>
                 </span>
                 <span class="inline-block overflow-hidden w-full text-sm text-gray-900 whitespace-nowrap text-ellipsis">
-                  <%= if @current_user.role == :attendee do %>
-                    <%= @current_user.cycle %> in <%= @current_user.course %>
-                  <% else %>
-                    <%= String.upcase(Atom.to_string(@current_user.role)) %>
+                  <%= case @current_user.role do %>
+                    <% :attendee -> %>
+                      <%= @current_user.cycle %> in <%= @current_user.course %>
+                    <% :recruiter -> %>
+                      <%= @current_company.name %>
+                    <% _ -> %>
+                      <%= String.upcase(Atom.to_string(@current_user.role)) %>
                   <% end %>
                 </span>
               </div>

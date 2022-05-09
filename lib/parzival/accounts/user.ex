@@ -4,15 +4,17 @@ defmodule Parzival.Accounts.User do
   """
   use Parzival.Schema
 
+  alias Parzival.Companies.Company
   alias Parzival.Gamification.Curriculum
   alias Parzival.Store.Order
 
-  @roles ~w(admin staff attendee company)a
+  @roles ~w(admin staff attendee recruiter)a
   @cycles ~w(Bachelors Masters Phd)a
 
   @required_fields ~w(email password name role)a
 
   @optional_fields [
+    :balance,
     :course,
     :cycle,
     :cellphone,
@@ -20,7 +22,7 @@ defmodule Parzival.Accounts.User do
     :linkedin,
     :github,
     :twitter,
-    :balance
+    :company_id
   ]
 
   @derive {
@@ -53,6 +55,8 @@ defmodule Parzival.Accounts.User do
     has_one :curriculum, Curriculum
 
     has_many :orders, Order
+
+    belongs_to :company, Company
 
     timestamps()
   end
