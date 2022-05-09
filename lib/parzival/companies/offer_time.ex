@@ -7,7 +7,7 @@ defmodule Parzival.Companies.OfferTime do
 
   @derive {
     Flop.Schema,
-    filterable: [:name],
+    filterable: [:search],
     sortable: [:name],
     compound_fields: [search: [:name]],
     default_order_by: [:name],

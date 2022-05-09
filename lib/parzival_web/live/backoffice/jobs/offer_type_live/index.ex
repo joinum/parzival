@@ -47,6 +47,21 @@ defmodule ParzivalWeb.Backoffice.OfferTypeLive.Index do
     {:noreply, assign(socket, list_offer_types(%{}))}
   end
 
+  @impl true
+  def handle_event("search", %{"search" => %{"query" => query}}, socket) do
+    params = build_search_map(socket.assigns.params, query)
+
+    {:noreply, push_patch(socket, to: Routes.admin_offer_type_index_path(socket, :index, params))}
+  end
+
+  defp build_search_map(params, text) do
+    filters =
+      (params["filters"] || %{})
+      |> Map.put("1", %{"field" => "search", "value" => text, "op" => "ilike_or"})
+
+    Map.put(params, "filters", filters)
+  end
+
   defp list_offer_types(params) do
     case Companies.list_offer_types(params) do
       {:ok, {offer_types, meta}} ->
