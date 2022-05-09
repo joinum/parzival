@@ -34,8 +34,8 @@
   </head>
 
   <body style="background-color: white">
-    <div style="background-color: rgb(234,59,45); height: 37.13cm;" class="absolute w-1/3 px-10 py-16">
-      <img class="w-48 mx-auto rounded-full" src="http://localhost:4000/images/team/luis.png" alt="Profile image" />
+    <div style="background-color: rgb(234,59,45); height: 37.13cm;" class="absolute py-16 px-10 w-1/3">
+      <img class="mx-auto w-48 rounded-full" src="http://localhost:4000/images/team/luis.png" alt="Profile image" />
       <div style="color: white;" class="mt-12">
         <p class="text-3xl font-black"><%= extract_first_last_name(@user.name) %></p>
         <p class="mt-1">
@@ -119,7 +119,7 @@
       <table>
         <tbody>
           <%= if @curriculum.summary do %>
-            <tr class="w-full mt-10">
+            <tr class="mt-10 w-full">
               <td>
                 <p style="color: rgb(234,59,45);" class="text-2xl font-bold tracking-wider">SUMMARY</p>
                 <p class="mt-5 font-light">
@@ -130,38 +130,38 @@
           <% end %>
 
           <%= if @curriculum.experience do %>
-            <tr class="w-full mt-10">
+            <tr class="mt-10 w-full">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EXPERIENCE</p>
                 <%= for experience <- @curriculum.experience do %>
-                  <% n_total_days =
+                  <% n_total_months =
                     Enum.reduce(experience.positions, 0, fn position, acc ->
                       if position.current do
-                        Timex.diff(Date.utc_today(), position.start, :days) + acc
+                        Timex.diff(Date.utc_today(), position.start, :months) + acc
                       else
-                        Timex.diff(position.finish, position.start, :days) + acc
+                        Timex.diff(position.finish, position.start, :months) + acc
                       end
                     end) %>
                   <div class="mt-4">
                     <p class="text-xl font-medium">
                       <%= experience.organization %>
                       <span style="color: rgb(156,163,175)" class="ml-1 text-sm font-normal">
-                        <%= if Integer.floor_div(n_total_days,365) > 0 do %>
-                          <%= Integer.floor_div(n_total_days, 365) %>yrs
+                        <%= if Integer.floor_div(n_total_months, 12) > 0 do %>
+                          <%= Integer.floor_div(n_total_months, 12) %>yrs
                         <% end %>
 
-                        <%= if rem(Integer.floor_div(n_total_days,31),12) != 0 do %>
-                          <%= rem(Integer.floor_div(n_total_days, 31), 12) %>mos
+                        <%= if rem(n_total_months, 12) != 0 do %>
+                          <%= rem(n_total_months, 12) %>mos
                         <% end %>
                       </span>
                     </p>
-                    <div style="border-left: rgb(209,213,219) 1.5px solid; border-top-style: none; border-bottom-style: none; border-right-style: none;" class="mt-2 ml-2">
+                    <div style="border-left: rgb(209,213,219) 1.5px solid; border-top-style: none; border-bottom-style: none; border-right-style: none;" class="mt-2 ml-2 w-full">
                       <%= for position <- experience.positions do %>
-                        <% n_days =
+                        <% n_months =
                           if position.current do
-                            Timex.diff(Date.utc_today(), position.start, :days)
+                            Timex.diff(Date.utc_today(), position.start, :months)
                           else
-                            Timex.diff(position.finish, position.start, :days)
+                            Timex.diff(position.finish, position.start, :months)
                           end %>
                         <p class="ml-5">
                           <%= position.title %>
@@ -172,11 +172,11 @@
                             <% else %>
                               <%= Calendar.strftime(position.finish, "%b %Y") %> ·
                             <% end %>
-                            <%= if Integer.floor_div(n_days,365) > 0 do %>
-                              <%= Integer.floor_div(n_days, 365) %>yrs
+                            <%= if Integer.floor_div(n_months, 12) > 0 do %>
+                              <%= Integer.floor_div(n_months, 12) %>yrs
                             <% end %>
-                            <%= if rem(Integer.floor_div(n_days,31),12) != 0 do %>
-                              <%= rem(Integer.floor_div(n_days, 31), 12) %>mos
+                            <%= if rem(n_months,12) != 0 do %>
+                              <%= rem(n_months, 12) %>mos
                             <% end %>
                           </span>
                         </p>
@@ -189,7 +189,7 @@
           <% end %>
 
           <%= if @curriculum.education do %>
-            <tr class="w-full mt-8">
+            <tr class="mt-8 w-full">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EDUCATION</p>
                 <%= for education <- @curriculum.education do %>
@@ -210,7 +210,7 @@
           <% end %>
 
           <%= if @curriculum.volunteering do %>
-            <tr class="w-full mt-10">
+            <tr class="mt-10 w-full">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">VOLUNTEERING</p>
                 <%= for voluntary <- @curriculum.volunteering do %>
@@ -238,7 +238,7 @@
           <% end %>
 
           <%= if @curriculum.skills do %>
-            <tr class="w-full mt-10">
+            <tr class="mt-10 w-full">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-4 text-2xl font-bold tracking-wider">SKILLS</p>
                 <table>
@@ -265,7 +265,7 @@
           <% end %>
 
           <%= if @curriculum.languages do %>
-            <tr class="w-full mt-10">
+            <tr class="mt-10 w-full">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-4 text-2xl font-bold tracking-wider">LANGUAGES</p>
                 <table>
