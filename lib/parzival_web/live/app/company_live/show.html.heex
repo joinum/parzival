@@ -56,11 +56,11 @@
                   <%= live_redirect to: Routes.offer_show_path(@socket, :show, offer), class: "block bg-white rounded-md shadow hover:bg-gray-50 border border-gray-300", replace: false do %>
                     <div class="py-4 px-4 lg:px-6">
                       <div class="mb-2">
-                        <p class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                          Full-Time
+                        <p class={"#{bg_100(offer.offer_type.color)} inline-flex px-2 text-xs font-semibold leading-5 #{text_800(offer.offer_type.color)} border-2 #{border_200(offer.offer_type.color)} rounded-full justify-center items-center"}>
+                          <%= offer.offer_type.name %>
                         </p>
-                        <p class="inline-flex px-2 text-xs font-semibold leading-5 text-orange-800 bg-orange-100 rounded-full">
-                          Job
+                        <p class={"#{bg_100(offer.offer_time.color)} inline-flex px-2 text-xs font-semibold leading-5 #{text_800(offer.offer_time.color)} border-2 #{border_200(offer.offer_time.color)} rounded-full justify-center items-center"}>
+                          <%= offer.offer_time.name %>
                         </p>
                       </div>
                       <div class="flex justify-between items-center">

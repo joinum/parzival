@@ -1,4 +1,7 @@
 defmodule Parzival.Companies.OfferTime do
+  @moduledoc """
+  A time of job offer.
+  """
   use Parzival.Schema
 
   alias Parzival.Companies.Offer

@@ -1,4 +1,7 @@
 defmodule Parzival.Companies.OfferType do
+  @moduledoc """
+  A type of job offer.
+  """
   use Parzival.Schema
 
   alias Parzival.Companies.Offer

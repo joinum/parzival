@@ -1,4 +1,5 @@
 defmodule ParzivalWeb.OfferLive.FormComponent do
+  @moduledoc false
   use ParzivalWeb, :live_component
 
   alias Parzival.Companies
@@ -15,7 +16,7 @@ defmodule ParzivalWeb.OfferLive.FormComponent do
      |> assign(list_offer_times())}
   end
 
-  defp list_offer_types() do
+  defp list_offer_types do
     case Companies.list_offer_types() do
       {:ok, {offer_types, _meta}} ->
         %{offer_types: offer_types}
@@ -25,7 +26,7 @@ defmodule ParzivalWeb.OfferLive.FormComponent do
     end
   end
 
-  defp list_offer_times() do
+  defp list_offer_times do
     case Companies.list_offer_times() do
       {:ok, {offer_times, _meta}} ->
         %{offer_times: offer_times}

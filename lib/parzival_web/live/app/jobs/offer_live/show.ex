@@ -1,4 +1,5 @@
 defmodule ParzivalWeb.App.OfferLive.Show do
+  @moduledoc false
   use ParzivalWeb, :live_view
 
   alias Parzival.Companies

@@ -1,4 +1,5 @@
 defmodule ParzivalWeb.Backoffice.OfferTimeLive.FormComponent do
+  @moduledoc false
   use ParzivalWeb, :live_component
 
   import ParzivalWeb.Components.Buttons

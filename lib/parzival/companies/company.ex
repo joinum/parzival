@@ -1,8 +1,11 @@
 defmodule Parzival.Companies.Company do
+  @moduledoc """
+  A company.
+  """
   use Parzival.Schema
 
-  alias Parzival.Companies.Offer
   alias Parzival.Accounts.User
+  alias Parzival.Companies.Offer
 
   @required_fields ~w(name description)a
 

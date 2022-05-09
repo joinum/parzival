@@ -1,4 +1,5 @@
 defmodule ParzivalWeb.App.CompanyLive.FormComponent do
+  @moduledoc false
   use ParzivalWeb, :live_component
 
   alias Parzival.Companies

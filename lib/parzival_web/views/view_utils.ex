@@ -81,6 +81,7 @@ defmodule ParzivalWeb.ViewUtils do
     |> Enum.min_by(&abs(NaiveDateTime.diff(&1, now)))
   end
 
+  # credo:disable-for-next-line Credo.Check.Refactor.CyclomaticComplexity
   def text_800(color) do
     case color do
       :gray -> "text-gray-800"
@@ -104,6 +105,7 @@ defmodule ParzivalWeb.ViewUtils do
     end
   end
 
+  # credo:disable-for-next-line Credo.Check.Refactor.CyclomaticComplexity
   def border_200(color) do
     case color do
       :gray -> "border-gray-200"
@@ -127,6 +129,7 @@ defmodule ParzivalWeb.ViewUtils do
     end
   end
 
+  # credo:disable-for-next-line Credo.Check.Refactor.CyclomaticComplexity
   def bg_100(color) do
     case color do
       :gray -> "bg-gray-100"
@@ -150,6 +153,7 @@ defmodule ParzivalWeb.ViewUtils do
     end
   end
 
+  # credo:disable-for-next-line Credo.Check.Refactor.CyclomaticComplexity
   def bg_500(color) do
     case color do
       :gray -> "bg-gray-500"

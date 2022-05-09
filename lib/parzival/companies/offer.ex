@@ -5,8 +5,8 @@ defmodule Parzival.Companies.Offer do
   use Parzival.Schema
 
   alias Parzival.Companies.Company
-  alias Parzival.Companies.OfferType
   alias Parzival.Companies.OfferTime
+  alias Parzival.Companies.OfferType
 
   @required_fields ~w(maximum_salary minimum_salary title location description company_id offer_type_id offer_time_id)a
 
