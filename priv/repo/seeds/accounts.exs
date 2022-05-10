@@ -14,21 +14,25 @@ defmodule Parzival.Repo.Seeds.Accounts do
     case Repo.all(User) do
       [] ->
         for attendee <- @attendees do
-          first_last_name = String.downcase(attendee) |> String.replace(" ", "_")
+          email =
+            String.downcase(attendee)
+            |> String.normalize(:nfd)
+            |> String.replace(~r/[^A-z\s]/u, "")
+            |> String.replace(" ", "_")
 
           %{
             name: attendee,
-            email: first_last_name <> "@mail.pt",
+            email: email <> "@mail.pt",
             password: "Password1234",
             role: :attendee,
             course: Enum.random(@courses),
             cycle: Enum.random([:Bachelors, :Masters, :Phd]),
             cellphone:
               "+351 9#{Enum.random([1, 2, 3, 6])}#{for _ <- 1..7, do: Enum.random(0..9) |> Integer.to_string()}",
-            website: first_last_name <> "." <> Faker.Internet.domain_suffix(),
-            linkedin: first_last_name,
-            github: first_last_name,
-            twitter: first_last_name,
+            website: email <> "." <> Faker.Internet.domain_suffix(),
+            linkedin: email,
+            github: email,
+            twitter: email,
             balance: Enum.random(100..999)
           }
           |> insert_user()
