@@ -1,0 +1,100 @@
+Massachusetts Institute of Technology (MIT)
+University of Oxford
+Stanford University
+University of Cambridge
+Harvard University
+California Institute of Technology (Caltech)
+Imperial College London
+ETH Zurich (Swiss Federal Institute of Technology)
+UCL (University College London)
+University of Chicago
+National University of Singapore (NUS)
+Nanyang Technological University, Singapore (NTU)
+University of Pennsylvania
+Ecole Polytechnique Fédérale de Lausanne (EPFL)
+Yale University
+University of Edinburgh
+Tsinghua University
+Peking University
+Columbia University
+Princeton University
+Cornell University
+University of Hong Kong (UKU)
+University of Tokyo
+University of Michigan-Ann Arbor
+Johns Hopkins University
+University of Toronto
+McGill University
+Australian National University
+University of Manchester
+Northwestern University
+Fudan University
+University of California, Berkeley (UCB)
+Kyoto University
+Hong Kong University of Science and Technology (HKUST)
+King's College London
+Seoul National University
+University of Melbourne
+University of Sydney
+Chinese University of Hong Kong (CUHK)
+University of California, Los Angeles (UCLA)
+KAIST - Korea Advanced Institute of Science & Technology
+New York University (NYU)
+University of New South Wales (UNSW Sydney)
+Universite PSL
+Zhejiang University
+University of British Columbia
+University of Queensland
+University of California, San Diego (UCSD)
+London School of Economics and Political Science (LSE)
+Shanghai Jiao Tong University
+Technical University of Munich
+Duke University
+Carnegie Mellon University
+City University of Hong Kong
+University of Amsterdam
+Tokyo Institute of Technology
+Delft University of Technology
+Monash University
+Institut Polytechnique de Paris
+Brown University
+University of Warwick
+University of Bristol
+Ruprecht-Karls-Universitat Heidelberg
+Ludwig-Maximilians-Universität München
+Universiti Malaya (UM)
+Hong Kong Polytechnic University
+University of Texas at Austin
+National Taiwan University (NTU)
+Universidad de Buenos Aires (UBA)
+KU Leuven
+University of Zurich
+Sorbonne University
+University of Glasgow
+Korea University
+Osaka University
+University of Wisconsin-Madison
+University of Southampton
+Lomonosov Moscow State University
+University of Copenhagen
+Yonsei University
+Pohang University of Science and Technology (POSTECH)
+Durham University
+Tohoku University
+University of Illinois at Urbana-Champaign
+University of Auckland
+University of Washington
+Lund University
+Georgia Institute of Technology
+KTH Royal Institute of Technology
+University of Birmingham
+University of St Andrews
+University of Leeds
+University of Western Australia
+Rice University
+University of Sheffield
+University of Pennsylvania
+Sungkyunkwan University (SKKU)
+University of Science and Technology of China
+Technical University of Denmark
+University of North Carolina, Chapel Hill

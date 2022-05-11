@@ -8,6 +8,7 @@ defmodule Parzival.Repo.Seeds do
   def run do
     [
       "accounts.exs",
+      "gamification.exs",
       "store.exs",
       "tools.exs"
     ]

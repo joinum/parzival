@@ -12,6 +12,13 @@ defmodule Parzival.Repo.Migrations.CreateUsersAuthTables do
 
       add :name, :string, null: false
       add :role, :string, null: false
+      add :course, :string
+      add :cycle, :string
+      add :cellphone, :string
+      add :website, :string
+      add :linkedin, :string
+      add :github, :string
+      add :twitter, :string
 
       add :balance, :integer
 

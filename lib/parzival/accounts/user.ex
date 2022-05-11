@@ -4,9 +4,23 @@ defmodule Parzival.Accounts.User do
   """
   use Parzival.Schema
 
+  alias Parzival.Gamification.Curriculum
   alias Parzival.Store.Order
 
   @roles ~w(admin staff attendee company)a
+  @cycles ~w(Bachelors Masters Phd)a
+
+  @required_fields ~w(email password name role)a
+
+  @optional_fields [
+    :course,
+    :cycle,
+    :cellphone,
+    :website,
+    :linkedin,
+    :github,
+    :twitter
+  ]
 
   @derive {
     Flop.Schema,
@@ -27,6 +41,15 @@ defmodule Parzival.Accounts.User do
 
     field :name, :string
     field :role, Ecto.Enum, values: @roles
+    field :course, :string
+    field :cycle, Ecto.Enum, values: @cycles
+    field :cellphone, :string
+    field :website, :string
+    field :linkedin, :string
+    field :github, :string
+    field :twitter, :string
+
+    has_one :curriculum, Curriculum
 
     has_many :orders, Order
 
@@ -52,7 +75,7 @@ defmodule Parzival.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password, :name, :balance, :role])
+    |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_email()
     |> validate_password(opts)
   end

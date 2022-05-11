@@ -53,6 +53,8 @@ defmodule ParzivalWeb.Router do
       scope "/app", App do
         live "/", HomeLive.Index, :index
 
+        live "/curriculum", CurriculumLive.Index, :index
+
         live "/store/", ProductLive.Index, :index
         live "/store/:id", ProductLive.Show, :show
 
@@ -88,7 +90,7 @@ defmodule ParzivalWeb.Router do
     get "/settings", UserSettingsController, :edit
     put "/settings", UserSettingsController, :update
     get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
-    get "/cv/:student_id", PdfController, :cv
+    get "/cv/:attendee_id", PdfController, :cv
     get "/cv/preview", PdfController, :cv_preview
   end
 
