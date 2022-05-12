@@ -221,9 +221,9 @@ defmodule Parzival.Missions do
     #          |> exists([t], subquery(query))
     #          |> Repo.all
 
-    User
-    |> select(User)
-    |> Repo.all
+    #User
+    #|> select(User)
+    #|> Repo.all
 
     # Participant
     # |> where([p], subquery(
@@ -257,14 +257,33 @@ defmodule Parzival.Missions do
 
   """
   def get_participants_with_task!(task_id) do
-    # Participant
-    # |> where([p], subquery(
-    #   TaskCompletion
-    #   |> where([p], p.task_id == task_id && p.participant_id == p.id)
-    #   |> Repo.exists)
-    # )
-    # |> Repo.all
-    "OLA"
+    mission_number_of_tasks =
+      from m in Mission,
+        join: t in Task, on: t.mission_id == m.id,
+        select: %{"mission": m.id, "count": count(t.id)}
+
+    user_task_completions =
+      from u in User,
+        join: tc in TaskCompletion, on: tc.participant_id == u.id,
+        select: {u, tc.task_id}
+
+    user_tasks =
+      from [u, task_id] in subquery(user_task_completions),
+        join: t in Task, on: task_id == t.id,
+        select: {u, t.id, t.mission_id}
+
+    user_missions =
+      from [u, task_id, mission_id] in subquery(user_tasks),
+        join: m in Mission, on: m.id == mission_id,
+        group_by: u.id,
+        select: {u, mission_id, count(m.id)}
+
+    participants_with_mission =
+      from [user, mission_id, task_count] in user_missions,
+        join: mim in subquery(mission_number_of_tasks), on: mim.mission == mission_id and mim.count == task_count,
+        select: {user}
+
+    Repo.all(participants_with_mission)
   end
 
   @doc """
