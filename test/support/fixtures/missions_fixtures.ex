@@ -3,6 +3,7 @@ defmodule Parzival.MissionsFixtures do
   This module defines test helpers for creating
   missions via the `Parzival.Missions` context.
   """
+  alias Parzival.Repo
 
   def valid_mission_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
@@ -12,9 +13,13 @@ defmodule Parzival.MissionsFixtures do
   end
 
   def valid_task_attributes(attrs \\ %{}) do
+    %{id: id} = mission_fixture()
     Enum.into(attrs, %{
       title: "Test Task",
-      description: "Test Task"
+      description: "Test Task",
+      start_time: "2022-10-20 10:34:02",
+      end_time: "2022-10-20 10:34:02",
+      mission_id: id
     })
   end
 

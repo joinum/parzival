@@ -14,7 +14,7 @@ defmodule Parzival.MissionsTest do
 
     test "returns the mission if it exists" do
       %{id: id} = mission = mission_fixture()
-      assert %Mission{id: ^id} = Missions.get_mission!(mission.id)
+      assert %Mission{id: id} = Missions.get_mission!(mission.id)
     end
   end
 

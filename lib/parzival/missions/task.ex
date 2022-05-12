@@ -6,7 +6,7 @@ defmodule Parzival.Missions.Task do
 
   alias Parzival.Missions
 
-  @required_fields ~w(title start_time end_time mssion_id)a
+  @required_fields ~w(title start_time end_time mission_id)a
   @optional_fields []
   schema "tasks" do
     field :title, :string
