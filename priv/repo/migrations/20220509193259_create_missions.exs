@@ -20,15 +20,15 @@ defmodule Parzival.Repo.Migrations.CreateMissions do
 
       add :title, :text
       add :description, :text
-      add :start_time, :datetime
-      add :end_time, :datetime
+      add :start_time, :utc_datetime
+      add :end_time, :utc_datetime
 
       add :mission_id, references(:missions, on_delete: :nothing, type: :binary_id)
 
       timestamps()
     end
 
-    create unique_index(:missions, [:title, :description, :mission_id])
+    create unique_index(:tasks, [:title, :description, :mission_id])
 
 
 
@@ -42,7 +42,7 @@ defmodule Parzival.Repo.Migrations.CreateMissions do
       timestamps()
     end
 
-    create unique_index(:missions, [:task_id, :participant_id])
+    create unique_index(:task_completions, [:task_id, :participant_id])
 
   end
 end

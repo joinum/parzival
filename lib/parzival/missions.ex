@@ -6,7 +6,7 @@ defmodule Parzival.Missions do
 
   import Ecto.Query, warn: false
 
-  alias Parzival.Missions.*
+  alias Parzival.Missions.{Mission, Task, TaskCompletion}
   alias Parzival.Accounts.{User, UserNotifier, UserToken}
   alias Parzival.Repo
 
@@ -46,22 +46,22 @@ defmodule Parzival.Missions do
     |> Flop.validate_and_run(flop, for: Task)
   end
 
-  def list_task_completions(params \\ %{})
+  def list_TaskCompletions(params \\ %{})
 
-  def list_task_completions(opts) when is_list(opts) do
-    Task_Completion
+  def list_TaskCompletions(opts) when is_list(opts) do
+    TaskCompletion
     |> apply_filters(opts)
     |> Repo.all()
   end
 
-  def list_task_completions(flop) do
-    Flop.validate_and_run(Task_Completion, flop, for: Task_Completion)
+  def list_TaskCompletions(flop) do
+    Flop.validate_and_run(TaskCompletion, flop, for: TaskCompletion)
   end
 
-  def list_task_completions(%{} = flop, opts) when is_list(opts) do
-    Task_Completion
+  def list_TaskCompletions(%{} = flop, opts) when is_list(opts) do
+    TaskCompletion
     |> apply_filters(opts)
-    |> Flop.validate_and_run(flop, for: Task_Completion)
+    |> Flop.validate_and_run(flop, for: TaskCompletion)
   end
 
    ## Database getters
@@ -81,10 +81,10 @@ defmodule Parzival.Missions do
       ** (Ecto.NoResultsError)
 
   """
-  def get_mission!(id), do: Repo.get!(Mission, id)
+  def get_mission!(id), do: Repo.get(Mission, id)
 
   @doc """
-  Gets a single Task.
+  Gets a single k.
 
   Raises `Ecto.NoResultsError` if the Task does not exist.
 
@@ -97,7 +97,7 @@ defmodule Parzival.Missions do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id)
+  def get_task!(id), do: Repo.get(Task, id)
 
   @doc """
   Gets all tasks needed to complete a mission.
@@ -168,21 +168,22 @@ defmodule Parzival.Missions do
 
   """
   def get_missions_of_participant!(participant_id) do
-    Mission
-    |> where([m], subquery(
-      Task
-      |> where([t], subquery(
-        Task_Completion
-        |> where([tc], tc.participant_id == participant_id && tc.task_id == t.id)
-        |> Repo.exists
-      ) && t.mission_id == mission_id)
-      |> Repo.aggregate(:count, :mission_id)
-    )
-      ==
-      subquery(Task_Completion
-      |> where([p], p.mission_id == m.id)
-      |> Repo.aggregate(:count, :mission_id)))
-    |> Repo.all
+    ##Mission
+    #|> where([m], subquery(from t in Task, limit: 10
+      ##Task
+      ##|> where([t], subquery(
+      ##  TaskCompletion
+     ##   |> where([tc], tc.participant_id == participant_id && tc.task_id == t.id)
+      ##  |> Repo.exists
+     ## ) && t.mission_id == mission_id)
+     ## |> Repo.aggregate(:count, :mission_id)
+    #))
+    #  == []
+      ##subquery(TaskCompletion
+      ##|> where([p], p.mission_id == m.id)
+      ##|> Repo.aggregate(:count, :mission_id)))
+    #|> Repo.all
+    "Ola"
   end
 
   @doc """
@@ -200,21 +201,45 @@ defmodule Parzival.Missions do
 
   """
   def get_participants_with_mission!(mission_id) do
-    Participant
-    |> where([p], subquery(
-      Task
-      |> where([t], subquery(
-        Task_Completion
-        |> where([tc], tc.participant_id == p.id && tc.task_id == t.id)
-        |> Repo.exists
-      ) && t.mission_id == mission_id)
-      |> Repo.aggregate(:count, :mission_id)
-    )
-      ==
-      subquery(Task
-      |> where([p], p.mission_id == mission_id)
-      |> Repo.aggregate(:count, :mission_id)))
+    # number_of_tasks_per_mission
+    #   = from m in Mission,
+    #           join: t in Task, on: t.mission_id == m.id
+
+    # user_tasks_completed
+    #   = from u in User,
+    #       join: tc in TaskCompletion, tc.participant_id == u.id
+
+
+    # user_tasks
+    #   = from u in subquery(user_tasks_completed),
+    #       join: t in Task, on: t.id ==
+
+
+    # query3 = from m in Mission,
+
+    # query2 = Task
+    #          |> exists([t], subquery(query))
+    #          |> Repo.all
+
+    User
+    |> select(User)
     |> Repo.all
+
+    # Participant
+    # |> where([p], subquery(
+    #   Task
+    #   |> where([t], subquery(
+    #     TaskCompletion
+    #     |> where([tc], tc.participant_id == p.id and tc.task_id == t.id)
+    #     |> Repo.exists
+    #   ) and t.mission_id == mission_id)
+    #   |> Repo.aggregate(:count, :mission_id)
+    # )
+    #   ==
+    #   subquery(Task
+    #   |> where([p], p.mission_id == mission_id)
+    #   |> Repo.aggregate(:count, :mission_id)))
+    # |> Repo.all
   end
 
   @doc """
@@ -232,13 +257,14 @@ defmodule Parzival.Missions do
 
   """
   def get_participants_with_task!(task_id) do
-    Participant
-    |> where([p], subquery(
-      Task_Completion
-      |> where([p], p.task_id == task_id && p.participant_id == p.id)
-      |> Repo.exists
-    )
-    |> Repo.all
+    # Participant
+    # |> where([p], subquery(
+    #   TaskCompletion
+    #   |> where([p], p.task_id == task_id && p.participant_id == p.id)
+    #   |> Repo.exists)
+    # )
+    # |> Repo.all
+    "OLA"
   end
 
   @doc """
@@ -246,9 +272,45 @@ defmodule Parzival.Missions do
 
   TODO::Documentation and verify user types
   """
-  def give_task(%User{} = user, %User{} staff, %Task{} = task) do
-    %Task_Completion{participant: user, staff: staff, task: task}
+  def give_task(%User{} = user, %User{} = staff, %Task{} = task) do
+    %TaskCompletion{participant: user, staff: staff, task: task}
     |> Repo.insert
+  end
+
+  @doc """
+  Registers a user.
+
+  ## Examples
+
+      iex> create_task(%{field: value})
+      {:ok, %Task{}}
+
+      iex> create_task(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_task(attrs) do
+    %Task{}
+    |> Task.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Creates a mission.
+
+  ## Examples
+
+      iex> create_mission(%{field: value})
+      {:ok, %Mission{}}
+
+      iex> create_mission(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_mission(attrs) do
+    %Mission{}
+    |> Mission.changeset(attrs)
+    |> Repo.insert()
   end
 
   ## Inserts

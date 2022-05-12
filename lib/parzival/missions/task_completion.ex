@@ -1,4 +1,4 @@
-defmodule Parzival.Missions.Task_Completion do
+defmodule Parzival.Missions.TaskCompletion do
   @moduledoc """
   An entry created every time a participant
   completes a task.
@@ -13,7 +13,7 @@ defmodule Parzival.Missions.Task_Completion do
   schema "task_completions" do
     belongs_to :participant, Accounts.User
     belongs_to :staff, Accounts.User
-    belongs_to :mission, Missions.Mission
+    belongs_to :task, Missions.Task
 
     timestamps()
   end

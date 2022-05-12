@@ -11,8 +11,8 @@ defmodule Parzival.Missions.Task do
   schema "tasks" do
     field :title, :string
     field :description, :string
-    field :start_time, :datetime
-    field :end_time, :datetime
+    field :start_time, :utc_datetime
+    field :end_time, :utc_datetime
 
     belongs_to :mission, Missions.Mission
 
