@@ -5,9 +5,9 @@
       <div class="flex relative justify-between items-center h-16">
         <!-- Logo section -->
         <div class="flex items-center px-2 lg:px-0 xl:w-64">
-          <div class="flex-shrink-0">
+          <%= live_redirect to: Routes.landing_home_index_path(@socket, :index) , class: "flex-shrink-0" do %>
             <img class="h-auto w-[100px]" src={Routes.static_path(@socket, "/images/logo.svg")} alt="JOIN Logo" />
-          </div>
+          <% end %>
         </div>
 
         <div class="flex lg:hidden">
