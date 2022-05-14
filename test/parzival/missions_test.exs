@@ -6,6 +6,7 @@ defmodule Parzival.MissionsTest do
   import Parzival.MissionsFixtures
   import Ecto
   alias Parzival.Missions.{Mission, Task, TaskCompletion}
+  alias Parzival.Accounts.User
 
   describe "get_mission/1" do
     test "does not return the mission if the mission does not exits" do
@@ -37,6 +38,14 @@ defmodule Parzival.MissionsTest do
     test "returns the task if it exists" do
       %{id: id} = mission = mission_fixture()
       assert nil == Missions.get_tasks_of_mission!(mission.id)
+    end
+  end
+
+  describe "get_participants_with_mission/1" do
+    test "returns a participant with the mission" do
+      %{mission_id: mission_id, user_id: user_id}  = mission_tasks_user_fixture()
+      [user] = Missions.get_participants_with_mission!(mission_id)
+      assert user_id == user.id
     end
   end
 end

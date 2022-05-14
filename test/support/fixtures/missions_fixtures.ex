@@ -4,6 +4,7 @@ defmodule Parzival.MissionsFixtures do
   missions via the `Parzival.Missions` context.
   """
   alias Parzival.Repo
+  import Parzival.AccountsFixtures
 
   def valid_mission_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
@@ -21,6 +22,27 @@ defmodule Parzival.MissionsFixtures do
       end_time: "2022-10-20 10:34:02",
       mission_id: id
     })
+  end
+
+  def valid_task_completion_attributes(attrs \\ %{}) do
+    %{id: task_id, mission_id: mission_id} = task_fixture()
+    %{id: user_id} = user_fixture()
+    tc = Enum.into(attrs, %{
+      task_id: task_id,
+      participant_id: user_id
+    })
+
+    %{task_completion: tc, mission_id: mission_id, task_id: task_id, user_id: user_id}
+  end
+
+  def mission_tasks_user_fixture(attrs \\ %{}) do
+      res =
+      attrs
+      |> valid_task_completion_attributes()
+
+      Parzival.Missions.give_task(res.user_id, res.user_id, res.task_id)
+
+    res
   end
 
   def mission_fixture(attrs \\ %{}) do

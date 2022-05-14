@@ -10,7 +10,9 @@ defmodule Parzival.AccountsFixtures do
   def valid_user_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
       email: unique_user_email(),
-      password: valid_user_password()
+      password: valid_user_password(),
+      name: "Joao",
+      role: :attendee
     })
   end
 
