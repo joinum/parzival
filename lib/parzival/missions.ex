@@ -168,22 +168,14 @@ defmodule Parzival.Missions do
 
   """
   def get_missions_of_participant!(participant_id) do
-    ##Mission
-    #|> where([m], subquery(from t in Task, limit: 10
-      ##Task
-      ##|> where([t], subquery(
-      ##  TaskCompletion
-     ##   |> where([tc], tc.participant_id == participant_id && tc.task_id == t.id)
-      ##  |> Repo.exists
-     ## ) && t.mission_id == mission_id)
-     ## |> Repo.aggregate(:count, :mission_id)
-    #))
-    #  == []
-      ##subquery(TaskCompletion
-      ##|> where([p], p.mission_id == m.id)
-      ##|> Repo.aggregate(:count, :mission_id)))
-    #|> Repo.all
-    "Ola"
+    query = subquery(mission_completions_query())
+    |> where([mc], mc.user == ^participant_id)
+    |> select([mc], %{mission: mc.mission})
+
+    subquery(query)
+    |> join(:inner, [missions], m in Mission, on: m.id == missions.mission)
+    |> select([sq, m], m)
+    |> Repo.all
   end
 
   @doc """
@@ -202,12 +194,12 @@ defmodule Parzival.Missions do
   """
   def get_participants_with_mission!(mission_id) do
 
-    query = subquery(mission_completions_query)
+    query = subquery(mission_completions_query())
     |> where([mc], mc.mission == ^mission_id)
-    |> select([mc], %{"user": mc.user})
+    |> select([mc], %{user: mc.user})
 
     subquery(query)
-    |> join(:left, [users], u in User, on: u.id == users.user)
+    |> join(:inner, [users], u in User, on: u.id == users.user)
     |> select([sq, u], u)
     |> Repo.all
   end
@@ -227,7 +219,14 @@ defmodule Parzival.Missions do
 
   """
   def get_participants_with_task!(task_id) do
-    "Ola"
+    query = subquery(task_completions_query())
+    |> where([tc], tc.task == ^task_id)
+    |> select([tc], %{user: tc.user})
+
+    subquery(query)
+    |> join(:inner, [users], u in User, on: u.id == users.user)
+    |> select([sq, u], u)
+    |> Repo.all
   end
 
   @doc """
@@ -285,36 +284,36 @@ defmodule Parzival.Missions do
     |> Repo.insert()
   end
 
-  @doc """
-    Gets the query used to determine which missions completed by which attendees
-  """
+
+  defp task_completions_query() do
+      User
+      |> join(:inner, [u], tc in TaskCompletion, on: tc.participant_id == u.id)
+      |> select([u, tc], %{user: u.id, task: tc.task_id})
+  end
+
   defp mission_completions_query() do
     mission_number_of_tasks =
       Mission
       |> join(:inner, [m], t in Task, on: t.mission_id == m.id)
       |> group_by([m,t], m.id)
-      |> select([m,t], %{"mission": m.id, "task_count": count(t.id)})
+      |> select([m,t], %{mission: m.id, task_count: count(t.id)})
 
 
-    user_task_completions =
-      User
-      |> join(:inner, [u], tc in TaskCompletion, on: tc.participant_id == u.id)
-      |> select([u, tc], %{"user": u.id, "task": tc.task_id})
+    user_task_completions = task_completions_query()
 
     user_tasks =
       subquery(user_task_completions)
       |> join(:inner, [utc], t in Task, on: utc.task == t.id)
-      |> select([utc, t], %{"user": utc.user, "task": t.id, "mission": t.mission_id})
+      |> select([utc, t], %{user: utc.user, task: t.id, mission: t.mission_id})
 
     user_missions =
       subquery(user_tasks)
       |> join(:inner, [ut], m in Mission, on: m.id == ut.mission)
       |> group_by([ut, m], [ut.mission, ut.user])
-      |> select([ut, m], %{"user": ut.user, "mission": ut.mission, "task_count": count(ut.task)})
+      |> select([ut, m], %{user: ut.user, mission: ut.mission, task_count: count(ut.task)})
 
-    participants_with_mission =
       subquery(user_missions)
       |> join(:inner, [um], m_tasks in subquery(mission_number_of_tasks), on: m_tasks.mission == um.mission and um.task_count == m_tasks.task_count)
-      |> select([um, m_tasks], %{"user": um.user, "mission": um.mission})
+      |> select([um, m_tasks], %{user: um.user, mission: um.mission})
   end
 end

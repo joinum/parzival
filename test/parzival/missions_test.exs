@@ -48,4 +48,20 @@ defmodule Parzival.MissionsTest do
       assert user_id == user.id
     end
   end
+
+  describe "get_missions_of_participant/1" do
+    test "returns all the missions completed by a participant" do
+      %{mission_id: mission_id, user_id: user_id}  = mission_tasks_user_fixture()
+      [mission] = Missions.get_missions_of_participant!(user_id)
+      assert mission_id == mission.id
+    end
+  end
+
+  describe "get_participants_with_task/1" do
+    test "returns a participant with the task" do
+      %{task_id: task_id, user_id: user_id}  = mission_tasks_user_fixture()
+      [user] = Missions.get_participants_with_task!(task_id)
+      assert user_id == user.id
+    end
+  end
 end
