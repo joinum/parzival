@@ -64,8 +64,7 @@ defmodule Parzival.Missions do
     |> Flop.validate_and_run(flop, for: TaskCompletion)
   end
 
-   ## Database getters
-
+  ## Database getters
 
   @doc """
   Gets a single Mission.
@@ -168,14 +167,15 @@ defmodule Parzival.Missions do
 
   """
   def get_missions_of_participant!(participant_id) do
-    query = subquery(mission_completions_query())
-    |> where([mc], mc.user == ^participant_id)
-    |> select([mc], %{mission: mc.mission})
+    query =
+      subquery(mission_completions_query())
+      |> where([mc], mc.user == ^participant_id)
+      |> select([mc], %{mission: mc.mission})
 
     subquery(query)
     |> join(:inner, [missions], m in Mission, on: m.id == missions.mission)
     |> select([sq, m], m)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -193,15 +193,15 @@ defmodule Parzival.Missions do
 
   """
   def get_participants_with_mission!(mission_id) do
-
-    query = subquery(mission_completions_query())
-    |> where([mc], mc.mission == ^mission_id)
-    |> select([mc], %{user: mc.user})
+    query =
+      subquery(mission_completions_query())
+      |> where([mc], mc.mission == ^mission_id)
+      |> select([mc], %{user: mc.user})
 
     subquery(query)
     |> join(:inner, [users], u in User, on: u.id == users.user)
     |> select([sq, u], u)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -219,14 +219,15 @@ defmodule Parzival.Missions do
 
   """
   def get_participants_with_task!(task_id) do
-    query = subquery(task_completions_query())
-    |> where([tc], tc.task == ^task_id)
-    |> select([tc], %{user: tc.user})
+    query =
+      subquery(task_completions_query())
+      |> where([tc], tc.task == ^task_id)
+      |> select([tc], %{user: tc.user})
 
     subquery(query)
     |> join(:inner, [users], u in User, on: u.id == users.user)
     |> select([sq, u], u)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -235,17 +236,20 @@ defmodule Parzival.Missions do
   TODO::Documentation and verify user types
   """
   def give_task(user_id, staff_id, task_id) do
-    user  = User
-           |> Repo.get_by(id: user_id)
+    user =
+      User
+      |> Repo.get_by(id: user_id)
 
-    staff = User
-           |> Repo.get_by(id: staff_id)
+    staff =
+      User
+      |> Repo.get_by(id: staff_id)
 
-    task  = Task
-           |> Repo.get_by(id: task_id)
+    task =
+      Task
+      |> Repo.get_by(id: task_id)
 
     %TaskCompletion{participant: user, staff: staff, task: task}
-    |> Repo.insert
+    |> Repo.insert()
   end
 
   @doc """
@@ -284,20 +288,18 @@ defmodule Parzival.Missions do
     |> Repo.insert()
   end
 
-
   defp task_completions_query() do
-      User
-      |> join(:inner, [u], tc in TaskCompletion, on: tc.participant_id == u.id)
-      |> select([u, tc], %{user: u.id, task: tc.task_id})
+    User
+    |> join(:inner, [u], tc in TaskCompletion, on: tc.participant_id == u.id)
+    |> select([u, tc], %{user: u.id, task: tc.task_id})
   end
 
   defp mission_completions_query() do
     mission_number_of_tasks =
       Mission
       |> join(:inner, [m], t in Task, on: t.mission_id == m.id)
-      |> group_by([m,t], m.id)
-      |> select([m,t], %{mission: m.id, task_count: count(t.id)})
-
+      |> group_by([m, t], m.id)
+      |> select([m, t], %{mission: m.id, task_count: count(t.id)})
 
     user_task_completions = task_completions_query()
 
@@ -312,8 +314,10 @@ defmodule Parzival.Missions do
       |> group_by([ut, m], [ut.mission, ut.user])
       |> select([ut, m], %{user: ut.user, mission: ut.mission, task_count: count(ut.task)})
 
-      subquery(user_missions)
-      |> join(:inner, [um], m_tasks in subquery(mission_number_of_tasks), on: m_tasks.mission == um.mission and um.task_count == m_tasks.task_count)
-      |> select([um, m_tasks], %{user: um.user, mission: um.mission})
+    subquery(user_missions)
+    |> join(:inner, [um], m_tasks in subquery(mission_number_of_tasks),
+      on: m_tasks.mission == um.mission and um.task_count == m_tasks.task_count
+    )
+    |> select([um, m_tasks], %{user: um.user, mission: um.mission})
   end
 end

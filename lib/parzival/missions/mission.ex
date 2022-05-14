@@ -4,7 +4,6 @@ defmodule Parzival.Missions.Mission do
   """
   use Parzival.Schema
 
-
   @required_fields ~w(title)a
   @optional_fields []
   schema "missions" do

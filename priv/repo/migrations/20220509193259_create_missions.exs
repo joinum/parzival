@@ -13,8 +13,6 @@ defmodule Parzival.Repo.Migrations.CreateMissions do
 
     create unique_index(:missions, [:title, :description])
 
-
-
     create table(:tasks, primary_key: false) do
       add :id, :binary_id, primary_key: true
 
@@ -30,8 +28,6 @@ defmodule Parzival.Repo.Migrations.CreateMissions do
 
     create unique_index(:tasks, [:title, :description, :mission_id])
 
-
-
     create table(:task_completions, primary_key: false) do
       add :id, :binary_id, primary_key: true
 
@@ -43,6 +39,5 @@ defmodule Parzival.Repo.Migrations.CreateMissions do
     end
 
     create unique_index(:task_completions, [:task_id, :participant_id])
-
   end
 end

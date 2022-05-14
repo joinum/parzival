@@ -15,6 +15,7 @@ defmodule Parzival.MissionsFixtures do
 
   def valid_task_attributes(attrs \\ %{}) do
     %{id: id} = mission_fixture()
+
     Enum.into(attrs, %{
       title: "Test Task",
       description: "Test Task",
@@ -27,20 +28,22 @@ defmodule Parzival.MissionsFixtures do
   def valid_task_completion_attributes(attrs \\ %{}) do
     %{id: task_id, mission_id: mission_id} = task_fixture()
     %{id: user_id} = user_fixture()
-    tc = Enum.into(attrs, %{
-      task_id: task_id,
-      participant_id: user_id
-    })
+
+    tc =
+      Enum.into(attrs, %{
+        task_id: task_id,
+        participant_id: user_id
+      })
 
     %{task_completion: tc, mission_id: mission_id, task_id: task_id, user_id: user_id}
   end
 
   def mission_tasks_user_fixture(attrs \\ %{}) do
-      res =
+    res =
       attrs
       |> valid_task_completion_attributes()
 
-      Parzival.Missions.give_task(res.user_id, res.user_id, res.task_id)
+    Parzival.Missions.give_task(res.user_id, res.user_id, res.task_id)
 
     res
   end
