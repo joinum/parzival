@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-white lg:flex-1 lg:min-w-0 xl:border-r xl:border-gray-200">
+<div class="h-full bg-white border-r border-gray-200">
   <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
     <div class="flex justify-between items-center h-10">
       <h1 class="flex-1 text-lg font-medium">Store</h1>
@@ -44,31 +44,27 @@
           </div>
         </section>
       </div>
-      <!-- Product image -->
       <div class="mt-10 lg:col-start-2 lg:row-span-2 lg:self-center lg:mt-0">
         <div class="overflow-hidden rounded-lg aspect-w-1 aspect-h-1">
           <img src={Uploaders.ProductImage.url({@product.image, @product}, :medium)} class="object-cover object-center w-full h-full" />
         </div>
       </div>
-      <!-- Product form -->
       <div class="lg:col-start-1 lg:row-start-2 lg:self-start lg:max-w-lg">
         <section aria-labelledby="options-heading">
           <h2 id="options-heading" class="sr-only">Product options</h2>
-          <form>
-            <div class="mt-10">
-              <%= if @current_user.role == :attendee do %>
-                <%= if @product.stock > 0 && @redeem_quantity > 0 do %>
-                  <button phx-click="purchase" type="submit" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
-                    Purchase
-                  </button>
-                <% else %>
-                  <div class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-white rounded-md border border-transparent shadow-sm opacity-50 bg-secondary">
-                    Purchase
-                  </div>
-                <% end %>
+          <div class="mt-10">
+            <%= if @current_user.role == :attendee do %>
+              <%= if @product.stock > 0 && @redeem_quantity > 0 do %>
+                <button phx-click="purchase" phx-throttle="500" phx-disable-with="Purchasing..." class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
+                  Purchase
+                </button>
+              <% else %>
+                <div class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-white rounded-md border border-transparent shadow-sm opacity-50 bg-secondary">
+                  Purchase
+                </div>
               <% end %>
-            </div>
-          </form>
+            <% end %>
+          </div>
         </section>
         <div class="flex flex-col justify-center items-center mt-1">
           <p class="font-medium text-md">

@@ -33,7 +33,7 @@ defmodule ParzivalWeb.Backoffice.FaqsLive.FormComponent do
       {:ok, _faqs} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Faq updated successfully")
+         |> put_flash(:success, "Faq updated successfully!")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -46,7 +46,7 @@ defmodule ParzivalWeb.Backoffice.FaqsLive.FormComponent do
       {:ok, _faq} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Faqs created successfully")
+         |> put_flash(:info, "Faqs created successfully!")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

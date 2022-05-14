@@ -9,8 +9,8 @@
   </div>
   <ul role="list" class="relative z-0">
     <%= for faq <- @faqs do %>
-      <li id={"faq-#{faq.id}"} class="relative py-5 pr-6 pl-4 border-b border-gray-200 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
-        <%= live_patch to: Routes.admin_faqs_show_path(@socket, :show, faq), class: "group" do %>
+      <%= live_patch to: Routes.admin_faqs_show_path(@socket, :show, faq), class: "group" do %>
+        <li id={"faq-#{faq.id}"} class="relative py-5 pr-6 pl-4 border-b border-gray-200 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
           <div>
             <h3 class="text-sm font-semibold text-gray-800 hover:underline focus:outline-none">
               <%= faq.question %>
@@ -19,8 +19,8 @@
               <%= faq.answer %>
             </article>
           </div>
-        <% end %>
-      </li>
+        </li>
+      <% end %>
     <% end %>
   </ul>
 </div>

@@ -19,7 +19,8 @@ defmodule Parzival.Accounts.User do
     :website,
     :linkedin,
     :github,
-    :twitter
+    :twitter,
+    :balance
   ]
 
   @derive {

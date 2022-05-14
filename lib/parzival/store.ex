@@ -232,5 +232,24 @@ defmodule Parzival.Store do
       Order.changeset(order, %{quantity: order.quantity + 1})
     end)
     |> Repo.transaction()
+    |> case do
+      {:ok, transaction} ->
+        broadcast({:ok, transaction.update_stock}, :purchased)
+
+      {:error, _transaction, changeset, _} ->
+        {:error, changeset}
+    end
+  end
+
+  def subscribe(topic) when topic in ["purchased"] do
+    Phoenix.PubSub.subscribe(Parzival.PubSub, topic)
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+
+  defp broadcast({:ok, %Product{} = product}, event)
+       when event in [:purchased] do
+    Phoenix.PubSub.broadcast!(Parzival.PubSub, "purchased", {event, product.stock})
+    {:ok, product}
   end
 end

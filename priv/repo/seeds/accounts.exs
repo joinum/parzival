@@ -33,7 +33,7 @@ defmodule Parzival.Repo.Seeds.Accounts do
             linkedin: email,
             github: email,
             twitter: email,
-            balance: Enum.random(100..999)
+            balance: Enum.random(1000..9999)
           }
           |> insert_user()
         end

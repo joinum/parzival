@@ -46,7 +46,7 @@ defmodule ParzivalWeb.Backoffice.ProductLive.FormComponent do
       {:ok, _product} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Product updated successfully")
+         |> put_flash(:success, "Product updated successfully!")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -59,7 +59,7 @@ defmodule ParzivalWeb.Backoffice.ProductLive.FormComponent do
       {:ok, _product} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Product created successfully")
+         |> put_flash(:info, "Product created successfully!")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
