@@ -37,7 +37,7 @@ defmodule ParzivalWeb.Backoffice.AnnouncementLive.FormComponent do
       {:ok, _announcement} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Announcement updated successfully")
+         |> put_flash(:info, "Announcement updated successfully!")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -50,7 +50,7 @@ defmodule ParzivalWeb.Backoffice.AnnouncementLive.FormComponent do
       {:ok, _announcement} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Announcement created successfully")
+         |> put_flash(:success, "Announcement created successfully!")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

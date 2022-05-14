@@ -35,7 +35,7 @@ defmodule ParzivalWeb.UserResetPasswordController do
     case Accounts.reset_user_password(conn.assigns.user, user_params) do
       {:ok, _} ->
         conn
-        |> put_flash(:info, "Password reset successfully.")
+        |> put_flash(:info, "Password reset successfully!")
         |> redirect(to: Routes.user_session_path(conn, :new))
 
       {:error, changeset} ->

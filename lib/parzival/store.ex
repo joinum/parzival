@@ -212,25 +212,40 @@ defmodule Parzival.Store do
   end
 
   def purchase(user, product) do
-    Multi.new()
-    |> Multi.update(
-      :update_balance,
-      User.balance_changeset(user, %{balance: user.balance - product.price})
-    )
-    |> Multi.update(
-      :update_stock,
-      Product.stock_changeset(product, %{stock: product.stock - 1})
-    )
-    |> Multi.run(:order, fn _repo, _changes ->
-      {
-        :ok,
-        get_order_by_user_and_product(user.id, product.id) ||
-          %Order{user_id: user.id, product_id: product.id, quantity: 0}
-      }
-    end)
-    |> Multi.insert_or_update(:insert_or_update_order, fn %{order: order} ->
-      Order.changeset(order, %{quantity: order.quantity + 1})
-    end)
-    |> Repo.transaction()
+    {:ok, transaction} =
+      Multi.new()
+      |> Multi.update(
+        :update_balance,
+        User.balance_changeset(user, %{balance: user.balance - product.price})
+      )
+      |> Multi.update(
+        :update_stock,
+        Product.stock_changeset(product, %{stock: product.stock - 1})
+      )
+      |> Multi.run(:order, fn _repo, _changes ->
+        {
+          :ok,
+          get_order_by_user_and_product(user.id, product.id) ||
+            %Order{user_id: user.id, product_id: product.id, quantity: 0}
+        }
+      end)
+      |> Multi.insert_or_update(:insert_or_update_order, fn %{order: order} ->
+        Order.changeset(order, %{quantity: order.quantity + 1})
+      end)
+      |> Repo.transaction()
+
+    broadcast({:ok, transaction.update_stock}, :purchased)
+  end
+
+  def subscribe(topic) when topic in ["purchased"] do
+    Phoenix.PubSub.subscribe(Parzival.PubSub, topic)
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+
+  defp broadcast({:ok, %Product{} = product}, event)
+       when event in [:purchased] do
+    Phoenix.PubSub.broadcast!(Parzival.PubSub, "purchased", {event, product.stock})
+    {:ok, product}
   end
 end

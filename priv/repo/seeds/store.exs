@@ -14,9 +14,9 @@ defmodule Parzival.Repo.Seeds.Store do
           %{
             name: "Saco",
             description: "É um saco",
-            price: 200,
-            stock: 5,
-            max_per_user: 2
+            price: 20,
+            stock: 100,
+            max_per_user: 50
           },
           %{
             name: "Caderno",

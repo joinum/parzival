@@ -4,20 +4,20 @@ defmodule ParzivalWeb.App.ProductLive.Show do
 
   alias Parzival.Store
   alias Parzival.Uploaders
+  alias Parzival.Accounts
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(%{"id" => id}, _session, socket) do
+    if connected?(socket) do
+      Store.subscribe("purchased")
+    end
+
+    {:ok, assign(socket, :id, id)}
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
-    {:noreply,
-     socket
-     |> assign(:current_page, :store)
-     |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:redeem_quantity, redeem_quantity(socket.assigns.current_user.id, id))
-     |> assign(:product, Store.get_product!(id))}
+  def handle_params(%{"id" => _id}, _, socket) do
+    {:noreply, reload(socket)}
   end
 
   def redeem_quantity(user_id, product_id) do
@@ -32,7 +32,11 @@ defmodule ParzivalWeb.App.ProductLive.Show do
   @impl true
   def handle_event("delete", _payload, socket) do
     {:ok, _} = Store.delete_product(socket.assigns.product)
-    {:noreply, push_redirect(socket, to: Routes.product_index_path(socket, :index))}
+
+    {:noreply,
+     socket
+     |> put_flash(:success, gettext("Product deleted successfully!"))
+     |> push_redirect(to: Routes.product_index_path(socket, :index))}
   end
 
   @impl true
@@ -42,11 +46,30 @@ defmodule ParzivalWeb.App.ProductLive.Show do
 
     case Store.purchase(current_user, product) do
       {:ok, _order} ->
-        {:noreply, socket}
+        {:noreply,
+         socket
+         |> put_flash(:success, "Product purchased successfully!")
+         |> reload()}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
     end
+  end
+
+  @impl true
+  def handle_info({event, _changes}, socket) when event in [:purchased] do
+    {:noreply, reload(socket)}
+  end
+
+  defp reload(socket) do
+    id = socket.assigns.id
+
+    socket
+    |> assign(:current_page, :store)
+    |> assign(:page_title, page_title(socket.assigns.live_action))
+    |> assign(:redeem_quantity, redeem_quantity(socket.assigns.current_user.id, id))
+    |> assign(:product, Store.get_product!(id))
+    |> assign(:current_user, Accounts.get_user!(socket.assigns.current_user.id))
   end
 
   defp page_title(:show), do: "Show Product"

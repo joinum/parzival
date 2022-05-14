@@ -24,7 +24,7 @@ defmodule ParzivalWeb.Backoffice.FaqsLive.Show do
 
     {:noreply,
      socket
-     |> put_flash(:info, gettext("Faq deleted successfully!"))
+     |> put_flash(:success, gettext("Faq deleted successfully!"))
      |> push_redirect(to: Routes.admin_faqs_index_path(socket, :index))}
   end
 
