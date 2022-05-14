@@ -10,7 +10,7 @@ defmodule Parzival.Accounts.User do
   @roles ~w(admin staff attendee company)a
   @cycles ~w(Bachelors Masters Phd)a
 
-  @required_fields ~w(email password name role balance)a
+  @required_fields ~w(email password name role)a
 
   @optional_fields [
     :course,
@@ -19,7 +19,8 @@ defmodule Parzival.Accounts.User do
     :website,
     :linkedin,
     :github,
-    :twitter
+    :twitter,
+    :balance
   ]
 
   @derive {

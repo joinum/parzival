@@ -2,9 +2,9 @@ defmodule ParzivalWeb.App.ProductLive.Show do
   @moduledoc false
   use ParzivalWeb, :live_view
 
+  alias Parzival.Accounts
   alias Parzival.Store
   alias Parzival.Uploaders
-  alias Parzival.Accounts
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do
@@ -45,7 +45,7 @@ defmodule ParzivalWeb.App.ProductLive.Show do
     current_user = socket.assigns.current_user
 
     case Store.purchase(current_user, product) do
-      {:ok, _order} ->
+      {:ok, _product} ->
         {:noreply,
          socket
          |> put_flash(:success, "Product purchased successfully!")
