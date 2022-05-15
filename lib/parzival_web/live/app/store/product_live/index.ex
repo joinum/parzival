@@ -7,8 +7,8 @@ defmodule ParzivalWeb.App.ProductLive.Index do
   alias Parzival.Uploaders
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :products, list_products())}
+  def mount(params, _session, socket) do
+    {:ok, assign(socket, list_products(params))}
   end
 
   @impl true
@@ -37,7 +37,13 @@ defmodule ParzivalWeb.App.ProductLive.Index do
     |> assign(:product, nil)
   end
 
-  defp list_products do
-    Store.list_products()
+  defp list_products(params) do
+    case Store.list_products(params) do
+      {:ok, {products, meta}} ->
+        %{products: products, meta: meta}
+
+      {:error, flop} ->
+        %{products: [], meta: flop}
+    end
   end
 end

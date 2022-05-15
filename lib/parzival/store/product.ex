@@ -13,6 +13,15 @@ defmodule Parzival.Store.Product do
 
   @optional_fields []
 
+  @derive {
+    Flop.Schema,
+    filterable: [],
+    sortable: [:name],
+    compound_fields: [search: [:name]],
+    default_order_by: [:name],
+    default_order_directions: [:asc]
+  }
+
   schema "products" do
     field :name, :string
     field :description, :string

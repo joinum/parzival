@@ -8,6 +8,16 @@ defmodule Parzival.Tools.Announcement do
 
   @required_fields ~w(title text author_id)a
   @optional_fields []
+
+  @derive {
+    Flop.Schema,
+    filterable: [:search],
+    sortable: [:inserted_at, :title],
+    compound_fields: [search: [:title]],
+    default_order_by: [:inserted_at, :title],
+    default_order_directions: [:desc]
+  }
+
   schema "announcements" do
     field :title, :string
     field :text, :string

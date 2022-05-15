@@ -2,12 +2,14 @@ defmodule ParzivalWeb.Backoffice.FaqsLive.Index do
   @moduledoc false
   use ParzivalWeb, :live_view
 
+  import ParzivalWeb.Components.Pagination
+
   alias Parzival.Tools
   alias Parzival.Tools.Faq
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :faqs, list_faqs())}
+  def mount(params, _session, socket) do
+    {:ok, assign(socket, list_faqs(params))}
   end
 
   @impl true
@@ -15,6 +17,7 @@ defmodule ParzivalWeb.Backoffice.FaqsLive.Index do
     {:noreply,
      socket
      |> assign(:current_page, :tools)
+     |> assign(:params, params)
      |> apply_action(socket.assigns.live_action, params)}
   end
 
@@ -36,15 +39,13 @@ defmodule ParzivalWeb.Backoffice.FaqsLive.Index do
     |> assign(:faq, nil)
   end
 
-  @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    faq = Tools.get_faq!(id)
-    {:ok, _} = Tools.delete_faq(faq)
+  defp list_faqs(params) do
+    case Tools.list_faqs(params) do
+      {:ok, {faqs, meta}} ->
+        %{faqs: faqs, meta: meta}
 
-    {:noreply, assign(socket, :faqs_collection, list_faqs())}
-  end
-
-  defp list_faqs do
-    Tools.list_faqs()
+      {:error, flop} ->
+        %{faqs: [], meta: flop}
+    end
   end
 end
