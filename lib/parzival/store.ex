@@ -74,6 +74,7 @@ defmodule Parzival.Store do
     product
     |> Product.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:updated)
   end
 
   @doc """
@@ -90,6 +91,7 @@ defmodule Parzival.Store do
   """
   def delete_product(%Product{} = product) do
     Repo.delete(product)
+    |> broadcast(:deleted)
   end
 
   @doc """
@@ -241,7 +243,7 @@ defmodule Parzival.Store do
     end
   end
 
-  def subscribe(topic) when topic in ["purchased"] do
+  def subscribe(topic) when topic in ["purchased", "updated", "deleted"] do
     Phoenix.PubSub.subscribe(Parzival.PubSub, topic)
   end
 
@@ -250,6 +252,18 @@ defmodule Parzival.Store do
   defp broadcast({:ok, %Product{} = product}, event)
        when event in [:purchased] do
     Phoenix.PubSub.broadcast!(Parzival.PubSub, "purchased", {event, product.stock})
+    {:ok, product}
+  end
+
+  defp broadcast({:ok, %Product{} = product}, event)
+       when event in [:updated] do
+    Phoenix.PubSub.broadcast!(Parzival.PubSub, "updated", {event, product})
+    {:ok, product}
+  end
+
+  defp broadcast({:ok, %Product{} = product}, event)
+       when event in [:deleted] do
+    Phoenix.PubSub.broadcast!(Parzival.PubSub, "deleted", {event, product})
     {:ok, product}
   end
 end
