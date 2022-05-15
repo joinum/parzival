@@ -10,6 +10,8 @@ defmodule ParzivalWeb.App.ProductLive.Show do
   def mount(%{"id" => id}, _session, socket) do
     if connected?(socket) do
       Store.subscribe("purchased")
+      Store.subscribe("updated")
+      Store.subscribe("deleted")
     end
 
     {:ok, assign(socket, :id, id)}
@@ -23,9 +25,16 @@ defmodule ParzivalWeb.App.ProductLive.Show do
   def redeem_quantity(user_id, product_id) do
     order = Store.get_order_by_user_and_product(user_id, product_id)
 
-    case order do
-      nil -> Store.get_product!(product_id).max_per_user
-      _ -> Store.get_product!(product_id).max_per_user - order.quantity
+    quantity =
+      case order do
+        nil -> Store.get_product!(product_id).max_per_user
+        _ -> Store.get_product!(product_id).max_per_user - order.quantity
+      end
+
+    if quantity < 0 do
+      0
+    else
+      quantity
     end
   end
 
@@ -57,8 +66,12 @@ defmodule ParzivalWeb.App.ProductLive.Show do
   end
 
   @impl true
-  def handle_info({event, _changes}, socket) when event in [:purchased] do
+  def handle_info({event, _changes}, socket) when event in [:purchased, :updated] do
     {:noreply, reload(socket)}
+  end
+
+  def handle_info({event, _changes}, socket) when event in [:deleted] do
+    {:noreply, push_redirect(socket, to: Routes.product_index_path(socket, :index))}
   end
 
   defp reload(socket) do
