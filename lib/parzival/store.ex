@@ -20,8 +20,22 @@ defmodule Parzival.Store do
       [%Product{}, ...]
 
   """
-  def list_products do
-    Repo.all(Product)
+  def list_products(params \\ %{})
+
+  def list_products(opts) when is_list(opts) do
+    Product
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_products(flop) do
+    Flop.validate_and_run(Product, flop, for: Product)
+  end
+
+  def list_products(%{} = flop, opts) when is_list(opts) do
+    Product
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Product)
   end
 
   @doc """
@@ -118,8 +132,22 @@ defmodule Parzival.Store do
       [%Order{}, ...]
 
   """
-  def list_orders do
-    Repo.all(Order)
+  def list_orders(params \\ %{})
+
+  def list_orders(opts) when is_list(opts) do
+    Order
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_orders(flop) do
+    Flop.validate_and_run(Order, flop, for: Order)
+  end
+
+  def list_orders(%{} = flop, opts) when is_list(opts) do
+    Order
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Order)
   end
 
   def list_orders_by_user(user, opts \\ []) do

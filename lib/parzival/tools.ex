@@ -19,8 +19,22 @@ defmodule Parzival.Tools do
       [%Faqs{}, ...]
 
   """
-  def list_faqs do
-    Repo.all(Faq)
+  def list_faqs(params \\ %{})
+
+  def list_faqs(opts) when is_list(opts) do
+    Faq
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_faqs(flop) do
+    Flop.validate_and_run(Faq, flop, for: Faq)
+  end
+
+  def list_faqs(%{} = flop, opts) when is_list(opts) do
+    Faq
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Faq)
   end
 
   @doc """
@@ -115,10 +129,22 @@ defmodule Parzival.Tools do
       [%Announcement{}, ...]
 
   """
-  def list_announcements(opts \\ []) do
+  def list_announcements(params \\ %{})
+
+  def list_announcements(opts) when is_list(opts) do
     Announcement
     |> apply_filters(opts)
     |> Repo.all()
+  end
+
+  def list_announcements(flop) do
+    Flop.validate_and_run(Announcement, flop, for: Announcement)
+  end
+
+  def list_announcements(%{} = flop, opts) when is_list(opts) do
+    Announcement
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Announcement)
   end
 
   @doc """

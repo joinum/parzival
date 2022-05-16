@@ -55,7 +55,7 @@
           <div class="mt-10">
             <%= if @current_user.role == :attendee do %>
               <%= if @product.stock > 0 && @redeem_quantity > 0 do %>
-                <button phx-click="purchase" phx-throttle="500" phx-disable-with="Purchasing..." class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
+                <button phx-click="purchase" phx-disable-with="Purchasing..." class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
                   Purchase
                 </button>
               <% else %>
