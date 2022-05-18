@@ -1,14 +1,45 @@
 <div class="flex justify-between items-center pt-10 w-full lg:pt-14">
-  <div class="hidden w-full text-white uppercase lg:block">
+  <div class="hidden w-full text-white lg:block">
     <div class="flex flex-col lg:flex-row">
       <div class="flex flex-row items-center space-x-1">
+        <%= if assigns[:current_user] do %>
+          <div class="relative flex-shrink-0 mr-8">
+            <div>
+              <div x-data="{ open: false }" @click.away="open = false">
+                <button x-on:click="open = ! open" class="flex text-sm rounded-full ring-2 ring-white ring-opacity-20 focus:ring-opacity-100 focus:outline-none">
+                  <span class="sr-only">Open user menu</span>
+                  <span class="inline-flex justify-center items-center w-10 h-10 rounded-full">
+                    <span class="text-lg font-medium leading-none text-white">
+                      <%= extract_initials(@current_user.name) %>
+                    </span>
+                  </span>
+                </button>
+                <div x-bind:class="! open ? 'hidden' : 'z-50 origin-top-right absolute left-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                  <%= for page <- ParzivalWeb.Config.pages(@socket, @current_user) do %>
+                    <div class="py-1" role="none">
+                      <%= live_redirect(page.title, to: page.url, class: "text-gray-700 block px-4 py-2 rounded-t-md text-sm hover:bg-gray-50 hover:text-gray-900") %>
+                    </div>
+                  <% end %>
+                  <div class="py-1" role="none">
+                    <%= link("Profile", to: Routes.profile_index_path(@socket, :index), class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>
+                  </div>
+                  <div class="py-1" role="none">
+                    <%= link("Sign Out", to: Routes.user_session_path(@socket, :delete), method: :delete, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
         <%= for {page,index} <- Enum.with_index(ParzivalWeb.Config.pages()) do %>
-          <%= if index != 0 do %>
-            <span class="select-none">|</span>
+          <%= if page.key != :login || ! assigns[:current_user] do %>
+            <%= if index != 0 do %>
+              <span class="select-none">|</span>
+            <% end %>
+            <span class={"#{@current_page == page.title && "font-bold"} inline-flex px-2"}>
+              <%= live_redirect(page.title, to: page.url, class: "uppercase inline-flex px-1 text-xs xl:text-base") %>
+            </span>
           <% end %>
-          <span class={"#{@current_page == page.title && "font-bold"} inline-flex px-2"}>
-            <%= live_redirect(page.title, to: page.url, class: "inline-flex px-1 text-xs xl:text-base") %>
-          </span>
         <% end %>
       </div>
     </div>

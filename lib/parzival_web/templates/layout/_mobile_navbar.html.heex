@@ -35,9 +35,23 @@
 
     <div class="flex flex-col gap-y-8 justify-center items-center my-14 mx-auto w-full">
       <%= for page <- ParzivalWeb.Config.pages() do %>
-        <%= live_redirect to: page.url do %>
-          <span @click="navbar = false" class={"#{@current_page == page.title && "font-bold"} text-white text-lg text-center hover:text-gray-300"}>
-            <%= page.title %>
+        <%= if page.key != :login || ! assigns[:current_user] do %>
+          <%= live_redirect to: page.url do %>
+            <span @click="navbar = false" class={"#{@current_page == page.title && "font-bold"} text-white text-lg text-center hover:text-gray-300"}>
+              <%= page.title %>
+            </span>
+          <% end %>
+        <% end %>
+      <% end %>
+      <%= if assigns[:current_user] do %>
+        <%= live_redirect to: Routes.home_index_path(@socket, :index) do %>
+          <span @click="navbar = false" class="text-lg text-center text-white hover:text-gray-300">
+            Dashboard
+          </span>
+        <% end %>
+        <%= link to: Routes.user_session_path(@socket, :delete), method: :delete do %>
+          <span @click="navbar = false" class="text-lg text-center text-white hover:text-gray-300">
+            Sign out
           </span>
         <% end %>
       <% end %>
