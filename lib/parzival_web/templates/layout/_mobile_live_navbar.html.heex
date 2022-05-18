@@ -1,0 +1,88 @@
+<div x-show="navbar" class="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
+  <div
+    x-transition:enter="transition-opacity ease-linear duration-300"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition-opacity ease-linear duration-300"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="hidden z-50 sm:block sm:fixed sm:inset-0 sm:bg-gray-600 sm:bg-opacity-75"
+    aria-hidden="true"
+    @click="navbar = false"
+  />
+
+  <nav
+    x-transition:enter="transition ease-out duration-150 sm:ease-in-out sm:duration-300"
+    x-transition:enter-start="transform opacity-0 scale-110 sm:translate-x-full sm:scale-100 sm:opacity-100"
+    x-transition:enter-end="transform opacity-100 scale-100 sm:translate-x-0 sm:scale-100 sm:opacity-100"
+    x-transition:leave="transition ease-in duration-150 sm:ease-in-out sm:duration-300"
+    x-transition:leave-start="transform opacity-100 scale-100 sm:translate-x-0 sm:scale-100 sm:opacity-100"
+    x-transition:leave-end="transform opacity-0 scale-110 sm:translate-x-full sm:scale-100 sm:opacity-100"
+    class="fixed inset-0 z-50 w-full h-full sm:inset-y-0 sm:right-0 sm:left-auto sm:w-full sm:max-w-sm sm:shadow-lg bg-secondary"
+    aria-label="Global"
+  >
+    <div class="flex justify-between items-center px-4 h-16 sm:px-6">
+      <a href="/">
+        <img class="h-auto w-[100px]" src={Routes.static_path(ParzivalWeb.Endpoint, "/images/logo.svg")} alt="JOIN Logo" />
+      </a>
+      <button @click="navbar = false" class="inline-flex justify-center items-center text-white">
+        <span class="sr-only">Close main menu</span>
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-y-8 justify-center items-center px-4 my-14 mx-auto w-full">
+      <%= for page <- ParzivalWeb.Config.pages(@socket, @current_user) do %>
+        <%= if page.tabs != [] do %>
+          <div class="relative w-full" x-data="{ open: false }" @click.away="open = false">
+            <button x-on:click="open = ! open" class={"#{page.key == @current_page && "font-extrabold"} justify-center flex px-3 hover:bg-tertiary gap-x-1 py-2 rounded-md text-sm font-medium w-full text-white hover:text-white"}>
+              <%= page.title %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="my-auto w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div x-bind:class="! open ? 'hidden' : 'w-full pt-2'" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+              <div class="flex flex-col gap-y-4 justify-center" role="none">
+                <%= for tab <- page.tabs do %>
+                  <%= live_redirect to: tab.url, class: "text-center hover:bg-tertiary px-3 py-2 hover:text-white text-white font-medium text-sm rounded-md" do %>
+                    <%= tab.title %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <%= live_redirect(page.title, to: page.url, class: "#{(page.key == @current_page && "font-extrabold") || "hover:bg-tertiary"} px-3 text-center py-2 rounded-md text-sm font-medium text-white hover:text-white w-full") %>
+        <% end %>
+      <% end %>
+      <%= link(to: Routes.profile_index_path(@socket, :index), class: "w-full text-center hover:text-white text-white font-medium text-sm") do %>
+        <div class="py-2 px-3 w-full rounded-md hover:bg-tertiary" role="none">
+          Profile
+        </div>
+      <% end %>
+      <%= link(to: Routes.landing_home_index_path(@socket, :index), class: "w-full text-center hover:text-white text-white font-medium text-sm") do %>
+        <div class="py-2 px-3 w-full rounded-md hover:bg-tertiary" role="none">
+          Landing
+        </div>
+      <% end %>
+      <%= link(to: Routes.user_session_path(@socket, :delete), method: :delete, class: "w-full text-center hover:text-white text-white font-medium text-sm") do %>
+        <div class="py-2 px-3 w-full rounded-md hover:bg-tertiary" role="none">
+          Sign Out
+        </div>
+      <% end %>
+    </div>
+    <div class="flex absolute bottom-6 justify-between items-center px-8 mx-auto w-full">
+      <%= link to: "https://cesium.di.uminho.pt/" do %>
+        <img class="h-auto text-white w-[70px]" src={Routes.static_path(ParzivalWeb.Endpoint, "/images/logos/cesium.svg")} alt="CeSIUM Logo" />
+      <% end %>
+      <%= link to: "https://necc.di.uminho.pt/" do %>
+        <img class="h-auto text-white w-[70px]" src={Routes.static_path(ParzivalWeb.Endpoint, "/images/logos/necc.svg")} alt="NECC Logo" />
+      <% end %>
+      <%= link to: "https://nefum.di.uminho.pt/" do %>
+        <img class="h-auto text-white w-[70px]" src={Routes.static_path(ParzivalWeb.Endpoint, "/images/logos/nefum.svg")} alt="NEFUM Logo" />
+      <% end %>
+    </div>
+  </nav>
+</div>
