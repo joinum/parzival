@@ -4,6 +4,7 @@ defmodule ParzivalWeb.UserAuth do
   import Phoenix.Controller
 
   alias Parzival.Accounts
+  alias Parzival.Gamification
   alias ParzivalWeb.Router.Helpers, as: Routes
 
   # Make the remember me cookie valid for 60 days.
@@ -116,6 +117,19 @@ defmodule ParzivalWeb.UserAuth do
     if conn.assigns[:current_user] do
       conn
       |> redirect(to: signed_in_path(conn))
+      |> halt()
+    else
+      conn
+    end
+  end
+
+  def require_level(conn, _opts) do
+    if conn.assigns[:current_user].role in [:attendee] and
+         Gamification.calc_level(conn.assigns[:current_user].exp) <
+           Gamification.get_mission!(conn.params["id"]).level do
+      conn
+      |> redirect(to: Routes.mission_index_path(conn, :index))
+      |> put_flash(:error, "You dont have enought level for this mission!")
       |> halt()
     else
       conn

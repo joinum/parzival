@@ -1,9 +1,14 @@
-defmodule Parzival.Repo.Seeds.Curriculums do
+defmodule Parzival.Repo.Seeds.Gamification do
   import Ecto.Query
 
   alias Parzival.Repo
   alias Parzival.Accounts.User
   alias Parzival.Gamification.Curriculum
+  alias Parzival.Gamification.Mission
+  alias Parzival.Gamification.Mission.Dificulty
+  alias Parzival.Gamification.Mission.MissionUser
+  alias Parzival.Gamification.Mission.Task
+  alias Parzival.Gamification.Mission.TaskUser
 
   @education_titles File.read!("priv/fake/uminho_courses.txt") |> String.split("\n")
   @languages File.read!("priv/fake/languages.txt") |> String.split("\n")
@@ -11,6 +16,11 @@ defmodule Parzival.Repo.Seeds.Curriculums do
 
   def run do
     seed_curriculums()
+    seed_dificulties()
+    seed_missions()
+    seed_tasks()
+    seed_missions_users()
+    seed_tasks_users()
   end
 
   def seed_curriculums do
@@ -137,6 +147,159 @@ defmodule Parzival.Repo.Seeds.Curriculums do
         Mix.shell().error("Found Curriculums, aborting seeding curriculums.")
     end
   end
+
+  def seed_dificulties do
+    case Repo.all(Dificulty) do
+      [] ->
+        [
+          %{
+            name: "Easy",
+            color: "green"
+          },
+          %{
+            name: "Medium",
+            color: "orange"
+          },
+          %{
+            name: "Hard",
+            color: "red"
+          },
+          %{
+            name: "Exclusive",
+            color: "purple"
+          }
+        ]
+        |> Enum.each(&insert_dificulty/1)
+
+      _ ->
+        Mix.shell().error("Found Dificulties, aborting seeding dificulties.")
+    end
+  end
+
+  def insert_dificulty(data) do
+    %Dificulty{}
+    |> Dificulty.changeset(data)
+    |> Repo.insert!()
+  end
+
+  def seed_missions do
+    case Repo.all(Mission) do
+      [] ->
+        dificulties =
+          Dificulty
+          |> Repo.all()
+
+        for _n <- 1..Enum.random(10..30) do
+          Mission.changeset(%Mission{}, %{
+            title: Faker.Lorem.sentence(5..10),
+            description: Faker.Lorem.sentence(20..40),
+            tokens: Enum.random(400..600),
+            exp: Enum.random(100..800),
+            level: Enum.random(1..10),
+            dificulty_id: Enum.random(dificulties).id,
+            start:
+              Faker.NaiveDateTime.between(
+                ~N[2022-06-28 09:30:00.000000],
+                ~N[2022-06-28 14:00:00.000000]
+              ),
+            finish:
+              Faker.DateTime.between(
+                ~N[2022-06-28 14:00:00.000000],
+                ~N[2022-06-28 23:59:00.000000]
+              )
+          })
+          |> Repo.insert!()
+        end
+
+      _ ->
+        Mix.shell().error("Found Missions, aborting seeding missions.")
+    end
+  end
+
+  def seed_tasks do
+    case Repo.all(Task) do
+      [] ->
+        missions =
+          Mission
+          |> Repo.all()
+
+        for mission <- missions do
+          for _n <- 1..Enum.random(1..5) do
+            Task.changeset(%Task{}, %{
+              title: Faker.Lorem.sentence(5..10),
+              description: Faker.Lorem.sentence(20..40),
+              tokens: Enum.random(400..600),
+              exp: Enum.random(500..1000),
+              mission_id: mission.id
+            })
+            |> Repo.insert!()
+          end
+        end
+
+      _ ->
+        Mix.shell().error("Found Tasks, aborting seeding tasks")
+    end
+  end
+
+  def seed_missions_users do
+    case Repo.all(MissionUser) do
+      [] ->
+        missions =
+          Mission
+          |> Repo.all()
+
+        attendees =
+          User
+          |> where(role: :attendee)
+          |> Repo.all()
+
+        for mission <- missions do
+          for attendee <- Enum.take_random(attendees, Enum.random(1..Enum.count(attendees))) do
+            MissionUser.changeset(%MissionUser{}, %{
+              user_id: attendee.id,
+              mission_id: mission.id
+            })
+            |> Repo.insert!()
+          end
+        end
+
+      _ ->
+        Mix.shell().error("Found MissionsUser, aborting seeding missions_users")
+    end
+  end
+
+  def seed_tasks_users do
+    case Repo.all(TaskUser) do
+      [] ->
+        tasks =
+          Task
+          |> Repo.all()
+
+        attendees =
+          User
+          |> where(role: :attendee)
+          |> Repo.all()
+
+        staffs =
+          User
+          |> where(role: :staff)
+          |> Repo.all()
+
+        for task <- Enum.take_random(tasks, Enum.random(1..Enum.count(tasks))) do
+          for attendee <- Enum.take_random(attendees, Enum.random(1..Enum.count(attendees))) do
+            TaskUser.changeset(%TaskUser{}, %{
+              user_id: attendee.id,
+              staff_id: Enum.random(staffs).id,
+              task_id: task.id
+            })
+            |> Repo.insert!()
+          end
+        end
+
+      _ ->
+        Mix.shell().error("Found TasksUser, aborting seeding tasks_users")
+    end
+  end
 end
 
-Parzival.Repo.Seeds.Curriculums.run()
+Parzival.Repo.Seeds.Gamification.run()

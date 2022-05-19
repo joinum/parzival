@@ -7,6 +7,7 @@ defmodule Parzival.Accounts.User do
   alias Parzival.Companies.Application
   alias Parzival.Companies.Company
   alias Parzival.Gamification.Curriculum
+  alias Parzival.Gamification.Mission
   alias Parzival.Store.Order
 
   @roles ~w(admin staff attendee recruiter)a
@@ -23,7 +24,9 @@ defmodule Parzival.Accounts.User do
     :linkedin,
     :github,
     :twitter,
-    :company_id
+    :company_id,
+    :balance,
+    :exp
   ]
 
   @derive {
@@ -53,9 +56,13 @@ defmodule Parzival.Accounts.User do
     field :github, :string
     field :twitter, :string
 
+    field :exp, :integer, default: 0
+
     has_one :curriculum, Curriculum
 
     has_many :orders, Order
+
+    many_to_many :missions, Mission, join_through: "missions_users"
 
     belongs_to :company, Company
 
@@ -191,6 +198,12 @@ defmodule Parzival.Accounts.User do
     user
     |> cast(attrs, [:balance])
     |> validate_balance()
+  end
+
+  def exp_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:exp])
+    |> validate_required([:exp])
   end
 
   @doc """

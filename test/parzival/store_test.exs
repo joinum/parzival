@@ -79,7 +79,7 @@ defmodule Parzival.StoreTest do
   end
 
   describe "orders" do
-    alias Parzival.Store.order()
+    alias Parzival.Store.Order
 
     import Parzival.StoreFixtures
 

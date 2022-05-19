@@ -40,12 +40,19 @@ defmodule ParzivalWeb.App.ProductLive.Show do
 
   @impl true
   def handle_event("delete", _payload, socket) do
-    {:ok, _} = Store.delete_product(socket.assigns.product)
+    case Store.delete_product(socket.assigns.product) do
+      {:ok, _product} ->
+        {:noreply,
+         socket
+         |> put_flash(:success, "Product deleted successfully!")
+         |> push_redirect(to: Routes.product_index_path(socket, :index))}
 
-    {:noreply,
-     socket
-     |> put_flash(:success, gettext("Product deleted successfully!"))
-     |> push_redirect(to: Routes.product_index_path(socket, :index))}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, elem(changeset.errors[:orders], 0))
+         |> assign(:changeset, changeset)}
+    end
   end
 
   @impl true
@@ -82,7 +89,9 @@ defmodule ParzivalWeb.App.ProductLive.Show do
     |> assign(:page_title, page_title(socket.assigns.live_action))
     |> assign(:redeem_quantity, redeem_quantity(socket.assigns.current_user.id, id))
     |> assign(:product, Store.get_product!(id))
-    |> assign(:current_user, Accounts.get_user!(socket.assigns.current_user.id))
+    |> assign(
+      current_user: Accounts.get_user!(socket.assigns.current_user.id, [:company, :missions])
+    )
   end
 
   defp page_title(:show), do: "Show Product"

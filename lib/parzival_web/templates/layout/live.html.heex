@@ -83,7 +83,7 @@
                     <% :attendee -> %>
                       <%= @current_user.cycle %> in <%= @current_user.course %>
                     <% :recruiter -> %>
-                      <%= @current_company.name %>
+                      <%= @current_user.company.name %>
                     <% _ -> %>
                       <%= String.upcase(Atom.to_string(@current_user.role)) %>
                   <% end %>
@@ -94,26 +94,26 @@
           <%= if @current_user.role == :attendee do %>
             <div class="flex flex-col gap-y-1">
               <span class="text-lg">
-                LVL 7
+                LVL <%= Gamification.calc_level(@current_user.exp) %>
               </span>
               <div class="overflow-hidden w-full h-6 rounded-md bg-quaternary">
-                <div class="w-1/2 h-full bg-secondary" />
+                <div style={"width: #{@current_user.exp / Gamification.calc_next_level_exp(@current_user.exp) * 100}%; transition: width 0.6s"} class="h-full bg-secondary" />
               </div>
               <span class="text-sm font-light text-right text-gray-300">
-                2300/4000 EXP
+                <%= @current_user.exp %>/<%= Gamification.calc_next_level_exp(@current_user.exp) %> EXP
               </span>
             </div>
             <span>
               💰 <%= @current_user.balance %>
             </span>
-            <div class="flex flex-col gap-y-2">
-              <div class="flex gap-x-4 text-gray-300 select-none hover:text-gray-400 flew-row">
+            <%= live_redirect to: Routes.mission_index_path(@socket, :index) do %>
+              <div class="flex gap-x-2 text-gray-300 select-none hover:text-gray-400 flew-row">
                 <Heroicons.Solid.clipboard_check class="w-5 h-5" />
-                <span class="">
-                  28 missions completed
+                <span>
+                  <%= Enum.count(@current_user.missions) %> missions completed
                 </span>
               </div>
-            </div>
+            <% end %>
           <% end %>
         </div>
         <div class="hidden gap-x-2 justify-center items-center mb-12 md:flex lg:gap-x-4">
@@ -134,7 +134,7 @@
       <%= @inner_content %>
     </div>
 
-    <footer class="flex gap-x-4 justify-center items-center mt-16 mb-4 md:hidden">
+    <footer class="flex gap-x-4 justify-center items-center my-4 md:hidden">
       <%= link to: "https://cesium.di.uminho.pt/" do %>
         <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/cesium.svg")} alt="CeSIUM Logo" />
       <% end %>

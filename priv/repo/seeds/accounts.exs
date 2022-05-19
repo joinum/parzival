@@ -6,6 +6,7 @@ defmodule Parzival.Repo.Seeds.Accounts do
 
   @attendees File.read!("priv/fake/attendees.txt") |> String.split("\n")
   @recruiters File.read!("priv/fake/recruiters.txt") |> String.split("\n")
+  @staffs File.read!("priv/fake/staffs.txt") |> String.split("\n")
   @courses File.read!("priv/fake/uminho_courses.txt") |> String.split("\n")
 
   def run do
@@ -35,7 +36,8 @@ defmodule Parzival.Repo.Seeds.Accounts do
             linkedin: email,
             github: email,
             twitter: email,
-            balance: Enum.random(1000..9999)
+            balance: Enum.random(1000..9999),
+            exp: Enum.random(100..3000)
           }
           |> insert_user()
         end
@@ -61,6 +63,28 @@ defmodule Parzival.Repo.Seeds.Accounts do
             github: email,
             twitter: email,
             company_id: Enum.random(companies).id
+          }
+          |> insert_user()
+        end
+
+        for staff <- @staffs do
+          email =
+            String.downcase(staff)
+            |> String.normalize(:nfd)
+            |> String.replace(~r/[^A-z\s]/u, "")
+            |> String.replace(" ", "_")
+
+          %{
+            name: staff,
+            email: email <> "@mail.pt",
+            password: "Password1234",
+            role: :staff,
+            cellphone:
+              "+351 9#{Enum.random([1, 2, 3, 6])}#{for _ <- 1..7, do: Enum.random(0..9) |> Integer.to_string()}",
+            website: email <> "." <> Faker.Internet.domain_suffix(),
+            linkedin: email,
+            github: email,
+            twitter: email
           }
           |> insert_user()
         end
