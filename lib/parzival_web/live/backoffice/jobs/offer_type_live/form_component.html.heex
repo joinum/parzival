@@ -12,7 +12,7 @@
 
     <fieldset class="mt-4">
       <legend class="block font-medium text-gray-700 text-md">Color</legend>
-      <div class="grid items-center grid-cols-4 gap-2 mt-2 sm:grid-cols-6 xl:grid-cols-9">
+      <div class="grid grid-cols-4 gap-2 items-center mt-2 sm:grid-cols-6 xl:grid-cols-9">
         <%= for color <- Ecto.Enum.values(Companies.OfferType, :color) do %>
           <.radio_button color={color} active={input_value(f, :color) in [color, Atom.to_string(color)]}>
             <%= radio_button(f, :color, color, class: "hidden") %>
@@ -26,7 +26,7 @@
 
     <div class="flex flex-row-reverse">
       <%= submit do %>
-        <div type="button" class="px-4 py-2 mt-6 text-sm font-medium text-white border border-transparent rounded-md shadow-sm xl:w-full bg-secondary hover:bg-primary">
+        <div type="button" class="py-2 px-4 mt-6 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
           Save
         </div>
       <% end %>

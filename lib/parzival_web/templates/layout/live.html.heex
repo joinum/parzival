@@ -1,7 +1,7 @@
-<div aria-live="assertive" class="fixed inset-0 z-50 flex flex-col items-end px-4 py-6 pointer-events-none gap-y-2 sm:items-start sm:py-16 sm:px-6">
+<div aria-live="assertive" class="flex fixed inset-0 z-50 flex-col gap-y-2 items-end py-6 px-4 pointer-events-none sm:items-start sm:py-16 sm:px-6">
   <%= for {key, message} <- @flash do %>
-    <div class="flex flex-col items-center w-full space-y-4 sm:items-end">
-      <div class="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto ring-1 ring-black ring-opacity-5">
+    <div class="flex flex-col items-center space-y-4 w-full sm:items-end">
+      <div class="overflow-hidden w-full max-w-sm bg-white rounded-lg ring-1 ring-black ring-opacity-5 shadow-lg pointer-events-auto">
         <div class="p-4">
           <div class="flex items-start">
             <div class="flex-shrink-0">
@@ -65,7 +65,7 @@
   <% end %>
 </div>
 
-<div x-data="{ navbar: false }" class="relative flex flex-col min-h-screen">
+<div x-data="{ navbar: false }" class="flex relative flex-col min-h-screen">
   <!-- Navbar -->
   <%= render("_desktop_live_navbar.html", assigns) %>
 
@@ -74,22 +74,22 @@
   <div class="flex flex-col mx-auto mt-16 w-full md:flex-row xl:px-8 max-w-[1380px]">
     <div class="relative flex-shrink-0 w-72 bg-white max-w-[400px]">
       <div class="flex relative top-0 flex-col justify-between py-10 pr-6 pl-4 w-72 sm:pl-6 md:fixed md:top-16 md:h-screen xl:pl-0 max-w-[400px]">
-        <div class="relative flex flex-col gap-y-4">
+        <div class="flex relative flex-col gap-y-4">
           <div class="block space-y-8">
             <!-- Profile -->
             <div class="flex flex-row items-center space-x-3">
               <div class="flex-shrink-0 w-14 h-14">
-                <span class="inline-flex items-center justify-center rounded-full w-14 h-14 bg-secondary">
+                <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
                   <span class="text-xl font-medium leading-none text-white">
                     <%= extract_initials(@current_user.name) %>
                   </span>
                 </span>
               </div>
-              <div class="flex flex-col w-full overflow-hidden">
-                <span class="inline-block w-full overflow-hidden text-base font-semibold text-gray-900 whitespace-nowrap text-ellipsis">
+              <div class="flex overflow-hidden flex-col w-full">
+                <span class="inline-block overflow-hidden w-full text-base font-semibold text-gray-900 whitespace-nowrap text-ellipsis">
                   <%= @current_user.name %>
                 </span>
-                <span class="inline-block w-full overflow-hidden text-sm text-gray-900 whitespace-nowrap text-ellipsis">
+                <span class="inline-block overflow-hidden w-full text-sm text-gray-900 whitespace-nowrap text-ellipsis">
                   <%= case @current_user.role do %>
                     <% :attendee -> %>
                       <%= @current_user.cycle %> in <%= @current_user.course %>
@@ -107,7 +107,7 @@
               <span class="text-lg">
                 LVL 7
               </span>
-              <div class="w-full h-6 overflow-hidden rounded-md bg-quaternary">
+              <div class="overflow-hidden w-full h-6 rounded-md bg-quaternary">
                 <div class="w-1/2 h-full bg-secondary" />
               </div>
               <span class="text-sm font-light text-right text-gray-300">
@@ -118,7 +118,7 @@
               💰 <%= @current_user.balance %>
             </span>
             <div class="flex flex-col gap-y-2">
-              <div class="flex text-gray-300 select-none gap-x-4 hover:text-gray-400 flew-row">
+              <div class="flex gap-x-4 text-gray-300 select-none hover:text-gray-400 flew-row">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                   <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -130,7 +130,7 @@
             </div>
           <% end %>
         </div>
-        <div class="items-center justify-center hidden mb-12 gap-x-2 md:flex lg:gap-x-4">
+        <div class="hidden gap-x-2 justify-center items-center mb-12 md:flex lg:gap-x-4">
           <%= link to: "https://cesium.di.uminho.pt/" do %>
             <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/cesium.svg")} alt="CeSIUM Logo" />
           <% end %>
@@ -148,7 +148,7 @@
       <%= @inner_content %>
     </div>
 
-    <footer class="flex items-center justify-center mt-16 mb-4 gap-x-4 md:hidden">
+    <footer class="flex gap-x-4 justify-center items-center mt-16 mb-4 md:hidden">
       <%= link to: "https://cesium.di.uminho.pt/" do %>
         <img class="w-20 h-auto opacity-30 hover:opacity-40" src={Routes.static_path(@socket, "/images/logos/black/cesium.svg")} alt="CeSIUM Logo" />
       <% end %>

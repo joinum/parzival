@@ -76,7 +76,7 @@ defmodule ParzivalWeb.Config do
         title: "Home",
         url: Routes.home_index_path(conn, :index),
         tabs: []
-      },
+      }
     ]
   end
 

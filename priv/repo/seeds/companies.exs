@@ -38,19 +38,13 @@ defmodule Parzival.Repo.Seeds.Companies do
 
         %OfferType{}
         |> OfferType.changeset(%{
-<<<<<<< HEAD
-          name: "Thesis",
-=======
           name: "Curricular Intership",
->>>>>>> ba3d33f (Add offers)
           color: "orange"
         })
         |> Repo.insert!()
 
         %OfferType{}
         |> OfferType.changeset(%{
-<<<<<<< HEAD
-=======
           name: "Grant",
           color: "gray"
         })
@@ -58,7 +52,6 @@ defmodule Parzival.Repo.Seeds.Companies do
 
         %OfferType{}
         |> OfferType.changeset(%{
->>>>>>> ba3d33f (Add offers)
           name: "Summer Intership",
           color: "pink"
         })

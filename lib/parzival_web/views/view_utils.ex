@@ -104,6 +104,29 @@ defmodule ParzivalWeb.ViewUtils do
     end
   end
 
+  def border_200(color) do
+    case color do
+      :gray -> "border-gray-200"
+      :red -> "border-red-200"
+      :orange -> "border-orange-200"
+      :amber -> "border-amber-200"
+      :yellow -> "border-yellow-200"
+      :lime -> "border-lime-200"
+      :green -> "border-green-200"
+      :emerald -> "border-emerald-200"
+      :teal -> "border-teal-200"
+      :cyan -> "border-cyan-200"
+      :sky -> "border-sky-200"
+      :blue -> "border-blue-200"
+      :indigo -> "border-indigo-200"
+      :violet -> "border-violet-200"
+      :purple -> "border-purple-200"
+      :fuchsia -> "border-fuchsia-200"
+      :pink -> "border-pink-200"
+      :rose -> "border-rose-200"
+    end
+  end
+
   def bg_100(color) do
     case color do
       :gray -> "bg-gray-100"
