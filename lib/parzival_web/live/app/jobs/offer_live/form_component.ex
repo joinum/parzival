@@ -63,11 +63,11 @@ defmodule ParzivalWeb.OfferLive.FormComponent do
   end
 
   defp save_offer(socket, :new, offer_params) do
-    if socket.assigns.current_user.role == :recruiter do
-      ^offer_params =
+    offer_params =
+      if socket.assigns.current_user.role == :recruiter do
         offer_params
         |> Map.put("company_id", socket.assigns.current_user.company_id)
-    end
+      end
 
     case Companies.create_offer(offer_params) do
       {:ok, _offer} ->

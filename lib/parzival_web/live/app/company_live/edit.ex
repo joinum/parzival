@@ -12,7 +12,7 @@ defmodule ParzivalWeb.App.CompanyLive.Edit do
   def handle_params(%{"id" => id}, _, socket) do
     {:noreply,
      socket
-     |> assign(:current_page, :jobs)
+     |> assign(:current_page, :companies)
      |> assign(:page_title, "Edit Company")
      |> assign(:company, Companies.get_company!(id))}
   end

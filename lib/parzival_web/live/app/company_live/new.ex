@@ -12,7 +12,7 @@ defmodule ParzivalWeb.App.CompanyLive.New do
   def handle_params(_params, _, socket) do
     {:noreply,
      socket
-     |> assign(:current_page, :jobs)
+     |> assign(:current_page, :companies)
      |> assign(:page_title, "New Company")
      |> assign(:company, %Company{})}
   end
