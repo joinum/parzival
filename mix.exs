@@ -75,7 +75,10 @@ defmodule Parzival.MixProject do
       {:pdf_generator, "~> 0.6.2"},
 
       # tools
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+
+      # icons
+      {:icons, "~> 0.6.0"}
     ]
   end
 

@@ -83,25 +83,21 @@
         <div x-show={"date == #{index + 2}"} class="flex flex-col w-full sm:w-96 md:w-[450px] lg:w-[500px]">
           <div class="flex flex-row justify-between items-center px-6 pt-4 pb-10">
             <button @click="date = date > 2 ? date - 1 : date">
-              <svg class={"#{if day == :tuesday do
-                    'fill-transparent'
-                  else
-                    'fill-white'
-                  end} w-4 sm:w-6"} viewBox="0 0 13 23" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.35957 11.1753L5.08221 11.5L5.35957 11.8247L12.3108 19.9632L9.86131 22.2757L0.657558 11.5L9.86131 0.724325L12.3108 3.03679L5.35957 11.1753Z" stroke="white" />
-              </svg>
+              <Heroicons.Solid.chevron_left class={"#{if day == :tuesday do
+                  'fill-transparent'
+                else
+                  'fill-white'
+                end} w-20"} />
             </button>
             <span class="text-xl font-bold text-white sm:text-3xl">
               <%= Calendar.strftime(hd(Map.get(@schedule, day))["hours"], "%d of %B") %>
             </span>
             <button @click="date = date < 4 ? date + 1 : date">
-              <svg class={"#{if day == :thursday do
-                    'fill-transparent'
-                  else
-                    'fill-white'
-                  end} w-4 transform rotate-180 sm:w-6"} viewBox="0 0 13 23" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.35957 11.1753L5.08221 11.5L5.35957 11.8247L12.3108 19.9632L9.86131 22.2757L0.657558 11.5L9.86131 0.724325L12.3108 3.03679L5.35957 11.1753Z" stroke="white" />
-              </svg>
+              <Heroicons.Solid.chevron_right class={"#{if day == :thursday do
+                  'fill-transparent'
+                else
+                  'fill-white'
+                end} w-20"} />
             </button>
           </div>
           <div class="flex relative flex-col gap-y-4">

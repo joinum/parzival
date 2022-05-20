@@ -109,6 +109,8 @@ defmodule ParzivalWeb do
       import ParzivalWeb.Gettext
       import ParzivalWeb.ViewUtils
       alias ParzivalWeb.Router.Helpers, as: Routes
+
+      alias Icons.{FontAwesome, Heroicons, Ionicons}
     end
   end
 
