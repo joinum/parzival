@@ -32,9 +32,7 @@
       <label for="search" class="sr-only">Search</label>
       <form phx-submit="search" phx-change="search" class="relative" method="#">
         <div class="flex absolute inset-y-0 left-0 items-center pl-6 pointer-events-none">
-          <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20">
-            <path fill="currentColor" fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8ZM2 8a6 6 0 1 1 10.89 3.476l4.817 4.817a1 1 0 0 1-1.414 1.414l-4.816-4.816A6 6 0 0 1 2 8Z" clip-rule="evenodd" />
-          </svg>
+          <Heroicons.Solid.search class="w-5 h-5 text-gray-400" />
         </div>
         <%= text_input(:search, :query,
           placeholder: "Search",
