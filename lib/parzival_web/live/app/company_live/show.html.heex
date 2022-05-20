@@ -97,7 +97,7 @@
                 </li>
               <% end %>
             </ul>
-            <.pagination items={@offers} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+            <.pagination items={@offers} meta={@offers_meta} params={@params} class="flex justify-between items-center w-full" />
           <% end %>
 
           <%= if @recruiters != [] do %>
@@ -129,7 +129,6 @@
               <% end %>
             </div>
           <% end %>
-          <.pagination items={@recruiters} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
         </div>
       </div>
     </div>
