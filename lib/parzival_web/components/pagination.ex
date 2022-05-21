@@ -7,11 +7,11 @@ defmodule ParzivalWeb.Components.Pagination do
   def pagination(assigns) do
     ~H"""
     <div class={@class}>
-      <nav class="flex justify-between items-center px-4 mb-5 w-full">
-        <div class="flex flex-1 -mt-px w-0">
+      <nav class="flex items-center justify-between w-full px-4 mb-5">
+        <div class="flex flex-1 w-0 -mt-px">
           <%= if @meta.has_previous_page? do %>
             <%= live_patch to: build_query(@meta.previous_page, @params), class: "inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-500 hover:text-gray-700" do %>
-              <svg class="mr-3 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+              <svg class="w-5 h-5 mr-3 text-gray-400" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
               </svg>
               Previous
@@ -46,11 +46,11 @@ defmodule ParzivalWeb.Components.Pagination do
             <%= live_patch("#{@meta.total_pages}", to: build_query(@meta.total_pages, @params), class: "inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 hover:text-gray-700") %>
           <% end %>
         </div>
-        <div class="flex flex-1 justify-end -mt-px w-0">
+        <div class="flex justify-end flex-1 w-0 -mt-px">
           <%= if @meta.has_next_page? do %>
             <%= live_patch to: build_query(@meta.next_page, @params), class: "inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-500 hover:text-gray-700" do %>
               Next
-              <svg xmlns="http://www.w3.org/2000/svg" class="ml-3 w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
               </svg>
             <% end %>
