@@ -1,9 +1,9 @@
 <div>
   <.form let={f} for={@changeset} id="offer_time-form" phx-target={@myself} phx-change="validate" phx-submit="save">
-    <fieldset class="mt-4">
-      <legend class="block font-medium text-gray-700 text-md">Name</legend>
-      <div class="mt-2">
-        <%= text_input(f, :name, placeholder: "Choose a name", phx_debounce: "blur", class: "text-gray-800 leading-7 text-gray-900 sm:truncate mt-1 font-bold focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+    <fieldset class="mt-4 w-full">
+      <legend class="block font-medium text-left text-gray-700 text-md">Name</legend>
+      <div class="mt-2 w-full">
+        <%= text_input(f, :name, placeholder: "Choose a name", phx_debounce: "blur", class: "w-full text-gray-800 leading-7 text-gray-900 sm:truncate mt-1 font-bold focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
       </div>
       <div class="flex text-red-500">
         <%= error_tag(f, :name) %>
@@ -11,7 +11,7 @@
     </fieldset>
 
     <fieldset class="mt-4">
-      <legend class="block font-medium text-gray-700 text-md">Color</legend>
+      <legend class="block font-medium text-left text-gray-700 text-md">Color</legend>
       <div class="grid grid-cols-4 gap-2 items-center mt-2 sm:grid-cols-6 xl:grid-cols-9">
         <%= for color <- Ecto.Enum.values(Companies.OfferTime, :color) do %>
           <.radio_button color={color} active={input_value(f, :color) in [color, Atom.to_string(color)]}>
