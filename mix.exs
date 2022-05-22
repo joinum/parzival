@@ -73,6 +73,7 @@ defmodule Parzival.MixProject do
 
       # utilities
       {:pdf_generator, "~> 0.6.2"},
+      {:earmark, "~> 1.4.0"},
 
       # tools
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},

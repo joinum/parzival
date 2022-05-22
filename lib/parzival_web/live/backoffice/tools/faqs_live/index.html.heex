@@ -15,8 +15,8 @@
             <h3 class="text-sm font-semibold text-gray-800 hover:underline focus:outline-none">
               <%= faq.question %>
             </h3>
-            <article class="mt-1 text-sm text-gray-600 line-clamp-3">
-              <%= faq.answer %>
+            <article class="mt-1 text-sm text-gray-600 line-clamp-2">
+              <%= raw(Earmark.as_html!(String.slice(faq.answer, 0, 200))) %>
             </article>
           </div>
         </li>

@@ -60,21 +60,17 @@ defmodule Parzival.Repo.Seeds.Tools do
 
     case Repo.all(Announcement) do
       [] ->
-        [
-          %{
-            title: "Welcome to the JOIN Platform",
-            text:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tincidunt massa. Nunc mi enim, blandit quis condimentum vel, tincidunt ac dolor. Curabitur placerat justo eros, sit amet vulputate nulla vulputate a. Interdum et malesuada fames ac ante ipsum primis in faucibus",
-            author_id: Enum.random(admins).id
-          },
-          %{
-            title: "Hackathon registrations are closed",
-            text:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tincidunt massa. Nunc mi enim, blandit quis condimentum vel, tincidunt ac dolor. Curabitur placerat justo eros, sit amet vulputate nulla vulputate a. Interdum et malesuada fames ac ante ipsum primis in faucibus",
-            author_id: Enum.random(admins).id
-          }
-        ]
-        |> Enum.each(&Repo.insert!(Announcement.changeset(%Announcement{}, &1)))
+        for _n <- 1..40 do
+          Announcement.changeset(
+            %Announcement{},
+            %{
+              title: Faker.Lorem.sentence(3..5),
+              text: Faker.Lorem.sentence(200..400),
+              author_id: Enum.random(admins).id
+            }
+          )
+          |> Repo.insert!()
+        end
 
       _ ->
         Mix.shell().error("Found announcements, aborting seeding announcements.")
