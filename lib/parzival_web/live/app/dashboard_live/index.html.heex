@@ -1,0 +1,57 @@
+<div class="flex flex-col-reverse lg:flex-row">
+  <!-- Left sidebar & main wrapper -->
+  <div class="flex flex-col w-full min-h-screen bg-white lg:flex-row"></div>
+  <!-- Announcements -->
+  <div class="pr-4 pb-6 pl-6 w-full bg-white border-t border-gray-200 sm:pr-6 md:border-t-0 lg:flex-shrink-0 lg:pb-0 lg:w-72 lg:border-l xl:pr-0">
+    <section aria-labelledby="announcements-title">
+      <div class="overflow-hidden">
+        <div class="">
+          <h2 class="pt-6 text-base font-medium text-gray-900" id="announcements-title">
+            Announcements
+          </h2>
+          <div class="flow-root mt-6">
+            <ul role="list" class="-my-5 divide-y divide-gray-200">
+              <%= for announcement <- @announcements do %>
+                <li class="py-5">
+                  <%= live_patch to: Routes.announcement_show_path(@socket, :show, announcement), class: "group" do %>
+                    <div>
+                      <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">
+                        <%= announcement.title %>
+                      </h3>
+                      <article class="mt-1 text-sm text-gray-600 line-clamp-4">
+                        <%= raw(Earmark.as_html!(String.slice(announcement.text, 0, 200) <> "...")) %>
+                      </article>
+                      <div class="flex flex-shrink-0 justify-between mt-4">
+                        <div class="flex items-center">
+                          <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
+                            <span class="text-xs font-medium leading-none text-white">
+                              <%= extract_initials(announcement.author.name) %>
+                            </span>
+                          </span>
+                          <p class="text-sm text-gray-500">
+                            <%= extract_first_last_name(announcement.author.name) %>
+                          </p>
+                        </div>
+                        <div class="flex">
+                          <Heroicons.Solid.calendar class="w-5 h-5 text-gray-500" />
+                          <p class="block pl-1.5 text-sm text-gray-600">
+                            <%= relative_datetime(announcement.inserted_at) %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="mt-6">
+            <%= live_patch to: Routes.announcement_index_path(@socket, :index), class: "w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" do %>
+              View all
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
