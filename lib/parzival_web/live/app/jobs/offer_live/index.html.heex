@@ -1,0 +1,92 @@
+<div class="h-full bg-white border-r border-gray-200">
+  <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+    <div class="flex justify-between items-center h-10">
+      <h1 class="flex-1 text-lg font-medium">Jobs</h1>
+      <%= if @current_user.role in [:admin, :recruiter] do %>
+        <div class="flex flex-col sm:flex-row xl:flex-col">
+          <%= live_patch("New", to: Routes.offer_new_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="overflow-hidden bg-white">
+    <div class="flex flex-1 justify-center items-center">
+      <div class="w-full border-b border-gray-200">
+        <label for="search" class="sr-only">Search</label>
+        <form phx-submit="search" phx-change="search" class="relative" method="#">
+          <div class="flex absolute inset-y-0 left-0 items-center pl-6 pointer-events-none">
+            <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20">
+              <path fill="currentColor" fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8ZM2 8a6 6 0 1 1 10.89 3.476l4.817 4.817a1 1 0 0 1-1.414 1.414l-4.816-4.816A6 6 0 0 1 2 8Z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <%= text_input(:search, :query,
+            placeholder: "Search",
+            autofocus: true,
+            "phx-debounce": "300",
+            class: "block w-full py-3 pl-14 pr-3 leading-5 placeholder-gray-400 bg-white border-0 focus:ring-primary focus:ring-0 focus:outline-none"
+          ) %>
+        </form>
+      </div>
+    </div>
+    <ul role="list" class="">
+      <%= for offer <- @offers do %>
+        <li>
+          <%= live_redirect to: Routes.offer_show_path(@socket, :show, offer), class: "block hover:bg-gray-50 border-b border-gray-200" do %>
+            <div class="flex flex-row py-4 px-4 sm:px-6">
+              <div class="inline-flex justify-center items-center h-10 rounded-full lg:h-16 aspect-square bg-secondary">
+                <span class="text-xl font-medium leading-none text-white md:text-2xl">
+                  <%= extract_initials(offer.company.name) %>
+                </span>
+              </div>
+              <div class="flex flex-col ml-6 w-full">
+                <div class="flex flex-col justify-between h-full lg:flex-row lg:items-center">
+                  <div class="flex flex-col">
+                    <p class="text-sm font-medium text-red-600 truncate">
+                      <%= offer.title %>
+                    </p>
+                    <p class="text-sm text-gray-500">
+                      <%= offer.company.name %>
+                    </p>
+                    <div class="flex flex-col lg:flex-row">
+                      <p class="flex items-center mr-5 text-sm text-gray-500">
+                        <!-- Heroicon name: solid/location-marker -->
+                        <svg class="flex-shrink-0 mr-0.5 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                        </svg>
+                        <%= offer.location %>
+                      </p>
+                      <p class="flex items-center text-sm text-gray-500">
+                        <!-- Heroicon name: solid/currency-euro -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mt-1 mr-0.5 w-5 h-5 text-gray-400 lg:mt-0" viewBox="0 0 20 20" fill="currentColor">
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <%= "#{offer.minimum_salary}€ - #{offer.maximum_salary}€" %>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex flex-row mt-2 w-full lg:flex-col lg:mt-0 lg:w-auto">
+                    <div class="flex flex-shrink-0 justify-end lg:ml-2">
+                      <p class={"#{bg_100(offer.offer_type.color)} inline-flex px-2 text-xs font-semibold leading-5 #{text_800(offer.offer_type.color)} border-2 #{border_200(offer.offer_type.color)} rounded-full justify-center items-center"}>
+                        <%= offer.offer_type.name %>
+                      </p>
+                    </div>
+                    <div class="flex flex-shrink-0 justify-end ml-2 lg:mt-2">
+                      <p class={"#{bg_100(offer.offer_time.color)} inline-flex px-2 text-xs font-semibold leading-5 #{text_800(offer.offer_time.color)} border-2 #{border_200(offer.offer_time.color)} rounded-full justify-center items-center"}>
+                        <%= offer.offer_time.name %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <.pagination items={@offers} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+  </div>
+</div>
