@@ -18,8 +18,8 @@
                       <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">
                         <%= announcement.title %>
                       </h3>
-                      <article class="mt-1 text-sm text-gray-600 line-clamp-2">
-                        <%= announcement.text %>
+                      <article class="mt-1 text-sm text-gray-600 line-clamp-4">
+                        <%= raw(Earmark.as_html!(String.slice(announcement.text, 0, 200) <> "...")) %>
                       </article>
                       <div class="flex flex-shrink-0 justify-between mt-4">
                         <div class="flex items-center">

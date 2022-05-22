@@ -17,7 +17,7 @@
               <%= announcement.title %>
             </h3>
             <article class="mt-1 text-sm text-gray-600 line-clamp-3">
-              <%= announcement.text %>
+              <%= raw(Earmark.as_html!(String.slice(announcement.text, 0, 200) <> "...")) %>
             </article>
           </div>
           <div class="flex flex-shrink-0 justify-between mt-1">

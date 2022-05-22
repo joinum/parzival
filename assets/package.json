@@ -3,7 +3,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "alpinejs": "^3.9.6"
+    "alpinejs": "^3.9.6",
+    "@tailwindcss/line-clamp": "^0.3.1"
   },
   "devDependencies": {
     "rustywind": "^0.15.0"

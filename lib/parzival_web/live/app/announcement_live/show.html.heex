@@ -18,8 +18,8 @@
       <h3 class="mt-4 text-xl font-semibold text-gray-800">
         <%= @announcement.title %>
       </h3>
-      <article class="mt-2 text-sm text-gray-600 line-clamp-3">
-        <%= @announcement.text %>
+      <article class="mt-1 text-sm text-gray-600">
+        <%= raw(Earmark.as_html!(@announcement.text)) %>
       </article>
     </div>
   </div>
