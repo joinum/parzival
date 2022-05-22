@@ -42,7 +42,7 @@
         <% end %>
       <% end %>
       <%= if assigns[:current_user] do %>
-        <%= live_redirect to: Routes.home_index_path(@socket, :index) do %>
+        <%= live_redirect to: Routes.dashboard_index_path(@socket, :index) do %>
           <span @click="navbar = false" class="text-lg text-center text-white hover:text-gray-300">
             Dashboard
           </span>
