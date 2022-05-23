@@ -29,9 +29,9 @@ defmodule Parzival.Repo.Seeds.Curriculums do
           Curriculum.changeset(%Curriculum{}, %{
             summary: Faker.Lorem.sentence(20..40),
             user_id: attendee.id,
-            experience:
+            experiences:
               Enum.reduce(
-                List.duplicate(:experience, Enum.random(1..3)),
+                List.duplicate(:experiences, Enum.random(1..3)),
                 [],
                 fn _n, acc ->
                   [
@@ -62,9 +62,9 @@ defmodule Parzival.Repo.Seeds.Curriculums do
                   ]
                 end
               ),
-            education:
+            educations:
               Enum.reduce(
-                List.duplicate(:education, Enum.random(1..2)),
+                List.duplicate(:educations, Enum.random(1..2)),
                 [],
                 fn _n, acc ->
                   [
@@ -82,7 +82,7 @@ defmodule Parzival.Repo.Seeds.Curriculums do
                   ]
                 end
               ),
-            volunteering:
+            volunteerings:
               Enum.reduce(
                 List.duplicate(:voluntary, Enum.random(1..2)),
                 [],
