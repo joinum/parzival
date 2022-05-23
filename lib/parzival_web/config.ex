@@ -101,12 +101,6 @@ defmodule ParzivalWeb.Config do
         tabs: []
       },
       %{
-        key: :curriculum,
-        title: "Curriculum",
-        url: Routes.curriculum_index_path(conn, :index),
-        tabs: []
-      },
-      %{
         key: :store,
         title: "Store",
         url: Routes.product_index_path(conn, :index),

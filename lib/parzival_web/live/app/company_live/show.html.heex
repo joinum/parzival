@@ -111,7 +111,7 @@
                     </span>
                   </div>
                   <div class="flex-1 min-w-0">
-                    <a href="#" class="focus:outline-none">
+                    <%= live_redirect to: Routes.profile_index_path(@socket, :index, recruiter) do %>
                       <span class="absolute inset-0" aria-hidden="true"></span>
                       <p class="text-sm font-medium text-gray-900">
                         <%= recruiter.name %>
@@ -119,7 +119,7 @@
                       <p class="text-sm text-gray-500 truncate">
                         <%= recruiter.email %>
                       </p>
-                    </a>
+                    <% end %>
                   </div>
                 </div>
               <% end %>
