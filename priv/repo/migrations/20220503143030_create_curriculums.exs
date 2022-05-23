@@ -6,9 +6,9 @@ defmodule Parzival.Repo.Migrations.CreateCurriculums do
       add :id, :binary_id, primary_key: true
       add :summary, :text
 
-      add :experience, {:array, :map}, default: []
-      add :education, {:array, :map}, default: []
-      add :volunteering, {:array, :map}, default: []
+      add :experiences, {:array, :map}, default: []
+      add :educations, {:array, :map}, default: []
+      add :volunteerings, {:array, :map}, default: []
       add :skills, {:array, :map}, default: []
       add :languages, {:array, :map}, default: []
 

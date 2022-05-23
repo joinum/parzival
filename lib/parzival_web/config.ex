@@ -72,7 +72,7 @@ defmodule ParzivalWeb.Config do
   defp live_pages(conn) do
     [
       %{
-        key: :dasboard,
+        key: :dashboard,
         title: "Dashboard",
         url: Routes.dashboard_index_path(conn, :index),
         tabs: []
@@ -98,12 +98,6 @@ defmodule ParzivalWeb.Config do
         key: :companies,
         title: "Companies",
         url: Routes.company_index_path(conn, :index),
-        tabs: []
-      },
-      %{
-        key: :curriculum,
-        title: "Curriculum",
-        url: Routes.curriculum_index_path(conn, :index),
         tabs: []
       },
       %{

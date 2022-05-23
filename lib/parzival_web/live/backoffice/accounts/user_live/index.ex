@@ -47,6 +47,15 @@ defmodule ParzivalWeb.Backoffice.UserLive.Index do
   end
 
   @impl true
+  def handle_event("assign_user", %{"id" => id}, socket) do
+    user = Accounts.get_user!(id)
+
+    {:noreply,
+     socket
+     |> assign(:user, user)}
+  end
+
+  @impl true
   def handle_event("search", %{"search" => %{"query" => query}}, socket) do
     params = build_search_map(socket.assigns.params, query)
 
@@ -54,7 +63,11 @@ defmodule ParzivalWeb.Backoffice.UserLive.Index do
   end
 
   defp list_users(params) do
-    case Accounts.list_users(params) do
+    params =
+      params
+      |> Map.put("page_size", 8)
+
+    case Accounts.list_users(params, preloads: :company) do
       {:ok, {users, meta}} ->
         %{users: users, meta: meta}
 

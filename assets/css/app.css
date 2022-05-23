@@ -330,7 +330,6 @@ body {
 
 @media screen and (min-width: 1024px) {
   .phx-modal-content {
-    max-width: fit-content;
   }
 }
 

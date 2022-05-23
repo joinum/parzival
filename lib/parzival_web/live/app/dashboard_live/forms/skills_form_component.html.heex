@@ -1,0 +1,45 @@
+<div>
+  <p class="block text-xl font-medium text-left text-gray-900 text-md">
+    Edit Skills
+  </p>
+
+  <div class="grid grid-cols-1 gap-y-2 gap-x-8 mt-10 md:grid-cols-2 2xl:grid-cols-4">
+    <%= for skill <- @curriculum.skills do %>
+      <div class="flex justify-between">
+        <p class="text-md">
+          <%= skill.name %>
+        </p>
+        <div class="flex items-center space-x-2">
+          <span>
+            <%= live_patch to: "", class: "inline-flex items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" do %>
+              <!-- Heroicon name: solid/pencil -->
+              <svg class="mr-2 -ml-1 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
+              Edit
+            <% end %>
+          </span>
+          <span>
+            <%= link("Delete",
+              to: "#",
+              phx_click: "delete",
+              phx_value_id: skill.id,
+              data: [confirm: "Are you sure?"],
+              class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
+            ) %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <.form let={f} for={@changeset} id="offer_time-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+    <div class="flex flex-row-reverse">
+      <%= submit do %>
+        <div type="button" class="py-2 px-4 mt-6 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
+          Save
+        </div>
+      <% end %>
+    </div>
+  </.form>
+</div>

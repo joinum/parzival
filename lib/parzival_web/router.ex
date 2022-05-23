@@ -52,6 +52,12 @@ defmodule ParzivalWeb.Router do
     live_session :logged_in, on_mount: [{ParzivalWeb.Hooks, :current_user}] do
       scope "/app", App do
         live "/", DashboardLive.Index, :index
+        live "/dashboard/edit_summary", DashboardLive.Index, :edit_summary
+        live "/dashboard/edit_experience", DashboardLive.Index, :edit_experience
+        live "/dashboard/edit_education", DashboardLive.Index, :edit_education
+        live "/dashboard/edit_volunteering", DashboardLive.Index, :edit_volunteering
+        live "/dashboard/edit_skills", DashboardLive.Index, :edit_skills
+        live "/dashboard/edit_languages", DashboardLive.Index, :edit_languages
 
         live "/curriculum", CurriculumLive.Index, :index
         live "/offers/", OfferLive.Index, :index
@@ -80,7 +86,7 @@ defmodule ParzivalWeb.Router do
           live "/:id", MissionLive.Show, :show
         end
 
-        live "/profile", ProfileLive.Index, :index
+        live "/profile/:id", ProfileLive.Index, :index
       end
 
       scope "/admin", Backoffice, as: :admin do
