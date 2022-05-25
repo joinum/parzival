@@ -96,20 +96,56 @@
                   </dt>
                   <dd class="mt-4 space-y-2 text-sm text-gray-900">
                     <%= for experience <- @curriculum.experiences do %>
+                      <% n_total_months =
+                        Enum.reduce(experience.positions, 0, fn position, acc ->
+                          if position.current do
+                            Timex.diff(Date.utc_today(), position.start, :months) + acc
+                          else
+                            Timex.diff(position.finish, position.start, :months) + acc
+                          end
+                        end) %>
                       <div>
-                        <p class="text-sm font-bold">
-                          <%= experience.organization %>
-                        </p>
-                        <div class="flow-root pl-4 border-l-2 border-gray-200">
+                        <div class="flex flex-row">
+                          <span class="font-bold">
+                            <%= experience.organization %>
+                          </span>
+                          <span class="ml-1 text-sm font-normal text-gray-400">
+                            <%= if Integer.floor_div(n_total_months, 12) > 0 do %>
+                              <%= Integer.floor_div(n_total_months, 12) %>yrs
+                            <% end %>
+
+                            <%= if rem(n_total_months, 12) != 0 do %>
+                              <%= rem(n_total_months, 12) %>mos
+                            <% end %>
+                          </span>
+                        </div>
+                        <div class="flow-root pl-4 ml-2 border-l border-gray-200">
                           <ul role="list" class="mt-0.5">
                             <%= for position <- experience.positions do %>
+                              <% n_months =
+                                if position.current do
+                                  Timex.diff(Date.utc_today(), position.start, :months)
+                                else
+                                  Timex.diff(position.finish, position.start, :months)
+                                end %>
                               <li>
                                 <p class="font-semibold">
                                   <%= position.title %>
                                 </p>
-                                <p class="text-xs text-gray-400">
-                                  Nov 2020 - Feb 2022 . 1yrs 3mos
-                                </p>
+                                <span class="text-xs text-gray-400">
+                                  <%= Calendar.strftime(position.start, "%b %Y") %> -
+                                  <%= if position.current do %>
+                                    Current ·
+                                  <% else %>
+                                    <%= Calendar.strftime(position.finish, "%b %Y") %> ·
+                                  <% end %>
+                                  <%= if Integer.floor_div(n_months, 12) > 0 do %>
+                                    <%= Integer.floor_div(n_months, 12) %>yrs
+                                  <% end %>
+                                  <%= if rem(n_months,12) != 0 do %>
+                                    <%= rem(n_months, 12) %>mos
+                                  <% end %>
+                                </span>
                               </li>
                             <% end %>
                           </ul>
@@ -137,7 +173,7 @@
                           <%= education.course %>
                         </p>
                         <p class="text-xs text-gray-400">
-                          2018 - 2022
+                          <%= Calendar.strftime(education.start, "%Y") %> - <%= Calendar.strftime(education.finish, "%Y") %>
                         </p>
                       </div>
                     <% end %>
@@ -162,7 +198,14 @@
                           <%= volunteering.institution %>
                         </p>
                         <p class="text-xs text-gray-400">
-                          Nov 2020 - Feb 2022 . 1yrs 3mos
+                          <%= Calendar.strftime(volunteering.start, "%b %Y") %> - <%= Calendar.strftime(volunteering.finish, "%b %Y") %> ·
+                          <%= if Timex.diff(volunteering.finish, volunteering.start, :years) > 0 do %>
+                            <%= Timex.diff(volunteering.finish, volunteering.start, :years) %>yrs
+                          <% end %>
+
+                          <%= if rem(Timex.diff(volunteering.finish, volunteering.start, :months), 12) != 0 do %>
+                            <%= rem(Timex.diff(volunteering.finish, volunteering.start, :months), 12) %>mos
+                          <% end %>
                         </p>
                       </div>
                     <% end %>
