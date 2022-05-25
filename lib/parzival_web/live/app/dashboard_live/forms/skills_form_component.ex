@@ -2,8 +2,6 @@ defmodule ParzivalWeb.App.DashboardLive.SkillsFormComponent do
   @moduledoc false
   use ParzivalWeb, :live_component
 
-  import ParzivalWeb.Components.Buttons
-
   alias Parzival.Gamification
 
   @impl true
