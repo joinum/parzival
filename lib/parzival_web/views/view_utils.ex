@@ -5,6 +5,8 @@ defmodule ParzivalWeb.ViewUtils do
 
   use Timex
 
+  alias Parzival.Gamification
+
   alias Timex.Format.DateTime.Formatters.Relative
 
   def extract_initials(nil), do: ""
@@ -175,5 +177,9 @@ defmodule ParzivalWeb.ViewUtils do
       :pink -> "bg-pink-500"
       :rose -> "bg-rose-500"
     end
+  end
+
+  def calc_level(user) do
+    Gamification.calc_level(user.exp)
   end
 end

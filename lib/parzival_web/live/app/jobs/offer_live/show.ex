@@ -4,6 +4,8 @@ defmodule ParzivalWeb.App.OfferLive.Show do
 
   require Logger
 
+  import ParzivalWeb.Components.Pagination
+
   alias Parzival.Companies
 
   @impl true
@@ -24,6 +26,7 @@ defmodule ParzivalWeb.App.OfferLive.Show do
      socket
      |> assign(:current_page, :jobs)
      |> assign(:page_title, "Show Offer")
+     |> assign(:params, params)
      |> assign(:applied?, Companies.is_user_applied?(offer, socket.assigns.current_user))
      |> assign(:offer, %{offer | applied: Companies.get_total_applied(offer)})
      |> assign(list_applications(params, offer.id))}

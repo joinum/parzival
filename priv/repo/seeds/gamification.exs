@@ -7,9 +7,7 @@ defmodule Parzival.Repo.Seeds.Gamification do
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Mission
   alias Parzival.Gamification.Mission.Dificulty
-  alias Parzival.Gamification.Mission.MissionUser
   alias Parzival.Gamification.Mission.Task
-  alias Parzival.Gamification.Mission.TaskUser
 
   @education_titles File.read!("priv/fake/uminho_courses.txt") |> String.split("\n")
   @languages File.read!("priv/fake/languages.txt") |> String.split("\n")

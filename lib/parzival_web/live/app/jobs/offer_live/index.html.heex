@@ -1,13 +1,26 @@
-<div class="h-full bg-white border-r border-gray-200">
-  <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
-    <div class="flex justify-between items-center h-10">
-      <h1 class="flex-1 text-lg font-medium">Jobs</h1>
-      <%= if @current_user.role in [:admin, :recruiter] do %>
-        <div class="flex flex-col sm:flex-row xl:flex-col">
-          <%= live_patch("New", to: Routes.offer_new_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
-        </div>
-      <% end %>
+<div x-data="{option: 'all'}" class="h-full bg-white border-r border-gray-200">
+  <div class={"#{@current_user.role in [:admin, :recruiter] && "flex justify-between items-center pb-4"} pt-5 pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y"}>
+    <h1 class="flex-1 text-lg font-medium">Jobs</h1>
+    <!-- Tabs -->
+    <div class="mt-2 2xl:mt-5">
+      <div class="flex justify-between items-center">
+        <%= if @current_user.role in [:attendee] do %>
+        <nav class="flex -mb-px space-x-8" aria-label="Tabs">
+          <%= live_patch to: "?tab=all", class: "#{@current_tab == "all" && "border-b-2 border-red-500 text-gray-900" || "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
+            <%= "All" %>
+          <% end %>
+          <%= live_patch to: "?tab=mine", class: "#{@current_tab == "mine" && "border-b-2 border-red-500 text-gray-900" || "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
+            <%= "Mine" %>
+          <% end %>
+        </nav>
+        <% end %>
+      </div>
     </div>
+    <%= if @current_user.role in [:admin, :recruiter] do %>
+      <div class="flex flex-col sm:flex-row xl:flex-col">
+        <%= live_patch("New", to: Routes.offer_new_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+      </div>
+    <% end %>
   </div>
   <div class="overflow-hidden bg-white">
     <div class="flex flex-1 justify-center items-center">
@@ -28,7 +41,7 @@
         </form>
       </div>
     </div>
-    <ul role="list" class="">
+    <ul role="list">
       <%= for offer <- @offers do %>
         <li>
           <%= live_redirect to: Routes.offer_show_path(@socket, :show, offer), class: "block hover:bg-gray-50 border-b border-gray-200" do %>
@@ -49,21 +62,11 @@
                     </p>
                     <div class="flex flex-col lg:flex-row">
                       <p class="flex items-center mr-5 text-sm text-gray-500">
-                        <!-- Heroicon name: solid/location-marker -->
-                        <svg class="flex-shrink-0 mr-0.5 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                        </svg>
+                        <Heroicons.Solid.location_marker class="flex-shrink-0 mr-0.5 w-5 h-5 text-gray-400" />
                         <%= offer.location %>
                       </p>
                       <p class="flex items-center text-sm text-gray-500">
-                        <!-- Heroicon name: solid/currency-euro -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mt-1 mr-0.5 w-5 h-5 text-gray-400 lg:mt-0" viewBox="0 0 20 20" fill="currentColor">
-                          <path
-                            fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
+                        <Heroicons.Solid.currency_euro class="flex-shrink-0 mr-0.5 w-5 h-5 text-gray-400" />
                         <%= "#{offer.minimum_salary}€ - #{offer.maximum_salary}€" %>
                       </p>
                     </div>
@@ -86,7 +89,7 @@
           <% end %>
         </li>
       <% end %>
+      <.pagination items={@offers} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
     </ul>
-    <.pagination items={@offers} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
   </div>
 </div>

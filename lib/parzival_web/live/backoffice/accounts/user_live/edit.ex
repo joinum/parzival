@@ -16,7 +16,7 @@ defmodule ParzivalWeb.Backoffice.UserLive.Edit do
     {:noreply,
      socket
      |> assign(:current_page, :accounts)
-     |> assign(:current_tab, user.role)
+     |> assign(:page_title, "Edit User")
      |> assign(:user, user)}
   end
 end

@@ -2,7 +2,6 @@ defmodule Parzival.Tools do
   @moduledoc """
   The Tools context.
   """
-
   use Parzival.Context
 
   import Ecto.Query, warn: false
@@ -227,5 +226,128 @@ defmodule Parzival.Tools do
   """
   def change_announcement(%Announcement{} = announcement, attrs \\ %{}) do
     Announcement.changeset(announcement, attrs)
+  end
+
+  alias Parzival.Tools.Post
+
+  @doc """
+  Returns the list of posts.
+
+  ## Examples
+
+      iex> list_posts()
+      [%Post{}, ...]
+
+  """
+  def list_posts(params \\ %{})
+
+  def list_posts(opts) when is_list(opts) do
+    Post
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_posts(flop) do
+    Flop.validate_and_run(Post, flop, for: Post)
+  end
+
+  def list_posts(%{} = flop, opts) when is_list(opts) do
+    Post
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Post)
+  end
+
+  @doc """
+  Gets a single post.
+
+  Raises `Ecto.NoResultsError` if the Post does not exist.
+
+  ## Examples
+
+      iex> get_post!(123)
+      %Post{}
+
+      iex> get_post!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_post!(id), do: Repo.get!(Post, id)
+
+  @doc """
+  Creates a post.
+
+  ## Examples
+
+      iex> create_post(%{field: value})
+      {:ok, %Post{}}
+
+      iex> create_post(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_post(attrs \\ %{}) do
+    %Post{}
+    |> Post.changeset(attrs)
+    |> Repo.insert()
+    |> broadcast(:new_post)
+  end
+
+  @doc """
+  Updates a post.
+
+  ## Examples
+
+      iex> update_post(post, %{field: new_value})
+      {:ok, %Post{}}
+
+      iex> update_post(post, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_post(%Post{} = post, attrs) do
+    post
+    |> Post.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a post.
+
+  ## Examples
+
+      iex> delete_post(post)
+      {:ok, %Post{}}
+
+      iex> delete_post(post)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_post(%Post{} = post) do
+    Repo.delete(post)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking post changes.
+
+  ## Examples
+
+      iex> change_post(post)
+      %Ecto.Changeset{data: %Post{}}
+
+  """
+  def change_post(%Post{} = post, attrs \\ %{}) do
+    Post.changeset(post, attrs)
+  end
+
+  def subscribe(topic) when topic in ["new_post"] do
+    Phoenix.PubSub.subscribe(Parzival.PubSub, topic)
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+
+  defp broadcast({:ok, %Post{} = post}, event)
+       when event in [:new_post] do
+    Phoenix.PubSub.broadcast!(Parzival.PubSub, "new_post", {event, post})
+    {:ok, post}
   end
 end

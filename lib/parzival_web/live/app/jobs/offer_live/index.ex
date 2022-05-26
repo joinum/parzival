@@ -16,6 +16,7 @@ defmodule ParzivalWeb.App.OfferLive.Index do
     {:noreply,
      socket
      |> assign(:current_page, :jobs)
+     |> assign(:current_tab, params["tab"] || "all")
      |> assign(:params, params)
      |> assign(:page_title, "Listing Offers")
      |> assign(list_offers(params, socket))}
@@ -41,15 +42,35 @@ defmodule ParzivalWeb.App.OfferLive.Index do
         end
 
       _ ->
-        case Companies.list_offers(
-               params,
-               preloads: [:company, :offer_type, :offer_time]
-             ) do
-          {:ok, {offers, meta}} ->
-            %{offers: offers, meta: meta}
+        case params["tab"] do
+          "mine" ->
+            case Companies.list_applications(
+                   params,
+                   preloads: [offer: [:company, :offer_type, :offer_time]],
+                   where: [user_id: socket.assigns.current_user.id]
+                 ) do
+              {:ok, {applications, meta}} ->
+                offers =
+                  applications
+                  |> Enum.map(fn application -> application.offer end)
 
-          {:error, flop} ->
-            %{offers: [], meta: flop}
+                %{offers: offers, meta: meta}
+
+              {:error, flop} ->
+                %{offers: [], meta: flop}
+            end
+
+          _ ->
+            case Companies.list_offers(
+                   params,
+                   preloads: [:company, :offer_type, :offer_time]
+                 ) do
+              {:ok, {offers, meta}} ->
+                %{offers: offers, meta: meta}
+
+              {:error, flop} ->
+                %{offers: [], meta: flop}
+            end
         end
     end
   end
