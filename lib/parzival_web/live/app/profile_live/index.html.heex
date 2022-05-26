@@ -3,7 +3,7 @@
     <!-- Profile header -->
     <div>
       <div>
-        <img class="object-cover w-full h-32 lg:h-48" src={Routes.static_path(@socket, "/images/banner.png")} alt="" />
+        <img class="object-cover w-full h-32 lg:h-48" src={Routes.static_path(@socket, "/images/banner.svg")} alt="" />
       </div>
       <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
         <div class="-mt-12 sm:flex sm:items-end sm:-mt-16 sm:space-x-5">
@@ -120,26 +120,26 @@
     <!-- Curriculum -->
     <%= if @user.role == :attendee do %>
       <div x-bind:class="option =='curriculum' ? 'block' : 'hidden'" class="px-4 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
-        <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+        <dl class="flex flex-col space-y-8">
           <%= if assigns[:curriculum] do %>
-            <div class="sm:col-span-2">
+            <div>
               <dt class="text-sm font-medium text-gray-500">About</dt>
-              <dd class="mt-1 space-y-5 text-sm text-gray-900">
+              <dd class="mt-1 text-sm text-gray-900">
                 <p>
                   <%= @curriculum.summary %>
                 </p>
               </dd>
             </div>
 
-            <div class="sm:col-span-1">
+            <div>
               <dt class="text-sm font-medium text-gray-500">Experience</dt>
-              <dd class="mt-1 space-y-2 text-sm text-gray-900">
+              <dd class="mt-1 space-y-1 text-sm text-gray-900">
                 <%= for experience <- @curriculum.experiences do %>
                   <div>
                     <p class="text-sm font-bold">
                       <%= experience.organization %>
                     </p>
-                    <div class="flow-root pl-4 border-l-2 border-gray-200">
+                    <div class="flow-root pl-4 ml-2 border-l border-gray-200">
                       <ul role="list" class="mt-0.5">
                         <%= for position <- experience.positions do %>
                           <li>
@@ -158,11 +158,11 @@
               </dd>
             </div>
 
-            <div class="sm:col-span-1">
+            <div>
               <dt class="text-sm font-medium text-gray-500">
                 Education
               </dt>
-              <dd class="mt-1 space-y-2 text-sm text-gray-900">
+              <dd class="mt-1 space-y-1 text-sm text-gray-900">
                 <%= for education <- @curriculum.educations do %>
                   <div>
                     <p class="text-sm font-bold">
@@ -179,11 +179,11 @@
               </dd>
             </div>
 
-            <div class="sm:col-span-2">
+            <div>
               <dt class="text-sm font-medium text-gray-500">
                 Volunteering
               </dt>
-              <dd class="grid mt-1 text-sm text-gray-900 sm:grid-cols-2 xl:grid-cols-3">
+              <dd class="mt-1 space-y-1 text-sm text-gray-900">
                 <%= for volunteering <- @curriculum.volunteerings do %>
                   <div>
                     <p class="text-sm font-bold">
@@ -200,7 +200,7 @@
               </dd>
             </div>
 
-            <div class="sm:col-span-2">
+            <div>
               <dt class="text-sm font-medium text-gray-500">
                 Skills
               </dt>
@@ -215,7 +215,7 @@
               </dd>
             </div>
 
-            <div class="sm:col-span-2">
+            <div>
               <dt class="text-sm font-medium text-gray-500">
                 Languages
               </dt>

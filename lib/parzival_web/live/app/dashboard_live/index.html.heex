@@ -1,20 +1,8 @@
-<%= if @live_action in [:edit_summary] do %>
-  <.modal return_to={Routes.dashboard_index_path(@socket, :index)}>
-    <.live_component id={@user.curriculum.id || :new} module={ParzivalWeb.App.DashboardLive.SummaryFormComponent} curriculum={@user.curriculum} action={@live_action} return_to={Routes.dashboard_index_path(@socket, :index)} />
-  </.modal>
-<% end %>
-
-<%= if @live_action in [:edit_skills] do %>
-  <.modal return_to={Routes.dashboard_index_path(@socket, :index)}>
-    <.live_component id={@user.curriculum.id || :new} module={ParzivalWeb.App.DashboardLive.SkillsFormComponent} curriculum={@user.curriculum} action={@live_action} return_to={Routes.dashboard_index_path(@socket, :index)} />
-  </.modal>
-<% end %>
-
 <div class="flex flex-col lg:flex-row">
   <!-- Left sidebar & main wrapper -->
   <div class="flex flex-col w-full min-h-screen bg-white lg:flex-row">
     <%= if @user.role == :attendee do %>
-      <main x-data="{option: 'curriculum'}" class="overflow-y-auto relative z-0 flex-1 mb-10 min-h-screen xl:order-last focus:outline-none">
+      <main x-data="{option: 'missions'}" class="overflow-y-auto relative z-0 flex-1 mb-10 min-h-screen xl:order-last focus:outline-none">
         <article>
           <!-- Profile header -->
           <div>
@@ -23,14 +11,14 @@
                 <div class="mt-6 sm:flex sm:flex-1 sm:justify-end sm:items-center sm:pb-1 sm:space-x-6 sm:min-w-0">
                   <div class="hidden flex-1 mt-6 min-w-0 2xl:block">
                     <h1 class="text-2xl font-bold text-gray-900 truncate">
-                      Welcome back, <%= @user.name %> 👋
+                      Welcome, <%= @user.name %> 👋
                     </h1>
                   </div>
                 </div>
               </div>
               <div class="hidden flex-1 mt-6 min-w-0 sm:block 2xl:hidden">
                 <h1 class="text-2xl font-bold text-gray-900 truncate">
-                  Welcome back, <%= @user.name %>
+                  Welcome, <%= @user.name %>
                 </h1>
               </div>
             </div>
@@ -38,22 +26,22 @@
           <!-- Tabs -->
           <div class="mt-6 sm:mt-2 2xl:mt-5">
             <div class="border-b border-gray-200">
-              <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
+              <div class="flex justify-between items-center px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
                 <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-                  <button
-                    x-on:click="option = 'curriculum'"
-                    x-bind:class="option =='curriculum' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-                    class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
-                  >
-                    Curriculum
-                  </button>
-
                   <button
                     x-on:click="option = 'missions'"
                     x-bind:class="option =='missions' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
                     class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
                   >
                     Missions
+                  </button>
+
+                  <button
+                    x-on:click="option = 'curriculum'"
+                    x-bind:class="option =='curriculum' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                    class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+                  >
+                    Curriculum
                   </button>
 
                   <button
@@ -64,88 +52,46 @@
                     Job Applications
                   </button>
                 </nav>
+                <div x-bind:class="option =='curriculum' ? 'block' : 'hidden'">
+                  <%= live_patch to: Routes.dashboard_edit_path(@socket, :edit), class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
+                    <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" />
+                    Edit
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
           <!-- Curriculum -->
           <div x-bind:class="option =='curriculum' ? 'block' : 'hidden'" class="px-4 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
-            <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+            <dl class="flex flex-col space-y-8">
               <%= if assigns[:curriculum] do %>
-                <div class="sm:col-span-2">
-                  <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
-                    About
-                    <%= live_patch to: Routes.dashboard_index_path(@socket, :edit_summary), class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
-                      <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" />
-                      Edit
-                    <% end %>
-                  </dt>
-                  <dd class="mt-4 space-y-5 text-sm text-gray-900">
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">About</dt>
+                  <dd class="mt-1 text-sm text-gray-900">
                     <p>
                       <%= @curriculum.summary %>
                     </p>
                   </dd>
                 </div>
 
-                <div class="sm:col-span-2">
-                  <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
-                    Experience
-                    <%= live_patch to: "", class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
-                      <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" />
-                      Edit
-                    <% end %>
-                  </dt>
-                  <dd class="mt-4 space-y-2 text-sm text-gray-900">
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">Experience</dt>
+                  <dd class="mt-1 space-y-1 text-sm text-gray-900">
                     <%= for experience <- @curriculum.experiences do %>
-                      <% n_total_months =
-                        Enum.reduce(experience.positions, 0, fn position, acc ->
-                          if position.current do
-                            Timex.diff(Date.utc_today(), position.start, :months) + acc
-                          else
-                            Timex.diff(position.finish, position.start, :months) + acc
-                          end
-                        end) %>
                       <div>
-                        <div class="flex flex-row">
-                          <span class="font-bold">
-                            <%= experience.organization %>
-                          </span>
-                          <span class="ml-1 text-sm font-normal text-gray-400">
-                            <%= if Integer.floor_div(n_total_months, 12) > 0 do %>
-                              <%= Integer.floor_div(n_total_months, 12) %>yrs
-                            <% end %>
-
-                            <%= if rem(n_total_months, 12) != 0 do %>
-                              <%= rem(n_total_months, 12) %>mos
-                            <% end %>
-                          </span>
-                        </div>
+                        <p class="text-sm font-bold">
+                          <%= experience.organization %>
+                        </p>
                         <div class="flow-root pl-4 ml-2 border-l border-gray-200">
                           <ul role="list" class="mt-0.5">
                             <%= for position <- experience.positions do %>
-                              <% n_months =
-                                if position.current do
-                                  Timex.diff(Date.utc_today(), position.start, :months)
-                                else
-                                  Timex.diff(position.finish, position.start, :months)
-                                end %>
                               <li>
                                 <p class="font-semibold">
                                   <%= position.title %>
                                 </p>
-                                <span class="text-xs text-gray-400">
-                                  <%= Calendar.strftime(position.start, "%b %Y") %> -
-                                  <%= if position.current do %>
-                                    Current ·
-                                  <% else %>
-                                    <%= Calendar.strftime(position.finish, "%b %Y") %> ·
-                                  <% end %>
-                                  <%= if Integer.floor_div(n_months, 12) > 0 do %>
-                                    <%= Integer.floor_div(n_months, 12) %>yrs
-                                  <% end %>
-                                  <%= if rem(n_months,12) != 0 do %>
-                                    <%= rem(n_months, 12) %>mos
-                                  <% end %>
-                                </span>
+                                <p class="text-xs text-gray-400">
+                                  Nov 2020 - Feb 2022 . 1yrs 3mos
+                                </p>
                               </li>
                             <% end %>
                           </ul>
@@ -155,15 +101,11 @@
                   </dd>
                 </div>
 
-                <div class="sm:col-span-2">
-                  <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">
                     Education
-                    <%= live_patch to: "", class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
-                      <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" />
-                      Edit
-                    <% end %>
                   </dt>
-                  <dd class="mt-4 space-y-2 text-sm text-gray-900">
+                  <dd class="mt-1 space-y-1 text-sm text-gray-900">
                     <%= for education <- @curriculum.educations do %>
                       <div>
                         <p class="text-sm font-bold">
@@ -173,22 +115,18 @@
                           <%= education.course %>
                         </p>
                         <p class="text-xs text-gray-400">
-                          <%= Calendar.strftime(education.start, "%Y") %> - <%= Calendar.strftime(education.finish, "%Y") %>
+                          2018 - 2022
                         </p>
                       </div>
                     <% end %>
                   </dd>
                 </div>
 
-                <div class="sm:col-span-2">
-                  <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">
                     Volunteering
-                    <%= live_patch to: "", class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
-                      <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" />
-                      Edit
-                    <% end %>
                   </dt>
-                  <dd class="mt-4 space-y-2 text-sm text-gray-900">
+                  <dd class="mt-1 space-y-1 text-sm text-gray-900">
                     <%= for volunteering <- @curriculum.volunteerings do %>
                       <div>
                         <p class="text-sm font-bold">
@@ -198,29 +136,18 @@
                           <%= volunteering.institution %>
                         </p>
                         <p class="text-xs text-gray-400">
-                          <%= Calendar.strftime(volunteering.start, "%b %Y") %> - <%= Calendar.strftime(volunteering.finish, "%b %Y") %> ·
-                          <%= if Timex.diff(volunteering.finish, volunteering.start, :years) > 0 do %>
-                            <%= Timex.diff(volunteering.finish, volunteering.start, :years) %>yrs
-                          <% end %>
-
-                          <%= if rem(Timex.diff(volunteering.finish, volunteering.start, :months), 12) != 0 do %>
-                            <%= rem(Timex.diff(volunteering.finish, volunteering.start, :months), 12) %>mos
-                          <% end %>
+                          Nov 2020 - Feb 2022 . 1yrs 3mos
                         </p>
                       </div>
                     <% end %>
                   </dd>
                 </div>
 
-                <div class="sm:col-span-2">
-                  <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">
                     Skills
-                    <%= live_patch to: Routes.dashboard_index_path(@socket, :edit_skills), class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
-                      <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" />
-                      Edit
-                    <% end %>
                   </dt>
-                  <dd class="grid grid-cols-2 mt-4 text-sm text-gray-900 sm:grid-cols-3 lg:grid-cols-4">
+                  <dd class="grid grid-cols-2 mt-1 text-sm text-gray-900 sm:grid-cols-3 lg:grid-cols-4">
                     <%= for skill <- @curriculum.skills do %>
                       <div>
                         <p class="text-sm font-bold">
@@ -231,15 +158,11 @@
                   </dd>
                 </div>
 
-                <div class="sm:col-span-2">
-                  <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">
                     Languages
-                    <%= live_patch to: "", class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
-                      <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" />
-                      Edit
-                    <% end %>
                   </dt>
-                  <dd class="grid grid-cols-2 mt-4 space-y-1 text-sm text-gray-900 md:grid-cols-4">
+                  <dd class="grid grid-cols-2 mt-1 space-y-1 text-sm text-gray-900 md:grid-cols-4">
                     <%= for language <- @curriculum.languages do %>
                       <div>
                         <p class="text-sm font-bold">
