@@ -1,106 +1,118 @@
 <div class="h-full bg-white border-r border-gray-200">
-    <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
-        <div class="flex justify-between items-center h-10">
-        <h1 class="flex-1 text-lg font-medium">Missions</h1>
-            <div class="flex flex-col sm:flex-row xl:flex-col">
-                <button class="inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full">New</button>
-            </div>
-        </div>
+  <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+    <div class="flex justify-between items-center h-10">
+      <h1 class="flex-1 text-lg font-medium">Missions</h1>
+      <div class="flex flex-col sm:flex-row xl:flex-col">
+        <button class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">New</button>
+      </div>
     </div>
-    
-    <ul role="list" class="relative z-0">
-        <li class="pt-2 pr-6 pb-2 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-2 xl:pl-6 border-b">
-            <div class="flex justify-between items-center h-10">
-                <h1 class="flex-1 text-lg font-medium">LVL 5</h1>
-            </div>
-        </li>
-        <%= for _n <- 1..4 do %>
-            <li id="user-1" class="relative pr-6 border-b border-gray-200 hover:bg-gray-50 cursor-pointer">
-                <div class="flex justify-between flex-col lg:flex-row">
-                    <div class="pt-4 lg:py-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6">
-                        <div class="flex items-center">
-                            <div class="ml-4">
-                                <div class="font-medium text-gray-900">
-                                    Big Boy CV: The road to a great curriculum
-                                </div>
-                                <div class="text-gray-500 mt-3">
-                                    <div class="flex flex-row">
-                                        <span class="mr-1">
-                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M8.5 2C8.00294 2 7.6 2.40294 7.6 2.9C7.6 3.39706 8.00294 3.8 8.5 3.8H10.3C10.7971 3.8 11.2 3.39706 11.2 2.9C11.2 2.40294 10.7971 2 10.3 2H8.5Z" fill="#C4C4C4"/>
-                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M4 4.7C4 3.70589 4.80589 2.9 5.8 2.9C5.8 4.39117 7.00883 5.6 8.5 5.6H10.3C11.7912 5.6 13 4.39117 13 2.9C13.9941 2.9 14.8 3.70589 14.8 4.7V14.6C14.8 15.5941 13.9941 16.4 13 16.4H5.8C4.80589 16.4 4 15.5941 4 14.6V4.7ZM6.7 8.3C6.20294 8.3 5.8 8.70294 5.8 9.2C5.8 9.69706 6.20294 10.1 6.7 10.1H6.709C7.20606 10.1 7.609 9.69706 7.609 9.2C7.609 8.70294 7.20606 8.3 6.709 8.3H6.7ZM9.4 8.3C8.90294 8.3 8.5 8.70294 8.5 9.2C8.5 9.69706 8.90294 10.1 9.4 10.1H12.1C12.5971 10.1 13 9.69706 13 9.2C13 8.70294 12.5971 8.3 12.1 8.3H9.4ZM6.7 11.9C6.20294 11.9 5.8 12.3029 5.8 12.8C5.8 13.2971 6.20294 13.7 6.7 13.7H6.709C7.20606 13.7 7.609 13.2971 7.609 12.8C7.609 12.3029 7.20606 11.9 6.709 11.9H6.7ZM9.4 11.9C8.90294 11.9 8.5 12.3029 8.5 12.8C8.5 13.2971 8.90294 13.7 9.4 13.7H12.1C12.5971 13.7 13 13.2971 13 12.8C13 12.3029 12.5971 11.9 12.1 11.9H9.4Z" fill="#C4C4C4"/>
-                                            </svg>
-                                        </span>
-                                        7/10
-                                        <span class="ml-6 mr-1">💰</span>
-                                        400
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex flex-row mt-2 w-full lg:flex-col lg:justify-between lg:mt-0 lg:w-auto lg:pt-2 pl-8 lg:pb-0 pb-2">
-                        <div class="flex flex-shrink-0 justify-end lg:ml-2">
-                            <p class={"inline-flex px-2 text-xs font-semibold leading-5 rounded-full justify-center items-center border border-gray-200"}>
-                                Easy
-                            </p>
-                        </div>
-                        <div class="text-xs text-gray-500 lg:pb-1 pl-2 lg:pl-0 flex items-center">
-                            1000 EXP
-                        </div>
-                    </div>
+  </div>
+
+  <ul role="list" class="relative z-0">
+    <li class="pt-2 pr-6 pb-2 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pt-2 xl:pl-6">
+      <div class="flex justify-between items-center h-10">
+        <h1 class="flex-1 text-lg font-medium">LVL 5</h1>
+      </div>
+    </li>
+    <%= for _n <- 1..4 do %>
+      <li id="user-1" class="relative pr-6 border-b border-gray-200 cursor-pointer hover:bg-gray-50">
+        <div class="flex flex-col justify-between lg:flex-row">
+          <div class="pt-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6 lg:py-4">
+            <div class="flex items-center">
+              <div class="ml-4">
+                <div class="font-medium text-gray-900">
+                  Big Boy CV: The road to a great curriculum
                 </div>
-            </li>
-        <% end %>
-        <div class="opacity-50 flex flex-col">
-            <div class="absolute w-full flex justify-center items-center z-10">
-                <svg width="196" height="191" viewBox="0 0 196 191" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M49.2406 85.95V66.85C49.2406 40.4784 71.0236 19.1 97.8944 19.1C124.765 19.1 146.548 40.4784 146.548 66.85V85.95C157.297 85.95 166.01 94.5014 166.01 105.05V152.8C166.01 163.349 157.297 171.9 146.548 171.9H49.2406C38.4923 171.9 29.7791 163.349 29.7791 152.8V105.05C29.7791 94.5014 38.4923 85.95 49.2406 85.95ZM127.087 66.85V85.95H68.7021V66.85C68.7021 51.0271 81.7719 38.2 97.8944 38.2C114.017 38.2 127.087 51.0271 127.087 66.85Z" fill="#EA3B2D" fill-opacity="0.5"/>
-                </svg>
-            </div>
-            <li class="pt-2 pr-6 pb-2 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-2 xl:pl-6 border-b">
-                <div class="flex justify-between items-center h-10">
-                    <h1 class="flex-1 text-lg font-medium">LVL 10</h1>
+                <div class="mt-3 text-gray-500">
+                  <div class="flex flex-row">
+                    <span class="mr-1">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.5 2C8.00294 2 7.6 2.40294 7.6 2.9C7.6 3.39706 8.00294 3.8 8.5 3.8H10.3C10.7971 3.8 11.2 3.39706 11.2 2.9C11.2 2.40294 10.7971 2 10.3 2H8.5Z" fill="#C4C4C4" />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M4 4.7C4 3.70589 4.80589 2.9 5.8 2.9C5.8 4.39117 7.00883 5.6 8.5 5.6H10.3C11.7912 5.6 13 4.39117 13 2.9C13.9941 2.9 14.8 3.70589 14.8 4.7V14.6C14.8 15.5941 13.9941 16.4 13 16.4H5.8C4.80589 16.4 4 15.5941 4 14.6V4.7ZM6.7 8.3C6.20294 8.3 5.8 8.70294 5.8 9.2C5.8 9.69706 6.20294 10.1 6.7 10.1H6.709C7.20606 10.1 7.609 9.69706 7.609 9.2C7.609 8.70294 7.20606 8.3 6.709 8.3H6.7ZM9.4 8.3C8.90294 8.3 8.5 8.70294 8.5 9.2C8.5 9.69706 8.90294 10.1 9.4 10.1H12.1C12.5971 10.1 13 9.69706 13 9.2C13 8.70294 12.5971 8.3 12.1 8.3H9.4ZM6.7 11.9C6.20294 11.9 5.8 12.3029 5.8 12.8C5.8 13.2971 6.20294 13.7 6.7 13.7H6.709C7.20606 13.7 7.609 13.2971 7.609 12.8C7.609 12.3029 7.20606 11.9 6.709 11.9H6.7ZM9.4 11.9C8.90294 11.9 8.5 12.3029 8.5 12.8C8.5 13.2971 8.90294 13.7 9.4 13.7H12.1C12.5971 13.7 13 13.2971 13 12.8C13 12.3029 12.5971 11.9 12.1 11.9H9.4Z"
+                          fill="#C4C4C4"
+                        />
+                      </svg>
+                    </span>
+                    7/10 <span class="mr-1 ml-6">💰</span> 400
+                  </div>
                 </div>
-            </li>
-            <%= for _n <- 1..6 do %>
-                <li id="user-1" class="relative pr-6 border-b border-gray-200">
-                    <div class="flex justify-between">
-                        <div class="pt-4 lg:py-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6">
-                            <div class="flex items-center">
-                                <div class="ml-4">
-                                    <div class="font-medium text-gray-900">
-                                        Big Boy CV: The road to a great curriculum
-                                    </div>
-                                    <div class="text-gray-500 mt-3">
-                                        <div class="flex flex-row">
-                                            <span class="mr-1">
-                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M8.5 2C8.00294 2 7.6 2.40294 7.6 2.9C7.6 3.39706 8.00294 3.8 8.5 3.8H10.3C10.7971 3.8 11.2 3.39706 11.2 2.9C11.2 2.40294 10.7971 2 10.3 2H8.5Z" fill="#C4C4C4"/>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4 4.7C4 3.70589 4.80589 2.9 5.8 2.9C5.8 4.39117 7.00883 5.6 8.5 5.6H10.3C11.7912 5.6 13 4.39117 13 2.9C13.9941 2.9 14.8 3.70589 14.8 4.7V14.6C14.8 15.5941 13.9941 16.4 13 16.4H5.8C4.80589 16.4 4 15.5941 4 14.6V4.7ZM6.7 8.3C6.20294 8.3 5.8 8.70294 5.8 9.2C5.8 9.69706 6.20294 10.1 6.7 10.1H6.709C7.20606 10.1 7.609 9.69706 7.609 9.2C7.609 8.70294 7.20606 8.3 6.709 8.3H6.7ZM9.4 8.3C8.90294 8.3 8.5 8.70294 8.5 9.2C8.5 9.69706 8.90294 10.1 9.4 10.1H12.1C12.5971 10.1 13 9.69706 13 9.2C13 8.70294 12.5971 8.3 12.1 8.3H9.4ZM6.7 11.9C6.20294 11.9 5.8 12.3029 5.8 12.8C5.8 13.2971 6.20294 13.7 6.7 13.7H6.709C7.20606 13.7 7.609 13.2971 7.609 12.8C7.609 12.3029 7.20606 11.9 6.709 11.9H6.7ZM9.4 11.9C8.90294 11.9 8.5 12.3029 8.5 12.8C8.5 13.2971 8.90294 13.7 9.4 13.7H12.1C12.5971 13.7 13 13.2971 13 12.8C13 12.3029 12.5971 11.9 12.1 11.9H9.4Z" fill="#C4C4C4"/>
-                                                </svg>
-                                            </span>
-                                            7/10
-                                            <span class="ml-6 mr-1">💰</span>
-                                            400
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-row mt-2 w-full lg:flex-col lg:justify-between lg:mt-0 lg:w-auto lg:pt-2 pl-8 lg:pb-0 pb-2">
-                            <div class="flex flex-shrink-0 justify-end lg:ml-2">
-                                <p class={"inline-flex px-2 text-xs font-semibold leading-5 rounded-full justify-center items-center border border-gray-200"}>
-                                    Easy
-                                </p>
-                            </div>
-                            <div class="text-xs text-gray-500 lg:pb-1 pl-2 lg:pl-0 flex items-center">
-                                1000 EXP
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-row pb-2 pl-8 mt-2 w-full lg:flex-col lg:justify-between lg:pt-2 lg:pb-0 lg:mt-0 lg:w-auto">
+            <div class="flex flex-shrink-0 justify-end lg:ml-2">
+              <p class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full justify-center items-center border border-gray-200">
+                Easy
+              </p>
+            </div>
+            <div class="flex items-center pl-2 text-xs text-gray-500 lg:pb-1 lg:pl-0">
+              1000 EXP
+            </div>
+          </div>
         </div>
-    </ul>
+      </li>
+    <% end %>
+    <div class="flex relative flex-col opacity-40">
+      <div class="flex absolute z-10 justify-center items-center m-auto w-full calc-top">
+        <svg width="196" height="191" viewBox="0 0 196 191" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M49.2406 85.95V66.85C49.2406 40.4784 71.0236 19.1 97.8944 19.1C124.765 19.1 146.548 40.4784 146.548 66.85V85.95C157.297 85.95 166.01 94.5014 166.01 105.05V152.8C166.01 163.349 157.297 171.9 146.548 171.9H49.2406C38.4923 171.9 29.7791 163.349 29.7791 152.8V105.05C29.7791 94.5014 38.4923 85.95 49.2406 85.95ZM127.087 66.85V85.95H68.7021V66.85C68.7021 51.0271 81.7719 38.2 97.8944 38.2C114.017 38.2 127.087 51.0271 127.087 66.85Z"
+            fill="#EA3B2D"
+            fill-opacity="0.5"
+          />
+        </svg>
+      </div>
+      <li class="pt-2 pr-6 pb-2 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pt-2 xl:pl-6">
+        <div class="flex justify-between items-center h-10">
+          <h1 class="flex-1 text-lg font-medium">LVL 10</h1>
+        </div>
+      </li>
+      <%= for _n <- 1..25 do %>
+        <li id="user-1" class="relative pr-6 border-b border-gray-200">
+          <div class="flex justify-between">
+            <div class="pt-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6 lg:py-4">
+              <div class="flex items-center">
+                <div class="ml-4">
+                  <div class="font-medium text-gray-900">
+                    Big Boy CV: The road to a great curriculum
+                  </div>
+                  <div class="mt-3 text-gray-500">
+                    <div class="flex flex-row">
+                      <span class="mr-1">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8.5 2C8.00294 2 7.6 2.40294 7.6 2.9C7.6 3.39706 8.00294 3.8 8.5 3.8H10.3C10.7971 3.8 11.2 3.39706 11.2 2.9C11.2 2.40294 10.7971 2 10.3 2H8.5Z" fill="#C4C4C4" />
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M4 4.7C4 3.70589 4.80589 2.9 5.8 2.9C5.8 4.39117 7.00883 5.6 8.5 5.6H10.3C11.7912 5.6 13 4.39117 13 2.9C13.9941 2.9 14.8 3.70589 14.8 4.7V14.6C14.8 15.5941 13.9941 16.4 13 16.4H5.8C4.80589 16.4 4 15.5941 4 14.6V4.7ZM6.7 8.3C6.20294 8.3 5.8 8.70294 5.8 9.2C5.8 9.69706 6.20294 10.1 6.7 10.1H6.709C7.20606 10.1 7.609 9.69706 7.609 9.2C7.609 8.70294 7.20606 8.3 6.709 8.3H6.7ZM9.4 8.3C8.90294 8.3 8.5 8.70294 8.5 9.2C8.5 9.69706 8.90294 10.1 9.4 10.1H12.1C12.5971 10.1 13 9.69706 13 9.2C13 8.70294 12.5971 8.3 12.1 8.3H9.4ZM6.7 11.9C6.20294 11.9 5.8 12.3029 5.8 12.8C5.8 13.2971 6.20294 13.7 6.7 13.7H6.709C7.20606 13.7 7.609 13.2971 7.609 12.8C7.609 12.3029 7.20606 11.9 6.709 11.9H6.7ZM9.4 11.9C8.90294 11.9 8.5 12.3029 8.5 12.8C8.5 13.2971 8.90294 13.7 9.4 13.7H12.1C12.5971 13.7 13 13.2971 13 12.8C13 12.3029 12.5971 11.9 12.1 11.9H9.4Z"
+                            fill="#C4C4C4"
+                          />
+                        </svg>
+                      </span>
+                      7/10 <span class="mr-1 ml-6">💰</span> 400
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-row pb-2 pl-8 mt-2 w-full lg:flex-col lg:justify-between lg:pt-2 lg:pb-0 lg:mt-0 lg:w-auto">
+              <div class="flex flex-shrink-0 justify-end lg:ml-2">
+                <p class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full justify-center items-center border border-gray-200">
+                  Easy
+                </p>
+              </div>
+              <div class="flex items-center pl-2 text-xs text-gray-500 lg:pb-1 lg:pl-0">
+                1000 EXP
+              </div>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </div>
+  </ul>
 </div>
