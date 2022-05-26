@@ -11,5 +11,4 @@ defmodule ParzivalWeb.App.MissionLive.New do
   def handle_params(_params, _url, socket) do
     {:noreply, socket}
   end
-
 end
