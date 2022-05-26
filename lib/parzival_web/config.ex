@@ -111,6 +111,12 @@ defmodule ParzivalWeb.Config do
         title: "Vault",
         url: Routes.order_index_path(conn, :index),
         tabs: []
+      },
+      %{
+        key: :missions,
+        title: "Missions",
+        url: Routes.mission_index_path(conn, :index),
+        tabs: []
       }
     ]
   end
