@@ -2,7 +2,9 @@ defmodule Parzival.Repo.Seeds.Accounts do
   alias Parzival.Repo
 
   alias Parzival.Accounts.User
+  alias Parzival.Companies.Application
   alias Parzival.Companies.Company
+  alias Parzival.Companies.Offer
 
   @attendees File.read!("priv/fake/attendees.txt") |> String.split("\n")
   @recruiters File.read!("priv/fake/recruiters.txt") |> String.split("\n")
@@ -11,6 +13,7 @@ defmodule Parzival.Repo.Seeds.Accounts do
 
   def run do
     seed_users()
+    seed_applications()
   end
 
   def seed_users do
@@ -126,6 +129,28 @@ defmodule Parzival.Repo.Seeds.Accounts do
     %User{}
     |> User.registration_changeset(data)
     |> Repo.insert!()
+  end
+
+  def seed_applications() do
+    users = Repo.all(User)
+    offers = Repo.all(Offer)
+
+    case Repo.all(Application) do
+      [] ->
+        for _n <- 1..200 do
+          Application.changeset(
+            %Application{},
+            %{
+              user_id: Enum.random(users).id,
+              offer_id: Enum.random(offers).id
+            }
+          )
+          |> Repo.insert!()
+        end
+
+      _ ->
+        Mix.shell().error("Found applications, aborting seeding applications.")
+    end
   end
 end
 

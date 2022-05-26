@@ -19,8 +19,8 @@ defmodule Parzival.Gamification.Curriculum do
     embeds_many :experiences, Curriculum.Experience
     embeds_many :educations, Curriculum.Education
     embeds_many :volunteerings, Curriculum.Volunteering
-    embeds_many :skills, Curriculum.Skills
-    embeds_many :languages, Curriculum.Languages
+    embeds_many :skills, Curriculum.Skill
+    embeds_many :languages, Curriculum.Language
 
     belongs_to :user, Accounts.User
 
@@ -57,11 +57,11 @@ defmodule Parzival.Gamification.Curriculum do
 
   defp validate_skills(changeset) do
     changeset
-    |> cast_embed(:skills, with: &Curriculum.Skills.changeset/2)
+    |> cast_embed(:skills, with: &Curriculum.Skill.changeset/2)
   end
 
   defp validate_languages(changeset) do
     changeset
-    |> cast_embed(:languages, with: &Curriculum.Languages.changeset/2)
+    |> cast_embed(:languages, with: &Curriculum.Language.changeset/2)
   end
 end
