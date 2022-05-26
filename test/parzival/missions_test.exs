@@ -5,8 +5,9 @@ defmodule Parzival.MissionsTest do
 
   import Parzival.MissionsFixtures
   import Ecto
-  alias Parzival.Missions.{Mission, Task, TaskCompletion}
+
   alias Parzival.Accounts.User
+  alias Parzival.Missions.{Mission, Task, TaskCompletion}
 
   describe "get_mission/1" do
     test "does not return the mission if the mission does not exits" do

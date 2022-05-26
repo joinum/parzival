@@ -5,8 +5,8 @@ defmodule Parzival.Missions.TaskCompletion do
   """
   use Parzival.Schema
 
-  alias Parzival.Missions
   alias Parzival.Accounts
+  alias Parzival.Missions
 
   @required_fields ~w(participant_id staff_id mission_id)a
   @optional_fields []

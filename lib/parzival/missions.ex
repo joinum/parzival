@@ -46,19 +46,19 @@ defmodule Parzival.Missions do
     |> Flop.validate_and_run(flop, for: Task)
   end
 
-  def list_TaskCompletions(params \\ %{})
+  def list_task_completions(params \\ %{})
 
-  def list_TaskCompletions(opts) when is_list(opts) do
+  def list_task_completions(opts) when is_list(opts) do
     TaskCompletion
     |> apply_filters(opts)
     |> Repo.all()
   end
 
-  def list_TaskCompletions(flop) do
+  def list_task_completions(flop) do
     Flop.validate_and_run(TaskCompletion, flop, for: TaskCompletion)
   end
 
-  def list_TaskCompletions(%{} = flop, opts) when is_list(opts) do
+  def list_task_completions(%{} = flop, opts) when is_list(opts) do
     TaskCompletion
     |> apply_filters(opts)
     |> Flop.validate_and_run(flop, for: TaskCompletion)
@@ -288,13 +288,13 @@ defmodule Parzival.Missions do
     |> Repo.insert()
   end
 
-  defp task_completions_query() do
+  defp task_completions_query do
     User
     |> join(:inner, [u], tc in TaskCompletion, on: tc.participant_id == u.id)
     |> select([u, tc], %{user: u.id, task: tc.task_id})
   end
 
-  defp mission_completions_query() do
+  defp mission_completions_query do
     mission_number_of_tasks =
       Mission
       |> join(:inner, [m], t in Task, on: t.mission_id == m.id)
