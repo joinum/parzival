@@ -3,6 +3,7 @@ defmodule Parzival.Repo.Seeds.Accounts do
 
   alias Parzival.Accounts.User
   alias Parzival.Companies.Company
+  alias Parzival.Companies.Offer
 
   @attendees File.read!("priv/fake/attendees.txt") |> String.split("\n")
   @recruiters File.read!("priv/fake/recruiters.txt") |> String.split("\n")

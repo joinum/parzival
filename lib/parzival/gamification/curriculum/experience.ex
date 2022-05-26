@@ -9,12 +9,14 @@ defmodule Parzival.Gamification.Curriculum.Experience do
 
   @required_fields ~w(organization)a
 
-  @optional_fields []
+  @optional_fields ~w(delete)a
 
   embedded_schema do
     field :organization, :string
 
-    embeds_many :positions, Curriculum.Positions
+    field :delete, :boolean, virtual: true
+
+    embeds_many :positions, Curriculum.Position
 
     timestamps()
   end
@@ -25,10 +27,21 @@ defmodule Parzival.Gamification.Curriculum.Experience do
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
     |> validate_positions()
+    |> maybe_mark_for_deletion()
   end
 
   defp validate_positions(changeset) do
     changeset
-    |> cast_embed(:positions, with: &Curriculum.Positions.changeset/2, required: true)
+    |> cast_embed(:positions, with: &Curriculum.Position.changeset/2, required: true)
+  end
+
+  defp maybe_mark_for_deletion(%{data: %{id: nil}} = changeset), do: changeset
+
+  defp maybe_mark_for_deletion(changeset) do
+    if get_change(changeset, :delete) do
+      %{changeset | action: :delete}
+    else
+      changeset
+    end
   end
 end

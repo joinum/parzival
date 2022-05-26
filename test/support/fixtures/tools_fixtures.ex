@@ -33,4 +33,18 @@ defmodule Parzival.ToolsFixtures do
 
     announcement
   end
+
+  @doc """
+  Generate a post.
+  """
+  def post_fixture(attrs \\ %{}) do
+    {:ok, post} =
+      attrs
+      |> Enum.into(%{
+        text: "some text"
+      })
+      |> Parzival.Tools.create_post()
+
+    post
+  end
 end

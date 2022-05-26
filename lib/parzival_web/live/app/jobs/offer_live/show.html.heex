@@ -107,64 +107,46 @@
         <ul role="list" class="mt-5 border-t border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
           <%= for application <- @applications do %>
             <li>
-              <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0">
-                <div class="flex flex-1 items-center min-w-0">
-                  <div class="flex-shrink-0">
-                    <span class="inline-flex justify-center items-center mr-2 w-12 h-12 rounded-full group-hover:opacity-75 bg-secondary">
-                      <span class="text-lg font-medium leading-none text-white">
-                        <%= extract_initials(application.user.name) %>
-                      </span>
-                    </span>
-                  </div>
-                  <div class="flex-1 px-4 min-w-0 md:grid md:grid-cols-2 md:gap-4">
-                    <div>
-                      <p class="text-sm font-medium text-red-600 truncate">
-                        <%= application.user.name %>
-                      </p>
-                      <p class="flex items-center mt-2 text-sm text-gray-500">
-                        <Heroicons.Solid.mail class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-                        <span class="truncate">
-                          <%= application.user.email %>
+              <%= live_patch to: Routes.profile_index_path(@socket, :index, application.user), class: "group" do %>
+                <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0">
+                  <div class="flex flex-1 items-center min-w-0">
+                    <div class="flex-shrink-0">
+                      <span class="inline-flex justify-center items-center mr-2 w-12 h-12 rounded-full group-hover:opacity-75 bg-secondary">
+                        <span class="text-lg font-medium leading-none text-white">
+                          <%= extract_initials(application.user.name) %>
                         </span>
-                      </p>
+                      </span>
                     </div>
-                    <div class="hidden md:block">
+                    <div class="flex-1 px-4 min-w-0 md:grid md:grid-cols-2 md:gap-4">
                       <div>
-                        <p class="text-sm text-gray-900">
-                          Applied <%= relative_datetime(application.inserted_at) %>
+                        <p class="text-sm font-medium text-red-600 truncate">
+                          <%= application.user.name %>
                         </p>
+                        <p class="flex items-center mt-2 text-sm text-gray-500">
+                          <Heroicons.Solid.mail class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+                          <span class="truncate">
+                            <%= application.user.email %>
+                          </span>
+                        </p>
+                      </div>
+                      <div class="hidden md:block">
+                        <div>
+                          <p class="text-sm text-gray-900">
+                            Applied <%= relative_datetime(application.inserted_at) %>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div>
+                    <Heroicons.Solid.chevron_right class="w-5 h-5 text-gray-400 group-hover:text-gray-700" />
+                  </div>
                 </div>
-                <div>
-                  <Heroicons.Solid.chevron_right class="w-5 h-5 text-gray-400 group-hover:text-gray-700" />
-                </div>
-              </div>
+              <% end %>
             </li>
           <% end %>
         </ul>
-        <nav class="flex justify-between items-center px-4 border-t border-gray-200 sm:px-0" aria-label="Pagination">
-          <div class="flex flex-1 -mt-px w-0">
-            <a href="#" class="inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">
-              <Heroicons.Solid.arrow_narrow_left class="mr-3 w-5 h-5 text-gray-400" /> Previous
-            </a>
-          </div>
-          <div class="hidden md:flex md:-mt-px">
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">1</a>
-            <!-- Current: "border-red-500 text-red-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200" -->
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-red-600 border-t-2 border-red-500" aria-current="page">2</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">3</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">4</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">5</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">6</a>
-          </div>
-          <div class="flex flex-1 justify-end -mt-px w-0">
-            <a href="#" class="inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">
-              Next <Heroicons.Solid.arrow_narrow_right class="ml-3 w-5 h-5 text-gray-400" />
-            </a>
-          </div>
-        </nav>
+        <.pagination items={@applications} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
       <% end %>
     </div>
   </main>

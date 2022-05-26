@@ -62,6 +62,9 @@
                     <%= link("Profile", to: Routes.profile_index_path(@socket, :index, @current_user), class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>
                   </div>
                   <div class="py-1" role="none">
+                    <%= link("Announcements", to: Routes.announcement_index_path(@socket, :index), class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>
+                  </div>
+                  <div class="py-1" role="none">
                     <%= link("Home", to: Routes.landing_home_index_path(@socket, :index), class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>
                   </div>
                   <div class="py-1" role="none">

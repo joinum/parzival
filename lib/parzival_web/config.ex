@@ -96,6 +96,12 @@ defmodule ParzivalWeb.Config do
         tabs: []
       },
       %{
+        key: :leaderboard,
+        title: "Leaderboard",
+        url: Routes.leaderboard_index_path(conn, :index),
+        tabs: []
+      },
+      %{
         key: :jobs,
         title: "Jobs",
         url: Routes.offer_index_path(conn, :index),
@@ -150,6 +156,12 @@ defmodule ParzivalWeb.Config do
             key: :missions,
             title: "Missions",
             url: Routes.mission_index_path(conn, :index)
+          },
+          %{
+            key: :missions,
+            title: "Leaderboard",
+            url: Routes.leaderboard_index_path(conn, :index),
+            tabs: []
           },
           %{
             key: :missions,

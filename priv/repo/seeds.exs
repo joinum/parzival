@@ -9,9 +9,11 @@ defmodule Parzival.Repo.Seeds do
     [
       "companies.exs",
       "accounts.exs",
+      "offers.exs",
       "gamification.exs",
       "store.exs",
-      "tools.exs"
+      "tools.exs",
+      "applications.exs"
     ]
     |> Enum.each(fn file ->
       Code.require_file("#{@seeds_dir}/#{file}")
