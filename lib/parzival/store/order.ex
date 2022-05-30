@@ -7,15 +7,23 @@ defmodule Parzival.Store.Order do
   alias Parzival.Accounts.User
   alias Parzival.Store.Product
 
-  @required_fields ~w(quantity user_id product_id)a
+  @required_fields ~w(user_id product_id)a
 
   @optional_fields [
     :redeemed
   ]
 
+  @derive {
+    Flop.Schema,
+    filterable: [],
+    sortable: [],
+    compound_fields: [search: []],
+    default_order_by: [],
+    default_order_directions: [:asc]
+  }
+
   schema "orders" do
-    field :quantity, :integer
-    field :redeemed, :integer, default: 0
+    field :redeemed, :boolean, default: false
 
     belongs_to :user, User
 

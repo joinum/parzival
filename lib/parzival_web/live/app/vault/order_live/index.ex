@@ -2,6 +2,8 @@ defmodule ParzivalWeb.App.OrderLive.Index do
   @moduledoc false
   use ParzivalWeb, :live_view
 
+  import ParzivalWeb.Components.Pagination
+
   alias Parzival.Store
   alias Parzival.Uploaders
 
@@ -11,14 +13,28 @@ defmodule ParzivalWeb.App.OrderLive.Index do
   end
 
   @impl true
-  def handle_params(_params, _url, socket) do
+  def handle_params(params, _url, socket) do
     {:noreply,
      socket
-     |> assign(:orders, list_orders(socket.assigns.current_user))
-     |> assign(:current_page, :vault)}
+     |> assign(:current_page, :vault)
+     |> assign(:params, params)
+     |> assign(list_orders(params, socket))}
   end
 
-  defp list_orders(current_user) do
-    Store.list_orders_by_user(current_user, preloads: [:product])
+  defp list_orders(params, socket) do
+    params =
+      params
+      |> Map.put("page_size", 6)
+
+    case Store.list_orders(params,
+           where: [user_id: socket.assigns.current_user.id],
+           preloads: [:product]
+         ) do
+      {:ok, {orders, meta}} ->
+        %{orders: orders, meta: meta}
+
+      {:error, flop} ->
+        %{orders: [], meta: flop}
+    end
   end
 end
