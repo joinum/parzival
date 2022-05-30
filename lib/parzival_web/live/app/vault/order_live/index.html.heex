@@ -13,18 +13,16 @@
     <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
     <ul role="list">
       <%= for order <- @orders do %>
-        <%= for i <- 1..order.quantity do %>
-          <li class="flex py-6 px-5 sm:px-10 md:px-20">
+        <%= live_redirect to: Routes.order_show_path(@socket, :show, order) do %>
+          <li class="flex py-6 px-5 sm:px-10 md:px-20 hover:bg-gray-50">
             <div class="flex-shrink-0">
               <img src={Uploaders.ProductImage.url({order.product.image, order.product}, :medium)} alt="Front side of mint cotton t-shirt with wavey lines pattern." class="object-cover object-center w-24 h-24 rounded-md sm:w-32 sm:h-32" />
             </div>
             <div class="flex flex-col flex-1 ml-4 sm:ml-6">
               <div>
                 <div class="flex justify-between">
-                  <h4 class="text-sm">
-                    <a href="#" class="font-medium text-gray-700 hover:text-gray-800">
-                      <%= order.product.name %>
-                    </a>
+                  <h4 class="text-sm font-medium text-gray-700 hover:text-gray-800">
+                    <%= order.product.name %>
                   </h4>
                   <p class="ml-4 text-sm font-medium text-gray-900">
                     💰 <%= order.product.price %>
@@ -35,26 +33,25 @@
                 </p>
               </div>
               <div class="flex flex-1 justify-between items-end mt-4">
-                <%= if i < order.redeemed do %>
-                  <p class="flex items-center space-x-2 text-sm text-gray-700">
+                <p class="flex items-center space-x-2 text-sm text-gray-700">
+                  <%= if order.redeemed do %>
                     <Heroicons.Solid.check class="flex-shrink-0 w-5 h-5 text-green-500" />
                     <span>
                       Delivered
                     </span>
-                  </p>
-                <% else %>
-                  <p class="flex items-center space-x-2 text-sm text-gray-700">
+                  <% else %>
                     <Heroicons.Solid.clock class="flex-shrink-0 w-5 h-5 text-gray-300" />
                     <span>
                       Go to the acreditation to pick up your purchase
                     </span>
-                  </p>
-                <% end %>
+                  <% end %>
+                </p>
               </div>
             </div>
           </li>
         <% end %>
       <% end %>
     </ul>
+    <.pagination items={@orders} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
   </section>
 </div>

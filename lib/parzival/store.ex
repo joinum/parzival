@@ -150,12 +150,6 @@ defmodule Parzival.Store do
     |> Flop.validate_and_run(flop, for: Order)
   end
 
-  def list_orders_by_user(user, opts \\ []) do
-    from(o in Order, where: o.user_id == ^user.id)
-    |> apply_filters(opts)
-    |> Repo.all()
-  end
-
   @doc """
   Gets a single order.
 
@@ -170,10 +164,10 @@ defmodule Parzival.Store do
       ** (Ecto.NoResultsError)
 
   """
-  def get_order!(id), do: Repo.get!(Order, id)
-
-  def get_order_by_user_and_product(user_id, product_id) do
-    Repo.get_by(Order, user_id: user_id, product_id: product_id)
+  def get_order!(id, opts \\ []) do
+    Order
+    |> apply_filters(opts)
+    |> Repo.get!(id)
   end
 
   @doc """
@@ -251,16 +245,7 @@ defmodule Parzival.Store do
       :update_stock,
       Product.stock_changeset(product, %{stock: product.stock - 1})
     )
-    |> Multi.run(:order, fn _repo, _changes ->
-      {
-        :ok,
-        get_order_by_user_and_product(user.id, product.id) ||
-          %Order{user_id: user.id, product_id: product.id, quantity: 0}
-      }
-    end)
-    |> Multi.insert_or_update(:insert_or_update_order, fn %{order: order} ->
-      Order.changeset(order, %{quantity: order.quantity + 1})
-    end)
+    |> Multi.insert(:insert, %Order{user_id: user.id, product_id: product.id})
     |> Repo.transaction()
     |> case do
       {:ok, transaction} ->
