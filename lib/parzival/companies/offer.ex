@@ -4,6 +4,7 @@ defmodule Parzival.Companies.Offer do
   """
   use Parzival.Schema
 
+  alias Parzival.Companies.Application
   alias Parzival.Companies.Company
   alias Parzival.Companies.OfferTime
   alias Parzival.Companies.OfferType
@@ -28,9 +29,15 @@ defmodule Parzival.Companies.Offer do
     field :location, :string
     field :description, :string
 
+    field :applied, :integer, virtual: true
+
     belongs_to :company, Company
     belongs_to :offer_type, OfferType
     belongs_to :offer_time, OfferTime
+
+    has_many :applications, Application
+
+    has_many :users, through: [:applications, :user]
 
     timestamps()
   end

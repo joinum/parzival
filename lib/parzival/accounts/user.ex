@@ -4,6 +4,7 @@ defmodule Parzival.Accounts.User do
   """
   use Parzival.Schema
 
+  alias Parzival.Companies.Application
   alias Parzival.Companies.Company
   alias Parzival.Gamification.Curriculum
   alias Parzival.Store.Order
@@ -57,6 +58,8 @@ defmodule Parzival.Accounts.User do
     has_many :orders, Order
 
     belongs_to :company, Company
+
+    has_many :applications, Application
 
     timestamps()
   end

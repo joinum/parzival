@@ -7,6 +7,7 @@ defmodule Parzival.Companies do
   import Ecto.Query, warn: false
   alias Parzival.Repo
 
+  alias Parzival.Accounts.User
   alias Parzival.Companies.Offer
 
   @doc """
@@ -451,5 +452,164 @@ defmodule Parzival.Companies do
   """
   def change_offer_time(%OfferTime{} = offer_time, attrs \\ %{}) do
     OfferTime.changeset(offer_time, attrs)
+  end
+
+  alias Parzival.Companies.Application
+
+  @doc """
+  Returns the list of applications.
+
+  ## Examples
+
+      iex> list_applications()
+      [%Application{}, ...]
+
+  """
+  def list_applications(params \\ %{})
+
+  def list_applications(opts) when is_list(opts) do
+    Application
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_applications(flop) do
+    Flop.validate_and_run(Application, flop, for: Application)
+  end
+
+  def list_applications(%{} = flop, opts) when is_list(opts) do
+    Application
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Application)
+  end
+
+  @doc """
+  Gets a single application.
+
+  Raises `Ecto.NoResultsError` if the Application does not exist.
+
+  ## Examples
+
+      iex> get_application!(123)
+      %Application{}
+
+      iex> get_application!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_application!(id), do: Repo.get!(Application, id)
+
+  @doc """
+  Creates a application.
+
+  ## Examples
+
+      iex> create_application(%{field: value})
+      {:ok, %Application{}}
+
+      iex> create_application(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_application(attrs \\ %{}) do
+    %Application{}
+    |> Application.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a application.
+
+  ## Examples
+
+      iex> update_application(application, %{field: new_value})
+      {:ok, %Application{}}
+
+      iex> update_application(application, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_application(%Application{} = application, attrs) do
+    application
+    |> Application.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a application.
+
+  ## Examples
+
+      iex> delete_application(application)
+      {:ok, %Application{}}
+
+      iex> delete_application(application)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_application(%Application{} = application) do
+    Repo.delete(application)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking application changes.
+
+  ## Examples
+
+      iex> change_application(application)
+      %Ecto.Changeset{data: %Application{}}
+
+  """
+  def change_application(%Application{} = application, attrs \\ %{}) do
+    Application.changeset(application, attrs)
+  end
+
+  def is_user_applied?(%Offer{} = offer, %User{} = user) do
+    Repo.one(
+      from a in Application,
+        where: a.user_id == ^user.id and a.offer_id == ^offer.id
+    )
+  end
+
+  def create_offer_application(%Offer{} = offer, %User{} = user) do
+    %Application{}
+    |> Application.changeset(%{
+      offer_id: offer.id,
+      user_id: user.id
+    })
+    |> Repo.insert()
+    |> broadcast(:new_application)
+  end
+
+  def delete_offer_application(%Offer{} = offer, %User{} = user) do
+    Repo.delete_all(
+      from a in Application,
+        where: a.user_id == ^user.id and a.offer_id == ^offer.id
+    )
+    |> broadcast(:deleted_application)
+  end
+
+  def get_total_applied(%Offer{} = offer) do
+    Application
+    |> where(offer_id: ^offer.id)
+    |> Repo.aggregate(:count, :id)
+  end
+
+  def subscribe(topic) when topic in ["new_application", "deleted_application"] do
+    Phoenix.PubSub.subscribe(Parzival.PubSub, topic)
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+
+  defp broadcast({:ok, %Application{} = application}, event)
+       when event in [:new_application] do
+    Phoenix.PubSub.broadcast!(Parzival.PubSub, "new_application", {event, application})
+    {:ok, application}
+  end
+
+  defp broadcast({number, nil}, event)
+       when event in [:deleted_application] do
+    Phoenix.PubSub.broadcast!(Parzival.PubSub, "deleted_application", {event, nil})
+    {number, nil}
   end
 end
