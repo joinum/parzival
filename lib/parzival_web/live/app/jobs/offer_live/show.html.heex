@@ -8,41 +8,28 @@
         </h1>
         <div class="flex flex-col mt-1">
           <div class="flex items-center mt-2 text-sm text-gray-500">
-            <svg class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd" />
-              <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
-            </svg>
+            <Heroicons.Solid.briefcase class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
             <%= @offer.offer_type.name %>
           </div>
           <div class="flex items-center mt-2 text-sm text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-            </svg>
+            <Heroicons.Solid.clock class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
             <%= @offer.offer_time.name %>
           </div>
           <div class="flex items-center mt-2 text-sm text-gray-500">
-            <!-- Heroicon name: solid/location-marker -->
-            <svg class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-            </svg>
+            <Heroicons.Solid.location_marker class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
             <%= @offer.location %>
           </div>
           <div class="flex items-center mt-2 text-sm text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z"
-                clip-rule="evenodd"
-              />
-            </svg>
+            <Heroicons.Solid.currency_euro class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
             <%= "#{@offer.minimum_salary}€ - #{@offer.maximum_salary}€" %>
           </div>
           <div class="flex items-center mt-2 text-sm text-gray-500">
-            <!-- Heroicon name: solid/calendar -->
-            <svg class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-            </svg>
+            <Heroicons.Solid.calendar class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
             <%= relative_datetime(@offer.inserted_at) %>
+          </div>
+          <div class="flex items-center mt-2 text-sm text-gray-500">
+            <Heroicons.Solid.users class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+            <%= @offer.applied %> applications
           </div>
         </div>
       </div>
@@ -51,15 +38,23 @@
         <div class="flex mt-5 space-x-2 xl:mt-0 xl:ml-4">
           <span>
             <%= live_patch to: Routes.offer_edit_path(@socket, :edit, @offer), class: "inline-flex items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" do %>
-              <!-- Heroicon name: solid/pencil -->
-              <svg class="mr-2 -ml-1 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-              </svg>
+              <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" />
               Edit
             <% end %>
           </span>
           <span>
             <%= link("Delete", to: "#", phx_click: "delete", phx_value_id: @offer.id, data: [confirm: "Are you sure?"], class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+          </span>
+        </div>
+      <% end %>
+      <%= if @current_user.role in [:attendee] do %>
+        <div class="flex items-end mt-5 space-x-2 xl:mt-0 xl:ml-4">
+          <span>
+            <%= if @applied? do %>
+              <%= link("Unapply", to: "#", phx_click: "unapply", phx_disable_with: "Unapplying...", phx_throttle: "0", class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+            <% else %>
+              <%= link("Apply", to: "#", phx_click: "apply", phx_disable_with: "Applying...", phx_throttle: "0", class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+            <% end %>
           </span>
         </div>
       <% end %>
@@ -102,112 +97,55 @@
 
       <%= if @current_user.role == :recruiter do %>
         <div class="px-4 pt-6 sm:px-0">
-          <h2 class="text-lg font-medium text-gray-900">Candidates</h2>
-          <!-- Tabs -->
-          <div class="">
-            <div class="border-b border-gray-200">
-              <nav class="flex mt-2 -mb-px space-x-8" aria-label="Tabs">
-                <!-- Current: "border-red-500 text-red-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200" -->
-                <a href="#" class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-200">
-                  Applied
-
-                <!-- Current: "bg-red-100 text-red-600", Default: "bg-gray-100 text-gray-900" -->
-                  <span class="hidden py-0.5 px-2.5 ml-2 text-xs font-medium text-gray-900 bg-gray-100 rounded-full md:inline-block">2</span>
-                </a>
-
-                <a href="#" class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-200">
-                  Phone Screening <span class="hidden py-0.5 px-2.5 ml-2 text-xs font-medium text-gray-900 bg-gray-100 rounded-full md:inline-block">4</span>
-                </a>
-
-                <a href="#" class="py-4 px-1 text-sm font-medium text-red-600 whitespace-nowrap border-b-2 border-red-500">
-                  Interview <span class="hidden py-0.5 px-2.5 ml-2 text-xs font-medium text-red-600 bg-red-100 rounded-full md:inline-block">6</span>
-                </a>
-
-                <a href="#" class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-200">Offer</a>
-
-                <a href="#" class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-200">Disqualified</a>
-              </nav>
-            </div>
-          </div>
+          <h2 class="text-lg font-medium text-gray-900">
+            Candidates
+            <span class="hidden py-0.5 px-2.5 ml-2 text-xs font-medium text-gray-900 bg-gray-100 rounded-full md:inline-block">
+              <%= @offer.applied %>
+            </span>
+          </h2>
         </div>
         <!-- Stacked list -->
         <ul role="list" class="mt-5 border-t border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
-          <li>
-            <a href="#" class="block group">
+          <%= for application <- @applications do %>
+            <li>
+              
               <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0">
                 <div class="flex flex-1 items-center min-w-0">
                   <div class="flex-shrink-0">
-                    <img class="w-12 h-12 rounded-full group-hover:opacity-75" src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                    <span class="inline-flex justify-center items-center mr-2 w-12 h-12 rounded-full group-hover:opacity-75 bg-secondary">
+                      <span class="text-lg font-medium leading-none text-white">
+                        <%= extract_initials(application.user.name) %>
+                      </span>
+                    </span>
                   </div>
                   <div class="flex-1 px-4 min-w-0 md:grid md:grid-cols-2 md:gap-4">
                     <div>
-                      <p class="text-sm font-medium text-red-600 truncate">Emily Selman</p>
+                      <p class="text-sm font-medium text-red-600 truncate">
+                        <%= application.user.name %>
+                      </p>
                       <p class="flex items-center mt-2 text-sm text-gray-500">
-                        <!-- Heroicon name: solid/mail -->
-                        <svg class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                        </svg>
-                        <span class="truncate">emily.selman@example.com</span>
+                        <Heroicons.Solid.mail class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+                        <span class="truncate">
+                          <%= application.user.email %>
+                        </span>
                       </p>
                     </div>
                     <div class="hidden md:block">
                       <div>
                         <p class="text-sm text-gray-900">
-                          Applied on <time datetime="2020-07-01T15:34:56">January 7, 2020</time>
-                        </p>
-                        <p class="flex items-center mt-2 text-sm text-gray-500">
-                          <!-- Heroicon name: solid/check-circle -->
-                          <svg class="flex-shrink-0 mr-1.5 w-5 h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                          </svg>
-                          Completed phone screening
+                          Applied <%= relative_datetime(application.inserted_at) %>
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div>
-                  <!-- Heroicon name: solid/chevron-right -->
-                  <svg class="w-5 h-5 text-gray-400 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                  </svg>
+                  <Heroicons.Solid.chevron_right class="w-5 h-5 text-gray-400 group-hover:text-gray-700" />
                 </div>
               </div>
-            </a>
-          </li>
-          <!-- More candidates... -->
+            </li>
+          <% end %>
         </ul>
-        <!-- Pagination -->
-        <nav class="flex justify-between items-center px-4 border-t border-gray-200 sm:px-0" aria-label="Pagination">
-          <div class="flex flex-1 -mt-px w-0">
-            <a href="#" class="inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">
-              <!-- Heroicon name: solid/arrow-narrow-left -->
-              <svg class="mr-3 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-              </svg>
-              Previous
-            </a>
-          </div>
-          <div class="hidden md:flex md:-mt-px">
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">1</a>
-            <!-- Current: "border-red-500 text-red-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200" -->
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-red-600 border-t-2 border-red-500" aria-current="page">2</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">3</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">4</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">5</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">6</a>
-          </div>
-          <div class="flex flex-1 justify-end -mt-px w-0">
-            <a href="#" class="inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">
-              Next
-            <!-- Heroicon name: solid/arrow-narrow-right -->
-              <svg class="ml-3 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-              </svg>
-            </a>
-          </div>
-        </nav>
       <% end %>
     </div>
   </main>
