@@ -83,6 +83,12 @@ defmodule ParzivalWeb.Config do
   def attendee_pages(conn) do
     [
       %{
+        key: :missions,
+        title: "Missions",
+        url: Routes.mission_index_path(conn, :index),
+        tabs: []
+      },
+      %{
         key: :jobs,
         title: "Jobs",
         url: Routes.offer_index_path(conn, :index),
