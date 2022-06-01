@@ -4,11 +4,9 @@ defmodule Parzival.Store do
   """
   use Parzival.Context
 
-  import Ecto.Query, warn: false
   alias Ecto.Multi
 
   alias Parzival.Accounts.User
-  alias Parzival.Repo
   alias Parzival.Store.Product
 
   @doc """
@@ -104,7 +102,13 @@ defmodule Parzival.Store do
 
   """
   def delete_product(%Product{} = product) do
-    Repo.delete(product)
+    product
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.foreign_key_constraint(:orders,
+      name: :orders_product_id_fkey,
+      message: "This product cant be deleted, because users have bought it!"
+    )
+    |> Repo.delete()
     |> broadcast(:deleted)
   end
 

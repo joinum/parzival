@@ -21,6 +21,17 @@ defmodule ParzivalWeb.App.HomeLive.Index do
      |> assign(:user, user)}
   end
 
+  @impl true
+  def handle_event("add-exp", _payload, socket) do
+    case Accounts.add_exp(socket.assigns.current_user) do
+      {:ok, user} ->
+        {:noreply, assign(socket, :current_user, user)}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, :changeset, changeset)}
+    end
+  end
+
   defp list_announcements do
     Tools.list_announcements(preloads: [:author], limit: 3, order_by: [desc: :inserted_at])
   end
