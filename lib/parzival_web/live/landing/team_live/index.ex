@@ -45,7 +45,7 @@ defmodule ParzivalWeb.Landing.TeamLive.Index do
     }
   ]
 
-  @organizers ["cesium", "necc", "nefum", "di"]
+  @organizers ["di", "ecum", "cesium", "necc", "nefum"]
 
   @impl true
   def mount(_params, _session, socket) do
