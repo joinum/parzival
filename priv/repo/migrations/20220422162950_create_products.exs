@@ -15,5 +15,7 @@ defmodule Parzival.Repo.Migrations.CreateProducts do
 
       timestamps()
     end
+
+    create constraint(:products, :stock_must_be_positive, check: "stock >= 0")
   end
 end
