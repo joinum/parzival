@@ -206,6 +206,7 @@ defmodule Parzival.Gamification do
     mission
     |> Mission.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:updated)
   end
 
   @doc """
@@ -699,5 +700,17 @@ defmodule Parzival.Gamification do
   """
   def change_task_user(%TaskUser{} = task_user, attrs \\ %{}) do
     TaskUser.changeset(task_user, attrs)
+  end
+
+  def subscribe(topic) when topic in ["updated"] do
+    Phoenix.PubSub.subscribe(Parzival.PubSub, topic)
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+
+  defp broadcast({:ok, %Mission{} = mission}, event)
+       when event in [:updated] do
+    Phoenix.PubSub.broadcast!(Parzival.PubSub, "updated", {event, mission})
+    {:ok, mission}
   end
 end
