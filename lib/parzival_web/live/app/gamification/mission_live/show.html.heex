@@ -68,10 +68,10 @@
         </div>
         <div>
           <p class="text-base text-black sm:text-lg">
-            Users that completed this mission ( <%= Enum.count(@mission.users) %> / <%= Enum.count(@attendees) %> )
+            Users that completed this mission ( <%= Enum.count(@mission.users) %> / <%= @attendees_count %> )
             <div style="box-shadow: nset 0.1em 0.1em 0.2em #99b5d2, inset -0.1em -0.1em 0.2em #fff; background: #edf2f7" class="w-full h-5 rounded-full">
-              <div style={"width: #{if Enum.count(@attendees) > 0 do
-                    Enum.count(@mission.users) / Enum.count(@attendees) * 100
+              <div style={"width: #{if @attendees_count > 0 do
+                    Enum.count(@mission.users) / @attendees_count * 100
                   else
                     100
                   end}% ;background: linear-gradient(145deg, #CDE2F5, #96BEE3);"} class="w-1/2 h-5 rounded-full" />

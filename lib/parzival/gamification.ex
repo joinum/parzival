@@ -702,7 +702,7 @@ defmodule Parzival.Gamification do
     TaskUser.changeset(task_user, attrs)
   end
 
-  def subscribe(topic) when topic in ["updated"] do
+  def subscribe(topic) do
     Phoenix.PubSub.subscribe(Parzival.PubSub, topic)
   end
 
@@ -710,7 +710,7 @@ defmodule Parzival.Gamification do
 
   defp broadcast({:ok, %Mission{} = mission}, event)
        when event in [:updated] do
-    Phoenix.PubSub.broadcast!(Parzival.PubSub, "updated", {event, mission})
+    Phoenix.PubSub.broadcast!(Parzival.PubSub, "updated:#{mission.id}", {event, mission})
     {:ok, mission}
   end
 end

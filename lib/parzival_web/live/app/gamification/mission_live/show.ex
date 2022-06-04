@@ -8,7 +8,7 @@ defmodule ParzivalWeb.App.MissionLive.Show do
   @impl true
   def mount(%{"id" => id}, _session, socket) do
     if connected?(socket) do
-      Gamification.subscribe("updated")
+      Gamification.subscribe("updated:#{id}")
     end
 
     {:ok, assign(socket, :id, id)}
@@ -20,7 +20,7 @@ defmodule ParzivalWeb.App.MissionLive.Show do
       socket
       |> assign(:current_page, :missions)
       |> assign(:page_title, "Show Mission")
-      |> assign(:attendees, Accounts.list_users(where: [role: :attendee]))
+      |> assign(:attendees_count, Accounts.count_users(where: [role: :attendee]))
 
     {:noreply, reload(socket)}
   end
