@@ -3,6 +3,8 @@ defmodule ParzivalWeb.Backoffice.UserLive.Edit do
   use ParzivalWeb, :live_view
 
   alias Parzival.Accounts
+  alias Parzival.Gamification
+  alias Parzival.Tools
 
   @impl true
   def mount(_params, _session, socket) do
@@ -11,12 +13,13 @@ defmodule ParzivalWeb.Backoffice.UserLive.Edit do
 
   @impl true
   def handle_params(%{"id" => id} = _params, _url, socket) do
-    user = Accounts.get_user!(id)
+    user = Accounts.get_user!(id, [:company, :curriculum])
 
     {:noreply,
      socket
-     |> assign(:current_page, :accounts)
-     |> assign(:current_tab, user.role)
-     |> assign(:user, user)}
+     |> assign(:current_page, :dashboard)
+     |> assign(:page_title, "Edit User")
+     |> assign(:user, user)
+     |> assign(:curriculum, Gamification.get_user_curriculum(user, []))}
   end
 end
