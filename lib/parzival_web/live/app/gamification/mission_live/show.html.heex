@@ -89,6 +89,16 @@
             <%= assigns.mission.exp %> EXP
           </span>
         </div>
+        <%= if @mission.created_by do %>
+          <div>
+            <p class="text-base text-black sm:text-lg">
+              Sponsored by
+            </p>
+            <span class="mt-2 text-sm sm:text-base">
+              <%= @mission.created_by.name %>
+            </span>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

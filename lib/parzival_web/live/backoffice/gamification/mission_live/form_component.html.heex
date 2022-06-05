@@ -44,14 +44,27 @@
               <%= error_tag(f, :description) %>
             </div>
           </div>
-          <div class="flex flex-col gap-y-1">
-            <span class="pl-1 text-base font-medium text-gray-800 sm:text-lg">
-              Dificulty
-            </span>
-            <div>
-              <%= select(f, :dificulty_id, Enum.map(@dificulties, &{&1.name, &1.id}), prompt: "Choose a Dificulty", selected: f.data.dificulty_id, class: "w-64 block border-gray-300 rounded-md shadow-sm focus:ring-red-800 focus:border-red-800") %>
-              <div class="text-red-500">
-                <%= error_tag(f, :dificulty) %>
+          <div class="flex flex-col gap-x-4 sm:flex-row">
+            <div class="flex flex-col gap-y-1">
+              <span class="pl-1 text-base font-medium text-gray-800 sm:text-lg">
+                Dificulty
+              </span>
+              <div>
+                <%= select(f, :dificulty_id, Enum.map(@dificulties, &{&1.name, &1.id}), prompt: "Choose a Dificulty", selected: f.data.dificulty_id, class: "w-64 block border-gray-300 rounded-md shadow-sm focus:ring-red-800 focus:border-red-800") %>
+                <div class="text-red-500">
+                  <%= error_tag(f, :dificulty) %>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col gap-y-1">
+              <span class="pl-1 text-base font-medium text-gray-800 sm:text-lg">
+                Sponsored by
+              </span>
+              <div>
+                <%= select(f, :created_by_id, Enum.map(@companies, &{&1.name, &1.id}), prompt: "Choose a Company", selected: f.data.created_by_id, class: "w-64 block border-gray-300 rounded-md shadow-sm focus:ring-red-800 focus:border-red-800") %>
+                <div class="text-red-500">
+                  <%= error_tag(f, :created_by) %>
+                </div>
               </div>
             </div>
           </div>
