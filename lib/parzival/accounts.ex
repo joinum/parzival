@@ -27,6 +27,12 @@ defmodule Parzival.Accounts do
     |> Flop.validate_and_run(flop, for: User)
   end
 
+  def count_users(opts \\ []) when is_list(opts) do
+    User
+    |> apply_filters(opts)
+    |> Repo.aggregate(:count)
+  end
+
   ## Database getters
 
   @doc """
