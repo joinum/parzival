@@ -2,6 +2,7 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
   @moduledoc false
   use ParzivalWeb, :live_component
 
+  alias Parzival.Companies
   alias Parzival.Gamification
   alias Parzival.Gamification.Mission.Task
 
@@ -13,6 +14,7 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
      socket
      |> assign(assigns)
      |> assign(:dificulties, list_dificulties())
+     |> assign(:companies, list_companies())
      |> assign(:changeset, changeset)}
   end
 
@@ -59,6 +61,10 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
 
   defp list_dificulties do
     Gamification.list_dificulties(fields: [:name, :id])
+  end
+
+  defp list_companies do
+    Companies.list_companies(fields: [:name, :id])
   end
 
   defp save_mission(socket, :edit, mission_params) do

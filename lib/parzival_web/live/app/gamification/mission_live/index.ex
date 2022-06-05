@@ -13,7 +13,7 @@ defmodule ParzivalWeb.App.MissionLive.Index do
   @impl true
   def handle_params(_params, _url, socket) do
     missions_levels =
-      Gamification.list_missions(preloads: [:dificulty, tasks: [:users]])
+      Gamification.list_missions(preloads: [:dificulty, :created_by, tasks: [:users]])
       |> Enum.group_by(& &1.level)
 
     current_user = Accounts.get_user!(socket.assigns.current_user.id)
@@ -38,9 +38,14 @@ defmodule ParzivalWeb.App.MissionLive.Index do
         <div class="pt-4 text-sm lg:py-4">
           <div class="flex items-center">
             <div class="ml-0 sm:ml-2">
-              <span class="font-medium text-gray-900">
+              <p class="font-medium text-gray-900">
                 <%= assigns.mission.title %>
-              </span>
+              </p>
+              <%= if assigns.mission.created_by do %>
+                <p class="mt-1 text-xs text-gray-400 sm:text-sm">
+                  Sponsored by <%= assigns.mission.created_by.name %>
+                </p>
+              <% end %>
               <div class="mt-3 text-gray-500">
                 <div class="flex flex-row gap-x-5">
                   <div class="flex text-right text-gray-500 lg:hidden lg:pl-0 items-centertext-xs">
