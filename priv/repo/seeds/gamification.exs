@@ -3,6 +3,7 @@ defmodule Parzival.Repo.Seeds.Gamification do
 
   alias Parzival.Repo
   alias Parzival.Accounts.User
+  alias Parzival.Gamification
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Mission
   alias Parzival.Gamification.Mission.Dificulty
@@ -19,8 +20,7 @@ defmodule Parzival.Repo.Seeds.Gamification do
     seed_dificulties()
     seed_missions()
     seed_tasks()
-    seed_missions_users()
-    seed_tasks_users()
+    seed_complete_tasks()
   end
 
   def seed_curriculums do
@@ -228,8 +228,8 @@ defmodule Parzival.Repo.Seeds.Gamification do
             Task.changeset(%Task{}, %{
               title: Faker.Lorem.sentence(5..10),
               description: Faker.Lorem.sentence(20..40),
-              tokens: Enum.random(400..600),
-              exp: Enum.random(500..1000),
+              tokens: Enum.random(100..200),
+              exp: Enum.random(200..500),
               mission_id: mission.id
             })
             |> Repo.insert!()
@@ -241,63 +241,30 @@ defmodule Parzival.Repo.Seeds.Gamification do
     end
   end
 
-  def seed_missions_users do
-    case Repo.all(MissionUser) do
-      [] ->
-        missions =
-          Mission
-          |> Repo.all()
+  def seed_complete_tasks do
+    attendees =
+      User
+      |> where(role: :attendee)
+      |> Repo.all()
 
-        attendees =
-          User
-          |> where(role: :attendee)
-          |> Repo.all()
+    staffs =
+      User
+      |> where(role: :staff)
+      |> Repo.all()
 
-        for mission <- missions do
-          for attendee <- Enum.take_random(attendees, Enum.random(1..Enum.count(attendees))) do
-            MissionUser.changeset(%MissionUser{}, %{
-              user_id: attendee.id,
-              mission_id: mission.id
-            })
-            |> Repo.insert!()
-          end
+    for attendee <- attendees do
+      missions =
+        Repo.all(
+          from m in Mission,
+            where: m.level <= ^Gamification.calc_level(attendee.exp),
+            preload: :tasks
+        )
+
+      for mission <- Enum.take_random(missions, Enum.random(1..Enum.count(missions))) do
+        for task <- Enum.take_random(mission.tasks, Enum.random(1..Enum.count(mission.tasks))) do
+          Gamification.complete_task(Enum.random(staffs), attendee, task)
         end
-
-      _ ->
-        Mix.shell().error("Found MissionsUser, aborting seeding missions_users")
-    end
-  end
-
-  def seed_tasks_users do
-    case Repo.all(TaskUser) do
-      [] ->
-        tasks =
-          Task
-          |> Repo.all()
-
-        attendees =
-          User
-          |> where(role: :attendee)
-          |> Repo.all()
-
-        staffs =
-          User
-          |> where(role: :staff)
-          |> Repo.all()
-
-        for task <- Enum.take_random(tasks, Enum.random(1..Enum.count(tasks))) do
-          for attendee <- Enum.take_random(attendees, Enum.random(1..Enum.count(attendees))) do
-            TaskUser.changeset(%TaskUser{}, %{
-              user_id: attendee.id,
-              staff_id: Enum.random(staffs).id,
-              task_id: task.id
-            })
-            |> Repo.insert!()
-          end
-        end
-
-      _ ->
-        Mix.shell().error("Found TasksUser, aborting seeding tasks_users")
+      end
     end
   end
 end
