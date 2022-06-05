@@ -31,6 +31,8 @@ defmodule Parzival.Repo.Migrations.CreateUsersAuthTables do
 
     create unique_index(:users, [:email])
 
+    create constraint(:users, :balance_must_be_positive, check: "balance >= 0")
+
     create table(:users_tokens, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :user_id, references(:users, type: :binary_id, on_delete: :delete_all), null: false
