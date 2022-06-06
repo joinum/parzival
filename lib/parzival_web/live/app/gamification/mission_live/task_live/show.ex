@@ -4,6 +4,7 @@ defmodule ParzivalWeb.App.MissionLive.TaskLive.Show do
 
   import ParzivalWeb.Components.Pagination
 
+  alias Parzival.Accounts
   alias Parzival.Gamification
   alias Parzival.Accounts
 
@@ -13,7 +14,7 @@ defmodule ParzivalWeb.App.MissionLive.TaskLive.Show do
   end
 
   @impl true
-  def handle_params(%{"mission_id" => mission_id, "task_id" => task_id} = params, _, socket) do
+  def handle_params(%{"id" => mission_id, "task_id" => task_id} = params, _, socket) do
     {:noreply,
      socket
      |> assign(:current_page, :missions)
@@ -21,18 +22,12 @@ defmodule ParzivalWeb.App.MissionLive.TaskLive.Show do
      |> assign(:params, params)
      |> assign(:attendees_count, Accounts.count_users(where: [role: :attendee]))
      |> assign(:mission, Gamification.get_mission!(mission_id))
+     |> assign(
+       :is_task_completed,
+       Gamification.is_task_completed?(task_id, socket.assigns.current_user.id)
+     )
      |> assign(list_completed_tasks_users(params))
      |> assign(:task, Gamification.get_task!(task_id))}
-  end
-
-  @impl true
-  def handle_event("delete", _args, socket) do
-    {:ok, _} = Gamification.delete_task(socket.assigns.task)
-
-    {:noreply,
-     socket
-     |> put_flash(:success, "Task deleted successfully!")
-     |> push_redirect(to: Routes.mission_show_path(socket, :index, socket.assigns.mission))}
   end
 
   defp list_completed_tasks_users(%{"task_id" => task_id} = params) do

@@ -79,7 +79,8 @@ defmodule ParzivalWeb.Router do
           pipe_through [:require_level]
           live "/:id", Show, :show
 
-          live "/:mission_id/tasks/:task_id", TaskLive.Show, :show
+          live "/:id/tasks/:task_id", TaskLive.Show, :show
+          live "/:id/tasks/:task_id/redeem", TaskLive.Redeem, :redeem
         end
 
         live "/profile", ProfileLive.Index, :index

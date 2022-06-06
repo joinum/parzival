@@ -689,6 +689,12 @@ defmodule Parzival.Gamification do
     Repo.delete(task_user)
   end
 
+  def is_task_completed?(task_id, user_id) do
+    from(t in TaskUser, where: t.task_id == ^task_id and t.user_id == ^user_id)
+    |> Repo.exists?()
+    |> IO.inspect()
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking task_user changes.
 
