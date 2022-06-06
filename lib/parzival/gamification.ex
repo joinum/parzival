@@ -298,7 +298,7 @@ defmodule Parzival.Gamification do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id)
+  def get_task!(id, preloads \\ []), do: Repo.get!(Task, id) |> Repo.preload(preloads)
 
   @doc """
   Creates a task.

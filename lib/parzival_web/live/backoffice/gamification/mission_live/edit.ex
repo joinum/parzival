@@ -13,7 +13,7 @@ defmodule ParzivalWeb.Backoffice.MissionLive.Edit do
   def handle_params(%{"id" => id}, _, socket) do
     {:noreply,
      socket
-     |> assign(:current_page, :mission)
+     |> assign(:current_page, :missions)
      |> assign(:page_title, "Edit Mission")
      |> assign(:mission, Gamification.get_mission!(id, [:tasks, :dificulty]))}
   end
