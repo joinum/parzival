@@ -20,7 +20,7 @@ defmodule Parzival.Repo.Seeds.Gamification do
     seed_dificulties()
     seed_missions()
     seed_tasks()
-    seed_complete_tasks()
+    seed_redeem_tasks()
   end
 
   def seed_curriculums do
@@ -241,7 +241,7 @@ defmodule Parzival.Repo.Seeds.Gamification do
     end
   end
 
-  def seed_complete_tasks do
+  def seed_redeem_tasks do
     attendees =
       User
       |> where(role: :attendee)
@@ -262,7 +262,7 @@ defmodule Parzival.Repo.Seeds.Gamification do
 
       for mission <- Enum.take_random(missions, Enum.random(1..Enum.count(missions))) do
         for task <- Enum.take_random(mission.tasks, Enum.random(1..Enum.count(mission.tasks))) do
-          Gamification.complete_task(Enum.random(staffs), attendee, task)
+          Gamification.redeem_task(Enum.random(staffs), attendee, task)
         end
       end
     end

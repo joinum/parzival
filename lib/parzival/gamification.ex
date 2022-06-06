@@ -691,9 +691,12 @@ defmodule Parzival.Gamification do
     Repo.delete(task_user)
   end
 
-  def complete_task(staff, user, task) do
+  def redeem_task(staff, user, task) do
     Multi.new()
-    |> Multi.insert(:task_user, %TaskUser{user_id: user.id, staff_id: staff.id, task_id: task.id})
+    |> Multi.insert(
+      :task_user,
+      TaskUser.changeset(%TaskUser{}, %{user_id: user.id, staff_id: staff.id, task_id: task.id})
+    )
     |> Multi.update(
       :update_user,
       User.task_completion_changeset(user, %{
