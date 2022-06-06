@@ -20,7 +20,6 @@ defmodule ParzivalWeb.App.AnnouncementLive.Show do
 
   @impl true
   def handle_event("delete", _args, socket) do
-    IO.inspect(socket.assigns)
     {:ok, _} = Tools.delete_announcement(socket.assigns.announcement)
 
     {:noreply,

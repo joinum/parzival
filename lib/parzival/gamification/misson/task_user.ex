@@ -11,6 +11,15 @@ defmodule Parzival.Gamification.Mission.TaskUser do
 
   @optional_fields [:staff_id]
 
+  @derive {
+    Flop.Schema,
+    filterable: [],
+    sortable: [:inserted_at],
+    compound_fields: [],
+    default_order_by: [:inserted_at],
+    default_order_directions: [:desc]
+  }
+
   schema "tasks_users" do
     belongs_to :task, Task
     belongs_to :staff, User
