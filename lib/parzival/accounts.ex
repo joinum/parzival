@@ -157,6 +157,33 @@ defmodule Parzival.Accounts do
     User.changeset(user, attrs, generate_password: false)
   end
 
+   @doc """
+  Creates a user.
+  ## Examples
+      iex> admin_create_user(%{field: value})
+      {:ok, %User{}}
+      iex> admin_create_user(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
+  def admin_create_user(attrs \\ %{}, opts \\ []) do
+    %User{}
+    |> User.registration_changeset(attrs, opts)
+    |> Repo.insert()
+  end
+  @doc """
+  Updates a user.
+  ## Examples
+      iex> admin_update_user(user, %{email: new_value}, generate_password: true)
+      {:ok, %User{}}
+      iex> admin_update_user(user, %{email: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
+  def admin_update_user(%User{} = user, attrs \\ %{}, opts \\ []) do
+    user
+    |> User.changeset(attrs, opts)
+    |> Repo.update()
+  end
+
   @doc """
   Deletes a user.
   ## Examples
