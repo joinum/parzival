@@ -6,7 +6,6 @@ defmodule ParzivalWeb.App.MissionLive.TaskLive.Show do
 
   alias Parzival.Accounts
   alias Parzival.Gamification
-  alias Parzival.Accounts
 
   @impl true
   def mount(_params, _session, socket) do
