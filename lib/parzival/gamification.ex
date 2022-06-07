@@ -734,11 +734,11 @@ defmodule Parzival.Gamification do
       {:error, _transaction, changeset, _} ->
         {:error, changeset}
     end
+  end
 
   def is_task_completed?(task_id, user_id) do
     from(t in TaskUser, where: t.task_id == ^task_id and t.user_id == ^user_id)
     |> Repo.exists?()
-
   end
 
   @doc """
