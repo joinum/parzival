@@ -18,7 +18,6 @@ defmodule ParzivalWeb.App.MissionLive.TaskLive.Show do
     {:noreply,
      socket
      |> assign(:current_page, :missions)
-     |> assign(:page_title, "Show Task")
      |> assign(:params, params)
      |> assign(:attendees_count, Accounts.count_users(where: [role: :attendee]))
      |> assign(:mission, Gamification.get_mission!(mission_id))
@@ -27,7 +26,18 @@ defmodule ParzivalWeb.App.MissionLive.TaskLive.Show do
        Gamification.is_task_completed?(task_id, socket.assigns.current_user.id)
      )
      |> assign(list_completed_tasks_users(params))
-     |> assign(:task, Gamification.get_task!(task_id))}
+     |> assign(:task, Gamification.get_task!(task_id))
+     |> apply_action(socket.assigns.live_action, params)}
+  end
+
+  defp apply_action(socket, :show, _params) do
+    socket
+    |> assign(:page_title, "Show Task")
+  end
+
+  defp apply_action(socket, :redeem, _params) do
+    socket
+    |> assign(:page_title, "Redeem Task")
   end
 
   defp list_completed_tasks_users(%{"task_id" => task_id} = params) do

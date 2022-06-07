@@ -79,7 +79,10 @@ defmodule Parzival.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
 
       # icons
-      {:icons, "~> 0.7.1"}
+      {:icons, "~> 0.7.1"},
+
+      # QRCode
+      {:qrcode_ex, "~> 0.1.0"}
     ]
   end
 

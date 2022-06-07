@@ -1,6 +1,6 @@
 <%= if @live_action in [:redeem] do %>
   <.modal return_to={Routes.mission_task_show_path(@socket, :show, @mission, @task)}>
-    <.live_component module={ParzivalWeb.App.MissionLive.TaskLive.Redeem} return_to={Routes.mission_task_show_path(@socket, :show, @mission, @task)} />
+    <.live_component module={ParzivalWeb.App.MissionLive.TaskLive.FormComponent} id={@task.id} title={@page_title} action={@live_action} task={@task} mission={@mission} user_id={@current_user.id} return_to={Routes.mission_task_show_path(@socket, :show, @mission, @task)} />
   </.modal>
 <% end %>
 
@@ -9,21 +9,19 @@
     <div class="flex justify-between items-center h-10">
       <h1 class="flex-1 text-lg font-medium">Task</h1>
       <%= if @current_user.role == :attendee do %>
-        <%= if @is_task_completed == false do %>
-          <div class="flex flex-row gap-x-4">
-            <%= live_patch to: Routes.mission_task_redeem_path(@socket, :redeem, @mission, @task), class: "button" do %>
+        <div class="flex flex-row gap-x-4">
+          <%= if @is_task_completed == false do %>
+            <%= live_patch to: Routes.mission_task_show_path(@socket, :redeem, @mission, @task), class: "button" do %>
               <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm cursor-pointer xl:w-full bg-secondary hover:bg-primary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
                 Complete task
               </div>
             <% end %>
-          </div>
-        <% else %>
-          <div class="flex flex-row gap-x-4">
+          <% else %>
             <div class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white bg-green-400 rounded-md border border-transparent shadow-sm xl:w-full">
               Completed
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>
