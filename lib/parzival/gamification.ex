@@ -5,6 +5,8 @@ defmodule Parzival.Gamification do
 
   use Parzival.Context
 
+  alias Ecto.Multi
+
   alias Parzival.Accounts.User
   alias Parzival.Gamification.Curriculum
 
@@ -689,9 +691,54 @@ defmodule Parzival.Gamification do
     Repo.delete(task_user)
   end
 
+  def redeem_task(staff, user, task) do
+    Multi.new()
+    |> Multi.insert(
+      :task_user,
+      TaskUser.changeset(%TaskUser{}, %{user_id: user.id, staff_id: staff.id, task_id: task.id})
+    )
+    |> Multi.update(
+      :update_user,
+      User.task_completion_changeset(user, %{
+        balance: user.balance + task.tokens,
+        exp: user.exp + task.exp
+      })
+    )
+    |> Multi.run(:mission, fn repo, _change ->
+      mission = Parzival.Gamification.get_mission!(task.mission_id, tasks: [:users])
+
+      case Enum.all?(mission.tasks, fn task -> Enum.any?(task.users, &(&1.id == user.id)) end) do
+        true ->
+          %MissionUser{}
+          |> MissionUser.changeset(%{mission_id: mission.id, user_id: user.id})
+          |> repo.insert()
+
+          user
+          |> User.task_completion_changeset(%{
+            balance: user.balance + mission.tokens,
+            exp: user.exp + mission.exp
+          })
+          |> repo.update()
+
+          {:ok, mission}
+
+        _ ->
+          {:ok, mission}
+      end
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, transaction} ->
+        broadcast({:ok, transaction.mission}, :updated)
+
+      {:error, _transaction, changeset, _} ->
+        {:error, changeset}
+    end
+
   def is_task_completed?(task_id, user_id) do
     from(t in TaskUser, where: t.task_id == ^task_id and t.user_id == ^user_id)
     |> Repo.exists?()
+
   end
 
   @doc """

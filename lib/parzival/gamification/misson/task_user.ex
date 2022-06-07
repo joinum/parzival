@@ -33,5 +33,6 @@ defmodule Parzival.Gamification.Mission.TaskUser do
     offer_time
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> unique_constraint([:user_id, :task_id])
   end
 end

@@ -206,6 +206,12 @@ defmodule Parzival.Accounts.User do
     |> validate_required([:exp])
   end
 
+  def task_completion_changeset(user, attrs) do
+    user
+    |> exp_changeset(attrs)
+    |> balance_changeset(attrs)
+  end
+
   @doc """
   Confirms the account by setting `confirmed_at`.
   """
