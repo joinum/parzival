@@ -109,7 +109,7 @@ defmodule Parzival.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "ecto.setup", "cmd --cd assets npm install"],
-      # format: ["cmd ./assets/node_modules/rustywind/bin/rustywind --write .", "format"],
+      format: ["cmd ./assets/node_modules/rustywind/bin/rustywind --write .", "format"],
       "ecto.seed": ["run priv/repo/seeds.exs"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "ecto.seed"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
