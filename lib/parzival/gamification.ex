@@ -760,8 +760,7 @@ defmodule Parzival.Gamification do
 
   defp broadcast({:error, _reason} = error, _event), do: error
 
-  defp broadcast({:ok, %Mission{} = mission}, event)
-       when event in [:updated] do
+  defp broadcast({:ok, %Mission{} = mission}, event) when event in [:updated] do
     Phoenix.PubSub.broadcast!(Parzival.PubSub, "updated:#{mission.id}", {event, mission})
     {:ok, mission}
   end

@@ -55,11 +55,14 @@ defmodule Parzival.MixProject do
       {:waffle, "~> 1.1"},
       {:waffle_ecto, "~> 0.0"},
 
+      # pagination
+      {:flop, "~> 0.15.0"},
+
       # icons
       {:icons, "~> 0.7.1"},
 
-      # pagination
-      {:flop, "~> 0.15.0"},
+      # QRCode
+      {:qrcode_ex, "~> 0.1.0"},
 
       # i18n
       {:gettext, "~> 0.18"},
@@ -93,10 +96,7 @@ defmodule Parzival.MixProject do
       {:floki, ">= 0.30.0", only: :test},
 
       # tools
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-
-      # QRCode
-      {:qrcode_ex, "~> 0.1.0"}
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 
@@ -109,7 +109,7 @@ defmodule Parzival.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "ecto.setup", "cmd --cd assets npm install"],
-      format: ["cmd ./assets/node_modules/rustywind/bin/rustywind --write .", "format"],
+      # format: ["cmd ./assets/node_modules/rustywind/bin/rustywind --write .", "format"],
       "ecto.seed": ["run priv/repo/seeds.exs"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "ecto.seed"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
