@@ -93,7 +93,13 @@ defmodule Parzival.MixProject do
       {:floki, ">= 0.30.0", only: :test},
 
       # tools
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+
+      # icons
+      {:icons, "~> 0.7.1"},
+
+      # QRCode
+      {:qrcode_ex, "~> 0.1.0"}
     ]
   end
 

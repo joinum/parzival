@@ -298,7 +298,7 @@ defmodule Parzival.Gamification do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id)
+  def get_task!(id, preloads \\ []), do: Repo.get!(Task, id) |> Repo.preload(preloads)
 
   @doc """
   Creates a task.
@@ -687,6 +687,11 @@ defmodule Parzival.Gamification do
   """
   def delete_task_user(%TaskUser{} = task_user) do
     Repo.delete(task_user)
+  end
+
+  def is_task_completed?(task_id, user_id) do
+    from(t in TaskUser, where: t.task_id == ^task_id and t.user_id == ^user_id)
+    |> Repo.exists?()
   end
 
   @doc """
