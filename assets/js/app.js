@@ -20,8 +20,8 @@ import "phoenix_html";
 // Establish Phoenix Socket and LiveView configuration.
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
-import Alpine from "alpinejs";
-import topbar from "topbar";
+import Alpine from "../vendor/alpine.js";
+import topbar from "../vendor/topbar.js";
 
 window.Alpine = Alpine;
 Alpine.start();
