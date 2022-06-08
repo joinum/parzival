@@ -65,13 +65,24 @@ defmodule ParzivalWeb.Router do
         live "/companies/:id", CompanyLive.Show, :show
         live "/companies/:id/edit", CompanyLive.Edit, :edit
 
+        live "/leaderboard/", LeaderboardLive.Index, :index
+
         live "/store/", ProductLive.Index, :index
         live "/store/:id", ProductLive.Show, :show
 
         live "/vault", OrderLive.Index, :index
+        live "/vault/:id", OrderLive.Show, :show
 
         live "/announcements", AnnouncementLive.Index, :index
         live "/announcements/:id", AnnouncementLive.Show, :show
+
+
+        live "/missions", MissionLive.Index, :index
+
+        scope "/missions" do
+          pipe_through [:require_level]
+          live "/:id", MissionLive.Show, :show
+        end
 
         live "/profile/:id", ProfileLive.Index, :index
       end
@@ -94,6 +105,15 @@ defmodule ParzivalWeb.Router do
 
         live "/store/new", ProductLive.New, :new
         live "/store/:id/edit", ProductLive.Edit, :edit
+
+        scope "/missions" do
+          live "/new", MissionLive.New, :new
+          live "/:id/edit", MissionLive.Edit, :edit
+
+          live "/dificulty/", DificultyLive.Index, :index
+          live "/dificulty/new", DificultyLive.Index, :new
+          live "/dificulty/:id/edit", DificultyLive.Index, :edit
+        end
 
         scope "/tools" do
           live "/faqs/", FaqsLive.Index, :index

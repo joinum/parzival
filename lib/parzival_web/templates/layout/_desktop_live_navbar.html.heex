@@ -1,5 +1,5 @@
 <nav class="fixed top-0 z-10 flex-shrink-0 w-full bg-secondary">
-  <div class="px-8 mx-auto max-w-[1380px]">
+  <div class="px-2 mx-auto sm:px-4 md:px-8 max-w-[1380px]">
     <div class="flex relative justify-between items-center h-16">
       <!-- Logo section -->
       <div class="flex items-center px-2 lg:px-0 xl:w-64">
@@ -60,6 +60,9 @@
                 <div x-bind:class="! open ? 'hidden' : 'z-50 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                   <div class="py-1" role="none">
                     <%= link("Profile", to: Routes.profile_index_path(@socket, :index, @current_user), class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>
+                  </div>
+                  <div class="py-1" role="none">
+                    <%= link("Announcements", to: Routes.announcement_index_path(@socket, :index), class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>
                   </div>
                   <div class="py-1" role="none">
                     <%= link("Home", to: Routes.landing_home_index_path(@socket, :index), class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>

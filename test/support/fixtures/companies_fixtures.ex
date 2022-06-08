@@ -65,4 +65,16 @@ defmodule Parzival.CompaniesFixtures do
 
     offer_time
   end
+
+  @doc """
+  Generate a application.
+  """
+  def application_fixture(attrs \\ %{}) do
+    {:ok, application} =
+      attrs
+      |> Enum.into(%{})
+      |> Parzival.Companies.create_application()
+
+    application
+  end
 end

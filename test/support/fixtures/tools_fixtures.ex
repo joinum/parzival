@@ -5,18 +5,18 @@ defmodule Parzival.ToolsFixtures do
   """
 
   @doc """
-  Generate a faqs.
+  Generate a faq.
   """
-  def faqs_fixture(attrs \\ %{}) do
-    {:ok, faqs} =
+  def faq_fixture(attrs \\ %{}) do
+    {:ok, faq} =
       attrs
       |> Enum.into(%{
         answer: "some answer",
         question: "some question"
       })
-      |> Parzival.Tools.create_faqs()
+      |> Parzival.Tools.create_faq()
 
-    faqs
+    faq
   end
 
   @doc """
@@ -32,5 +32,19 @@ defmodule Parzival.ToolsFixtures do
       |> Parzival.Tools.create_announcement()
 
     announcement
+  end
+
+  @doc """
+  Generate a post.
+  """
+  def post_fixture(attrs \\ %{}) do
+    {:ok, post} =
+      attrs
+      |> Enum.into(%{
+        text: "some text"
+      })
+      |> Parzival.Tools.create_post()
+
+    post
   end
 end

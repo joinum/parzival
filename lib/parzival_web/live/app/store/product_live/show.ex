@@ -23,12 +23,12 @@ defmodule ParzivalWeb.App.ProductLive.Show do
   end
 
   def redeem_quantity(user_id, product_id) do
-    order = Store.get_order_by_user_and_product(user_id, product_id)
+    order_quantity = Enum.count(Store.list_orders(where: [user_id: user_id]))
 
     quantity =
-      case order do
-        nil -> Store.get_product!(product_id).max_per_user
-        _ -> Store.get_product!(product_id).max_per_user - order.quantity
+      case order_quantity do
+        0 -> Store.get_product!(product_id).max_per_user
+        _ -> Store.get_product!(product_id).max_per_user - order_quantity
       end
 
     if quantity < 0 do
@@ -40,12 +40,19 @@ defmodule ParzivalWeb.App.ProductLive.Show do
 
   @impl true
   def handle_event("delete", _payload, socket) do
-    {:ok, _} = Store.delete_product(socket.assigns.product)
+    case Store.delete_product(socket.assigns.product) do
+      {:ok, _product} ->
+        {:noreply,
+         socket
+         |> put_flash(:success, "Product deleted successfully!")
+         |> push_redirect(to: Routes.product_index_path(socket, :index))}
 
-    {:noreply,
-     socket
-     |> put_flash(:success, gettext("Product deleted successfully!"))
-     |> push_redirect(to: Routes.product_index_path(socket, :index))}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, elem(changeset.errors[:orders], 0))
+         |> assign(:changeset, changeset)}
+    end
   end
 
   @impl true
@@ -82,7 +89,9 @@ defmodule ParzivalWeb.App.ProductLive.Show do
     |> assign(:page_title, page_title(socket.assigns.live_action))
     |> assign(:redeem_quantity, redeem_quantity(socket.assigns.current_user.id, id))
     |> assign(:product, Store.get_product!(id))
-    |> assign(:current_user, Accounts.get_user!(socket.assigns.current_user.id))
+    |> assign(
+      current_user: Accounts.get_user!(socket.assigns.current_user.id, [:company, :missions])
+    )
   end
 
   defp page_title(:show), do: "Show Product"

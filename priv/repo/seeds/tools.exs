@@ -5,12 +5,14 @@ defmodule Parzival.Repo.Seeds.Tools do
 
   alias Parzival.Accounts.User
 
-  alias Parzival.Tools.Faq
   alias Parzival.Tools.Announcement
+  alias Parzival.Tools.Faq
+  alias Parzival.Tools.Post
 
   def run do
     seed_faqs()
     seed_announcements()
+    seed_posts()
   end
 
   def seed_faqs do
@@ -74,6 +76,43 @@ defmodule Parzival.Repo.Seeds.Tools do
 
       _ ->
         Mix.shell().error("Found announcements, aborting seeding announcements.")
+    end
+  end
+
+  def seed_posts do
+    attendees = Repo.all(where(User, role: :attendee))
+    recruiters = Repo.all(where(User, role: :recruiter))
+    offers = Repo.all(where(User, role: :attendee))
+
+    case Repo.all(Post) do
+      [] ->
+        for _n <- 1..40 do
+          Post.changeset(
+            %Post{},
+            %{
+              text: Faker.Lorem.sentence(25..50),
+              author_id: Enum.random(attendees).id
+            }
+          )
+          |> Repo.insert!()
+        end
+
+      # for recruiter <- recruiters do
+      #   offers = Repo.all(where(Offer, company_id: ^recruiter.company_id))
+
+      #   Post.changeset(
+      #     %Post{},
+      #     %{
+      #       text: Enum.random(offers).description,
+      #       author_id: recruiter.id,
+      #       offer_id: Enum.random(offers).id
+      #     }
+      #   )
+      #   |> Repo.insert!()
+      # end
+
+      _ ->
+        Mix.shell().error("Found posts, aborting seeding posts.")
     end
   end
 end

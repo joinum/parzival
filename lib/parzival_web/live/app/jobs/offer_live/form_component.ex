@@ -3,6 +3,8 @@ defmodule ParzivalWeb.OfferLive.FormComponent do
   use ParzivalWeb, :live_component
 
   alias Parzival.Companies
+  alias Parzival.Tools
+  alias Parzival.Tools.Post
 
   @impl true
   def update(%{offer: offer} = assigns, socket) do
@@ -52,7 +54,7 @@ defmodule ParzivalWeb.OfferLive.FormComponent do
 
   defp save_offer(socket, :edit, offer_params) do
     case Companies.update_offer(socket.assigns.offer, offer_params) do
-      {:ok, _offer} ->
+      {:ok, offer} ->
         {:noreply,
          socket
          |> put_flash(:success, "Offer updated successfully")
@@ -68,10 +70,18 @@ defmodule ParzivalWeb.OfferLive.FormComponent do
       if socket.assigns.current_user.role == :recruiter do
         offer_params
         |> Map.put("company_id", socket.assigns.current_user.company_id)
+      else
+        offer_params
       end
 
     case Companies.create_offer(offer_params) do
-      {:ok, _offer} ->
+      {:ok, offer} ->
+        Tools.create_post(%{
+          text: offer.description,
+          author_id: socket.assigns.current_user.id,
+          offer_id: offer.id
+        })
+
         {:noreply,
          socket
          |> put_flash(:success, "Offer created successfully")

@@ -346,3 +346,7 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+
+.calc-top {
+  top: calc(50% - 80px);
+}

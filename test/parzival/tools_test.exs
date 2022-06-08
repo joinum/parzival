@@ -3,59 +3,59 @@ defmodule Parzival.ToolsTest do
 
   alias Parzival.Tools
 
-  describe "faqs" do
-    alias Parzival.Tools.Faqs
+  describe "faq" do
+    alias Parzival.Tools.Faq
 
     import Parzival.ToolsFixtures
 
     @invalid_attrs %{answer: nil, question: nil}
 
-    test "list_faqs/0 returns all faqs" do
-      faqs = faqs_fixture()
-      assert Tools.list_faqs() == [faqs]
+    test "list_faqs/0 returns all faq" do
+      faq = faq_fixture()
+      assert Tools.list_faqs() == [faq]
     end
 
-    test "get_faqs!/1 returns the faqs with given id" do
-      faqs = faqs_fixture()
-      assert Tools.get_faqs!(faqs.id) == faqs
+    test "get_faq!/1 returns the faq with given id" do
+      faq = faq_fixture()
+      assert Tools.get_faq!(faq.id) == faq
     end
 
-    test "create_faqs/1 with valid data creates a faqs" do
+    test "create_faq/1 with valid data creates a faq" do
       valid_attrs = %{answer: "some answer", question: "some question"}
 
-      assert {:ok, %Faqs{} = faqs} = Tools.create_faqs(valid_attrs)
-      assert faqs.answer == "some answer"
-      assert faqs.question == "some question"
+      assert {:ok, %Faq{} = faq} = Tools.create_faq(valid_attrs)
+      assert faq.answer == "some answer"
+      assert faq.question == "some question"
     end
 
-    test "create_faqs/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Tools.create_faqs(@invalid_attrs)
+    test "create_faq/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Tools.create_faq(@invalid_attrs)
     end
 
-    test "update_faqs/2 with valid data updates the faqs" do
-      faqs = faqs_fixture()
+    test "update_faq/2 with valid data updates the faq" do
+      faq = faq_fixture()
       update_attrs = %{answer: "some updated answer", question: "some updated question"}
 
-      assert {:ok, %Faqs{} = faqs} = Tools.update_faqs(faqs, update_attrs)
-      assert faqs.answer == "some updated answer"
-      assert faqs.question == "some updated question"
+      assert {:ok, %Faq{} = faq} = Tools.update_faq(faq, update_attrs)
+      assert faq.answer == "some updated answer"
+      assert faq.question == "some updated question"
     end
 
-    test "update_faqs/2 with invalid data returns error changeset" do
-      faqs = faqs_fixture()
-      assert {:error, %Ecto.Changeset{}} = Tools.update_faqs(faqs, @invalid_attrs)
-      assert faqs == Tools.get_faqs!(faqs.id)
+    test "update_faq/2 with invalid data returns error changeset" do
+      faq = faq_fixture()
+      assert {:error, %Ecto.Changeset{}} = Tools.update_faq(faq, @invalid_attrs)
+      assert faq == Tools.get_faq!(faq.id)
     end
 
-    test "delete_faqs/1 deletes the faqs" do
-      faqs = faqs_fixture()
-      assert {:ok, %Faqs{}} = Tools.delete_faqs(faqs)
-      assert_raise Ecto.NoResultsError, fn -> Tools.get_faqs!(faqs.id) end
+    test "delete_faq/1 deletes the faq" do
+      faq = faq_fixture()
+      assert {:ok, %Faq{}} = Tools.delete_faq(faq)
+      assert_raise Ecto.NoResultsError, fn -> Tools.get_faq!(faq.id) end
     end
 
-    test "change_faqs/1 returns a faqs changeset" do
-      faqs = faqs_fixture()
-      assert %Ecto.Changeset{} = Tools.change_faqs(faqs)
+    test "change_faq/1 returns a faq changeset" do
+      faq = faq_fixture()
+      assert %Ecto.Changeset{} = Tools.change_faq(faq)
     end
   end
 
@@ -114,6 +114,60 @@ defmodule Parzival.ToolsTest do
     test "change_announcement/1 returns a announcement changeset" do
       announcement = announcement_fixture()
       assert %Ecto.Changeset{} = Tools.change_announcement(announcement)
+    end
+  end
+
+  describe "posts" do
+    alias Parzival.Tools.Post
+
+    import Parzival.ToolsFixtures
+
+    @invalid_attrs %{text: nil}
+
+    test "list_posts/0 returns all posts" do
+      post = post_fixture()
+      assert Tools.list_posts() == [post]
+    end
+
+    test "get_post!/1 returns the post with given id" do
+      post = post_fixture()
+      assert Tools.get_post!(post.id) == post
+    end
+
+    test "create_post/1 with valid data creates a post" do
+      valid_attrs = %{text: "some text"}
+
+      assert {:ok, %Post{} = post} = Tools.create_post(valid_attrs)
+      assert post.text == "some text"
+    end
+
+    test "create_post/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Tools.create_post(@invalid_attrs)
+    end
+
+    test "update_post/2 with valid data updates the post" do
+      post = post_fixture()
+      update_attrs = %{text: "some updated text"}
+
+      assert {:ok, %Post{} = post} = Tools.update_post(post, update_attrs)
+      assert post.text == "some updated text"
+    end
+
+    test "update_post/2 with invalid data returns error changeset" do
+      post = post_fixture()
+      assert {:error, %Ecto.Changeset{}} = Tools.update_post(post, @invalid_attrs)
+      assert post == Tools.get_post!(post.id)
+    end
+
+    test "delete_post/1 deletes the post" do
+      post = post_fixture()
+      assert {:ok, %Post{}} = Tools.delete_post(post)
+      assert_raise Ecto.NoResultsError, fn -> Tools.get_post!(post.id) end
+    end
+
+    test "change_post/1 returns a post changeset" do
+      post = post_fixture()
+      assert %Ecto.Changeset{} = Tools.change_post(post)
     end
   end
 end

@@ -1,5 +1,7 @@
 defmodule Parzival.Repo.Seeds.Companies do
   alias Parzival.Repo
+
+  alias Parzival.Companies.Application
   alias Parzival.Companies.Company
   alias Parzival.Companies.Offer
   alias Parzival.Companies.OfferType
@@ -85,7 +87,7 @@ defmodule Parzival.Repo.Seeds.Companies do
   end
 
   def seed_companies() do
-    case Repo.all(Offer) do
+    case Repo.all(Company) do
       [] ->
         for _n <- 1..40 do
           Company.changeset(

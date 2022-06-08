@@ -20,6 +20,8 @@ defmodule Parzival.Repo.Migrations.CreateUsersAuthTables do
       add :github, :string
       add :twitter, :string
 
+      add :exp, :integer
+
       add :balance, :integer
 
       add :company_id, references(:companies, on_delete: :nothing, type: :binary_id)
@@ -28,6 +30,8 @@ defmodule Parzival.Repo.Migrations.CreateUsersAuthTables do
     end
 
     create unique_index(:users, [:email])
+
+    create constraint(:users, :balance_must_be_positive, check: "balance >= 0")
 
     create table(:users_tokens, primary_key: false) do
       add :id, :binary_id, primary_key: true

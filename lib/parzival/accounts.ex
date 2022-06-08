@@ -27,6 +27,12 @@ defmodule Parzival.Accounts do
     |> Flop.validate_and_run(flop, for: User)
   end
 
+  def count_users(opts \\ []) when is_list(opts) do
+    User
+    |> apply_filters(opts)
+    |> Repo.aggregate(:count)
+  end
+
   ## Database getters
 
   @doc """
@@ -78,6 +84,8 @@ defmodule Parzival.Accounts do
 
   """
   def get_user!(id, preloads \\ []), do: Repo.get!(User, id) |> Repo.preload(preloads)
+
+  def load_user_fields(%User{} = user, preloads), do: Repo.preload(user, preloads)
 
   ## User registration
 
@@ -418,5 +426,11 @@ defmodule Parzival.Accounts do
       {:ok, %{user: user}} -> {:ok, user}
       {:error, :user, changeset, _} -> {:error, changeset}
     end
+  end
+
+  def add_exp(user) do
+    user
+    |> User.exp_changeset(%{exp: user.exp + 500})
+    |> Repo.update()
   end
 end

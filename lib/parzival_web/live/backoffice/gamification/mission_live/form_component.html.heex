@@ -1,0 +1,162 @@
+<div class="h-full border-r border-gray-200">
+  <.form let={f} for={@changeset} id="product-form" phx-target={@myself} phx-submit="save">
+    <div class="h-full bg-white">
+      <div class="py-5 pr-6 pl-4 border-gray-200 sm:px-6 lg:px-8 xl:py-6 xl:px-6 border-y">
+        <div class="flex justify-between items-center h-10">
+          <h1 class="flex-1 text-lg font-medium">Mission</h1>
+          <%= submit do %>
+            <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
+              Save
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="relative py-5 px-4 border-b border-gray-200 sm:py-6 sm:px-6 lg:px-8 xl:px-6">
+        <div class="flex flex-col gap-y-3 lg:self-end">
+          <div>
+            <%= live_redirect("< Back", to: @return_to, class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
+          </div>
+          <div class="flex flex-col gap-4 justify-between sm:flex-row">
+            <div class="w-full">
+              <%= text_input(f, :title, placeholder: "Choose title", phx_debounce: "blur", class: "text-2xl leading-7 text-gray-700 sm:text-3xl h-14 sm:truncate mt-1 font-bold focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+              <div class="flex text-red-500">
+                <%= error_tag(f, :title) %>
+              </div>
+            </div>
+            <div class="relative">
+              <div class="absolute ml-2 top-[30%] text-gray-300 text-lg">
+                LVL
+              </div>
+              <%= number_input(f, :level, placeholder: "Choose level", phx_debounce: "blur", class: "w-64 sm:w-full mt-1 pl-10 text-base sm:text-lg leading-7 text-gray-700 sm:truncate h-14 font-medium focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+              <div class="text-red-500">
+                <%= error_tag(f, :level) %>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-y-1">
+            <span class="pl-1 text-base font-medium text-gray-800 sm:text-lg">
+              Description
+            </span>
+            <span class="text-sm text-gray-700 line-clamp-3">
+              <%= textarea(f, :description, placeholder: "Choose description", rows: 15, phx_debounce: "blur", class: "focus:ring-red-500 h-32 font-medium focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+            </span>
+            <div class="flex text-red-500">
+              <%= error_tag(f, :description) %>
+            </div>
+          </div>
+          <div class="flex flex-col gap-x-4 sm:flex-row">
+            <div class="flex flex-col gap-y-1">
+              <span class="pl-1 text-base font-medium text-gray-800 sm:text-lg">
+                Dificulty
+              </span>
+              <div>
+                <%= select(f, :dificulty_id, Enum.map(@dificulties, &{&1.name, &1.id}), prompt: "Choose a Dificulty", selected: f.data.dificulty_id, class: "w-64 block border-gray-300 rounded-md shadow-sm focus:ring-red-800 focus:border-red-800") %>
+                <div class="text-red-500">
+                  <%= error_tag(f, :dificulty) %>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col gap-y-1">
+              <span class="pl-1 text-base font-medium text-gray-800 sm:text-lg">
+                Sponsored by
+              </span>
+              <div>
+                <%= select(f, :created_by_id, Enum.map(@companies, &{&1.name, &1.id}), prompt: "Choose a Company", selected: f.data.created_by_id, class: "w-64 block border-gray-300 rounded-md shadow-sm focus:ring-red-800 focus:border-red-800") %>
+                <div class="text-red-500">
+                  <%= error_tag(f, :created_by) %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-y-1">
+            <span class="pl-1 text-base font-medium text-gray-800 sm:text-lg">
+              Rewards
+            </span>
+            <div class="flex flex-col gap-4 sm:flex-row">
+              <div class="relative">
+                <div class="absolute ml-3 top-[22%]">
+                  💰
+                </div>
+                <%= number_input(f, :tokens, placeholder: "Choose tokens", phx_debounce: "blur", class: "w-64 pl-9 leading-7 text-gray-700 sm:truncate font-medium focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+                <div class="text-red-500">
+                  <%= error_tag(f, :tokens) %>
+                </div>
+              </div>
+              <div class="relative">
+                <div class="absolute ml-2 top-[28%] text-gray-300 text-sm">
+                  EXP
+                </div>
+                <%= number_input(f, :exp, placeholder: "Choose experience", phx_debounce: "blur", class: "w-64 pl-9 leading-7 text-gray-700 sm:truncate font-medium focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+                <div class="text-red-500">
+                  <%= error_tag(f, :exp) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-row justify-between py-5 px-4 border-b border-gray-200 sm:py-6 sm:px-6 lg:px-8">
+        <span class="flex items-center pl-1 text-lg font-medium text-gray-800 sm:text-xl">
+          Tasks
+        </span>
+        <div>
+          <a phx-click="add-task" phx-target={@myself} class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50">
+            Add
+          </a>
+        </div>
+      </div>
+      <div clas="flex flex-col">
+        <%= for {fs, index} <- Enum.with_index(inputs_for(f, :tasks)) do %>
+          <%= hidden_input(fs, :mission_id) %>
+          <div class="flex flex-col gap-2 py-3 px-4 border-b border-gray-200 sm:py-4 sm:px-6 lg:px-8">
+            <span class="text-lg font-bold sm:text-xl">
+              Task <%= index + 1 %>
+            </span>
+            <div>
+              <%= text_input(fs, :title, placeholder: "Choose title", phx_debounce: "blur", class: "leading-7 text-gray-700 text-base sm:text-lg sm:truncate mt-1 font-bold focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+              <div class="flex text-red-500">
+                <%= error_tag(fs, :title) %>
+              </div>
+            </div>
+            <div class="flex flex-col gap-y-1">
+              <span class="pl-1 text-sm font-medium text-gray-800 sm:text-base">
+                Description
+              </span>
+              <span class="text-sm text-gray-700 line-clamp-3">
+                <%= textarea(fs, :description, placeholder: "Choose description", rows: 15, phx_debounce: "blur", class: "focus:ring-red-500 h-24 font-medium focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+              </span>
+              <div class="flex text-red-500">
+                <%= error_tag(fs, :description) %>
+              </div>
+            </div>
+            <div class="flex flex-col gap-y-1">
+              <span class="pl-1 text-sm font-medium text-gray-800 sm:text-base">
+                Rewards
+              </span>
+              <div class="flex flex-col gap-4 sm:flex-row">
+                <div class="relative">
+                  <div class="absolute ml-3 top-[22%]">
+                    💰
+                  </div>
+                  <%= number_input(fs, :tokens, placeholder: "Choose tokens", phx_debounce: "blur", class: "w-64 pl-9 leading-7 text-gray-700 sm:truncate text-sm focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+                  <div class="text-red-500">
+                    <%= error_tag(fs, :tokens) %>
+                  </div>
+                </div>
+                <div class="relative">
+                  <div class="absolute ml-2 top-[28%] text-gray-300 text-sm">
+                    EXP
+                  </div>
+                  <%= number_input(fs, :exp, placeholder: "Choose experience", phx_debounce: "blur", class: "w-64 pl-9 leading-7 text-gray-700 sm:truncate text-sm focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+                  <div class="text-red-500">
+                    <%= error_tag(fs, :exp) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </.form>
+</div>

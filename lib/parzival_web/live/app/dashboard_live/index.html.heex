@@ -1,41 +1,50 @@
 <div class="flex flex-col lg:flex-row">
   <!-- Left sidebar & main wrapper -->
   <div class="flex flex-col w-full min-h-screen bg-white lg:flex-row">
-    <%= if @user.role == :attendee do %>
-      <main x-data="{option: 'missions'}" class="overflow-y-auto relative z-0 flex-1 mb-10 min-h-screen xl:order-last focus:outline-none">
-        <article>
-          <!-- Profile header -->
-          <div>
-            <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
-              <div class="sm:flex sm:items-end sm:space-x-5">
-                <div class="mt-6 sm:flex sm:flex-1 sm:justify-end sm:items-center sm:pb-1 sm:space-x-6 sm:min-w-0">
-                  <div class="hidden flex-1 mt-6 min-w-0 2xl:block">
-                    <h1 class="text-2xl font-bold text-gray-900 truncate">
-                      Welcome, <%= @user.name %> 👋
-                    </h1>
-                  </div>
+    <main x-data="{option: 'feed'}" class="overflow-y-auto relative z-0 flex-1 mb-10 min-h-screen xl:order-last focus:outline-none">
+      <article>
+        <!-- Profile header -->
+        <div>
+          <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-end sm:space-x-5">
+              <div class="mt-6 sm:flex sm:flex-1 sm:justify-end sm:items-center sm:pb-1 sm:space-x-6 sm:min-w-0">
+                <div class="hidden flex-1 mt-6 min-w-0 2xl:block">
+                  <h1 class="text-2xl font-bold text-gray-900 truncate">
+                    Welcome, <%= @user.name %> 👋
+                  </h1>
                 </div>
               </div>
-              <div class="hidden flex-1 mt-6 min-w-0 sm:block 2xl:hidden">
-                <h1 class="text-2xl font-bold text-gray-900 truncate">
-                  Welcome, <%= @user.name %>
-                </h1>
-              </div>
+            </div>
+            <div class="hidden flex-1 mt-6 min-w-0 sm:block 2xl:hidden">
+              <h1 class="text-2xl font-bold text-gray-900 truncate">
+                Welcome, <%= @user.name %> 👋
+              </h1>
+            </div>
+            <div x-bind:class="option =='curriculum' ? 'mt-4 flex xl:hidden' : 'hidden'">
+              <%= live_patch to: Routes.dashboard_edit_path(@socket, :edit), class: "mr-2 bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
+                <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" /> Edit
+              <% end %>
+              <%= link("Download CV",
+                to: Routes.pdf_path(@socket, :cv, @user),
+                class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
+              ) %>
             </div>
           </div>
-          <!-- Tabs -->
-          <div class="mt-6 sm:mt-2 2xl:mt-5">
-            <div class="border-b border-gray-200">
-              <div class="flex justify-between items-center px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
-                <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-                  <button
-                    x-on:click="option = 'missions'"
-                    x-bind:class="option =='missions' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-                    class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
-                  >
-                    Missions
-                  </button>
+        </div>
+        <!-- Tabs -->
+        <div class="mt-2 2xl:mt-5">
+          <div class="border-b border-gray-200">
+            <div class="flex justify-between items-center px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
+              <nav class="flex -mb-px space-x-8" aria-label="Tabs">
+                <button
+                  x-on:click="option = 'feed'"
+                  x-bind:class="option =='feed' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                  class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+                >
+                  Feed
+                </button>
 
+                <%= if @user.role == :attendee do %>
                   <button
                     x-on:click="option = 'curriculum'"
                     x-bind:class="option =='curriculum' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
@@ -44,23 +53,107 @@
                     Curriculum
                   </button>
 
-                  <button
-                    x-on:click="option = 'job'"
-                    x-bind:class="option =='job' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-                    class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
-                  >
-                    Job Applications
-                  </button>
-                </nav>
-                <div x-bind:class="option =='curriculum' ? 'block' : 'hidden'">
-                  <%= live_patch to: Routes.dashboard_edit_path(@socket, :edit), class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
-                    <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" />
-                    Edit
-                  <% end %>
-                </div>
+                <% end %>
+              </nav>
+              <div x-bind:class="option =='curriculum' ? 'hidden xl:flex justify-between space-x-2' : 'hidden'">
+                <%= live_patch to: Routes.dashboard_edit_path(@socket, :edit), class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
+                  <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" /> Edit
+                <% end %>
+                <%= link("Download CV",
+                  to: Routes.pdf_path(@socket, :cv, @user),
+                  class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
+                ) %>
               </div>
             </div>
           </div>
+        </div>
+        <!-- Feed -->
+        <div x-bind:class="option =='feed' ? 'block' : 'hidden'">
+          <.form let={f} for={@changeset} id="post-form" phx-change="validate" phx-submit="save">
+            <div class="px-4 mx-auto mt-6 max-w-5xl border-b border-gray-200 sm:px-6 lg:px-8">
+              <div class="flex">
+                <div class="flex-shrink-0 w-12 h-12">
+                  <span class="inline-flex justify-center items-center w-12 h-12 rounded-full bg-secondary">
+                    <span class="text-xl font-medium leading-none text-white">
+                      <%= extract_initials(@current_user.name) %>
+                    </span>
+                  </span>
+                </div>
+                <div class="flex-1 px-2">
+                  <%= textarea(f, :text, class: "block mt-1 w-full text-sm leading-7 text-gray-900 rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500", rows: 2, cols: 50, placeholder: "Say something") %>
+                </div>
+              </div>
+              <div class="flex mb-2">
+                <div class="flex ml-14 text-red-500 floar-left">
+                  <%= error_tag(f, :text) %>
+                </div>
+                <div class="flex-1">
+                  <div type="button" class="inline-flex float-right justify-center items-center py-2 px-4 mt-2 mr-2 text-sm font-medium text-white rounded-md border border-transparent shadow-sm cursor-pointer bg-secondary hover:bg-primary">
+                    <%= submit do %>
+                      Post
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </.form>
+
+          <%= for post <- @posts do %>
+            <div class="py-4 px-4 mx-auto max-w-5xl border-b border-gray-200 sm:px-6 lg:px-8">
+              <div class="flex flex-shrink-0">
+                <%= live_redirect to: Routes.profile_index_path(@socket, :index, post.author), class: "block flex-shrink-0 group" do %>
+                  <div class="flex items-center">
+                    <div>
+                      <div class="flex-shrink-0 w-10 h-10">
+                        <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                          <span class="font-medium leading-none text-white text-md">
+                            <%= extract_initials(post.author.name) %>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="ml-3">
+                      <p class="leading-6 text-gray-900">
+                        <%= if post.offer do %>
+                          <%= post.offer.title %>
+                        <% else %>
+                          <%= post.author.name %>
+                        <% end %>
+                        <span class="text-sm leading-5 text-gray-400 transition duration-150 ease-in-out group-hover:text-gray-300">
+                          <%= relative_datetime(post.inserted_at) %>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+              <div class="pl-12 text-sm">
+                <%= if post.offer do %>
+                  <div class="pb-2">
+                    <%= post.offer.company.name %>
+                  </div>
+                  <div class="pb-2">
+                    <%= post.offer.location %>
+                  </div>
+                  <div class="pb-2">
+                    <%= "#{post.offer.minimum_salary}€ - #{post.offer.maximum_salary}€" %>
+                  </div>
+                <% end %>
+                <p class="flex-shrink text-sm text-gray-900 width-auto">
+                  <%= post.text %>
+                </p>
+              </div>
+              <%= if post.offer do %>
+                <div class="pt-2">
+                  <%= live_redirect("View this Job", to: Routes.offer_show_path(@socket, :show, post.offer), class: "flex flex-row-reverse cursor-pointer hover:underline text-secondary width-auto text-md") %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <%= if @user.role == :attendee do %>
+
           <!-- Curriculum -->
           <div x-bind:class="option =='curriculum' ? 'block' : 'hidden'" class="px-4 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
             <dl class="flex flex-col space-y-8">
@@ -178,20 +271,66 @@
               <% end %>
             </dl>
           </div>
-        </article>
-      </main>
-    <% end %>
+        <% end %>
+      </article>
+    </main>
   </div>
-  <!-- Announcements -->
+  <!-- Right Collumn -->
   <div class="pr-4 pb-6 pl-6 w-full bg-white border-t border-gray-200 sm:pr-6 lg:flex-shrink-0 lg:pb-0 lg:w-72 lg:border-t-0 lg:border-l xl:pr-0">
+    <!-- Rankings -->
+    <section aria-labelledby="rankings-title">
+      <div class="overflow-hidden">
+        <div class="">
+          <h2 class="pt-6 text-base font-medium text-gray-900" id="rankings-title">
+            Current Rankings
+          </h2>
+          <div class="flow-root mt-1">
+            <ul role="list" class="divide-y divide-gray-200">
+              <%= for user <- @users do %>
+                <%= live_patch to: Routes.profile_index_path(@socket, :index, user), class: "group" do %>
+                  <li id={"user-#{user.id}"} class="relative">
+                    <div class="flex justify-between">
+                      <div class="py-4 text-sm whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div class="flex-shrink-0 w-10 h-10 lg:w-8 lg:h-8">
+                            <span class="inline-flex justify-center items-center w-10 h-10 rounded-full lg:w-8 lg:h-8 bg-secondary">
+                              <span class="text-lg font-medium leading-none text-white lg:text-sm">
+                                <%= extract_initials(user.name) %>
+                              </span>
+                            </span>
+                          </div>
+                          <div class="ml-4">
+                            <div class="font-medium text-gray-900 group-hover:underline group-focus:outline-none">
+                              <%= user.name %>
+                            </div>
+                            <div class="flex">
+                              <div class="text-gray-500">
+                                LVL <%= calc_level(user) %>
+                              </div>
+                              <div class="ml-2 text-gray-400">
+                                <%= user.exp %> EXP
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
     <section aria-labelledby="announcements-title">
       <div class="overflow-hidden">
         <div class="">
           <h2 class="pt-6 text-base font-medium text-gray-900" id="announcements-title">
             Announcements
           </h2>
-          <div class="flow-root mt-6">
-            <ul role="list" class="-my-5 divide-y divide-gray-200">
+          <div class="flow-root mt-1">
+            <ul role="list" class="divide-y divide-gray-200">
               <%= for announcement <- @announcements do %>
                 <li class="py-5">
                   <%= live_patch to: Routes.announcement_show_path(@socket, :show, announcement), class: "group" do %>
@@ -226,7 +365,7 @@
               <% end %>
             </ul>
           </div>
-          <div class="mt-6">
+          <div class="my-6">
             <%= live_patch to: Routes.announcement_index_path(@socket, :index), class: "w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" do %>
               View all
             <% end %>

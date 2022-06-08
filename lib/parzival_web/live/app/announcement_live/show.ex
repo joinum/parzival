@@ -24,7 +24,7 @@ defmodule ParzivalWeb.App.AnnouncementLive.Show do
 
     {:noreply,
      socket
-     |> put_flash(:info, gettext("Announcement deleted successfully!"))
+     |> put_flash(:info, "Announcement deleted successfully!")
      |> push_redirect(to: Routes.announcement_index_path(socket, :index))}
   end
 

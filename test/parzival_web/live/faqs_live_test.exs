@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.FaqsLiveTest do
+defmodule ParzivalWeb.FaqLiveTest do
   use ParzivalWeb.ConnCase
 
   import Phoenix.LiveViewTest
@@ -8,102 +8,102 @@ defmodule ParzivalWeb.FaqsLiveTest do
   @update_attrs %{answer: "some updated answer", question: "some updated question"}
   @invalid_attrs %{answer: nil, question: nil}
 
-  defp create_faqs(_) do
-    faqs = faqs_fixture()
-    %{faqs: faqs}
+  defp create_faq(_) do
+    faq = faq_fixture()
+    %{faq: faq}
   end
 
   describe "Index" do
-    setup [:create_faqs]
+    setup [:create_faq]
 
-    test "lists all faqs", %{conn: conn, faqs: faqs} do
-      {:ok, _index_live, html} = live(conn, Routes.faqs_index_path(conn, :index))
+    test "lists all faqs", %{conn: conn, faq: faq} do
+      {:ok, _index_live, html} = live(conn, Routes.faq_index_path(conn, :index))
 
-      assert html =~ "Listing Faqs"
-      assert html =~ faqs.answer
+      assert html =~ "Listing Faq"
+      assert html =~ faq.answer
     end
 
-    test "saves new faqs", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, Routes.faqs_index_path(conn, :index))
+    test "saves new faq", %{conn: conn} do
+      {:ok, index_live, _html} = live(conn, Routes.faq_index_path(conn, :index))
 
-      assert index_live |> element("a", "New Faqs") |> render_click() =~
-               "New Faqs"
+      assert index_live |> element("a", "New Faq") |> render_click() =~
+               "New Faq"
 
-      assert_patch(index_live, Routes.faqs_index_path(conn, :new))
+      assert_patch(index_live, Routes.faq_index_path(conn, :new))
 
       assert index_live
-             |> form("#faqs-form", faqs: @invalid_attrs)
+             |> form("#faq-form", faq: @invalid_attrs)
              |> render_change() =~ "can&#39;t be blank"
 
       {:ok, _, html} =
         index_live
-        |> form("#faqs-form", faqs: @create_attrs)
+        |> form("#faq-form", faq: @create_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.faqs_index_path(conn, :index))
+        |> follow_redirect(conn, Routes.faq_index_path(conn, :index))
 
-      assert html =~ "Faqs created successfully"
+      assert html =~ "Faq created successfully"
       assert html =~ "some answer"
     end
 
-    test "updates faqs in listing", %{conn: conn, faqs: faqs} do
-      {:ok, index_live, _html} = live(conn, Routes.faqs_index_path(conn, :index))
+    test "updates faq in listing", %{conn: conn, faq: faq} do
+      {:ok, index_live, _html} = live(conn, Routes.faq_index_path(conn, :index))
 
-      assert index_live |> element("#faqs-#{faqs.id} a", "Edit") |> render_click() =~
-               "Edit Faqs"
+      assert index_live |> element("#faq-#{faq.id} a", "Edit") |> render_click() =~
+               "Edit Faq"
 
-      assert_patch(index_live, Routes.faqs_index_path(conn, :edit, faqs))
+      assert_patch(index_live, Routes.faq_index_path(conn, :edit, faq))
 
       assert index_live
-             |> form("#faqs-form", faqs: @invalid_attrs)
+             |> form("#faq-form", faq: @invalid_attrs)
              |> render_change() =~ "can&#39;t be blank"
 
       {:ok, _, html} =
         index_live
-        |> form("#faqs-form", faqs: @update_attrs)
+        |> form("#faq-form", faq: @update_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.faqs_index_path(conn, :index))
+        |> follow_redirect(conn, Routes.faq_index_path(conn, :index))
 
-      assert html =~ "Faqs updated successfully"
+      assert html =~ "Faq updated successfully"
       assert html =~ "some updated answer"
     end
 
-    test "deletes faqs in listing", %{conn: conn, faqs: faqs} do
-      {:ok, index_live, _html} = live(conn, Routes.faqs_index_path(conn, :index))
+    test "deletes faq in listing", %{conn: conn, faq: faq} do
+      {:ok, index_live, _html} = live(conn, Routes.faq_index_path(conn, :index))
 
-      assert index_live |> element("#faqs-#{faqs.id} a", "Delete") |> render_click()
-      refute has_element?(index_live, "#faqs-#{faqs.id}")
+      assert index_live |> element("#faq-#{faq.id} a", "Delete") |> render_click()
+      refute has_element?(index_live, "#faq-#{faq.id}")
     end
   end
 
   describe "Show" do
-    setup [:create_faqs]
+    setup [:create_faq]
 
-    test "displays faqs", %{conn: conn, faqs: faqs} do
-      {:ok, _show_live, html} = live(conn, Routes.faqs_show_path(conn, :show, faqs))
+    test "displays faq", %{conn: conn, faq: faq} do
+      {:ok, _show_live, html} = live(conn, Routes.faq_show_path(conn, :show, faq))
 
-      assert html =~ "Show Faqs"
-      assert html =~ faqs.answer
+      assert html =~ "Show Faq"
+      assert html =~ faq.answer
     end
 
-    test "updates faqs within modal", %{conn: conn, faqs: faqs} do
-      {:ok, show_live, _html} = live(conn, Routes.faqs_show_path(conn, :show, faqs))
+    test "updates faq within modal", %{conn: conn, faq: faq} do
+      {:ok, show_live, _html} = live(conn, Routes.faq_show_path(conn, :show, faq))
 
       assert show_live |> element("a", "Edit") |> render_click() =~
-               "Edit Faqs"
+               "Edit Faq"
 
-      assert_patch(show_live, Routes.faqs_show_path(conn, :edit, faqs))
+      assert_patch(show_live, Routes.faq_show_path(conn, :edit, faq))
 
       assert show_live
-             |> form("#faqs-form", faqs: @invalid_attrs)
+             |> form("#faq-form", faq: @invalid_attrs)
              |> render_change() =~ "can&#39;t be blank"
 
       {:ok, _, html} =
         show_live
-        |> form("#faqs-form", faqs: @update_attrs)
+        |> form("#faq-form", faq: @update_attrs)
         |> render_submit()
-        |> follow_redirect(conn, Routes.faqs_show_path(conn, :show, faqs))
+        |> follow_redirect(conn, Routes.faq_show_path(conn, :show, faq))
 
-      assert html =~ "Faqs updated successfully"
+      assert html =~ "Faq updated successfully"
       assert html =~ "some updated answer"
     end
   end

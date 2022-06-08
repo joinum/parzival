@@ -11,8 +11,14 @@
   </div>
 
   <div class="lg:mx-20 xl:mx-40">
-    <div class="flex flex-row-reverse items-center mt-10 sm:mt-24 xl:mt-10">
-      <img class="h-auto w-[150px] sm:w-[200px]" src={Routes.static_path(@socket, "/images/missions/badges/complete_missions.svg")} alt="JOIN Logo" />
+    <div class="flex flex-row-reverse gap-x-4 items-center mt-10 sm:mt-24 xl:mt-10">
+      <div class="flex justify-center items-center bg-white rounded-full w-[115px] h-[115px] shrink-0 sm:w-[175px] sm:h-[175px]">
+        <div style="box-shadow: 0px 0px 8px 10px rgb(209,213,219);" class="flex justify-center items-center bg-white rounded-full shrink-0 w-[85px] h-[85px] sm:w-[130px] sm:h-[130px]">
+          <span class="text-4xl font-bold sm:text-5xl sm:font-extrabold text-secondary">
+            1/4
+          </span>
+        </div>
+      </div>
       <div class="w-[400px]">
         <div class="text-right text-white">
           <p class="text-xl font-bold sm:text-2xl lg:text-3xl">
@@ -25,8 +31,18 @@
       </div>
     </div>
 
-    <div class="flex items-center mt-10 sm:mt-24 xl:mt-10">
-      <img class="h-auto w-[150px] sm:w-[200px]" src={Routes.static_path(@socket, "/images/missions/badges/level_up.svg")} alt="JOIN Logo" />
+    <div class="flex gap-x-4 items-center mt-10 sm:mt-24 xl:mt-10">
+      <div class="flex z-0 justify-center items-center bg-white rounded-full w-[115px] h-[115px] shrink-0 sm:w-[175px] sm:h-[175px]">
+        <div style="box-shadow: 0px 0px 8px 10px rgb(209,213,219);" class="flex z-0 justify-center items-center bg-white rounded-full shrink-0 w-[85px] h-[85px] sm:w-[130px] sm:h-[130px]">
+          <div style="background: conic-gradient(rgb(234,59,45) 100deg, rgb(239,94,86) 36deg 170deg);" class="flex relative z-0 justify-center items-center w-full h-full rounded-full bg-tertiary">
+            <div class="flex z-20 justify-center items-center w-2/3 h-2/3 bg-white rounded-full">
+              <span class="text-4xl font-bold sm:text-5xl sm:font-extrabold text-secondary">
+                2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="w-[400px]">
         <div class="text-left text-white">
           <p class="text-xl font-bold sm:text-2xl lg:text-3xl">
@@ -39,8 +55,13 @@
       </div>
     </div>
 
-    <div class="flex flex-row-reverse items-center mt-10 sm:mt-24 xl:mt-10">
-      <img class="h-auto w-[150px] sm:w-[200px]" src={Routes.static_path(@socket, "/images/missions/badges/unlock_missions.svg")} alt="JOIN Logo" />
+    <div class="flex flex-row-reverse gap-x-4 items-center mt-10 sm:mt-24 xl:mt-10">
+      <div class="flex justify-center items-center bg-white rounded-full w-[115px] h-[115px] shrink-0 sm:w-[175px] sm:h-[175px]">
+        <div style="box-shadow: 0px 0px 8px 10px rgb(209,213,219);" class="flex justify-center items-center p-4 bg-white rounded-full shrink-0 w-[85px] h-[85px] sm:w-[130px] sm:h-[130px]">
+          <img class="h-full" src={Routes.static_path(@socket, "/images/assets/lock.svg")} alt="Lock Image" />
+        </div>
+      </div>
+
       <div class="w-[400px]">
         <div class="text-right text-white">
           <p class="text-xl font-bold sm:text-2xl lg:text-3xl">
