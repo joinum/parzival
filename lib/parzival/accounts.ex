@@ -165,9 +165,10 @@ defmodule Parzival.Accounts do
       iex> admin_create_user(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
   """
-  def admin_create_user(attrs \\ %{}, opts \\ []) do
+  def admin_create_user(attrs \\ %{}, role) do
     %User{}
-    |> User.registration_changeset(attrs, opts)
+    |> Map.put(:role, role)
+    |> User.changeset(attrs)
     |> Repo.insert()
   end
   @doc """
