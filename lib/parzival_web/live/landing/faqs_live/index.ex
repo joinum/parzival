@@ -8,7 +8,7 @@ defmodule ParzivalWeb.Landing.FaqsLive.Index do
   def mount(params, _session, socket) do
     {:ok,
      socket
-     |> assign(:current_page, "FAQs")
+     |> assign(:current_page, "Faqs")
      |> assign(list_faqs(params))}
   end
 

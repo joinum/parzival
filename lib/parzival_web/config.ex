@@ -72,7 +72,7 @@ defmodule ParzivalWeb.Config do
   defp live_pages(conn) do
     [
       %{
-        key: :dasboard,
+        key: :dashboard,
         title: "Dashboard",
         url: Routes.dashboard_index_path(conn, :index),
         tabs: []

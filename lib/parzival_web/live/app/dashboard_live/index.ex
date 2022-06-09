@@ -16,7 +16,7 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
 
     {:noreply,
      socket
-     |> assign(:current_page, :home)
+     |> assign(:current_page, :dashboard)
      |> assign(:announcements, list_announcements())
      |> assign(:user, user)}
   end
