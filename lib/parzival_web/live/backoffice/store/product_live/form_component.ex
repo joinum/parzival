@@ -33,12 +33,14 @@ defmodule ParzivalWeb.Backoffice.ProductLive.FormComponent do
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_event("save", %{"product" => product_params}, socket) do
-    save_product(socket, socket.assigns.action, product_params)
-  end
-
+  @impl true
   def handle_event("cancel-image", %{"ref" => ref}, socket) do
     {:noreply, cancel_upload(socket, :image, ref)}
+  end
+
+  @impl true
+  def handle_event("save", %{"product" => product_params}, socket) do
+    save_product(socket, socket.assigns.action, product_params)
   end
 
   defp save_product(socket, :edit, product_params) do
