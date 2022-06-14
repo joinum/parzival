@@ -64,10 +64,11 @@ defmodule Parzival.Store do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_product(attrs \\ %{}) do
+  def create_product(attrs \\ %{}, after_save \\ &{:ok, &1}) do
     %Product{}
     |> Product.changeset(attrs)
     |> Repo.insert()
+    |> after_save(after_save)
   end
 
   @doc """
@@ -82,11 +83,22 @@ defmodule Parzival.Store do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_product(%Product{} = product, attrs) do
+  def update_product(
+        %Product{} = product,
+        attrs,
+        after_save \\ &{:ok, &1}
+      ) do
     product
     |> Product.changeset(attrs)
     |> Repo.update()
+    |> after_save(after_save)
     |> broadcast(:updated)
+  end
+
+  def update_product_image(%Product{} = product, attrs) do
+    product
+    |> Product.image_changeset(attrs)
+    |> Repo.update()
   end
 
   @doc """

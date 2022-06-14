@@ -1,7 +1,7 @@
-<div>
-  <.form let={f} for={@changeset} id="product-form" phx-target={@myself} phx-submit="save">
-    <div class="h-full bg-white border-r border-gray-200">
-      <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+<div class="h-full border-r border-gray-200">
+  <.form let={f} for={@changeset} id="product-form" phx-target={@myself} phx-submit="save" phx-change="validate">
+    <div class="h-full bg-white">
+      <div class="py-5 pr-6 pl-4 border-gray-200 sm:px-6 lg:px-8 xl:py-6 xl:px-6 border-y">
         <div class="flex justify-between items-center h-10">
           <h1 class="flex-1 text-lg font-medium">Store</h1>
           <!-- Action buttons -->
@@ -51,7 +51,8 @@
           <div class="mt-10 lg:col-start-2 lg:row-span-2 lg:self-center lg:mt-0">
             <div class="overflow-hidden rounded-lg aspect-w-1 aspect-h-1">
               <div class="flex flex-col 1.5xl:flex-row">
-                <div x-bind:class="py-5 px-4 sm:px-6 shrink-0 1.5xl:py-5 1.5xl:px-6 1.5xl:shrink-0">
+                <div class="py-5 px-4 sm:px-6 shrink-0 1.5xl:py-5 1.5xl:px-6 1.5xl:shrink-0">
+                  <%= live_file_input(@uploads.image, class: "hidden") %>
                   <div class={"#{if length(@uploads.image.entries) != 0 do
                         "hidden"
                       end} border-2 border-gray-300 border-dashed rounded-md"} phx-drop-target={@uploads.image.ref}>
@@ -74,31 +75,32 @@
                           </p>
                         </div>
                       </div>
-                      <%= live_file_input(@uploads.image, class: "invisible") %>
                     </div>
                   </div>
-                  <%= for entry <- @uploads.image.entries do %>
-                    <%= for err <- upload_errors(@uploads.image, entry) do %>
-                      <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
+                  <section>
+                    <%= for entry <- @uploads.image.entries do %>
+                      <%= for err <- upload_errors(@uploads.image, entry) do %>
+                        <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
+                      <% end %>
+                      <article class="upload-entry">
+                        <figure class="w-[400px]">
+                          <%= live_img_preview(entry) %>
+                          <div class="flex">
+                            <figcaption>
+                              <%= if String.length(entry.client_name) < 30 do
+                                entry.client_name
+                              else
+                                String.slice(entry.client_name, 0..30) <> "... "
+                              end %>
+                            </figcaption>
+                            <button phx-click="cancel-image" phx-value-ref={entry.ref} aria-label="cancel" class="pl-4">
+                              <Heroicons.Solid.x class="w-5 h-5 text-gray-400" />
+                            </button>
+                          </div>
+                        </figure>
+                      </article>
                     <% end %>
-                    <article class="upload-entry">
-                      <figure class="w-[400px]">
-                        <%= live_img_preview(entry) %>
-                        <div class="flex">
-                          <figcaption>
-                            <%= if String.length(entry.client_name) < 30 do
-                              entry.client_name
-                            else
-                              String.slice(entry.client_name, 0..30) <> "... "
-                            end %>
-                          </figcaption>
-                          <button phx-click="cancel-image" phx-value-ref={entry.ref} aria-label="cancel" class="pl-4">
-                            <Heroicons.Solid.x class="w-5 h-5 text-gray-400" />
-                          </button>
-                        </div>
-                      </figure>
-                    </article>
-                  <% end %>
+                  </section>
                 </div>
               </div>
             </div>

@@ -42,7 +42,11 @@ defmodule ParzivalWeb.Backoffice.ProductLive.FormComponent do
   end
 
   defp save_product(socket, :edit, product_params) do
-    case Store.update_product(socket.assigns.product, product_params) do
+    case Store.update_product(
+           socket.assigns.product,
+           product_params,
+           &consume_image_data(socket, &1)
+         ) do
       {:ok, _product} ->
         {:noreply,
          socket
@@ -55,7 +59,10 @@ defmodule ParzivalWeb.Backoffice.ProductLive.FormComponent do
   end
 
   defp save_product(socket, :new, product_params) do
-    case Store.create_product(product_params) do
+    case Store.create_product(
+           product_params,
+           &consume_image_data(socket, &1)
+         ) do
       {:ok, _product} ->
         {:noreply,
          socket
@@ -64,6 +71,25 @@ defmodule ParzivalWeb.Backoffice.ProductLive.FormComponent do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  defp consume_image_data(socket, product) do
+    consume_uploaded_entries(socket, :image, fn %{path: path}, entry ->
+      Store.update_product_image(product, %{
+        "image" => %Plug.Upload{
+          content_type: entry.client_type,
+          filename: entry.client_name,
+          path: path
+        }
+      })
+    end)
+    |> case do
+      [{:ok, product}] ->
+        {:ok, product}
+
+      _errors ->
+        {:ok, product}
     end
   end
 end
