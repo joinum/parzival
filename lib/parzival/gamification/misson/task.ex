@@ -36,7 +36,7 @@ defmodule Parzival.Gamification.Mission.Task do
     |> validate_required(@required_fields)
   end
 
-  def mission_changeset(task, attrs) do
+  def task_changeset(task, attrs) do
     task
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields -- [:mission_id])
