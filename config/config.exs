@@ -21,6 +21,11 @@ config :parzival, ParzivalWeb.Endpoint,
   pubsub_server: Parzival.PubSub,
   live_view: [signing_salt: "h9dkyv4j"]
 
+config :waffle,
+  storage: Waffle.Storage.Local,
+  storage_dir_prefix: "priv",
+  asset_host: {:system, "ASSET_HOST"}
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

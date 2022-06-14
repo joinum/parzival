@@ -53,7 +53,7 @@ config :parzival, ParzivalWeb.Endpoint,
 config :parzival, ParzivalWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/(?!uploads).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/parzival_web/(live|views)/.*(ex)$",
       ~r"lib/parzival_web/templates/.*(eex)$"

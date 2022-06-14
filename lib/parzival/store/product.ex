@@ -50,4 +50,9 @@ defmodule Parzival.Store.Product do
     |> validate_required([:stock])
     |> validate_number(:stock, greater_than_or_equal_to: 0)
   end
+
+  def image_changeset(product, attrs) do
+    product
+    |> cast_attachments(attrs, [:image])
+  end
 end
