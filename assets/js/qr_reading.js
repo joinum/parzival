@@ -4,6 +4,7 @@ var canvas = canvasElement.getContext("2d");
 var loadingMessage = document.getElementById("loadingMessage");
 var loadingMessageWrapper = document.getElementById("loadingMessageWrapper");
 
+
 function drawLine(begin, end, color) {
   canvas.beginPath();
   canvas.moveTo(begin.x, begin.y);
@@ -13,13 +14,16 @@ function drawLine(begin, end, color) {
   canvas.stroke();
 }
 
-// Use facingMode: environment to attemt to get the front camera on phones
-navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
-  video.srcObject = stream;
-  video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-  video.play();
-  requestAnimationFrame(tick);
-});
+function requestMedia() {
+  // Use facingMode: environment to attemt to get the front camera on phones
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+    video.srcObject = stream;
+    video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+    video.play();
+    requestAnimationFrame(tick);
+  });
+}
+
 
 function tick() {
   loadingMessage.innerText = "⌛ Loading video..."
@@ -41,5 +45,8 @@ function tick() {
       alert(code.data);
     } 
   }
+
   requestAnimationFrame(tick);
 }
+
+requestMedia();
