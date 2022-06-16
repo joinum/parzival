@@ -1,6 +1,6 @@
 <div class="block h-full bg-white border-r border-gray-200">
-  <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
-    <div class="flex justify-between items-center h-10">
+  <div class="pt-5 pb-5 pl-4 pr-6 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+    <div class="flex items-center justify-between h-10">
       <h1 class="flex-1 text-lg font-medium">
         Leaderboard
       </h1>
@@ -11,7 +11,7 @@
   <ul role="list" class="relative z-0">
     <%= for {user, index} <- Enum.with_index(@users) do %>
       <%= if @position == index + 1 do %>
-        <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6">
+        <li id={"user-#{user.id}"} class="relative pl-4 pr-6 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6">
           <div class="flex justify-between">
             <div class="py-4 text-sm whitespace-nowrap">
               <div class="flex items-center">
@@ -20,7 +20,7 @@
                     <span class="text-secondary"><%= index + 1 %></span>
                   </div>
                   <div class="flex-shrink-0 w-10 h-10">
-                    <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-secondary">
                       <span class="text-lg font-medium leading-none text-white">
                         <%= extract_initials(user.name) %>
                       </span>
@@ -46,7 +46,7 @@
         </li>
       <% else %>
         <%= live_patch(to: Routes.profile_index_path(@socket, :index, user)) do %>
-          <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
+          <li id={"user-#{user.id}"} class="relative pl-4 pr-6 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
             <div class="flex justify-between">
               <div class="py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center">
@@ -55,7 +55,7 @@
                       <span class="text-gray-900"><%= index + 1 %></span>
                     </div>
                     <div class="flex-shrink-0 w-10 h-10">
-                      <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                      <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-secondary">
                         <span class="text-lg font-medium leading-none text-white">
                           <%= extract_initials(user.name) %>
                         </span>
@@ -85,7 +85,7 @@
 
     <%= if @position > @page_size do %>
       <%= if @current_user.role in [:attendee] do %>
-        <li id={"user-#{@current_user.id}"} class="relative pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 border-y">
+        <li id={"user-#{@current_user.id}"} class="relative pl-4 pr-6 border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 border-y">
           <div class="flex justify-between">
             <div class="py-4 text-sm whitespace-nowrap">
               <div class="flex items-center">
@@ -94,7 +94,7 @@
                     <%= @position %>
                   </div>
                   <div class="flex-shrink-0 w-10 h-10">
-                    <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-secondary">
                       <span class="text-lg font-medium leading-none text-white">
                         <%= extract_initials(@current_user.name) %>
                       </span>
