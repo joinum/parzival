@@ -1,47 +1,45 @@
-var video = document.getElementById('video');
-var canvas = document.getElementById("canvas");
-var context = canvas.getContext("2d");
+var video = document.createElement("video");
+var canvasElement = document.getElementById("canvas");
+var canvas = canvasElement.getContext("2d");
+var loadingMessage = document.getElementById("loadingMessage");
+var loadingMessageWrapper = document.getElementById("loadingMessageWrapper");
 
-
-video.setAttribute('playsinline', '');
-video.setAttribute('autoplay', '');
-video.setAttribute('muted', '');
-video.style.width = '200px';
-video.style.height = '200px';
-
-/* Setting up the constraint */
-var facingMode = "environment"; // Can be 'user' or 'environment' to access back or front camera (NEAT!)
-var constraints = {
-audio: false,
-video: {
-    facingMode: facingMode
+function drawLine(begin, end, color) {
+  canvas.beginPath();
+  canvas.moveTo(begin.x, begin.y);
+  canvas.lineTo(end.x, end.y);
+  canvas.lineWidth = 4;
+  canvas.strokeStyle = color;
+  canvas.stroke();
 }
-};
 
-/* Stream it to video element */
-navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-    video.srcObject = stream;
+// Use facingMode: environment to attemt to get the front camera on phones
+navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+  video.srcObject = stream;
+  video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+  video.play();
+  requestAnimationFrame(tick);
 });
 
-        
-video.addEventListener('play', function () {
-    var $this = this; //cache
-    var x = 400;
-    var y = x * $this.videoHeight / $this.videoWidth;
-    var delay = 1000 / 60;
-    (function loop() {
-        if (!$this.paused && !$this.ended) {
-            context.drawImage($this, 0, 0, x, y);
-            var image = context.getImageData(0, 0, x, y).data;
-            const code = jsQR(image, x, y);
-            
-            if(code && code.data != "") {
-                //Success
-                console.log(code.data);
-            }
-                
-
-            setTimeout(loop, delay);
-        }
-    })();
-}, 0);
+function tick() {
+  loadingMessage.innerText = "⌛ Loading video..."
+  if (video.readyState === video.HAVE_ENOUGH_DATA) {
+    loadingMessageWrapper.hidden = true;
+    canvasElement.hidden = false;
+    canvasElement.height = video.videoHeight;
+    canvasElement.width = video.videoWidth;
+    canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+    var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+    var code = jsQR(imageData.data, imageData.width, imageData.height, {
+      inversionAttempts: "dontInvert",
+    });
+    if (code && code.data) {
+      drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
+      drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
+      drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
+      drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+      alert(code.data);
+    } 
+  }
+  requestAnimationFrame(tick);
+}
