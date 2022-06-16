@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.App.CompanyLive.Edit do
+defmodule ParzivalWeb.Backoffice.CompanyLive.Edit do
   @moduledoc false
   use ParzivalWeb, :live_view
 

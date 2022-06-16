@@ -54,21 +54,32 @@ defmodule ParzivalWeb.Router do
         live "/", DashboardLive.Index, :index
         live "/dashboard/curriculum", DashboardLive.Edit, :edit
 
-        live "/curriculum", CurriculumLive.Index, :index
-        live "/offers/", OfferLive.Index, :index
-        live "/offers/new", OfferLive.New, :new
-        live "/offers/:id", OfferLive.Show, :show
-        live "/offers/:id/edit", OfferLive.Edit, :edit
+        scope "/offers" do
+          live "/", OfferLive.Index, :index
+          live "/:id", OfferLive.Show, :show
 
-        live "/companies/", CompanyLive.Index, :index
-        live "/companies/new", CompanyLive.New, :new
-        live "/companies/:id", CompanyLive.Show, :show
-        live "/companies/:id/edit", CompanyLive.Edit, :edit
+          scope "/new" do
+            pipe_through [:require_admin_or_recruiter]
+            live "/", OfferLive.New, :new
+          end
 
         live "/leaderboard/", LeaderboardLive.Index, :index
 
-        live "/store/", ProductLive.Index, :index
-        live "/store/:id", ProductLive.Show, :show
+          pipe_through [:require_admin_or_company_recruiter]
+          live "/:id/edit", OfferLive.Edit, :edit
+        end
+
+        scope "/companies" do
+          pipe_through [:require_not_recruiter]
+          live "/", CompanyLive.Index, :index
+          live "/:id", CompanyLive.Show, :show
+        end
+
+        scope "/store" do
+          pipe_through [:require_not_recruiter]
+          live "/", ProductLive.Index, :index
+          live "/store/:id", ProductLive.Show, :show
+        end
 
         live "/vault", OrderLive.Index, :index
         live "/vault/:id", OrderLive.Show, :show
@@ -91,12 +102,23 @@ defmodule ParzivalWeb.Router do
       end
 
       scope "/admin", Backoffice, as: :admin do
-        live "/accounts/", UserLive.Index, :index
-        live "/accounts/new", UserLive.New, :new
-        # live "/accounts/:id", UserLive.Show, :show
-        # live "/accounts/:id/edit", UserLive.Edit, :edit
+        pipe_through [:require_admin_or_staff]
+
+        scope "/accounts" do
+          live "/", UserLive.Index, :index
+
+          pipe_through [:require_admin]
+          live "/accounts/new", UserLive.New, :new
+        end
+
+        scope "/companies" do
+          pipe_through [:require_admin]
+          live "/new", CompanyLive.New, :new
+          live "/:id/edit", CompanyLive.Edit, :edit
+        end
 
         scope "/jobs" do
+          pipe_through [:require_admin]
           live "/types/", OfferTypeLive.Index, :index
           live "/types/new", OfferTypeLive.Index, :new
           live "/types/:id/edit", OfferTypeLive.Index, :edit
@@ -112,10 +134,14 @@ defmodule ParzivalWeb.Router do
           live "/levels/:id/edit", LevelLive.Index, :edit
         end
 
-        live "/store/new", ProductLive.New, :new
-        live "/store/:id/edit", ProductLive.Edit, :edit
+        scope "/store" do
+          pipe_through [:require_admin]
+          live "/new", ProductLive.New, :new
+          live "/:id/edit", ProductLive.Edit, :edit
+        end
 
         scope "/missions" do
+          pipe_through [:require_admin]
           live "/new", MissionLive.New, :new
           live "/:id/edit", MissionLive.Edit, :edit
 
@@ -125,6 +151,7 @@ defmodule ParzivalWeb.Router do
         end
 
         scope "/tools" do
+          pipe_through [:require_admin]
           live "/faqs/", FaqsLive.Index, :index
           live "/faqs/new", FaqsLive.New, :new
           live "/faqs/:id", FaqsLive.Show, :show

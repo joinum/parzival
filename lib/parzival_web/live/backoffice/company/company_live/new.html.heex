@@ -1,0 +1,3 @@
+<div id="company-edit" phx-update="ignore">
+  <.live_component module={ParzivalWeb.Backoffice.CompanyLive.FormComponent} id={:new} title={@page_title} action={@live_action} company={@company} current_user={@current_user} return_to={Routes.company_index_path(@socket, :index)} />
+</div>

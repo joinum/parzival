@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.App.CompanyLive.FormComponent do
+defmodule ParzivalWeb.Backoffice.CompanyLive.FormComponent do
   @moduledoc false
   use ParzivalWeb, :live_component
 
