@@ -35,15 +35,21 @@
           </span>
         </div>
         <div>
-          <h4 class="text-2xl font-bold text-gray-800">
-            <%= @company.name %>
-          </h4>
+          <div class="flex justify-between items-center">
+            <h4 class="text-2xl font-bold text-gray-800">
+              <%= @company.name %>
+            </h4>
+            <div>
+              <span class={"inline-flex items-center justify-center px-2 text-xs font-semibold leading-5 border #{border_200(@company.level.color)} #{bg_100(@company.level.color)} rounded-full"}>
+                <%= @company.level.name %>
+              </span>
+            </div>
+          </div>
           <p class="mt-1 text-gray-500">
             <%= @company.description %>
           </p>
         </div>
       </div>
-
       <%= if @offers != [] do %>
         <h2 class="mt-8 text-lg font-medium text-gray-900">
           Offers

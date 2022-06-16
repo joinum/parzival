@@ -105,6 +105,12 @@ defmodule ParzivalWeb.Router do
           live "/times/:id/edit", OfferTimeLive.Index, :edit
         end
 
+        scope "/companies" do
+          live "/levels/", LevelLive.Index, :index
+          live "/levels/new", LevelLive.Index, :new
+          live "/levels/:id/edit", LevelLive.Index, :edit
+        end
+
         live "/store/new", ProductLive.New, :new
         live "/store/:id/edit", ProductLive.Edit, :edit
 

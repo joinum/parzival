@@ -194,9 +194,20 @@ defmodule ParzivalWeb.Config do
       },
       %{
         key: :companies,
-        title: "Companies",
+        title: "Sponsors",
         url: Routes.company_index_path(conn, :index),
-        tabs: []
+        tabs: [
+          %{
+            key: :companies,
+            title: "Companies",
+            url: Routes.company_index_path(conn, :index)
+          },
+          %{
+            key: :levels,
+            title: "Levels",
+            url: Routes.admin_level_index_path(conn, :index)
+          }
+        ]
       },
       %{
         key: :store,

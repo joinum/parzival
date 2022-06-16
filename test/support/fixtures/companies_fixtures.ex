@@ -77,4 +77,19 @@ defmodule Parzival.CompaniesFixtures do
 
     application
   end
+
+  @doc """
+  Generate a level.
+  """
+  def level_fixture(attrs \\ %{}) do
+    {:ok, level} =
+      attrs
+      |> Enum.into(%{
+        color: "some color",
+        name: "some name"
+      })
+      |> Parzival.Companies.create_level()
+
+    level
+  end
 end

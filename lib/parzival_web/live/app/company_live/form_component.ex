@@ -11,7 +11,8 @@ defmodule ParzivalWeb.App.CompanyLive.FormComponent do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> assign(list_levels(assigns))}
   end
 
   @impl true
@@ -51,6 +52,16 @@ defmodule ParzivalWeb.App.CompanyLive.FormComponent do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  defp list_levels(params) do
+    case Companies.list_levels(params) do
+      {:ok, {levels, _meta}} ->
+        %{levels: levels}
+
+      {:error, _flop} ->
+        %{levels: []}
     end
   end
 end
