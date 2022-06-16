@@ -147,6 +147,12 @@ defmodule ParzivalWeb.Config do
         title: "Announcements",
         url: Routes.announcement_index_path(conn, :index),
         tabs: []
+      },
+      %{
+        key: :scanner,
+        title: "Scan",
+        url: Routes.scanner_index_path(conn, :index),
+        tabs: []
       }
     ]
   end
@@ -279,6 +285,12 @@ defmodule ParzivalWeb.Config do
             url: Routes.announcement_index_path(conn, :index)
           }
         ]
+      },
+      %{
+        key: :scanner,
+        title: "Scan",
+        url: Routes.scanner_index_path(conn, :index),
+        tabs: []
       }
     ]
   end
