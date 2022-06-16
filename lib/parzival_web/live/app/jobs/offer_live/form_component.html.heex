@@ -90,7 +90,7 @@
               <%= error_tag(f, :description) %>
             </div>
           </div>
-          <%= if @current_user.role == :admin do %>
+          <%= if @current_user.role in [:admin] do %>
             <div class="pt-6">
               <h2 class="text-lg font-medium text-gray-900">
                 Company

@@ -15,6 +15,7 @@ defmodule ParzivalWeb.Config do
       :admin -> admin_pages(conn)
       :attendee -> attendee_pages(conn)
       :recruiter -> recruiter_pages(conn)
+      :staff -> admin_pages(conn)
     end
   end
 
