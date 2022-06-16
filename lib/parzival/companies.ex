@@ -167,7 +167,11 @@ defmodule Parzival.Companies do
       ** (Ecto.NoResultsError)
 
   """
-  def get_company!(id), do: Repo.get!(Company, id)
+  def get_company!(id, opts \\ []) do
+    Company
+    |> apply_filters(opts)
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a company.
@@ -611,5 +615,115 @@ defmodule Parzival.Companies do
        when event in [:deleted_application] do
     Phoenix.PubSub.broadcast!(Parzival.PubSub, "deleted_application", {event, nil})
     {number, nil}
+  end
+
+  alias Parzival.Companies.Level
+
+  @doc """
+  Returns the list of levels.
+
+  ## Examples
+
+      iex> list_levels()
+      [%Level{}, ...]
+
+  """
+  def list_levels(params \\ %{})
+
+  def list_levels(opts) when is_list(opts) do
+    Level
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_levels(flop) do
+    Flop.validate_and_run(Level, flop, for: Level)
+  end
+
+  def list_levels(%{} = flop, opts) when is_list(opts) do
+    Level
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Level)
+  end
+
+  @doc """
+  Gets a single level.
+
+  Raises `Ecto.NoResultsError` if the Level does not exist.
+
+  ## Examples
+
+      iex> get_level!(123)
+      %Level{}
+
+      iex> get_level!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_level!(id), do: Repo.get!(Level, id)
+
+  @doc """
+  Creates a level.
+
+  ## Examples
+
+      iex> create_level(%{field: value})
+      {:ok, %Level{}}
+
+      iex> create_level(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_level(attrs \\ %{}) do
+    %Level{}
+    |> Level.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a level.
+
+  ## Examples
+
+      iex> update_level(level, %{field: new_value})
+      {:ok, %Level{}}
+
+      iex> update_level(level, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_level(%Level{} = level, attrs) do
+    level
+    |> Level.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a level.
+
+  ## Examples
+
+      iex> delete_level(level)
+      {:ok, %Level{}}
+
+      iex> delete_level(level)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_level(%Level{} = level) do
+    Repo.delete(level)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking level changes.
+
+  ## Examples
+
+      iex> change_level(level)
+      %Ecto.Changeset{data: %Level{}}
+
+  """
+  def change_level(%Level{} = level, attrs \\ %{}) do
+    Level.changeset(level, attrs)
   end
 end

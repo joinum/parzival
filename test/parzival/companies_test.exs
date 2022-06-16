@@ -301,4 +301,60 @@ defmodule Parzival.CompaniesTest do
       assert %Ecto.Changeset{} = Companies.change_application(application)
     end
   end
+
+  describe "levels" do
+    alias Parzival.Companies.Level
+
+    import Parzival.CompaniesFixtures
+
+    @invalid_attrs %{color: nil, name: nil}
+
+    test "list_levels/0 returns all levels" do
+      level = level_fixture()
+      assert Companies.list_levels() == [level]
+    end
+
+    test "get_level!/1 returns the level with given id" do
+      level = level_fixture()
+      assert Companies.get_level!(level.id) == level
+    end
+
+    test "create_level/1 with valid data creates a level" do
+      valid_attrs = %{color: "some color", name: "some name"}
+
+      assert {:ok, %Level{} = level} = Companies.create_level(valid_attrs)
+      assert level.color == "some color"
+      assert level.name == "some name"
+    end
+
+    test "create_level/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Companies.create_level(@invalid_attrs)
+    end
+
+    test "update_level/2 with valid data updates the level" do
+      level = level_fixture()
+      update_attrs = %{color: "some updated color", name: "some updated name"}
+
+      assert {:ok, %Level{} = level} = Companies.update_level(level, update_attrs)
+      assert level.color == "some updated color"
+      assert level.name == "some updated name"
+    end
+
+    test "update_level/2 with invalid data returns error changeset" do
+      level = level_fixture()
+      assert {:error, %Ecto.Changeset{}} = Companies.update_level(level, @invalid_attrs)
+      assert level == Companies.get_level!(level.id)
+    end
+
+    test "delete_level/1 deletes the level" do
+      level = level_fixture()
+      assert {:ok, %Level{}} = Companies.delete_level(level)
+      assert_raise Ecto.NoResultsError, fn -> Companies.get_level!(level.id) end
+    end
+
+    test "change_level/1 returns a level changeset" do
+      level = level_fixture()
+      assert %Ecto.Changeset{} = Companies.change_level(level)
+    end
+  end
 end

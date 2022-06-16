@@ -30,6 +30,10 @@
                   <div class="flex text-red-500">
                     <%= error_tag(f, :name) %>
                   </div>
+                  <%= select(f, :level_id, Enum.map(@levels, &{&1.name, &1.id}), prompt: "Choose a Sponsorship Level", selected: f.data.level_id, class: "mt-1 block border-gray-300 rounded-md shadow-sm focus:ring-red-800 focus:border-red-800") %>
+                  <div class="flex text-red-500">
+                    <%= error_tag(f, :level_id) %>
+                  </div>
                   <%= textarea(f, :description, placeholder: "Choose description", rows: 3, phx_debounce: "blur", class: "mt-1 text-gray-500 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
                   <div class="flex text-red-500">
                     <%= error_tag(f, :description) %>
