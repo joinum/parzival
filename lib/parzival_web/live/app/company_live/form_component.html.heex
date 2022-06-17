@@ -1,12 +1,12 @@
 <div id={"company-#{@action}"} phx-update="ignore" class="min-h-full border-r border-gray-200">
   <.form let={f} for={@changeset} id="offer-form" phx-target={@myself} phx-change="validate" phx-submit="save">
-    <div class="py-5 pr-6 pl-4 border-gray-200 sm:px-6 lg:px-8 xl:py-6 xl:px-6 border-y">
-      <div class="flex justify-between items-center h-10">
+    <div class="py-5 pl-4 pr-6 border-gray-200 sm:px-6 lg:px-8 xl:py-6 xl:px-6 border-y">
+      <div class="flex items-center justify-between h-10">
         <h1 class="flex-1 text-lg font-medium">Company</h1>
         <%= if @current_user.role in [:admin] || @current_user.role in [:recruiter] && @current_user.company_id == @company.id do %>
           <div class="flex mt-5 space-x-2 xl:mt-0 xl:ml-4">
             <%= submit do %>
-              <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
+              <div type="button" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm xl:w-full bg-secondary hover:bg-primary">
                 Save
               </div>
             <% end %>
@@ -14,14 +14,14 @@
         <% end %>
       </div>
     </div>
-    <div class="relative py-5 px-4 border-b border-gray-200 sm:py-6 sm:px-6 md:border-b-0 lg:px-8 xl:px-6">
+    <div class="relative px-4 py-5 border-b border-gray-200 sm:py-6 sm:px-6 md:border-b-0 lg:px-8 xl:px-6">
       <div>
         <%= live_redirect("< Back", to: @return_to, class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
       </div>
       <div class="px-4 sm:px-0">
         <div class="mt-6 sm:flex sm:items-center">
           <div class="flex-shrink-0 mb-4 sm:mr-4 sm:mb-0">
-            <span class="inline-flex justify-center items-center w-24 h-24 rounded-full bg-secondary">
+            <span class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-secondary">
               <span class="text-5xl font-medium leading-none text-white">
                 <%= extract_initials(input_value(f, :name)) %>
               </span>
