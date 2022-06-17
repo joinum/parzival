@@ -3,15 +3,15 @@ defmodule ParzivalWeb.App.MissionLive.TaskLive.FormComponent do
   use ParzivalWeb, :live_component
 
   @impl true
-  def update(%{task: task, mission: mission, user_id: user_id} = assigns, socket) do
+  def update(%{task: task, mission: _mission, user_id: user_id} = assigns, socket) do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:qrcode, qrcode(socket, task, mission, user_id))}
+     |> assign(:qrcode, qrcode(socket, task, user_id))}
   end
 
-  defp qrcode(socket, task, mission, user_id) do
-    Routes.mission_task_show_url(socket, :show, mission, task, user_id: user_id)
+  defp qrcode(socket, task, user_id) do
+    Routes.mission_task_user_new_url(socket, :new, task.id,user_id)
     |> QRCodeEx.encode()
     |> QRCodeEx.svg(color: "#1F2937", width: 295, background_color: :transparent)
   end
