@@ -43,7 +43,7 @@ defmodule ParzivalWeb.LiveHelpers do
             </svg>
           </a>
         <% end %>
-        <h2 class="text-2xl text-left  font-bold text-gray-900 mb-5">Show this QR code to a staff member</h2>
+        <h2 class="text-2xl text-left font-bold text-gray-900 mb-5">Show this QR code to a staff member</h2>
         <%= render_slot(@inner_block) %>
       </div>
     </div>
