@@ -5,8 +5,8 @@ defmodule Parzival.Repo.Seeds.Tools do
 
   alias Parzival.Accounts.User
 
-  alias Parzival.Tools.Faq
   alias Parzival.Tools.Announcement
+  alias Parzival.Tools.Faq
 
   def run do
     seed_faqs()

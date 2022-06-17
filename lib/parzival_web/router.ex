@@ -52,6 +52,7 @@ defmodule ParzivalWeb.Router do
     live_session :logged_in, on_mount: [{ParzivalWeb.Hooks, :current_user}] do
       scope "/app", App do
         live "/", DashboardLive.Index, :index
+        live "/dashboard/curriculum", DashboardLive.Edit, :edit
 
         live "/curriculum", CurriculumLive.Index, :index
         live "/offers/", OfferLive.Index, :index
@@ -63,6 +64,8 @@ defmodule ParzivalWeb.Router do
         live "/companies/new", CompanyLive.New, :new
         live "/companies/:id", CompanyLive.Show, :show
         live "/companies/:id/edit", CompanyLive.Edit, :edit
+
+        live "/leaderboard/", LeaderboardLive.Index, :index
 
         live "/store/", ProductLive.Index, :index
         live "/store/:id", ProductLive.Show, :show
@@ -83,7 +86,7 @@ defmodule ParzivalWeb.Router do
           live "/:id/tasks/:task_id/redeem", TaskLive.Show, :redeem
         end
 
-        live "/profile", ProfileLive.Index, :index
+        live "/profile/:id", ProfileLive.Index, :index
       end
 
       scope "/admin", Backoffice, as: :admin do
@@ -100,6 +103,12 @@ defmodule ParzivalWeb.Router do
           live "/times/", OfferTimeLive.Index, :index
           live "/times/new", OfferTimeLive.Index, :new
           live "/times/:id/edit", OfferTimeLive.Index, :edit
+        end
+
+        scope "/companies" do
+          live "/levels/", LevelLive.Index, :index
+          live "/levels/new", LevelLive.Index, :new
+          live "/levels/:id/edit", LevelLive.Index, :edit
         end
 
         live "/store/new", ProductLive.New, :new

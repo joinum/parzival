@@ -5,9 +5,10 @@ defmodule Parzival.Companies.Company do
   use Parzival.Schema
 
   alias Parzival.Accounts.User
+  alias Parzival.Companies.Level
   alias Parzival.Companies.Offer
 
-  @required_fields ~w(name description)a
+  @required_fields ~w(name description level_id)a
 
   @optional_fields []
 
@@ -26,6 +27,8 @@ defmodule Parzival.Companies.Company do
 
     has_many :offers, Offer
     has_many :recruiters, User
+
+    belongs_to :level, Level
 
     timestamps()
   end

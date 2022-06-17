@@ -7,7 +7,7 @@ defmodule Parzival.Accounts do
   import Ecto.Query, warn: false
 
   alias Parzival.Accounts.{User, UserNotifier, UserToken}
-  alias Parzival.Repo
+  alias Parzival.Gamification
 
   def list_users(params \\ %{})
 
@@ -163,6 +163,46 @@ defmodule Parzival.Accounts do
   """
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs, generate_password: false)
+  end
+
+  @doc """
+  Creates a user.
+  ## Examples
+      iex> admin_create_user(%{field: value})
+      {:ok, %User{}}
+      iex> admin_create_user(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
+  def admin_create_user(attrs \\ %{}, role) do
+    %User{}
+    |> Map.put(:role, role)
+    |> User.changeset(attrs)
+    |> Repo.insert()
+    |> case do
+      {:ok, user} ->
+        if role in [:attendee] do
+          Gamification.create_curriculum(%{user_id: user.id})
+        end
+
+        {:ok, user}
+
+      error ->
+        error
+    end
+  end
+
+  @doc """
+  Updates a user.
+  ## Examples
+      iex> admin_update_user(user, %{email: new_value}, generate_password: true)
+      {:ok, %User{}}
+      iex> admin_update_user(user, %{email: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
+  def admin_update_user(%User{} = user, attrs \\ %{}, opts \\ []) do
+    user
+    |> User.changeset(attrs, opts)
+    |> Repo.update()
   end
 
   @doc """
@@ -404,5 +444,27 @@ defmodule Parzival.Accounts do
     user
     |> User.exp_changeset(%{exp: user.exp + 500})
     |> Repo.update()
+  end
+
+  @doc """
+  Gets the position of a user in the leaderboard.
+
+  In case of a tie, the user has the highest (best) position amongst those who have that score (i.e., is tied for x-th place).any()
+
+  This means the same position can appear for multiple users at the same time
+
+  ## Examples
+
+      iex> get_user_position(user)
+      1
+
+  """
+  def get_user_position(user) do
+    x =
+      User
+      |> where([u], u.exp > ^user.exp)
+      |> Repo.aggregate(:count, :id)
+
+    x + 1
   end
 end

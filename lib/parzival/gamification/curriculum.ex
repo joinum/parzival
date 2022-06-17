@@ -16,11 +16,11 @@ defmodule Parzival.Gamification.Curriculum do
   schema "curriculums" do
     field :summary, :string
 
-    embeds_many :experience, Curriculum.Experience
-    embeds_many :education, Curriculum.Education
-    embeds_many :volunteering, Curriculum.Volunteering
-    embeds_many :skills, Curriculum.Skills
-    embeds_many :languages, Curriculum.Languages
+    embeds_many :experiences, Curriculum.Experience
+    embeds_many :educations, Curriculum.Education
+    embeds_many :volunteerings, Curriculum.Volunteering
+    embeds_many :skills, Curriculum.Skill
+    embeds_many :languages, Curriculum.Language
 
     belongs_to :user, Accounts.User
 
@@ -42,26 +42,26 @@ defmodule Parzival.Gamification.Curriculum do
 
   defp validate_experience(changeset) do
     changeset
-    |> cast_embed(:experience, with: &Curriculum.Experience.changeset/2)
+    |> cast_embed(:experiences, with: &Curriculum.Experience.changeset/2)
   end
 
   defp validate_education(changeset) do
     changeset
-    |> cast_embed(:education, with: &Curriculum.Education.changeset/2)
+    |> cast_embed(:educations, with: &Curriculum.Education.changeset/2)
   end
 
   defp validate_volunteering(changeset) do
     changeset
-    |> cast_embed(:volunteering, with: &Curriculum.Volunteering.changeset/2)
+    |> cast_embed(:volunteerings, with: &Curriculum.Volunteering.changeset/2)
   end
 
   defp validate_skills(changeset) do
     changeset
-    |> cast_embed(:skills, with: &Curriculum.Skills.changeset/2)
+    |> cast_embed(:skills, with: &Curriculum.Skill.changeset/2)
   end
 
   defp validate_languages(changeset) do
     changeset
-    |> cast_embed(:languages, with: &Curriculum.Languages.changeset/2)
+    |> cast_embed(:languages, with: &Curriculum.Language.changeset/2)
   end
 end

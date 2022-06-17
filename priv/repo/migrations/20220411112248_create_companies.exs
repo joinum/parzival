@@ -7,6 +7,8 @@ defmodule Parzival.Repo.Migrations.CreateCompanies do
       add :name, :string
       add :description, :text
 
+      add :level_id, references(:levels, on_delete: :nothing, type: :binary_id)
+
       timestamps()
     end
   end

@@ -9,6 +9,12 @@ defmodule Parzival.Gamification do
 
   alias Parzival.Accounts.User
   alias Parzival.Gamification.Curriculum
+  alias Parzival.Gamification.Curriculum.Education
+  alias Parzival.Gamification.Curriculum.Experience
+  alias Parzival.Gamification.Curriculum.Language
+  alias Parzival.Gamification.Curriculum.Position
+  alias Parzival.Gamification.Curriculum.Skill
+  alias Parzival.Gamification.Curriculum.Volunteering
 
   @doc """
   Returns the list of curriculums.
@@ -49,15 +55,15 @@ defmodule Parzival.Gamification do
 
     %{
       summary: curriculum.summary,
-      experience:
-        Enum.map(curriculum.experience, fn experience ->
+      experiences:
+        Enum.map(curriculum.experiences, fn experience ->
           %{
             organization: experience.organization,
             positions: Enum.sort_by(experience.positions, & &1.finish, {:desc, Date})
           }
         end),
-      education: Enum.sort_by(curriculum.education, & &1.finish, {:desc, Date}),
-      volunteering: Enum.sort_by(curriculum.volunteering, & &1.finish, {:desc, Date}),
+      educations: Enum.sort_by(curriculum.educations, & &1.finish, {:desc, Date}),
+      volunteerings: Enum.sort_by(curriculum.volunteerings, & &1.finish, {:desc, Date}),
       skills: curriculum.skills,
       languages: curriculum.languages,
       user: curriculum.user
@@ -752,6 +758,48 @@ defmodule Parzival.Gamification do
   """
   def change_task_user(%TaskUser{} = task_user, attrs \\ %{}) do
     TaskUser.changeset(task_user, attrs)
+  end
+
+  def change_education(
+        %Education{} = education,
+        attrs \\ %{}
+      ) do
+    Education.changeset(education, attrs)
+  end
+
+  def change_experience(
+        %Experience{} = experience,
+        attrs \\ %{}
+      ) do
+    Experience.changeset(experience, attrs)
+  end
+
+  def change_language(
+        %Language{} = language,
+        attrs \\ %{}
+      ) do
+    Language.changeset(language, attrs)
+  end
+
+  def change_position(
+        %Position{} = position,
+        attrs \\ %{}
+      ) do
+    Position.changeset(position, attrs)
+  end
+
+  def change_skill(
+        %Skill{} = skill,
+        attrs \\ %{}
+      ) do
+    Skill.changeset(skill, attrs)
+  end
+
+  def change_volunteering(
+        %Volunteering{} = volunteering,
+        attrs \\ %{}
+      ) do
+    Volunteering.changeset(volunteering, attrs)
   end
 
   def subscribe(topic) do

@@ -1,0 +1,319 @@
+<div>
+  <.form let={f} for={@changeset} id="offer_time-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+    <div class="flex flex-col lg:flex-row">
+      <!-- Left sidebar & main wrapper -->
+      <div class="flex flex-col w-full min-h-screen bg-white lg:flex-row">
+        <main class="overflow-y-auto relative z-0 flex-1 mb-10 min-h-screen xl:order-last focus:outline-none">
+          <article>
+            <!-- Profile header -->
+            <div>
+              <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
+                <div class="sm:flex sm:items-end sm:space-x-5">
+                  <div class="mt-6 sm:flex sm:flex-1 sm:justify-end sm:items-center sm:pb-1 sm:space-x-6 sm:min-w-0">
+                    <div class="hidden flex-1 mt-6 min-w-0 2xl:block">
+                      <h1 class="text-2xl font-bold text-gray-900 truncate">
+                        Welcome, <%= @user.name %> 👋
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+                <div class="hidden flex-1 mt-6 min-w-0 sm:block 2xl:hidden">
+                  <h1 class="text-2xl font-bold text-gray-900 truncate">
+                    Welcome, <%= @user.name %>
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <!-- Tabs -->
+            <div class="mt-6 sm:mt-2 2xl:mt-5">
+              <div class="border-b border-gray-200">
+                <div class="flex justify-between items-center px-4 my-2 mx-auto max-w-5xl sm:px-6 lg:px-8">
+                  <%= live_redirect("< Back", to: @return_to, class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
+                  <%= submit do %>
+                    <div type="button" class="py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm bg-secondary hover:bg-primary">
+                      Save
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <!-- Curriculum -->
+            <div class="mx-auto mt-6 max-w-5xl">
+              <dl class="flex flex-col">
+                <%= if assigns[:curriculum] do %>
+                  <div class="px-4 pb-6 border-b border-gray-200 sm:px-6 lg:px-8">
+                    <dt class="text-sm font-medium text-gray-500">About</dt>
+                    <dd class="mt-1 text-sm text-gray-900">
+                      <%= textarea(f, :summary, rows: 4, placeholder: "Write a summary about yourself", phx_debounce: "blur", class: "text-sm w-full leading-7 mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+                      <div class="flex text-red-500">
+                        <%= error_tag(f, :summary) %>
+                      </div>
+                    </dd>
+                  </div>
+
+                  <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
+                    <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
+                      Experience
+                      <a phx-click="add-experience" phx-target={@myself} class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50">
+                        Add
+                      </a>
+                    </dt>
+                    <dd class="mt-1 space-y-2 text-sm text-gray-900">
+                      <%= inputs_for f, :experiences, fn fe -> %>
+                        <div x-bind:class="! show ? 'hidden' : 'block space-y-2'" x-data="{ show: true }">
+                          <div class="w-full">
+                            <div class="mt-1 text-xs font-medium text-gray-500">
+                              Organization
+                            </div>
+                            <div class="flex relative mt-1">
+                              <%= text_input(fe, :organization, placeholder: "Add a institution, e.g. 'CeSIUM'", class: "w-full block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                              <%= if is_nil(fe.data.id) do %>
+                                <a class="absolute right-2 cursor-pointer" phx-click="rm-experience" phx-target={@myself} phx-value-index={fe.index}>
+                                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                </a>
+                              <% else %>
+                                <a class="absolute right-2 cursor-pointer" onclick={"document.getElementById('#{fe.data.id}').click()"} x-on:click="show = false">
+                                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                </a>
+                                <%= checkbox(fe, :delete, id: fe.data.id, class: "hidden") %>
+                              <% end %>
+                            </div>
+
+                            <div class="mt-1">
+                              <div class="flex justify-between mt-1 text-xs font-medium text-gray-500">
+                                <div class="flex items-end">
+                                  Positions
+                                </div>
+                                <a phx-click="add-position" phx-target={@myself} phx-value-id={fe.data.id} class="inline-flex justify-center py-1 px-2 my-1 text-xs font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50">
+                                  Add
+                                </a>
+                              </div>
+                              <%= inputs_for fe, :positions, fn fp -> %>
+                                <div x-bind:class="! show ? 'hidden' : 'block space-y-2'" x-data="{ show: true }">
+                                  <div class="w-full">
+                                    <div class="flex relative mt-1">
+                                      <%= text_input(fp, :title, placeholder: "Add a institution, e.g. 'CeSIUM'", class: "w-full block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                                      <%= if is_nil(fp.data.id) do %>
+                                        <a class="absolute right-2 cursor-pointer" phx-click="rm-position" phx-target={@myself} phx-value-index={fp.index}>
+                                          <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                        </a>
+                                      <% else %>
+                                        <a class="absolute right-2 cursor-pointer" onclick={"document.getElementById('#{fp.data.id}').click()"} x-on:click="show = false">
+                                          <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                        </a>
+                                        <%= checkbox(fp, :delete, id: fp.data.id, class: "hidden") %>
+                                      <% end %>
+                                    </div>
+                                    <div class="flex mt-1 space-x-1">
+                                      <%= date_input(fp, :start, class: "w-full sm:w-48 block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                                      <%= date_input(fp, :finish, class: "w-full sm:w-48 block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                                    </div>
+                                  </div>
+                                </div>
+                              <% end %>
+                            </div>
+                          </div>
+                          <div class="flex text-xs text-red-500"></div>
+                        </div>
+                      <% end %>
+                    </dd>
+                  </div>
+
+                  <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
+                    <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
+                      Education
+                      <a phx-click="add-education" phx-target={@myself} class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50">
+                        Add
+                      </a>
+                    </dt>
+                    <dd class="mt-1 space-y-2 text-sm text-gray-900">
+                      <%= inputs_for f, :educations, fn fe -> %>
+                        <div x-bind:class="! show ? 'hidden' : 'block space-y-2'" x-data="{ show: true }">
+                          <div class="w-full">
+                            <div class="flex relative">
+                              <%= text_input(fe, :institution, placeholder: "Add a institution, e.g. 'Universidade do Minho'", class: "w-full block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                              <%= if is_nil(fe.data.id) do %>
+                                <a class="absolute right-2 cursor-pointer" phx-click="rm-education" phx-target={@myself} phx-value-index={fe.index}>
+                                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                </a>
+                              <% else %>
+                                <a class="absolute right-2 cursor-pointer" onclick={"document.getElementById('#{fe.data.id}').click()"} x-on:click="show = false">
+                                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                </a>
+                                <%= checkbox(fe, :delete, id: fe.data.id, class: "hidden") %>
+                              <% end %>
+                            </div>
+                            <%= text_input(fe, :course, placeholder: "Add a course, e.g. 'Bachelors in Software Engineering'", class: "mt-1 w-full block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                            <div class="flex mt-1 space-x-1">
+                              <%= date_input(fe, :start, class: "w-full sm:w-48 block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                              <%= date_input(fe, :finish, class: "w-full sm:w-48 block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                            </div>
+                          </div>
+                          <div class="flex text-xs text-red-500"></div>
+                        </div>
+                      <% end %>
+                    </dd>
+                  </div>
+
+                  <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
+                    <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
+                      Volunteering
+                      <a phx-click="add-volunteering" phx-target={@myself} class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50">
+                        Add
+                      </a>
+                    </dt>
+                    <dd class="mt-1 space-y-2 text-sm text-gray-900">
+                      <%= inputs_for f, :volunteerings, fn fv -> %>
+                        <div x-bind:class="! show ? 'hidden' : 'block space-y-2'" x-data="{ show: true }">
+                          <div class="w-full">
+                            <div class="flex relative">
+                              <%= text_input(fv, :position, placeholder: "Add a position, e.g. 'Staff'", class: "w-full block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                              <%= if is_nil(fv.data.id) do %>
+                                <a class="absolute right-2 cursor-pointer" phx-click="rm-volunteering" phx-target={@myself} phx-value-index={fv.index}>
+                                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                </a>
+                              <% else %>
+                                <a class="absolute right-2 cursor-pointer" onclick={"document.getElementById('#{fv.data.id}').click()"} x-on:click="show = false">
+                                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                </a>
+                                <%= checkbox(fv, :delete, id: fv.data.id, class: "hidden") %>
+                              <% end %>
+                            </div>
+                            <%= text_input(fv, :institution, placeholder: "Add a institution, e.g. 'ElixirConf EU'", class: "mt-1 w-full block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                            <div class="flex mt-1 space-x-1">
+                              <%= date_input(fv, :start, class: "w-full sm:w-48 block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                              <%= date_input(fv, :finish, class: "w-full sm:w-48 block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                            </div>
+                          </div>
+                          <div class="flex text-xs text-red-500"></div>
+                        </div>
+                      <% end %>
+                    </dd>
+                  </div>
+
+                  <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
+                    <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
+                      Skills
+                      <a phx-click="add-skill" phx-target={@myself} class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50">
+                        Add
+                      </a>
+                    </dt>
+                    <dd class="grid grid-cols-2 mt-1 space-y-2 text-sm text-gray-900">
+                      <%= inputs_for f, :skills, fn fs -> %>
+                        <div x-bind:class="! show ? 'hidden' : 'block'" x-data="{ show: true }">
+                          <div class="flex relative max-w-[192px]">
+                            <%= text_input(fs, :name, placeholder: "Add a skill", class: "w-full max-w-[192px] block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                            <%= if is_nil(fs.data.id) do %>
+                              <a class="absolute right-2 cursor-pointer" phx-click="rm-skill" phx-target={@myself} phx-value-index={fs.index}>
+                                <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                              </a>
+                            <% else %>
+                              <a class="absolute right-2 cursor-pointer" onclick={"document.getElementById('#{fs.data.id}').click()"} x-on:click="show = false">
+                                <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                              </a>
+                              <%= checkbox(fs, :delete, id: fs.data.id, class: "hidden") %>
+                            <% end %>
+                          </div>
+                          <div class="flex text-xs text-red-500">
+                            <%= error_tag(fs, :name) %>
+                          </div>
+                        </div>
+                      <% end %>
+                    </dd>
+                  </div>
+
+                  <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
+                    <dt class="flex justify-between items-center text-sm font-medium text-gray-500">
+                      Languages
+                      <a phx-click="add-language" phx-target={@myself} class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50">
+                        Add
+                      </a>
+                    </dt>
+                    <dd class="mt-1 space-y-2 text-sm text-gray-900">
+                      <%= inputs_for f, :languages, fn fl -> %>
+                        <div x-bind:class="! show ? 'hidden' : 'block'" x-data="{ show: true }">
+                          <div class="flex space-x-5">
+                            <div class="flex relative">
+                              <%= text_input(fl, :idiom, placeholder: "Add a language", class: "w-full max-w-[192px] block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                              <%= if is_nil(fl.data.id) do %>
+                                <a class="absolute right-2 cursor-pointer" phx-click="rm-language" phx-target={@myself} phx-value-index={fl.index}>
+                                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                </a>
+                              <% else %>
+                                <a class="absolute right-2 cursor-pointer" onclick={"document.getElementById('#{fl.data.id}').click()"} x-on:click="show = false">
+                                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                </a>
+                                <%= checkbox(fl, :delete, id: fl.data.id, class: "hidden") %>
+                              <% end %>
+                            </div>
+                            <%= select(fl, :proficiency, @proficiencies, prompt: gettext("Choose a Proficiency"), selected: fl.data.proficiency, class: "block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                          </div>
+                          <div class="flex text-xs text-red-500">
+                            <%= error_tag(fl, :idiom) %>
+                          </div>
+                        </div>
+                      <% end %>
+                    </dd>
+                  </div>
+                <% end %>
+              </dl>
+            </div>
+          </article>
+        </main>
+      </div>
+      <!-- Announcements -->
+      <div class="hidden pr-4 pb-6 pl-6 w-full bg-white border-t border-gray-200 sm:block sm:pr-6 lg:flex-shrink-0 lg:pb-0 lg:w-72 lg:border-t-0 lg:border-l xl:pr-0">
+        <section aria-labelledby="announcements-title">
+          <div class="overflow-hidden">
+            <div class="">
+              <h2 class="pt-6 text-base font-medium text-gray-900" id="announcements-title">
+                Announcements
+              </h2>
+              <div class="flow-root mt-6">
+                <ul role="list" class="-my-5 divide-y divide-gray-200">
+                  <%= for announcement <- @announcements do %>
+                    <li class="py-5">
+                      <%= live_patch to: Routes.announcement_show_path(@socket, :show, announcement), class: "group" do %>
+                        <div>
+                          <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">
+                            <%= announcement.title %>
+                          </h3>
+                          <article class="mt-1 text-sm text-gray-600 line-clamp-4">
+                            <%= raw(Earmark.as_html!(String.slice(announcement.text, 0, 200) <> "...")) %>
+                          </article>
+                          <div class="flex flex-shrink-0 justify-between mt-4">
+                            <div class="flex items-center">
+                              <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
+                                <span class="text-xs font-medium leading-none text-white">
+                                  <%= extract_initials(announcement.author.name) %>
+                                </span>
+                              </span>
+                              <p class="text-sm text-gray-500">
+                                <%= extract_first_last_name(announcement.author.name) %>
+                              </p>
+                            </div>
+                            <div class="flex">
+                              <Heroicons.Solid.calendar class="w-5 h-5 text-gray-500" />
+                              <p class="block pl-1.5 text-sm text-gray-600">
+                                <%= relative_datetime(announcement.inserted_at) %>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+              <div class="mt-6">
+                <%= live_patch to: Routes.announcement_index_path(@socket, :index), class: "w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" do %>
+                  View all
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </.form>
+</div>

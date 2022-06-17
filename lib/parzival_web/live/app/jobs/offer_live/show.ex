@@ -4,6 +4,8 @@ defmodule ParzivalWeb.App.OfferLive.Show do
 
   require Logger
 
+  import ParzivalWeb.Components.Pagination
+
   alias Parzival.Companies
 
   @impl true
@@ -24,6 +26,7 @@ defmodule ParzivalWeb.App.OfferLive.Show do
      socket
      |> assign(:current_page, :jobs)
      |> assign(:page_title, "Show Offer")
+     |> assign(:params, params)
      |> assign(:applied?, Companies.is_user_applied?(offer, socket.assigns.current_user))
      |> assign(:offer, %{offer | applied: Companies.get_total_applied(offer)})
      |> assign(list_applications(params, offer.id))}
@@ -77,6 +80,23 @@ defmodule ParzivalWeb.App.OfferLive.Show do
         {:noreply,
          socket
          |> set_applied(offer, current_user)}
+    end
+  end
+
+  @impl true
+  def handle_event("delete", _payload, socket) do
+    case Companies.delete_offer(socket.assigns.offer) do
+      {:ok, _offer} ->
+        {:noreply,
+         socket
+         |> put_flash(:success, "Offer deleted successfully!")
+         |> push_redirect(to: Routes.offer_index_path(socket, :index))}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, elem(changeset.errors[:applications], 0))
+         |> assign(:changeset, changeset)}
     end
   end
 

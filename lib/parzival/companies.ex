@@ -4,10 +4,351 @@ defmodule Parzival.Companies do
   """
   use Parzival.Context
 
-  import Ecto.Query, warn: false
-  alias Parzival.Repo
-
   alias Parzival.Accounts.User
+  alias Parzival.Companies.Application
+
+  @doc """
+  Returns the list of applications.
+
+  ## Examples
+
+      iex> list_applications()
+      [%Application{}, ...]
+
+  """
+  def list_applications(params \\ %{})
+
+  def list_applications(opts) when is_list(opts) do
+    Application
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_applications(flop) do
+    Flop.validate_and_run(Application, flop, for: Application)
+  end
+
+  def list_applications(%{} = flop, opts) when is_list(opts) do
+    Application
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Application)
+  end
+
+  @doc """
+  Gets a single application.
+
+  Raises `Ecto.NoResultsError` if the Application does not exist.
+
+  ## Examples
+
+      iex> get_application!(123)
+      %Application{}
+
+      iex> get_application!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_application!(id), do: Repo.get!(Application, id)
+
+  @doc """
+  Creates a application.
+
+  ## Examples
+
+      iex> create_application(%{field: value})
+      {:ok, %Application{}}
+
+      iex> create_application(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_application(attrs \\ %{}) do
+    %Application{}
+    |> Application.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a application.
+
+  ## Examples
+
+      iex> update_application(application, %{field: new_value})
+      {:ok, %Application{}}
+
+      iex> update_application(application, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_application(%Application{} = application, attrs) do
+    application
+    |> Application.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a application.
+
+  ## Examples
+
+      iex> delete_application(application)
+      {:ok, %Application{}}
+
+      iex> delete_application(application)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_application(%Application{} = application) do
+    Repo.delete(application)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking application changes.
+
+  ## Examples
+
+      iex> change_application(application)
+      %Ecto.Changeset{data: %Application{}}
+
+  """
+  def change_application(%Application{} = application, attrs \\ %{}) do
+    Application.changeset(application, attrs)
+  end
+
+  alias Parzival.Companies.Company
+
+  @doc """
+  Returns the list of companies.
+
+  ## Examples
+
+      iex> list_companies()
+      [%Company{}, ...]
+
+  """
+  def list_companies(params \\ %{})
+
+  def list_companies(opts) when is_list(opts) do
+    Company
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_companies(flop) do
+    Flop.validate_and_run(Company, flop, for: Company)
+  end
+
+  def list_companies(%{} = flop, opts) when is_list(opts) do
+    Company
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Company)
+  end
+
+  @doc """
+  Gets a single company.
+
+  Raises `Ecto.NoResultsError` if the Company does not exist.
+
+  ## Examples
+
+      iex> get_company!(123)
+      %Company{}
+
+      iex> get_company!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_company!(id, opts \\ []) do
+    Company
+    |> apply_filters(opts)
+    |> Repo.get!(id)
+  end
+
+  @doc """
+  Creates a company.
+
+  ## Examples
+
+      iex> create_company(%{field: value})
+      {:ok, %Company{}}
+
+      iex> create_company(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_company(attrs \\ %{}) do
+    %Company{}
+    |> Company.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a company.
+
+  ## Examples
+
+      iex> update_company(company, %{field: new_value})
+      {:ok, %Company{}}
+
+      iex> update_company(company, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_company(%Company{} = company, attrs) do
+    company
+    |> Company.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a company.
+
+  ## Examples
+
+      iex> delete_company(company)
+      {:ok, %Company{}}
+
+      iex> delete_company(company)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_company(%Company{} = company) do
+    company
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.foreign_key_constraint(:error,
+      name: :users_company_id_fkey,
+      message: "This company can't be deleted, because recruiters are associated to it!"
+    )
+    |> Ecto.Changeset.foreign_key_constraint(:error,
+      name: :offers_company_id_fkey,
+      message: "This company can't be deleted, because job offers are associated to it!"
+    )
+    |> Repo.delete()
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking company changes.
+
+  ## Examples
+
+      iex> change_company(company)
+      %Ecto.Changeset{data: %Company{}}
+
+  """
+  def change_company(%Company{} = company, attrs \\ %{}) do
+    Company.changeset(company, attrs)
+  end
+
+  alias Parzival.Companies.Level
+
+  @doc """
+  Returns the list of levels.
+
+  ## Examples
+
+      iex> list_levels()
+      [%Level{}, ...]
+
+  """
+  def list_levels(params \\ %{})
+
+  def list_levels(opts) when is_list(opts) do
+    Level
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_levels(flop) do
+    Flop.validate_and_run(Level, flop, for: Level)
+  end
+
+  def list_levels(%{} = flop, opts) when is_list(opts) do
+    Level
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Level)
+  end
+
+  @doc """
+  Gets a single level.
+
+  Raises `Ecto.NoResultsError` if the Level does not exist.
+
+  ## Examples
+
+      iex> get_level!(123)
+      %Level{}
+
+      iex> get_level!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_level!(id), do: Repo.get!(Level, id)
+
+  @doc """
+  Creates a level.
+
+  ## Examples
+
+      iex> create_level(%{field: value})
+      {:ok, %Level{}}
+
+      iex> create_level(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_level(attrs \\ %{}) do
+    %Level{}
+    |> Level.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a level.
+
+  ## Examples
+
+      iex> update_level(level, %{field: new_value})
+      {:ok, %Level{}}
+
+      iex> update_level(level, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_level(%Level{} = level, attrs) do
+    level
+    |> Level.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a level.
+
+  ## Examples
+
+      iex> delete_level(level)
+      {:ok, %Level{}}
+
+      iex> delete_level(level)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_level(%Level{} = level) do
+    Repo.delete(level)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking level changes.
+
+  ## Examples
+
+      iex> change_level(level)
+      %Ecto.Changeset{data: %Level{}}
+
+  """
+  def change_level(%Level{} = level, attrs \\ %{}) do
+    Level.changeset(level, attrs)
+  end
+
   alias Parzival.Companies.Offer
 
   @doc """
@@ -108,7 +449,13 @@ defmodule Parzival.Companies do
 
   """
   def delete_offer(%Offer{} = offer) do
-    Repo.delete(offer)
+    offer
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.foreign_key_constraint(:applications,
+      name: :applications_offer_id_fkey,
+      message: "This offer can't be deleted, because users have applied to it!"
+    )
+    |> Repo.delete()
   end
 
   @doc """
@@ -122,116 +469,6 @@ defmodule Parzival.Companies do
   """
   def change_offer(%Offer{} = offer, attrs \\ %{}) do
     Offer.changeset(offer, attrs)
-  end
-
-  alias Parzival.Companies.Company
-
-  @doc """
-  Returns the list of companies.
-
-  ## Examples
-
-      iex> list_companies()
-      [%Company{}, ...]
-
-  """
-  def list_companies(params \\ %{})
-
-  def list_companies(opts) when is_list(opts) do
-    Company
-    |> apply_filters(opts)
-    |> Repo.all()
-  end
-
-  def list_companies(flop) do
-    Flop.validate_and_run(Company, flop, for: Company)
-  end
-
-  def list_companies(%{} = flop, opts) when is_list(opts) do
-    Company
-    |> apply_filters(opts)
-    |> Flop.validate_and_run(flop, for: Company)
-  end
-
-  @doc """
-  Gets a single company.
-
-  Raises `Ecto.NoResultsError` if the Company does not exist.
-
-  ## Examples
-
-      iex> get_company!(123)
-      %Company{}
-
-      iex> get_company!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_company!(id), do: Repo.get!(Company, id)
-
-  @doc """
-  Creates a company.
-
-  ## Examples
-
-      iex> create_company(%{field: value})
-      {:ok, %Company{}}
-
-      iex> create_company(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_company(attrs \\ %{}) do
-    %Company{}
-    |> Company.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a company.
-
-  ## Examples
-
-      iex> update_company(company, %{field: new_value})
-      {:ok, %Company{}}
-
-      iex> update_company(company, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_company(%Company{} = company, attrs) do
-    company
-    |> Company.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a company.
-
-  ## Examples
-
-      iex> delete_company(company)
-      {:ok, %Company{}}
-
-      iex> delete_company(company)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_company(%Company{} = company) do
-    Repo.delete(company)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking company changes.
-
-  ## Examples
-
-      iex> change_company(company)
-      %Ecto.Changeset{data: %Company{}}
-
-  """
-  def change_company(%Company{} = company, attrs \\ %{}) do
-    Company.changeset(company, attrs)
   end
 
   alias Parzival.Companies.OfferType
@@ -452,116 +689,6 @@ defmodule Parzival.Companies do
   """
   def change_offer_time(%OfferTime{} = offer_time, attrs \\ %{}) do
     OfferTime.changeset(offer_time, attrs)
-  end
-
-  alias Parzival.Companies.Application
-
-  @doc """
-  Returns the list of applications.
-
-  ## Examples
-
-      iex> list_applications()
-      [%Application{}, ...]
-
-  """
-  def list_applications(params \\ %{})
-
-  def list_applications(opts) when is_list(opts) do
-    Application
-    |> apply_filters(opts)
-    |> Repo.all()
-  end
-
-  def list_applications(flop) do
-    Flop.validate_and_run(Application, flop, for: Application)
-  end
-
-  def list_applications(%{} = flop, opts) when is_list(opts) do
-    Application
-    |> apply_filters(opts)
-    |> Flop.validate_and_run(flop, for: Application)
-  end
-
-  @doc """
-  Gets a single application.
-
-  Raises `Ecto.NoResultsError` if the Application does not exist.
-
-  ## Examples
-
-      iex> get_application!(123)
-      %Application{}
-
-      iex> get_application!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_application!(id), do: Repo.get!(Application, id)
-
-  @doc """
-  Creates a application.
-
-  ## Examples
-
-      iex> create_application(%{field: value})
-      {:ok, %Application{}}
-
-      iex> create_application(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_application(attrs \\ %{}) do
-    %Application{}
-    |> Application.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a application.
-
-  ## Examples
-
-      iex> update_application(application, %{field: new_value})
-      {:ok, %Application{}}
-
-      iex> update_application(application, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_application(%Application{} = application, attrs) do
-    application
-    |> Application.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a application.
-
-  ## Examples
-
-      iex> delete_application(application)
-      {:ok, %Application{}}
-
-      iex> delete_application(application)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_application(%Application{} = application) do
-    Repo.delete(application)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking application changes.
-
-  ## Examples
-
-      iex> change_application(application)
-      %Ecto.Changeset{data: %Application{}}
-
-  """
-  def change_application(%Application{} = application, attrs \\ %{}) do
-    Application.changeset(application, attrs)
   end
 
   def is_user_applied?(%Offer{} = offer, %User{} = user) do

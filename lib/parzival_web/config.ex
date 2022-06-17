@@ -96,6 +96,12 @@ defmodule ParzivalWeb.Config do
         tabs: []
       },
       %{
+        key: :leaderboard,
+        title: "Leaderboard",
+        url: Routes.leaderboard_index_path(conn, :index),
+        tabs: []
+      },
+      %{
         key: :jobs,
         title: "Jobs",
         url: Routes.offer_index_path(conn, :index),
@@ -105,12 +111,6 @@ defmodule ParzivalWeb.Config do
         key: :companies,
         title: "Companies",
         url: Routes.company_index_path(conn, :index),
-        tabs: []
-      },
-      %{
-        key: :curriculum,
-        title: "Curriculum",
-        url: Routes.curriculum_index_path(conn, :index),
         tabs: []
       },
       %{
@@ -159,6 +159,12 @@ defmodule ParzivalWeb.Config do
           },
           %{
             key: :missions,
+            title: "Leaderboard",
+            url: Routes.leaderboard_index_path(conn, :index),
+            tabs: []
+          },
+          %{
+            key: :missions,
             title: "Dificulties",
             url: Routes.admin_dificulty_index_path(conn, :index)
           }
@@ -188,9 +194,20 @@ defmodule ParzivalWeb.Config do
       },
       %{
         key: :companies,
-        title: "Companies",
+        title: "Sponsors",
         url: Routes.company_index_path(conn, :index),
-        tabs: []
+        tabs: [
+          %{
+            key: :companies,
+            title: "Companies",
+            url: Routes.company_index_path(conn, :index)
+          },
+          %{
+            key: :levels,
+            title: "Levels",
+            url: Routes.admin_level_index_path(conn, :index)
+          }
+        ]
       },
       %{
         key: :store,

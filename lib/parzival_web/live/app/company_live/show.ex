@@ -18,10 +18,27 @@ defmodule ParzivalWeb.App.CompanyLive.Show do
      socket
      |> assign(:current_page, :companies)
      |> assign(:page_title, "Show company")
-     |> assign(:company, Companies.get_company!(id))
+     |> assign(:company, Companies.get_company!(id, preloads: :level))
      |> assign(:params, params)
      |> assign(:recruiters, list_recruiters(params))
      |> assign(list_offers(params))}
+  end
+
+  @impl true
+  def handle_event("delete", _payload, socket) do
+    case Companies.delete_company(socket.assigns.company) do
+      {:ok, _company} ->
+        {:noreply,
+         socket
+         |> put_flash(:success, "Company deleted successfully!")
+         |> push_redirect(to: Routes.company_index_path(socket, :index))}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, elem(changeset.errors[:error], 0))
+         |> assign(:changeset, changeset)}
+    end
   end
 
   defp list_offers(%{"id" => id} = params) do

@@ -112,11 +112,11 @@
             </tr>
           <% end %>
 
-          <%= if @curriculum.experience do %>
+          <%= if @curriculum.experiences do %>
             <tr class="mt-10 w-full">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EXPERIENCE</p>
-                <%= for experience <- @curriculum.experience do %>
+                <%= for experience <- @curriculum.experiences do %>
                   <% n_total_months =
                     Enum.reduce(experience.positions, 0, fn position, acc ->
                       if position.current do
@@ -171,11 +171,11 @@
             </tr>
           <% end %>
 
-          <%= if @curriculum.education do %>
+          <%= if @curriculum.educations do %>
             <tr class="mt-8 w-full">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EDUCATION</p>
-                <%= for education <- @curriculum.education do %>
+                <%= for education <- @curriculum.educations do %>
                   <div class="mt-4">
                     <p class="text-xl font-medium">
                       <%= education.institution %>
@@ -192,26 +192,26 @@
             </tr>
           <% end %>
 
-          <%= if @curriculum.volunteering do %>
+          <%= if @curriculum.volunteerings do %>
             <tr class="mt-10 w-full">
               <td>
                 <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">VOLUNTEERING</p>
-                <%= for voluntary <- @curriculum.volunteering do %>
+                <%= for volunteering <- @curriculum.volunteerings do %>
                   <div class="mt-4">
                     <p class="text-xl font-medium">
-                      <%= voluntary.position %>
+                      <%= volunteering.position %>
                     </p>
                     <p class="text-sm">
-                      <%= voluntary.institution %>
+                      <%= volunteering.institution %>
                     </p>
                     <p style="color: rgb(156,163,175)" class="text-sm">
-                      <%= Calendar.strftime(voluntary.start, "%b %Y") %> - <%= Calendar.strftime(voluntary.finish, "%b %Y") %> ·
-                      <%= if Timex.diff(voluntary.finish, voluntary.start, :years) > 0 do %>
-                        <%= Timex.diff(voluntary.finish, voluntary.start, :years) %>yrs
+                      <%= Calendar.strftime(volunteering.start, "%b %Y") %> - <%= Calendar.strftime(volunteering.finish, "%b %Y") %> ·
+                      <%= if Timex.diff(volunteering.finish, volunteering.start, :years) > 0 do %>
+                        <%= Timex.diff(volunteering.finish, volunteering.start, :years) %>yrs
                       <% end %>
 
-                      <%= if rem(Timex.diff(voluntary.finish, voluntary.start, :months), 12) != 0 do %>
-                        <%= rem(Timex.diff(voluntary.finish, voluntary.start, :months), 12) %>mos
+                      <%= if rem(Timex.diff(volunteering.finish, volunteering.start, :months), 12) != 0 do %>
+                        <%= rem(Timex.diff(volunteering.finish, volunteering.start, :months), 12) %>mos
                       <% end %>
                     </p>
                   </div>

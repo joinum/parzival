@@ -21,7 +21,7 @@
                     </div>
                   <% end %>
                   <div class="py-1" role="none">
-                    <%= link("Profile", to: Routes.profile_index_path(@socket, :index), class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>
+                    <%= link("Profile", to: Routes.profile_index_path(@socket, :index, @current_user), class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>
                   </div>
                   <div class="py-1" role="none">
                     <%= link("Sign Out", to: Routes.user_session_path(@socket, :delete), method: :delete, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900") %>

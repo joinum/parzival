@@ -1,4 +1,4 @@
-<div class="h-full bg-white border-r border-gray-200">
+<div class="min-h-full bg-white border-r border-gray-200">
   <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
     <div class="flex justify-between items-center h-10">
       <h1 class="flex-1 text-lg font-medium">Companies</h1>
@@ -32,7 +32,7 @@
     <%= for company <- @companies do %>
       <%= live_redirect to: Routes.company_show_path(@socket, :show, company) do %>
         <li id={"company-#{company.id}"} class="relative pr-6 border-b border-gray-200 hover:bg-gray-50">
-          <div class="flex justify-between">
+          <div class="flex justify-between items-center">
             <div class="py-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6">
               <div class="flex items-center">
                 <div class="flex-shrink-0 w-10 h-10">
@@ -48,6 +48,11 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div>
+              <span class={"inline-flex items-center justify-center px-2 text-xs font-semibold leading-5 border #{border_200(company.level.color)} #{bg_100(company.level.color)} rounded-full"}>
+                <%= company.level.name %>
+              </span>
             </div>
           </div>
         </li>

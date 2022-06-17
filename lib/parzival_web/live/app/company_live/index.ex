@@ -21,7 +21,7 @@ defmodule ParzivalWeb.App.CompanyLive.Index do
   end
 
   defp list_companies(params) do
-    case Companies.list_companies(params) do
+    case Companies.list_companies(params, preloads: :level) do
       {:ok, {companies, meta}} ->
         %{companies: companies, meta: meta}
 

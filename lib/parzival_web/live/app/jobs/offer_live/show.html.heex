@@ -1,49 +1,16 @@
-<div class="min-h-full">
-  <header class="pt-8 pb-6">
-    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 xl:flex xl:justify-between">
-      <div class="flex-1 min-w-0">
-        <%= live_redirect("< Back", to: Routes.offer_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
-        <h1 class="mt-6 text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-          <%= @offer.title %>
-        </h1>
-        <div class="flex flex-col mt-1">
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.briefcase class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= @offer.offer_type.name %>
-          </div>
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.clock class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= @offer.offer_time.name %>
-          </div>
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.location_marker class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= @offer.location %>
-          </div>
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.currency_euro class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= "#{@offer.minimum_salary}€ - #{@offer.maximum_salary}€" %>
-          </div>
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.calendar class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= relative_datetime(@offer.inserted_at) %>
-          </div>
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.users class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= @offer.applied %> applications
-          </div>
-        </div>
-      </div>
-
-      <%= if @current_user.role in [:admin, :recruiter] do %>
-        <div class="flex mt-5 space-x-2 xl:mt-0 xl:ml-4">
-          <span>
-            <%= live_patch to: Routes.offer_edit_path(@socket, :edit, @offer), class: "inline-flex items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" do %>
+<div class="min-h-full bg-white border-r border-gray-200">
+  <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+    <div class="flex justify-between items-center h-10">
+      <h1 class="flex-1 text-lg font-medium">Job Offer</h1>
+      <!-- Action buttons -->
+      <%= if @current_user.role in [:admin] || @current_user.role in [:recruiter] && @current_user.company_id == @offer.company_id do %>
+        <div class="flex flex-row gap-x-4">
+          <%= live_patch to: Routes.offer_edit_path(@socket, :edit, @offer), class: "button" do %>
+            <div type="button" class="inline-flex justify-center py-2 px-4 w-full text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
               <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" /> Edit
-            <% end %>
-          </span>
-          <span>
-            <%= link("Delete", to: "#", phx_click: "delete", phx_value_id: @offer.id, data: [confirm: "Are you sure?"], class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
-          </span>
+            </div>
+          <% end %>
+          <%= link("Delete", to: "#", phx_click: "delete", data: [confirm: "Are you sure?"], class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
         </div>
       <% end %>
       <%= if @current_user.role in [:attendee] do %>
@@ -58,10 +25,44 @@
         </div>
       <% end %>
     </div>
-  </header>
+  </div>
 
-  <main class="">
-    <div class="px-6 mx-auto max-w-7xl lg:px-8">
+  <div class="flex flex-col py-6 px-4 mx-auto w-full border-b border-gray-200 sm:px-6 md:border-0 lg:px-8">
+    <div>
+      <%= live_redirect("< Back", to: Routes.offer_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
+    </div>
+    <div class="flex-1 min-w-0">
+      <h1 class="mt-6 text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+        <%= @offer.title %>
+      </h1>
+      <div class="flex flex-col mt-1">
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.briefcase class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= @offer.offer_type.name %>
+        </div>
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.clock class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= @offer.offer_time.name %>
+        </div>
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.location_marker class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= @offer.location %>
+        </div>
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.currency_euro class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= "#{@offer.minimum_salary}€ - #{@offer.maximum_salary}€" %>
+        </div>
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.calendar class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= relative_datetime(@offer.inserted_at) %>
+        </div>
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.users class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= @offer.applied %> applications
+        </div>
+      </div>
+    </div>
+    <div class="mt-6">
       <div>
         <h2 class="text-lg font-medium text-gray-900">
           Description
@@ -94,7 +95,7 @@
         </div>
       <% end %>
 
-      <%= if @current_user.role == :recruiter do %>
+      <%= if @current_user.role in [:admin] || @current_user.role in [:recruiter] && @current_user.company_id == @offer.company_id do %>
         <div class="px-4 pt-6 sm:px-0">
           <h2 class="text-lg font-medium text-gray-900">
             Candidates
@@ -107,65 +108,47 @@
         <ul role="list" class="mt-5 border-t border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
           <%= for application <- @applications do %>
             <li>
-              <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0">
-                <div class="flex flex-1 items-center min-w-0">
-                  <div class="flex-shrink-0">
-                    <span class="inline-flex justify-center items-center mr-2 w-12 h-12 rounded-full group-hover:opacity-75 bg-secondary">
-                      <span class="text-lg font-medium leading-none text-white">
-                        <%= extract_initials(application.user.name) %>
-                      </span>
-                    </span>
-                  </div>
-                  <div class="flex-1 px-4 min-w-0 md:grid md:grid-cols-2 md:gap-4">
-                    <div>
-                      <p class="text-sm font-medium text-red-600 truncate">
-                        <%= application.user.name %>
-                      </p>
-                      <p class="flex items-center mt-2 text-sm text-gray-500">
-                        <Heroicons.Solid.mail class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-                        <span class="truncate">
-                          <%= application.user.email %>
+              <%= live_patch to: Routes.profile_index_path(@socket, :index, application.user), class: "group" do %>
+                <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0">
+                  <div class="flex flex-1 items-center min-w-0">
+                    <div class="flex-shrink-0">
+                      <span class="inline-flex justify-center items-center mr-2 w-12 h-12 rounded-full group-hover:opacity-75 bg-secondary">
+                        <span class="text-lg font-medium leading-none text-white">
+                          <%= extract_initials(application.user.name) %>
                         </span>
-                      </p>
+                      </span>
                     </div>
-                    <div class="hidden md:block">
+                    <div class="flex-1 px-4 min-w-0 md:grid md:grid-cols-2 md:gap-4">
                       <div>
-                        <p class="text-sm text-gray-900">
-                          Applied <%= relative_datetime(application.inserted_at) %>
+                        <p class="text-sm font-medium text-red-600 truncate">
+                          <%= application.user.name %>
                         </p>
+                        <p class="flex items-center mt-2 text-sm text-gray-500">
+                          <Heroicons.Solid.mail class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+                          <span class="truncate">
+                            <%= application.user.email %>
+                          </span>
+                        </p>
+                      </div>
+                      <div class="hidden md:block">
+                        <div>
+                          <p class="text-sm text-gray-900">
+                            Applied <%= relative_datetime(application.inserted_at) %>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div>
+                    <Heroicons.Solid.chevron_right class="w-5 h-5 text-gray-400 group-hover:text-gray-700" />
+                  </div>
                 </div>
-                <div>
-                  <Heroicons.Solid.chevron_right class="w-5 h-5 text-gray-400 group-hover:text-gray-700" />
-                </div>
-              </div>
+              <% end %>
             </li>
           <% end %>
         </ul>
-        <nav class="flex justify-between items-center px-4 border-t border-gray-200 sm:px-0" aria-label="Pagination">
-          <div class="flex flex-1 -mt-px w-0">
-            <a href="#" class="inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">
-              <Heroicons.Solid.arrow_narrow_left class="mr-3 w-5 h-5 text-gray-400" /> Previous
-            </a>
-          </div>
-          <div class="hidden md:flex md:-mt-px">
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">1</a>
-            <!-- Current: "border-red-500 text-red-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200" -->
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-red-600 border-t-2 border-red-500" aria-current="page">2</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">3</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">4</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">5</a>
-            <a href="#" class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">6</a>
-          </div>
-          <div class="flex flex-1 justify-end -mt-px w-0">
-            <a href="#" class="inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:text-gray-700 hover:border-gray-200">
-              Next <Heroicons.Solid.arrow_narrow_right class="ml-3 w-5 h-5 text-gray-400" />
-            </a>
-          </div>
-        </nav>
+        <.pagination items={@applications} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
       <% end %>
     </div>
-  </main>
+  </div>
 </div>

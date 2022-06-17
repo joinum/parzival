@@ -17,7 +17,7 @@
   }
 } %>
 
-<div class="h-full bg-white border-r border-gray-200">
+<div class="block h-full bg-white border-r border-gray-200">
   <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
     <div class="flex justify-between items-center h-10">
       <h1 class="flex-1 text-lg font-medium"><%= roles[@current_tab].title %></h1>
@@ -48,7 +48,7 @@
       <%= live_patch(to: Routes.admin_user_show_path(@socket, :show, user)) do %>
         <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
           <div class="flex justify-between">
-            <div class="py-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6">
+            <div class="py-4 text-sm whitespace-nowrap">
               <div class="flex items-center">
                 <div class="flex-shrink-0 w-10 h-10">
                   <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
@@ -61,16 +61,23 @@
                   <div class="font-medium text-gray-900">
                     <%= user.name %>
                   </div>
-                  <div class="hidden text-gray-500 md:block"><%= user.email %></div>
+                  <div class="text-gray-500">
+                    <%= case @current_tab do %>
+                      <% :attendee -> %>
+                        <%= user.cycle %> in <%= user.course %>
+                      <% :recruiter -> %>
+                        <%= user.company.name %>
+                      <% _ -> %>
+                        <%= user.email %>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="flex items-center py-4 px-3 text-sm text-gray-900 whitespace-nowrap">Front-end Developer</div>
           </div>
         </li>
       <% end %>
     <% end %>
   </ul>
-
   <.pagination items={@users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
 </div>
