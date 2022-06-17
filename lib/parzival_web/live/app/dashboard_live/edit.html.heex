@@ -1,3 +1,1 @@
-<div id="curriculum-edit" phx-update="ignore">
-  <.live_component id={@user.curriculum.id || :new} module={ParzivalWeb.App.DashboardLive.FormComponent} curriculum={@user.curriculum} user={@user} announcements={@announcements} action={@live_action} return_to={Routes.dashboard_index_path(@socket, :index)} />
-</div>
+<.live_component id={@user.curriculum.id || :new} module={ParzivalWeb.App.DashboardLive.FormComponent} curriculum={@user.curriculum} user={@user} announcements={@announcements} action={@live_action} return_to={Routes.dashboard_index_path(@socket, :index)} />
