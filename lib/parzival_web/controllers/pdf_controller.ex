@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.PdfController do
+defmodule ParzivalWeb.App.PdfController do
   use ParzivalWeb, :controller
 
   alias Parzival.Accounts

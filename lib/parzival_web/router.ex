@@ -52,18 +52,43 @@ defmodule ParzivalWeb.Router do
     live_session :logged_in, on_mount: [{ParzivalWeb.Hooks, :current_user}] do
       scope "/app", App do
         live "/", DashboardLive.Index, :index
-        live "/dashboard/curriculum", DashboardLive.Edit, :edit
+
+        scope "/curriculum" do
+          pipe_through [:require_curriculum_attendee]
+          live "/:id/edit", DashboardLive.Edit, :edit
+        end
+
+        live "/leaderboard/", LeaderboardLive.Index, :index
+
+        live "/profile/:id", ProfileLive.Show, :show
+        live "/profile/:id/edit", ProfileLive.Edit, :edit
+
+        live "/announcements", AnnouncementLive.Index, :index
+        live "/announcements/:id", AnnouncementLive.Show, :show
+
+        live "/missions", MissionLive.Index, :index
+
+        scope "/vault" do
+          live "/", OrderLive.Index, :index
+
+          pipe_through [:require_order_attendee]
+          live "/:id", OrderLive.Show, :show
+        end
+
+        scope "/cv" do
+          get "/preview", PdfController, :cv_preview
+          get "/:attendee_id", PdfController, :cv
+        end
 
         scope "/offers" do
           live "/", OfferLive.Index, :index
-          live "/:id", OfferLive.Show, :show
 
           scope "/new" do
             pipe_through [:require_admin_or_recruiter]
             live "/", OfferLive.New, :new
           end
 
-        live "/leaderboard/", LeaderboardLive.Index, :index
+          live "/:id", OfferLive.Show, :show
 
           pipe_through [:require_admin_or_company_recruiter]
           live "/:id/edit", OfferLive.Edit, :edit
@@ -81,14 +106,6 @@ defmodule ParzivalWeb.Router do
           live "/store/:id", ProductLive.Show, :show
         end
 
-        live "/vault", OrderLive.Index, :index
-        live "/vault/:id", OrderLive.Show, :show
-
-        live "/announcements", AnnouncementLive.Index, :index
-        live "/announcements/:id", AnnouncementLive.Show, :show
-
-        live "/missions", MissionLive.Index, :index
-
         scope "/missions", MissionLive do
           pipe_through [:require_level]
           live "/:id", Show, :show
@@ -96,9 +113,6 @@ defmodule ParzivalWeb.Router do
           live "/:id/tasks/:task_id", TaskLive.Show, :show
           live "/:id/tasks/:task_id/redeem", TaskLive.Show, :redeem
         end
-
-        live "/profile/:id", ProfileLive.Show, :show
-        live "/profile/:id/edit", ProfileLive.Edit, :edit
       end
 
       scope "/admin", Backoffice, as: :admin do
@@ -108,7 +122,7 @@ defmodule ParzivalWeb.Router do
           live "/", UserLive.Index, :index
 
           pipe_through [:require_admin]
-          live "/accounts/new", UserLive.New, :new
+          live "/new", UserLive.New, :new
         end
 
         scope "/companies" do
@@ -129,6 +143,7 @@ defmodule ParzivalWeb.Router do
         end
 
         scope "/companies" do
+          pipe_through [:require_admin]
           live "/levels/", LevelLive.Index, :index
           live "/levels/new", LevelLive.Index, :new
           live "/levels/:id/edit", LevelLive.Index, :edit
@@ -166,8 +181,6 @@ defmodule ParzivalWeb.Router do
     get "/settings", UserSettingsController, :edit
     put "/settings", UserSettingsController, :update
     get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
-    get "/cv/:attendee_id", PdfController, :cv
-    get "/cv/preview", PdfController, :cv_preview
   end
 
   scope "/", ParzivalWeb do

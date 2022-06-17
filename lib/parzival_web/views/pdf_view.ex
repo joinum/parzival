@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.PdfView do
+defmodule ParzivalWeb.App.PdfView do
   use ParzivalWeb, :view
 
   require Integer

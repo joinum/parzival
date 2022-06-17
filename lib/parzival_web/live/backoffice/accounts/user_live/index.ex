@@ -86,13 +86,13 @@ defmodule ParzivalWeb.Backoffice.UserLive.Index do
 
   def user_list_entry(assigns) do
     ~H"""
-    <li id={"user-#{assigns.user.id}"} class="relative pl-4 pr-6 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
+    <li id={"user-#{assigns.user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
       <div class="flex justify-between">
-        <div class="py-4 pl-4 pr-3 text-sm whitespace-nowrap sm:pl-6">
+        <div class="py-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6">
           <div class="flex items-center">
             <div class="flex-shrink-0 w-10 h-10">
               <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({assigns.user.picture, assigns.user}, :original)) do %>
-                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-secondary">
+                <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
                   <span class="text-lg font-medium leading-none text-white">
                     <%= extract_initials(assigns.user.name) %>
                   </span>
@@ -108,7 +108,7 @@ defmodule ParzivalWeb.Backoffice.UserLive.Index do
                 <%= assigns.user.name %>
               </div>
               <div class="text-gray-500">
-                <%= case @assigns.current_tab do %>
+                <%= case assigns.current_tab do %>
                   <% :attendee -> %>
                     <%= assigns.user.cycle %> in <%= assigns.user.course %>
                   <% :recruiter -> %>

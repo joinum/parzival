@@ -279,6 +279,12 @@ defmodule ParzivalWeb.Config do
             url: Routes.announcement_index_path(conn, :index)
           }
         ]
+      },
+      %{
+        key: :vault,
+        title: "Vault",
+        url: Routes.order_index_path(conn, :index),
+        tabs: []
       }
     ]
   end
@@ -287,9 +293,21 @@ defmodule ParzivalWeb.Config do
     [
       %{
         key: :missions,
-        title: "Missions",
+        title: "Gamification",
         url: Routes.mission_index_path(conn, :index),
-        tabs: []
+        tabs: [
+          %{
+            key: :missions,
+            title: "Missions",
+            url: Routes.mission_index_path(conn, :index)
+          },
+          %{
+            key: :missions,
+            title: "Leaderboard",
+            url: Routes.leaderboard_index_path(conn, :index),
+            tabs: []
+          }
+        ]
       },
       %{
         key: :jobs,
@@ -355,6 +373,12 @@ defmodule ParzivalWeb.Config do
         key: :announcements,
         title: "Announcements",
         url: Routes.announcement_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :vault,
+        title: "Vault",
+        url: Routes.order_index_path(conn, :index),
         tabs: []
       }
     ]

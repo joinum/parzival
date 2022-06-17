@@ -1,0 +1,294 @@
+<main x-data="{option: 'profile'}" class="overflow-y-auto relative z-0 flex-1 mb-4 min-h-screen border-r border-gray-200 xl:order-last focus:outline-none">
+  <article>
+    <!-- Profile header -->
+    <div>
+      <div>
+        <img class="object-cover w-full h-32 lg:h-48" src={Routes.static_path(@socket, "/images/banner.svg")} alt="" />
+      </div>
+      <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
+        <div class="-mt-12 sm:flex sm:items-end sm:-mt-16 sm:space-x-5">
+          <div class="flex">
+            <div class="flex-shrink-0 w-24 h-24 rounded-full ring-4 ring-white sm:w-32 sm:h-32">
+              <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
+                <span class="text-4xl font-medium leading-none text-white sm:text-5xl">
+                  <%= extract_initials(@user.name) %>
+                </span>
+              </span>
+            </div>
+          </div>
+          <div class="mt-6 sm:flex sm:flex-1 sm:justify-end sm:items-center sm:pb-1 sm:space-x-6 sm:min-w-0">
+            <div class="flex-1 mt-6 min-w-0 sm:hidden 2xl:block">
+              <h1 class="text-2xl font-bold text-gray-900 truncate">
+                <%= @user.name %>
+              </h1>
+            </div>
+            <div class="flex flex-col mt-6 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
+              <a href={"mailto:#{@user.name}"} type="button" class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50">
+                <Heroicons.Solid.mail class="mr-2 -ml-1 w-5 h-5 text-gray-400" />
+                <span>Message</span>
+              </a>
+            </div>
+
+            <div class="flex flex-col mt-6 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
+              <%= live_patch to: Routes.admin_user_edit_path(@socket, :edit, @user), class: "inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" do %>
+                <Heroicons.Solid.pencil class="mr-2 -ml-1 w-5 h-5 text-gray-400" /> Edit
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="hidden flex-1 mt-6 min-w-0 sm:block 2xl:hidden">
+          <h1 class="text-2xl font-bold text-gray-900 truncate">
+            <%= @user.name %>
+          </h1>
+        </div>
+      </div>
+    </div>
+    <!-- Tabs -->
+    <div class="mt-6 sm:mt-2 2xl:mt-5">
+      <div class="border-b border-gray-200">
+        <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
+          <nav class="flex -mb-px space-x-8" aria-label="Tabs">
+            <button
+              x-on:click="option = 'profile'"
+              x-bind:class="option =='profile' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+              class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+            >
+              Profile
+            </button>
+
+            <%= if @user.role == :attendee do %>
+              <button
+                x-on:click="option = 'curriculum'"
+                x-bind:class="option =='curriculum' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+              >
+                Curriculum
+              </button>
+            <% end %>
+
+            <%= if @user.role == :recruiter do %>
+              <button
+                x-on:click="option = 'company'"
+                x-bind:class="option =='company' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+              >
+                Company
+              </button>
+            <% end %>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!-- Profile -->
+    <div x-bind:class="option =='profile' ? 'block' : 'hidden'" class="px-4 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+        <%= if @user.company do %>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Company</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <%= @user.company.name %>
+            </dd>
+          </div>
+        <% end %>
+
+        <%= if @user.course do %>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Course</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <%= @user.cycle %> in <%= @user.course %>
+            </dd>
+          </div>
+        <% end %>
+
+        <%= if @user.cellphone do %>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Phone</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <%= @user.cellphone %>
+            </dd>
+          </div>
+        <% end %>
+
+        <%= if @user.email do %>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Email</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <%= @user.email %>
+            </dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+    <!-- Curriculum -->
+    <%= if @user.role == :attendee do %>
+      <div x-bind:class="option =='curriculum' ? 'block' : 'hidden'" class="px-4 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
+        <dl class="flex flex-col space-y-8">
+          <%= if assigns[:curriculum] do %>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">About</dt>
+              <dd class="mt-1 text-sm text-gray-900">
+                <p>
+                  <%= @curriculum.summary %>
+                </p>
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Experience</dt>
+              <dd class="mt-1 space-y-1 text-sm text-gray-900">
+                <%= for experience <- @curriculum.experiences do %>
+                  <div>
+                    <p class="text-sm font-bold">
+                      <%= experience.organization %>
+                    </p>
+                    <div class="flow-root pl-4 ml-2 border-l border-gray-200">
+                      <ul role="list" class="mt-0.5">
+                        <%= for position <- experience.positions do %>
+                          <li>
+                            <p class="font-semibold">
+                              <%= position.title %>
+                            </p>
+                            <p class="text-xs text-gray-400">
+                              Nov 2020 - Feb 2022 . 1yrs 3mos
+                            </p>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                <% end %>
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">
+                Education
+              </dt>
+              <dd class="mt-1 space-y-1 text-sm text-gray-900">
+                <%= for education <- @curriculum.educations do %>
+                  <div>
+                    <p class="text-sm font-bold">
+                      <%= education.institution %>
+                    </p>
+                    <p class="text-gray-700">
+                      <%= education.course %>
+                    </p>
+                    <p class="text-xs text-gray-400">
+                      2018 - 2022
+                    </p>
+                  </div>
+                <% end %>
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">
+                Volunteering
+              </dt>
+              <dd class="mt-1 space-y-1 text-sm text-gray-900">
+                <%= for volunteering <- @curriculum.volunteerings do %>
+                  <div>
+                    <p class="text-sm font-bold">
+                      <%= volunteering.position %>
+                    </p>
+                    <p class="text-gray-700">
+                      <%= volunteering.institution %>
+                    </p>
+                    <p class="text-xs text-gray-400">
+                      Nov 2020 - Feb 2022 . 1yrs 3mos
+                    </p>
+                  </div>
+                <% end %>
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">
+                Skills
+              </dt>
+              <dd class="grid grid-cols-2 mt-1 text-sm text-gray-900 sm:grid-cols-3 lg:grid-cols-4">
+                <%= for skill <- @curriculum.skills do %>
+                  <div>
+                    <p class="text-sm font-bold">
+                      <%= skill.name %>
+                    </p>
+                  </div>
+                <% end %>
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">
+                Languages
+              </dt>
+              <dd class="grid grid-cols-2 mt-1 space-y-1 text-sm text-gray-900 md:grid-cols-4">
+                <%= for language <- @curriculum.languages do %>
+                  <div>
+                    <p class="text-sm font-bold">
+                      <%= language.idiom %>
+                    </p>
+                    <p class="text-xs text-gray-400">
+                      <%= language.proficiency %>
+                    </p>
+                  </div>
+                <% end %>
+              </dd>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+    <% end %>
+    <!-- Company -->
+    <%= if @user.role == :recruiter do %>
+      <div x-bind:class="option =='company' ? 'block' : 'hidden'" class="px-4 pb-12 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
+        <%= live_redirect to: Routes.company_show_path(@socket, :show, @user.company), class: "mt-4 flex border border-gray-300 shadow-sm hover:bg-gray-50 px-6 py-6 rounded-md items-center" do %>
+          <div class="flex-shrink-0 mr-4 md:mb-4">
+            <span class="inline-flex justify-center items-center w-16 h-16 rounded-full md:w-24 md:h-24 bg-secondary">
+              <span class="text-3xl font-medium leading-none text-white md:text-5xl">
+                <%= extract_initials(@user.company.name) %>
+              </span>
+            </span>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold text-gray-800">
+              <%= @user.company.name %>
+            </h4>
+            <p class="hidden mt-1 text-gray-500 md:block">
+              <%= @user.company.description %>
+            </p>
+          </div>
+        <% end %>
+
+        <%= if assigns[:recruiters] do %>
+          <h2 class="mt-8 text-sm font-medium text-gray-500">
+            Team members
+          </h2>
+          <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2">
+            <%= for recruiter <- @recruiters do %>
+              <div class="flex relative items-center py-5 px-6 space-x-3 bg-white rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50">
+                <div class="flex-shrink-0 w-10 h-10">
+                  <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                    <span class="text-lg font-medium leading-none text-white">
+                      <%= extract_initials(recruiter.name) %>
+                    </span>
+                  </span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <%= live_redirect to: Routes.admin_user_show_path(@socket, :show, recruiter) do %>
+                    <span class="absolute inset-0" aria-hidden="true"></span>
+                    <p class="text-sm font-medium text-gray-900">
+                      <%= recruiter.name %>
+                    </p>
+                    <p class="text-sm text-gray-500 truncate">
+                      <%= recruiter.email %>
+                    </p>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </article>
+</main>
