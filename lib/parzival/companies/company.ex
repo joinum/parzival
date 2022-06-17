@@ -5,6 +5,7 @@ defmodule Parzival.Companies.Company do
   use Parzival.Schema
 
   alias Parzival.Accounts.User
+  alias Parzival.Companies.Level
   alias Parzival.Companies.Offer
   alias Parzival.Companies.Level
 

@@ -1,4 +1,5 @@
 defmodule ParzivalWeb.Backoffice.LevelLive.Index do
+  @moduledoc false
   use ParzivalWeb, :live_view
 
   import ParzivalWeb.Components.Pagination
