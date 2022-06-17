@@ -60,8 +60,6 @@ defmodule ParzivalWeb.Router do
         live "/offers/:id", OfferLive.Show, :show
         live "/offers/:id/edit", OfferLive.Edit, :edit
 
-        live "/scanner", ScannerLive.Index, :index
-
         live "/companies/", CompanyLive.Index, :index
         live "/companies/new", CompanyLive.New, :new
         live "/companies/:id", CompanyLive.Show, :show
@@ -74,7 +72,6 @@ defmodule ParzivalWeb.Router do
 
         live "/vault", OrderLive.Index, :index
         live "/vault/:id", OrderLive.Show, :show
-        live "/vault/redeem/:id", OrderLive.Edit, :edit
 
         live "/announcements", AnnouncementLive.Index, :index
         live "/announcements/:id", AnnouncementLive.Show, :show
@@ -87,13 +84,19 @@ defmodule ParzivalWeb.Router do
 
           live "/:id/tasks/:task_id", TaskLive.Show, :show
           live "/:id/tasks/:task_id/redeem", TaskLive.Show, :redeem
-
-          live "redeem/:task/:attendee", TaskUserLive.New, :new
         end
 
         live "/profile/:id", ProfileLive.Show, :show
         live "/profile/:id/edit", ProfileLive.Edit, :edit
+
+        scope "/staff", Staff, as: :staff do
+          live "/task_redeem/:task/:attendee", TaskUserLive.New, :new
+          live "/order_redeem/:id", OrderLive.Edit, :edit
+          live "/scanner", ScannerLive.Index, :index
+        end
       end
+
+
 
       scope "/admin", Backoffice, as: :admin do
         live "/accounts/", UserLive.Index, :index

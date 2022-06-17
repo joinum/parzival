@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.App.ScannerLive.Index do
+defmodule ParzivalWeb.App.Staff.ScannerLive.Index do
   @moduledoc false
   use ParzivalWeb, :live_view
 
@@ -11,7 +11,7 @@ defmodule ParzivalWeb.App.ScannerLive.Index do
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
+  def handle_params(_params, _url, socket) do
     {:noreply,
      socket
      |> assign(:current_page, :scanner)

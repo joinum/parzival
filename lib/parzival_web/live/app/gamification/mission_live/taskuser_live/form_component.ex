@@ -1,12 +1,11 @@
-defmodule ParzivalWeb.App.MissionLive.TaskUserLive.FormComponent do
+defmodule ParzivalWeb.App.Staff.TaskUserLive.FormComponent do
   @moduledoc false
   use ParzivalWeb, :live_component
 
   alias Parzival.Gamification
-  alias Parzival.Accounts
 
   @impl true
-  def update(%{attendee: attendee, task: task} = assigns, socket) do
+  def update(assigns, socket) do
 
     {:ok,
      socket
@@ -14,7 +13,7 @@ defmodule ParzivalWeb.App.MissionLive.TaskUserLive.FormComponent do
      |> assign(:changeset, nil)}
   end
 
-
+  @impl true
   def handle_event("save", __params, socket) do
     redeem_task(socket, socket.assigns.current_user, socket.assigns.attendee, socket.assigns.task)
   end
