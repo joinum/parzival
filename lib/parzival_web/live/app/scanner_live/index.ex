@@ -4,7 +4,6 @@ defmodule ParzivalWeb.App.Staff.ScannerLive.Index do
 
   import ParzivalWeb.Components.Pagination
 
-
   @impl true
   def mount(_params, _session, socket) do
     {:ok, socket}

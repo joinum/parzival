@@ -2,8 +2,8 @@ defmodule ParzivalWeb.App.Staff.TaskUserLive.New do
   @moduledoc false
   use ParzivalWeb, :live_view
 
-  alias Parzival.Gamification
   alias Parzival.Accounts
+  alias Parzival.Gamification
 
   @impl true
   def mount(_params, _session, socket) do

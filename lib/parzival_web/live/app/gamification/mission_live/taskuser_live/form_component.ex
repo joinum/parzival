@@ -6,7 +6,6 @@ defmodule ParzivalWeb.App.Staff.TaskUserLive.FormComponent do
 
   @impl true
   def update(assigns, socket) do
-
     {:ok,
      socket
      |> assign(assigns)
@@ -21,7 +20,6 @@ defmodule ParzivalWeb.App.Staff.TaskUserLive.FormComponent do
   defp redeem_task(socket, staff, attendee, task) do
     case Gamification.redeem_task(staff, attendee, task) do
       {:ok, __taskuser} ->
-
         {:noreply,
          socket
          |> put_flash(:success, "Task redeemed successfully")
@@ -33,5 +31,4 @@ defmodule ParzivalWeb.App.Staff.TaskUserLive.FormComponent do
          |> assign(changeset: changeset)}
     end
   end
-
 end

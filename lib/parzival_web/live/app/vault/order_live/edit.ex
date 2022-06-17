@@ -2,8 +2,8 @@ defmodule ParzivalWeb.App.Staff.OrderLive.Edit do
   @moduledoc false
   use ParzivalWeb, :live_view
 
-  alias Parzival.Store
   alias Parzival.Accounts
+  alias Parzival.Store
 
   @impl true
   def mount(_params, _session, socket) do

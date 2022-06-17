@@ -3,7 +3,6 @@ defmodule ParzivalWeb.App.OrderLive.FormComponent do
   use ParzivalWeb, :live_component
 
   alias Parzival.Store
-  alias Parzival.Accounts
 
   @impl true
   def update(%{order: order} = assigns, socket) do
@@ -31,5 +30,4 @@ defmodule ParzivalWeb.App.OrderLive.FormComponent do
         {:noreply, assign(socket, :changeset, changeset)}
     end
   end
-
 end

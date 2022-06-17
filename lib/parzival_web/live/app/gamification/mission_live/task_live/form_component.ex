@@ -11,7 +11,7 @@ defmodule ParzivalWeb.App.MissionLive.TaskLive.FormComponent do
   end
 
   defp qrcode(socket, task, user_id) do
-    Routes.mission_task_user_new_url(socket, :new, task.id,user_id)
+    Routes.mission_task_user_new_url(socket, :new, task.id, user_id)
     |> QRCodeEx.encode()
     |> QRCodeEx.svg(color: "#1F2937", width: 295, background_color: :transparent)
   end

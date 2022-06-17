@@ -59,8 +59,8 @@
       <%= if not @order.redeemed do %>
         <div class="flex justify-between mt-10">
           <div>
-            <%= checkbox f, :redeemed %>
-            <span class="text-gray-900 pl-4 sm:text-lg text-md">Deliver</span>
+            <%= checkbox(f, :redeemed) %>
+            <span class="pl-4 text-gray-900 sm:text-lg text-md">Deliver</span>
           </div>
           <div>
             <%= submit do %>
@@ -70,7 +70,7 @@
             <% end %>
           </div>
         </div>
-      <%= end %>
+      <% end %>
     </div>
   </.form>
 </div>
