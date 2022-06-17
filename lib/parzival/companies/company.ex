@@ -7,6 +7,7 @@ defmodule Parzival.Companies.Company do
   alias Parzival.Accounts.User
   alias Parzival.Companies.Level
   alias Parzival.Companies.Offer
+  alias Parzival.Companies.Level
 
   @required_fields ~w(name description level_id)a
 

@@ -1,49 +1,16 @@
-<div class="min-h-full border-r border-gray-200">
-  <header class="pt-8 pb-6">
-    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 xl:flex xl:justify-between">
-      <div class="flex-1 min-w-0">
-        <%= live_redirect("< Back", to: Routes.offer_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
-        <h1 class="mt-6 text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-          <%= @offer.title %>
-        </h1>
-        <div class="flex flex-col mt-1">
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.briefcase class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= @offer.offer_type.name %>
-          </div>
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.clock class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= @offer.offer_time.name %>
-          </div>
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.location_marker class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= @offer.location %>
-          </div>
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.currency_euro class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= "#{@offer.minimum_salary}€ - #{@offer.maximum_salary}€" %>
-          </div>
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.calendar class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= relative_datetime(@offer.inserted_at) %>
-          </div>
-          <div class="flex items-center mt-2 text-sm text-gray-500">
-            <Heroicons.Solid.users class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-            <%= @offer.applied %> applications
-          </div>
-        </div>
-      </div>
-
-      <%= if @current_user.role in [:admin, :recruiter] do %>
-        <div class="flex mt-5 space-x-2 xl:mt-0 xl:ml-4">
-          <span>
-            <%= live_patch to: Routes.offer_edit_path(@socket, :edit, @offer), class: "inline-flex items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" do %>
+<div class="min-h-full bg-white border-r border-gray-200">
+  <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+    <div class="flex justify-between items-center h-10">
+      <h1 class="flex-1 text-lg font-medium">Job Offer</h1>
+      <!-- Action buttons -->
+      <%= if @current_user.role in [:admin] || @current_user.role in [:recruiter] && @current_user.company_id == @offer.company_id do %>
+        <div class="flex flex-row gap-x-4">
+          <%= live_patch to: Routes.offer_edit_path(@socket, :edit, @offer), class: "button" do %>
+            <div type="button" class="inline-flex justify-center py-2 px-4 w-full text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
               <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" /> Edit
-            <% end %>
-          </span>
-          <span>
-            <%= link("Delete", to: "#", phx_click: "delete", phx_value_id: @offer.id, data: [confirm: "Are you sure?"], class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
-          </span>
+            </div>
+          <% end %>
+          <%= link("Delete", to: "#", phx_click: "delete", data: [confirm: "Are you sure?"], class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
         </div>
       <% end %>
       <%= if @current_user.role in [:attendee] do %>
@@ -58,10 +25,44 @@
         </div>
       <% end %>
     </div>
-  </header>
+  </div>
 
-  <main class="">
-    <div class="px-6 mx-auto max-w-7xl lg:px-8">
+  <div class="flex flex-col py-6 px-4 mx-auto w-full border-b border-gray-200 sm:px-6 md:border-0 lg:px-8">
+    <div>
+      <%= live_redirect("< Back", to: Routes.offer_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
+    </div>
+    <div class="flex-1 min-w-0">
+      <h1 class="mt-6 text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+        <%= @offer.title %>
+      </h1>
+      <div class="flex flex-col mt-1">
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.briefcase class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= @offer.offer_type.name %>
+        </div>
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.clock class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= @offer.offer_time.name %>
+        </div>
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.location_marker class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= @offer.location %>
+        </div>
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.currency_euro class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= "#{@offer.minimum_salary}€ - #{@offer.maximum_salary}€" %>
+        </div>
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.calendar class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= relative_datetime(@offer.inserted_at) %>
+        </div>
+        <div class="flex items-center mt-2 text-sm text-gray-500">
+          <Heroicons.Solid.users class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+          <%= @offer.applied %> applications
+        </div>
+      </div>
+    </div>
+    <div class="mt-6">
       <div>
         <h2 class="text-lg font-medium text-gray-900">
           Description
@@ -94,7 +95,7 @@
         </div>
       <% end %>
 
-      <%= if @current_user.role == :recruiter do %>
+      <%= if @current_user.role in [:admin] || @current_user.role in [:recruiter] && @current_user.company_id == @offer.company_id do %>
         <div class="px-4 pt-6 sm:px-0">
           <h2 class="text-lg font-medium text-gray-900">
             Candidates
@@ -149,5 +150,5 @@
         <.pagination items={@applications} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
       <% end %>
     </div>
-  </main>
+  </div>
 </div>

@@ -7,7 +7,7 @@ defmodule Parzival.Accounts do
   import Ecto.Query, warn: false
 
   alias Parzival.Accounts.{User, UserNotifier, UserToken}
-  alias Parzival.Repo
+  alias Parzival.Gamification
 
   def list_users(params \\ %{})
 
@@ -178,6 +178,17 @@ defmodule Parzival.Accounts do
     |> Map.put(:role, role)
     |> User.changeset(attrs)
     |> Repo.insert()
+    |> case do
+      {:ok, user} ->
+        if role in [:attendee] do
+          Gamification.create_curriculum(%{user_id: user.id})
+        end
+
+        {:ok, user}
+
+      error ->
+        error
+    end
   end
 
   @doc """
