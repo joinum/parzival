@@ -25,14 +25,16 @@
       <% else %>
         <Heroicons.Solid.clock class="flex-shrink-0 w-5 h-5 text-gray-300" />
         <span>
-          Go to the acreditation to pick up your purchase
+          Go to the acreditation to pick up your purchase by showing them the below QR code
         </span>
       <% end %>
     </p>
-    <div class="flex justify-center">
-      <img class="h-auto w-[500px]" src={Routes.static_path(@socket, "/images/qr_code.png")} alt="JOIN Logo" />
-    </div>
-    <div class="flex justify-between">
+    <%= if not @order.redeemed do %>
+      <div class="flex justify-center mt-5">
+        <%= @qrcode |> raw %>
+      </div>
+    <% end %>
+    <div class="flex justify-between mt-5">
       <div>
         <p class="text-gray-900">
           <%= String.upcase(@order.product.name) %>

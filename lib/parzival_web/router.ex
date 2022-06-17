@@ -74,7 +74,7 @@ defmodule ParzivalWeb.Router do
 
         live "/vault", OrderLive.Index, :index
         live "/vault/:id", OrderLive.Show, :show
-        live "/vault/redeem/:id", OrderLive.Edit, :show
+        live "/vault/redeem/:id", OrderLive.Edit, :edit
 
         live "/announcements", AnnouncementLive.Index, :index
         live "/announcements/:id", AnnouncementLive.Show, :show
