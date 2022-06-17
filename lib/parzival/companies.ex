@@ -4,129 +4,115 @@ defmodule Parzival.Companies do
   """
   use Parzival.Context
 
-  import Ecto.Query, warn: false
-
   alias Parzival.Accounts.User
-  alias Parzival.Companies.Offer
+  alias Parzival.Companies.Application
 
   @doc """
-  Returns the list of offers.
+  Returns the list of applications.
 
   ## Examples
 
-      iex> list_offers()
-      [%Offer{}, ...]
+      iex> list_applications()
+      [%Application{}, ...]
 
   """
-  def list_offers(params \\ %{})
+  def list_applications(params \\ %{})
 
-  def list_offers(opts) when is_list(opts) do
-    Offer
+  def list_applications(opts) when is_list(opts) do
+    Application
     |> apply_filters(opts)
     |> Repo.all()
   end
 
-  def list_offers(flop) do
-    Flop.validate_and_run(Offer, flop, for: Offer)
+  def list_applications(flop) do
+    Flop.validate_and_run(Application, flop, for: Application)
   end
 
-  def list_offers(%{} = flop, opts) when is_list(opts) do
-    Offer
+  def list_applications(%{} = flop, opts) when is_list(opts) do
+    Application
     |> apply_filters(opts)
-    |> Flop.validate_and_run(flop, for: Offer)
+    |> Flop.validate_and_run(flop, for: Application)
   end
 
   @doc """
-  Gets a single offer.
+  Gets a single application.
 
-  Raises `Ecto.NoResultsError` if the Offer does not exist.
+  Raises `Ecto.NoResultsError` if the Application does not exist.
 
   ## Examples
 
-      iex> get_offer!(123)
-      %Offer{}
+      iex> get_application!(123)
+      %Application{}
 
-      iex> get_offer!(456)
+      iex> get_application!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_offer!(id), do: Repo.get!(Offer, id)
-
-  def get_offer!(id, opts) do
-    Offer
-    |> apply_filters(opts)
-    |> Repo.get!(id)
-  end
+  def get_application!(id), do: Repo.get!(Application, id)
 
   @doc """
-  Creates a offer.
+  Creates a application.
 
   ## Examples
 
-      iex> create_offer(%{field: value})
-      {:ok, %Offer{}}
+      iex> create_application(%{field: value})
+      {:ok, %Application{}}
 
-      iex> create_offer(%{field: bad_value})
+      iex> create_application(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_offer(attrs \\ %{}) do
-    %Offer{}
-    |> Offer.changeset(attrs)
+  def create_application(attrs \\ %{}) do
+    %Application{}
+    |> Application.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a offer.
+  Updates a application.
 
   ## Examples
 
-      iex> update_offer(offer, %{field: new_value})
-      {:ok, %Offer{}}
+      iex> update_application(application, %{field: new_value})
+      {:ok, %Application{}}
 
-      iex> update_offer(offer, %{field: bad_value})
+      iex> update_application(application, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_offer(%Offer{} = offer, attrs) do
-    offer
-    |> Offer.changeset(attrs)
+  def update_application(%Application{} = application, attrs) do
+    application
+    |> Application.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a offer.
+  Deletes a application.
 
   ## Examples
 
-      iex> delete_offer(offer)
-      {:ok, %Offer{}}
+      iex> delete_application(application)
+      {:ok, %Application{}}
 
-      iex> delete_offer(offer)
+      iex> delete_application(application)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_offer(%Offer{} = offer) do
-    offer
-    |> Ecto.Changeset.change()
-    |> Ecto.Changeset.foreign_key_constraint(:applications,
-      name: :applications_offer_id_fkey,
-      message: "This offer can't be deleted, because users have applied to it!"
-    )
-    |> Repo.delete()
+  def delete_application(%Application{} = application) do
+    Repo.delete(application)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking offer changes.
+  Returns an `%Ecto.Changeset{}` for tracking application changes.
 
   ## Examples
 
-      iex> change_offer(offer)
-      %Ecto.Changeset{data: %Offer{}}
+      iex> change_application(application)
+      %Ecto.Changeset{data: %Application{}}
 
   """
-  def change_offer(%Offer{} = offer, attrs \\ %{}) do
-    Offer.changeset(offer, attrs)
+  def change_application(%Application{} = application, attrs \\ %{}) do
+    Application.changeset(application, attrs)
   end
 
   alias Parzival.Companies.Company
@@ -251,6 +237,238 @@ defmodule Parzival.Companies do
   """
   def change_company(%Company{} = company, attrs \\ %{}) do
     Company.changeset(company, attrs)
+  end
+
+  alias Parzival.Companies.Level
+
+  @doc """
+  Returns the list of levels.
+
+  ## Examples
+
+      iex> list_levels()
+      [%Level{}, ...]
+
+  """
+  def list_levels(params \\ %{})
+
+  def list_levels(opts) when is_list(opts) do
+    Level
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_levels(flop) do
+    Flop.validate_and_run(Level, flop, for: Level)
+  end
+
+  def list_levels(%{} = flop, opts) when is_list(opts) do
+    Level
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Level)
+  end
+
+  @doc """
+  Gets a single level.
+
+  Raises `Ecto.NoResultsError` if the Level does not exist.
+
+  ## Examples
+
+      iex> get_level!(123)
+      %Level{}
+
+      iex> get_level!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_level!(id), do: Repo.get!(Level, id)
+
+  @doc """
+  Creates a level.
+
+  ## Examples
+
+      iex> create_level(%{field: value})
+      {:ok, %Level{}}
+
+      iex> create_level(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_level(attrs \\ %{}) do
+    %Level{}
+    |> Level.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a level.
+
+  ## Examples
+
+      iex> update_level(level, %{field: new_value})
+      {:ok, %Level{}}
+
+      iex> update_level(level, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_level(%Level{} = level, attrs) do
+    level
+    |> Level.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a level.
+
+  ## Examples
+
+      iex> delete_level(level)
+      {:ok, %Level{}}
+
+      iex> delete_level(level)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_level(%Level{} = level) do
+    Repo.delete(level)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking level changes.
+
+  ## Examples
+
+      iex> change_level(level)
+      %Ecto.Changeset{data: %Level{}}
+
+  """
+  def change_level(%Level{} = level, attrs \\ %{}) do
+    Level.changeset(level, attrs)
+  end
+
+  alias Parzival.Companies.Offer
+
+  @doc """
+  Returns the list of offers.
+
+  ## Examples
+
+      iex> list_offers()
+      [%Offer{}, ...]
+
+  """
+  def list_offers(params \\ %{})
+
+  def list_offers(opts) when is_list(opts) do
+    Offer
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_offers(flop) do
+    Flop.validate_and_run(Offer, flop, for: Offer)
+  end
+
+  def list_offers(%{} = flop, opts) when is_list(opts) do
+    Offer
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Offer)
+  end
+
+  @doc """
+  Gets a single offer.
+
+  Raises `Ecto.NoResultsError` if the Offer does not exist.
+
+  ## Examples
+
+      iex> get_offer!(123)
+      %Offer{}
+
+      iex> get_offer!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_offer!(id), do: Repo.get!(Offer, id)
+
+  def get_offer!(id, opts) do
+    Offer
+    |> apply_filters(opts)
+    |> Repo.get!(id)
+  end
+
+  @doc """
+  Creates a offer.
+
+  ## Examples
+
+      iex> create_offer(%{field: value})
+      {:ok, %Offer{}}
+
+      iex> create_offer(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_offer(attrs \\ %{}) do
+    %Offer{}
+    |> Offer.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a offer.
+
+  ## Examples
+
+      iex> update_offer(offer, %{field: new_value})
+      {:ok, %Offer{}}
+
+      iex> update_offer(offer, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_offer(%Offer{} = offer, attrs) do
+    offer
+    |> Offer.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a offer.
+
+  ## Examples
+
+      iex> delete_offer(offer)
+      {:ok, %Offer{}}
+
+      iex> delete_offer(offer)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_offer(%Offer{} = offer) do
+    offer
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.foreign_key_constraint(:applications,
+      name: :applications_offer_id_fkey,
+      message: "This offer can't be deleted, because users have applied to it!"
+    )
+    |> Repo.delete()
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking offer changes.
+
+  ## Examples
+
+      iex> change_offer(offer)
+      %Ecto.Changeset{data: %Offer{}}
+
+  """
+  def change_offer(%Offer{} = offer, attrs \\ %{}) do
+    Offer.changeset(offer, attrs)
   end
 
   alias Parzival.Companies.OfferType
@@ -473,116 +691,6 @@ defmodule Parzival.Companies do
     OfferTime.changeset(offer_time, attrs)
   end
 
-  alias Parzival.Companies.Application
-
-  @doc """
-  Returns the list of applications.
-
-  ## Examples
-
-      iex> list_applications()
-      [%Application{}, ...]
-
-  """
-  def list_applications(params \\ %{})
-
-  def list_applications(opts) when is_list(opts) do
-    Application
-    |> apply_filters(opts)
-    |> Repo.all()
-  end
-
-  def list_applications(flop) do
-    Flop.validate_and_run(Application, flop, for: Application)
-  end
-
-  def list_applications(%{} = flop, opts) when is_list(opts) do
-    Application
-    |> apply_filters(opts)
-    |> Flop.validate_and_run(flop, for: Application)
-  end
-
-  @doc """
-  Gets a single application.
-
-  Raises `Ecto.NoResultsError` if the Application does not exist.
-
-  ## Examples
-
-      iex> get_application!(123)
-      %Application{}
-
-      iex> get_application!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_application!(id), do: Repo.get!(Application, id)
-
-  @doc """
-  Creates a application.
-
-  ## Examples
-
-      iex> create_application(%{field: value})
-      {:ok, %Application{}}
-
-      iex> create_application(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_application(attrs \\ %{}) do
-    %Application{}
-    |> Application.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a application.
-
-  ## Examples
-
-      iex> update_application(application, %{field: new_value})
-      {:ok, %Application{}}
-
-      iex> update_application(application, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_application(%Application{} = application, attrs) do
-    application
-    |> Application.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a application.
-
-  ## Examples
-
-      iex> delete_application(application)
-      {:ok, %Application{}}
-
-      iex> delete_application(application)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_application(%Application{} = application) do
-    Repo.delete(application)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking application changes.
-
-  ## Examples
-
-      iex> change_application(application)
-      %Ecto.Changeset{data: %Application{}}
-
-  """
-  def change_application(%Application{} = application, attrs \\ %{}) do
-    Application.changeset(application, attrs)
-  end
-
   def is_user_applied?(%Offer{} = offer, %User{} = user) do
     Repo.one(
       from a in Application,
@@ -630,115 +738,5 @@ defmodule Parzival.Companies do
        when event in [:deleted_application] do
     Phoenix.PubSub.broadcast!(Parzival.PubSub, "deleted_application", {event, nil})
     {number, nil}
-  end
-
-  alias Parzival.Companies.Level
-
-  @doc """
-  Returns the list of levels.
-
-  ## Examples
-
-      iex> list_levels()
-      [%Level{}, ...]
-
-  """
-  def list_levels(params \\ %{})
-
-  def list_levels(opts) when is_list(opts) do
-    Level
-    |> apply_filters(opts)
-    |> Repo.all()
-  end
-
-  def list_levels(flop) do
-    Flop.validate_and_run(Level, flop, for: Level)
-  end
-
-  def list_levels(%{} = flop, opts) when is_list(opts) do
-    Level
-    |> apply_filters(opts)
-    |> Flop.validate_and_run(flop, for: Level)
-  end
-
-  @doc """
-  Gets a single level.
-
-  Raises `Ecto.NoResultsError` if the Level does not exist.
-
-  ## Examples
-
-      iex> get_level!(123)
-      %Level{}
-
-      iex> get_level!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_level!(id), do: Repo.get!(Level, id)
-
-  @doc """
-  Creates a level.
-
-  ## Examples
-
-      iex> create_level(%{field: value})
-      {:ok, %Level{}}
-
-      iex> create_level(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_level(attrs \\ %{}) do
-    %Level{}
-    |> Level.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a level.
-
-  ## Examples
-
-      iex> update_level(level, %{field: new_value})
-      {:ok, %Level{}}
-
-      iex> update_level(level, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_level(%Level{} = level, attrs) do
-    level
-    |> Level.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a level.
-
-  ## Examples
-
-      iex> delete_level(level)
-      {:ok, %Level{}}
-
-      iex> delete_level(level)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_level(%Level{} = level) do
-    Repo.delete(level)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking level changes.
-
-  ## Examples
-
-      iex> change_level(level)
-      %Ecto.Changeset{data: %Level{}}
-
-  """
-  def change_level(%Level{} = level, attrs \\ %{}) do
-    Level.changeset(level, attrs)
   end
 end
