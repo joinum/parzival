@@ -84,6 +84,23 @@ defmodule ParzivalWeb.App.OfferLive.Show do
   end
 
   @impl true
+  def handle_event("delete", _payload, socket) do
+    case Companies.delete_offer(socket.assigns.offer) do
+      {:ok, _offer} ->
+        {:noreply,
+         socket
+         |> put_flash(:success, "Offer deleted successfully!")
+         |> push_redirect(to: Routes.offer_index_path(socket, :index))}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, elem(changeset.errors[:applications], 0))
+         |> assign(:changeset, changeset)}
+    end
+  end
+
+  @impl true
   def handle_info({event, application}, socket) when event in [:new_application] do
     offer = socket.assigns.offer
 

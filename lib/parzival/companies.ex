@@ -5,7 +5,6 @@ defmodule Parzival.Companies do
   use Parzival.Context
 
   import Ecto.Query, warn: false
-  alias Parzival.Repo
 
   alias Parzival.Accounts.User
   alias Parzival.Companies.Offer
@@ -108,7 +107,13 @@ defmodule Parzival.Companies do
 
   """
   def delete_offer(%Offer{} = offer) do
-    Repo.delete(offer)
+    offer
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.foreign_key_constraint(:applications,
+      name: :applications_offer_id_fkey,
+      message: "This offer can't be deleted, because users have applied to it!"
+    )
+    |> Repo.delete()
   end
 
   @doc """
@@ -222,7 +227,17 @@ defmodule Parzival.Companies do
 
   """
   def delete_company(%Company{} = company) do
-    Repo.delete(company)
+    company
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.foreign_key_constraint(:error,
+      name: :users_company_id_fkey,
+      message: "This company can't be deleted, because recruiters are associated to it!"
+    )
+    |> Ecto.Changeset.foreign_key_constraint(:error,
+      name: :offers_company_id_fkey,
+      message: "This company can't be deleted, because job offers are associated to it!"
+    )
+    |> Repo.delete()
   end
 
   @doc """
