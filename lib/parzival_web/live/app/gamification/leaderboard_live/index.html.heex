@@ -84,39 +84,41 @@
     <% end %>
 
     <%= if @position > @page_size do %>
-      <li id={"user-#{@current_user.id}"} class="relative pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 border-y">
-        <div class="flex justify-between">
-          <div class="py-4 text-sm whitespace-nowrap">
-            <div class="flex items-center">
+      <%= if @current_user.role in [:attendee] do %>
+        <li id={"user-#{@current_user.id}"} class="relative pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 border-y">
+          <div class="flex justify-between">
+            <div class="py-4 text-sm whitespace-nowrap">
               <div class="flex items-center">
-                <div class="mr-10 text-xl text-secondary">
-                  <%= @position %>
-                </div>
-                <div class="flex-shrink-0 w-10 h-10">
-                  <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
-                    <span class="text-lg font-medium leading-none text-white">
-                      <%= extract_initials(@current_user.name) %>
-                    </span>
-                  </span>
-                </div>
-              </div>
-              <div class="ml-4">
-                <div class="font-medium text-gray-900">
-                  <%= @current_user.name %>
-                </div>
-                <div class="flex">
-                  <div class="text-gray-500">
-                    LVL <%= calc_level(@current_user) %>
+                <div class="flex items-center">
+                  <div class="mr-10 text-xl text-secondary">
+                    <%= @position %>
                   </div>
-                  <div class="ml-2 text-gray-400">
-                    <%= @current_user.exp %> EXP
+                  <div class="flex-shrink-0 w-10 h-10">
+                    <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                      <span class="text-lg font-medium leading-none text-white">
+                        <%= extract_initials(@current_user.name) %>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <div class="font-medium text-gray-900">
+                    <%= @current_user.name %>
+                  </div>
+                  <div class="flex">
+                    <div class="text-gray-500">
+                      LVL <%= calc_level(@current_user) %>
+                    </div>
+                    <div class="ml-2 text-gray-400">
+                      <%= @current_user.exp %> EXP
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </li>
+        </li>
+      <% end %>
     <% end %>
   </ul>
 </div>
