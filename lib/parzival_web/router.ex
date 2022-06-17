@@ -87,6 +87,8 @@ defmodule ParzivalWeb.Router do
 
           live "/:id/tasks/:task_id", TaskLive.Show, :show
           live "/:id/tasks/:task_id/redeem", TaskLive.Show, :redeem
+
+          live "redeem/:task/:attendee", TaskUserLive.New, :new
         end
 
         live "/profile/:id", ProfileLive.Show, :show
