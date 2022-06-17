@@ -1,8 +1,5 @@
 defmodule ParzivalWeb.Backoffice.LevelLive.Index do
-<<<<<<< HEAD
   @moduledoc false
-=======
->>>>>>> a83fe14 (Fix leaderboard)
   use ParzivalWeb, :live_view
 
   import ParzivalWeb.Components.Pagination
