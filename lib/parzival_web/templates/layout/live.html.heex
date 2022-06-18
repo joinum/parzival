@@ -115,9 +115,12 @@
               </div>
             <% end %>
           <% end %>
-          <div class="grid grid-cols-6">
-            <%= for i <- 1..12 do %>
-              <div class="w-12 h-12"></div>
+          <p class=" text-gray-500">
+            Inventory
+          </p>
+          <div class="grid grid-cols-5 gap-2">
+            <%= for i <- 1..10 do %>
+              <div class="w-12 h-12 border border-gray-200"></div>
             <% end %>
           </div>
         </div>
