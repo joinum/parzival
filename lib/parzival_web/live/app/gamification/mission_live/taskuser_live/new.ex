@@ -18,7 +18,7 @@ defmodule ParzivalWeb.App.Staff.TaskUserLive.New do
      |> assign(:page_title, "Give task")
      |> assign(:attendee, Accounts.get_user!(attendee, [:missions]))
      |> assign(:task, Gamification.get_task!(task))
-     |> assign(:return_to, Routes.scanner_index_path(socket, :index))
+     |> assign(:return_to, Routes.staff_scanner_index_path(socket, :index))
      |> assign(:is_completed, Gamification.is_task_completed?(task, attendee))}
   end
 end

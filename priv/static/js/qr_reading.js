@@ -3,7 +3,7 @@ var canvasElement = document.getElementById("canvas");
 var canvas = canvasElement.getContext("2d");
 var loadingMessage = document.getElementById("loadingMessage");
 var loadingMessageWrapper = document.getElementById("loadingMessageWrapper");
-
+var scanning = true;
 
 function drawLine(begin, end, color) {
   canvas.beginPath();
@@ -27,7 +27,7 @@ function requestMedia() {
 
 function tick() {
   loadingMessage.innerText = "⌛ Loading video..."
-  if (video.readyState === video.HAVE_ENOUGH_DATA) {
+  if (video.readyState === video.HAVE_ENOUGH_DATA && scanning) {
     loadingMessageWrapper.hidden = true;
     canvasElement.hidden = false;
     canvasElement.height = video.videoHeight;
@@ -42,11 +42,14 @@ function tick() {
       drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
       drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
       drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
-      alert(code.data);
+      window.location.replace(code.data);
+      scanning = false;
     } 
   }
 
-  requestAnimationFrame(tick);
+  if(scanning) {
+    requestAnimationFrame(tick);
+  }
 }
 
 requestMedia();
