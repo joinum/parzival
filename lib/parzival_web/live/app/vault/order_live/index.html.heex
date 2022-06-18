@@ -11,47 +11,105 @@
 
   <section aria-labelledby="cart-heading">
     <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
-    <ul role="list">
-      <%= for order <- @orders do %>
-        <%= live_redirect to: Routes.order_show_path(@socket, :show, order) do %>
-          <li class="flex py-6 px-5 sm:px-10 md:px-20 hover:bg-gray-50">
-            <div class="flex-shrink-0">
-              <img src={Uploaders.ProductImage.url({order.product.image, order.product}, :medium)} alt="Front side of mint cotton t-shirt with wavey lines pattern." class="object-cover object-center w-24 h-24 rounded-md sm:w-32 sm:h-32" />
-            </div>
-            <div class="flex flex-col flex-1 ml-4 sm:ml-6">
-              <div>
-                <div class="flex justify-between">
-                  <h4 class="text-sm font-medium text-gray-700 hover:text-gray-800">
+    <%= if not Enum.empty?(@orders) do %>
+      <ul role="list">
+        <%= for order <- @orders do %>
+          <%= live_redirect to: Routes.order_show_path(@socket, :show, order) do %>
+            <li class="flex py-6 px-5 sm:px-10 md:px-20 hover:bg-gray-50">
+              <div class="flex-shrink-0">
+                <img src={Uploaders.ProductImage.url({order.product.image, order.product}, :medium)} alt="Front side of mint cotton t-shirt with wavey lines pattern." class="object-cover object-center w-24 h-24 rounded-md sm:w-32 sm:h-32" />
+              </div>
+              <div class="flex flex-col flex-1 ml-4 sm:ml-6">
+                <div>
+                  <div class="flex justify-between">
+                    <h4 class="text-sm font-medium text-gray-700 hover:text-gray-800">
+                      <%= order.product.name %>
+                    </h4>
+                    <p class="ml-4 text-sm font-medium text-gray-900">
+                      💰 <%= order.product.price %>
+                    </p>
+                  </div>
+                  <p class="mt-1 text-sm text-gray-500">
                     <%= order.product.name %>
-                  </h4>
-                  <p class="ml-4 text-sm font-medium text-gray-900">
-                    💰 <%= order.product.price %>
                   </p>
                 </div>
-                <p class="mt-1 text-sm text-gray-500">
-                  <%= order.product.name %>
-                </p>
+                <div class="flex flex-1 justify-between items-end mt-4">
+                  <p class="flex items-center space-x-2 text-sm text-gray-700">
+                    <%= if order.redeemed do %>
+                      <Heroicons.Solid.check class="flex-shrink-0 w-5 h-5 text-green-500" />
+                      <span>
+                        Delivered
+                      </span>
+                    <% else %>
+                      <Heroicons.Solid.clock class="flex-shrink-0 w-5 h-5 text-gray-300" />
+                      <span>
+                        Go to the acreditation to pick up your purchase
+                      </span>
+                    <% end %>
+                  </p>
+                </div>
               </div>
-              <div class="flex flex-1 justify-between items-end mt-4">
-                <p class="flex items-center space-x-2 text-sm text-gray-700">
-                  <%= if order.redeemed do %>
-                    <Heroicons.Solid.check class="flex-shrink-0 w-5 h-5 text-green-500" />
-                    <span>
-                      Delivered
-                    </span>
-                  <% else %>
-                    <Heroicons.Solid.clock class="flex-shrink-0 w-5 h-5 text-gray-300" />
-                    <span>
-                      Go to the acreditation to pick up your purchase
-                    </span>
-                  <% end %>
-                </p>
-              </div>
-            </div>
-          </li>
+            </li>
+          <% end %>
         <% end %>
-      <% end %>
-    </ul>
-    <.pagination items={@orders} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+      </ul>
+      <.pagination items={@orders} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+    <% else %>
+      <div class="px-5 mx-auto mt-10 max-w-lg">
+        <div>
+          <div class="text-center">
+            <Heroicons.Outline.shopping_cart class="mx-auto w-12 h-12 text-gray-400" />
+            <h2 class="mt-2 text-lg font-medium text-gray-900">
+              Buy Prizes
+            </h2>
+            <p class="mt-1 text-sm text-gray-500">
+              You haven’t purchased any prizes from the store yet. Spen your
+              tokens wisely.
+            </p>
+          </div>
+        </div>
+        <div class="mt-10">
+          <h3 class="px-5 text-xs font-semibold tracking-wide text-gray-500 uppercase">
+            Prizes that you can still purchase
+          </h3>
+          <ul role="list" class="mt-4 border-t border-b border-gray-200 divide-y divide-gray-200">
+            <%= for product <- @products do %>
+              <li>
+                <%= live_patch to: Routes.product_show_path(@socket, :show, product), class: "px-5 flex justify-between items-center py-4 space-x-3 hover:bg-gray-50" do %>
+                  <div class="flex flex-1 items-center space-x-3 min-w-0">
+                    <div>
+                      <img src={Uploaders.ProductImage.url({product.image, product}, :original)} class="object-cover object-center w-16 h-16" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium text-gray-900 truncate">
+                        <%= product.name %>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <p class="text-sm font-medium text-gray-900">
+                      💰 <%= product.price %>
+                    </p>
+                  </div>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-lg">
+        <div className="mt-10">
+          <div className="text-center">
+            <h2 className="mt-2 text-lg font-medium text-gray-900"></h2>
+            <p className="mt-1 text-sm text-gray-500"></p>
+          </div>
+        </div>
+        <div className="mt-10">
+          <h3 className="text-xs font-semibold tracking-wide text-gray-500 uppercase"></h3>
+          <ul role="list" className="mt-4 mb-14 border-t border-b border-gray-200 divide-y divide-gray-200"></ul>
+        </div>
+      </div>
+    <% end %>
   </section>
 </div>
