@@ -53,21 +53,30 @@ defmodule Parzival.Gamification do
           preload: ^preloads
       )
 
-    %{
-      summary: curriculum.summary,
-      experiences:
-        Enum.map(curriculum.experiences, fn experience ->
-          %{
-            organization: experience.organization,
-            positions: Enum.sort_by(experience.positions, & &1.finish, {:desc, Date})
-          }
-        end),
-      educations: Enum.sort_by(curriculum.educations, & &1.finish, {:desc, Date}),
-      volunteerings: Enum.sort_by(curriculum.volunteerings, & &1.finish, {:desc, Date}),
-      skills: curriculum.skills,
-      languages: curriculum.languages,
-      user: curriculum.user
-    }
+    unless is_nil(curriculum) do
+      %{
+        summary:
+          if curriculum.summary do
+            curriculum.summary
+          else
+            nil
+          end,
+        experiences:
+          Enum.map(curriculum.experiences, fn experience ->
+            %{
+              organization: experience.organization,
+              positions: Enum.sort_by(experience.positions, & &1.finish, {:desc, Date})
+            }
+          end),
+        educations: Enum.sort_by(curriculum.educations, & &1.finish, {:desc, Date}),
+        volunteerings: Enum.sort_by(curriculum.volunteerings, & &1.finish, {:desc, Date}),
+        skills: curriculum.skills,
+        languages: curriculum.languages,
+        user: curriculum.user
+      }
+    else
+      nil
+    end
   end
 
   @doc """

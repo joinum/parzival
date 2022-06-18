@@ -4,6 +4,9 @@ defmodule ParzivalWeb.App.ProfileLive.Index do
 
   alias Parzival.Accounts
   alias Parzival.Gamification
+  alias Parzival.Uploaders
+
+  import ParzivalWeb.Components.Curriculum
 
   @impl true
   def mount(_params, _session, socket) do
