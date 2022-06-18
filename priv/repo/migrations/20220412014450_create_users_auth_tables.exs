@@ -26,6 +26,8 @@ defmodule Parzival.Repo.Migrations.CreateUsersAuthTables do
 
       add :company_id, references(:companies, on_delete: :nothing, type: :binary_id)
 
+      add :picture, :string
+
       timestamps()
     end
 

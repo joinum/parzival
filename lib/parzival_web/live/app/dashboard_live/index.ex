@@ -8,6 +8,8 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
   alias Parzival.Tools
   alias Parzival.Tools.Post
 
+  import ParzivalWeb.Components.Curriculum
+
   @impl true
   def mount(_params, _session, socket) do
     if connected?(socket) do

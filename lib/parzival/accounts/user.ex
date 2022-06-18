@@ -9,6 +9,7 @@ defmodule Parzival.Accounts.User do
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Mission
   alias Parzival.Store.Order
+  alias Parzival.Uploaders
 
   @roles ~w(admin staff attendee recruiter)a
   @cycles ~w(Bachelors Masters Phd)a
@@ -68,6 +69,8 @@ defmodule Parzival.Accounts.User do
 
     has_many :applications, Application
 
+    field :picture, Uploaders.ProfilePicture.Type
+
     timestamps()
   end
 
@@ -91,6 +94,7 @@ defmodule Parzival.Accounts.User do
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, @required_fields ++ @optional_fields)
+    |> cast_attachments(attrs, [:picture])
     |> validate_email()
     |> validate_password(opts)
   end
@@ -102,6 +106,7 @@ defmodule Parzival.Accounts.User do
       :email,
       :role
     ])
+    |> cast_attachments(attrs, [:picture])
     |> validate_required([:name])
     |> validate_email()
     |> generate_random_password(opts)
