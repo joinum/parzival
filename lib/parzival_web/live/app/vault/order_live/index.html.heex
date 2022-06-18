@@ -16,7 +16,7 @@
         <%= live_redirect to: Routes.order_show_path(@socket, :show, order) do %>
           <li class="flex py-6 px-5 sm:px-10 md:px-20 hover:bg-gray-50">
             <div class="flex-shrink-0">
-              <img src={Uploaders.ProductImage.url({order.product.image, order.product}, :medium)} alt="Front side of mint cotton t-shirt with wavey lines pattern." class="object-cover object-center w-24 h-24 rounded-md sm:w-32 sm:h-32" />
+              <img src={Uploaders.ProductImage.url({order.product.image, order.product}, :original)} class="object-cover object-center w-24 h-24 rounded-md sm:w-32 sm:h-32" />
             </div>
             <div class="flex flex-col flex-1 ml-4 sm:ml-6">
               <div>
