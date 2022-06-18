@@ -8,6 +8,7 @@ defmodule Parzival.Accounts.User do
   alias Parzival.Companies.Company
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Mission
+  alias Parzival.Store.Item
   alias Parzival.Store.Order
   alias Parzival.Uploaders
 
@@ -62,6 +63,7 @@ defmodule Parzival.Accounts.User do
     has_one :curriculum, Curriculum
 
     has_many :orders, Order
+    has_many :inventory, Item
 
     many_to_many :missions, Mission, join_through: "missions_users"
 

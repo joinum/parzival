@@ -39,6 +39,13 @@ defmodule ParzivalWeb.ViewUtils do
     Relative.lformat!(datetime, "{relative}", Gettext.get_locale())
   end
 
+  def relative_datetime_in_digital_clock_format(datetime) do
+    time_in_microseconds = Timex.diff(datetime, NaiveDateTime.utc_now())
+
+    Time.add(~T[00:00:00], time_in_microseconds, :microsecond)
+    |> Timex.format!("{h24}:{m}:{s}")
+  end
+
   def display_date(nil), do: ""
 
   def display_date(""), do: ""

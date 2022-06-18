@@ -36,4 +36,30 @@ defmodule Parzival.StoreFixtures do
 
     order
   end
+
+  @doc """
+  Generate a boost.
+  """
+  def boost_fixture(attrs \\ %{}) do
+    {:ok, boost} =
+      attrs
+      |> Enum.into(%{
+        finish: ~N[2022-06-18 01:07:00]
+      })
+      |> Parzival.Store.create_boost()
+
+    boost
+  end
+
+  @doc """
+  Generate a item.
+  """
+  def item_fixture(attrs \\ %{}) do
+    {:ok, item} =
+      attrs
+      |> Enum.into(%{})
+      |> Parzival.Store.create_item()
+
+    item
+  end
 end

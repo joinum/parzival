@@ -133,4 +133,110 @@ defmodule Parzival.StoreTest do
       assert %Ecto.Changeset{} = Store.change_order(order)
     end
   end
+
+  describe "boosts" do
+    alias Parzival.Store.Boost
+
+    import Parzival.StoreFixtures
+
+    @invalid_attrs %{finish: nil}
+
+    test "list_boosts/0 returns all boosts" do
+      boost = boost_fixture()
+      assert Store.list_boosts() == [boost]
+    end
+
+    test "get_boost!/1 returns the boost with given id" do
+      boost = boost_fixture()
+      assert Store.get_boost!(boost.id) == boost
+    end
+
+    test "create_boost/1 with valid data creates a boost" do
+      valid_attrs = %{finish: ~N[2022-06-18 01:07:00]}
+
+      assert {:ok, %Boost{} = boost} = Store.create_boost(valid_attrs)
+      assert boost.finish == ~N[2022-06-18 01:07:00]
+    end
+
+    test "create_boost/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Store.create_boost(@invalid_attrs)
+    end
+
+    test "update_boost/2 with valid data updates the boost" do
+      boost = boost_fixture()
+      update_attrs = %{finish: ~N[2022-06-19 01:07:00]}
+
+      assert {:ok, %Boost{} = boost} = Store.update_boost(boost, update_attrs)
+      assert boost.finish == ~N[2022-06-19 01:07:00]
+    end
+
+    test "update_boost/2 with invalid data returns error changeset" do
+      boost = boost_fixture()
+      assert {:error, %Ecto.Changeset{}} = Store.update_boost(boost, @invalid_attrs)
+      assert boost == Store.get_boost!(boost.id)
+    end
+
+    test "delete_boost/1 deletes the boost" do
+      boost = boost_fixture()
+      assert {:ok, %Boost{}} = Store.delete_boost(boost)
+      assert_raise Ecto.NoResultsError, fn -> Store.get_boost!(boost.id) end
+    end
+
+    test "change_boost/1 returns a boost changeset" do
+      boost = boost_fixture()
+      assert %Ecto.Changeset{} = Store.change_boost(boost)
+    end
+  end
+
+  describe "items" do
+    alias Parzival.Store.Item
+
+    import Parzival.StoreFixtures
+
+    @invalid_attrs %{}
+
+    test "list_items/0 returns all items" do
+      item = item_fixture()
+      assert Store.list_items() == [item]
+    end
+
+    test "get_item!/1 returns the item with given id" do
+      item = item_fixture()
+      assert Store.get_item!(item.id) == item
+    end
+
+    test "create_item/1 with valid data creates a item" do
+      valid_attrs = %{}
+
+      assert {:ok, %Item{} = item} = Store.create_item(valid_attrs)
+    end
+
+    test "create_item/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Store.create_item(@invalid_attrs)
+    end
+
+    test "update_item/2 with valid data updates the item" do
+      item = item_fixture()
+      update_attrs = %{}
+
+      assert {:ok, %Item{} = item} = Store.update_item(item, update_attrs)
+    end
+
+    test "update_item/2 with invalid data returns error changeset" do
+      item = item_fixture()
+      assert {:error, %Ecto.Changeset{}} = Store.update_item(item, @invalid_attrs)
+      assert item == Store.get_item!(item.id)
+    end
+
+    test "delete_item/1 deletes the item" do
+      item = item_fixture()
+      assert {:ok, %Item{}} = Store.delete_item(item)
+      assert_raise Ecto.NoResultsError, fn -> Store.get_item!(item.id) end
+    end
+
+    test "change_item/1 returns a item changeset" do
+      item = item_fixture()
+      assert %Ecto.Changeset{} = Store.change_item(item)
+    end
+  end
 end

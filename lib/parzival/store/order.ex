@@ -26,7 +26,6 @@ defmodule Parzival.Store.Order do
     field :redeemed, :boolean, default: false
 
     belongs_to :user, User
-
     belongs_to :product, Product
 
     timestamps()
