@@ -22,9 +22,11 @@
     </div>
   </div>
   <div class="flex flex-col py-0 px-4 mx-auto w-full border-b border-gray-200 sm:py-6 sm:px-6 md:border-0 lg:px-8">
-    <div>
-      <%= live_redirect("< Back", to: Routes.company_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
-    </div>
+    <%= if @current_user.role not in [:recruiter] do %>
+      <div>
+        <%= live_redirect("< Back", to: Routes.company_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
+      </div>
+    <% end %>
     <div class="py-4 px-4 sm:px-0">
       <div class="mt-6 sm:flex">
         <div class="flex-shrink-0 mb-4 sm:mr-4 sm:mb-0">

@@ -7,14 +7,14 @@ defmodule ParzivalWeb.Config do
   @conn ParzivalWeb.Endpoint
 
   def pages(conn, current_user) do
-    live_pages(conn) ++ role_pages(conn, current_user.role)
+    live_pages(conn) ++ role_pages(conn, current_user)
   end
 
-  def role_pages(conn, role) do
-    case role do
+  def role_pages(conn, user) do
+    case user.role do
       :admin -> admin_pages(conn)
       :attendee -> attendee_pages(conn)
-      :recruiter -> recruiter_pages(conn)
+      :recruiter -> recruiter_pages(conn, user.company)
       :staff -> admin_pages(conn)
     end
   end
@@ -128,7 +128,7 @@ defmodule ParzivalWeb.Config do
     ]
   end
 
-  def recruiter_pages(conn) do
+  def recruiter_pages(conn, user) do
     [
       %{
         key: :announcements,
@@ -140,6 +140,12 @@ defmodule ParzivalWeb.Config do
         key: :jobs,
         title: "Jobs",
         url: Routes.offer_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :companies,
+        title: "Company",
+        url: Routes.company_show_path(conn, :show, user),
         tabs: []
       }
     ]
