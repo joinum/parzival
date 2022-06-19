@@ -1,25 +1,81 @@
-<h1>Reset password</h1>
-
-<.form let={f} for={@changeset} action={Routes.user_reset_password_path(@conn, :update, @token)}>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+<body class="min-h-screen bg-gradient-to-l from-primary via-secondary to-primary lg:px-[200px]">
+  <header>
+    <div class="flex flex-row justify-between pt-20">
+      <div class="flex items-center text-lg font-bold text-white hover:underline align-items">
+        <Heroicons.Solid.chevron_left class="w-5 h-5 text-white" /> <%= link("Log in", to: Routes.user_session_path(@conn, :new), class: "hover:underline align-items") %>
+      </div>
+      <div class="flex gap-x-8 justify-center items-center">
+        <%= link to: "https://cesium.di.uminho.pt/" do %>
+          <img class="w-16 h-auto text-white lg:w-20" src={Routes.static_path(@conn, "/images/logos/cesium.svg")} alt="CeSIUM Logo" />
+        <% end %>
+        <%= link to: "https://necc.di.uminho.pt/" do %>
+          <img class="w-16 h-auto text-white lg:w-20" src={Routes.static_path(@conn, "/images/logos/necc.svg")} alt="NECC Logo" />
+        <% end %>
+        <%= link to: "https://nefum.di.uminho.pt/" do %>
+          <img class="w-12 h-auto text-white lg:w-16" src={Routes.static_path(@conn, "/images/logos/nefum.svg")} alt="NEFUM Logo" />
+        <% end %>
+      </div>
     </div>
-  <% end %>
+  </header>
 
-  <%= label(f, :password, "New password") %>
-  <%= password_input(f, :password, required: true) %>
-  <%= error_tag(f, :password) %>
+  <main>
+    <div>
+      <.form class="flex justify-center items-center px-4 pt-10 mt-10 mb-10 min-h-full sm:px-6 lg:px-8 lg:mt-0 lg:mb-0" let={f} for={@changeset} action={Routes.user_reset_password_path(@conn, :update, @token)}>
+        <div class="space-y-8 w-full max-w-md">
+          <div class="mb-10">
+            <div class="flex flex-col justify-center items-center">
+              <img class="h-auto w-[380px] lg:w-[420px]" src={Routes.static_path(@conn, "/images/logo.svg")} alt="JOIN Logo" />
+              <p class="pt-4 font-semibold text-white tracking-[4px] sm:tracking-[8px] lg:tracking-[14px]">28, 29 e 30 de junho</p>
+              <h2 class="pt-10 text-xl font-extrabold text-center text-white md:text-2xl lg:text-3xl">Reset password</h2>
+            </div>
+          </div>
 
-  <%= label(f, :password_confirmation, "Confirm new password") %>
-  <%= password_input(f, :password_confirmation, required: true) %>
-  <%= error_tag(f, :password_confirmation) %>
+          <%= if @changeset.action do %>
+            <div class="alert alert-danger">
+              <p>Oops, something went wrong! Please check the errors below.</p>
+            </div>
+          <% end %>
 
-  <div>
-    <%= submit("Reset password") %>
-  </div>
-</.form>
+          <form class="mt-8">
+            <div>
+              <label for="password" class="sr-only">Password</label>
+              <%= password_input(f, :password, required: true, placeholder: "Password", class: "appearance-none rounded-3xl block w-full px-10 py-3 border border-gray-300 placeholder-gray-400 sm:text-sm focus:outline-none focus:ring-white focus:border-white") %>
+            </div>
+            <%= error_tag(f, :password) %>
 
-<p>
-  <%= link("Register", to: Routes.user_registration_path(@conn, :new)) %> | <%= link("Log in", to: Routes.user_session_path(@conn, :new)) %>
-</p>
+            <div>
+              <label for="password" class="sr-only">Password Confirmation</label>
+              <%= password_input(f, :password_confirmation, required: true, placeholder: "Password Confirmation", class: "appearance-none rounded-3xl block w-full px-10 py-3 border border-gray-300 placeholder-gray-400 sm:text-sm focus:outline-none focus:ring-white focus:border-white") %>
+            </div>
+            <%= error_tag(f, :password_confirmation) %>
+
+            <%= submit("Reset Password", class: "w-full flex justify-center py-3 px-4 rounded-3xl shadow-sm text-xl font-bold text-white bg-tertiary border-2 border-tertiary hover:border-white focus:outline-none focus:ring-white focus:border-white") %>
+          </form>
+          <div class="flex justify-center space-x-6 lg:hidden">
+            <%= link to: "https://www.instagram.com/join_uminho/" do %>
+              <Ionicons.Filled.logo_instagram class="w-5 h-auto fill-white hover:fill-primary" />
+            <% end %>
+            <%= link to: "https://www.linkedin.com/company/join-di-uminho/" do %>
+              <Ionicons.Filled.logo_linkedin class="w-5 h-auto fill-white hover:fill-primary" />
+            <% end %>
+            <%= link to: "https://github.com/joinum/" do %>
+              <Ionicons.Filled.logo_github class="w-5 h-auto fill-white hover:fill-primary" />
+            <% end %>
+          </div>
+        </div>
+      </.form>
+
+      <div class="hidden absolute flex-col space-y-6 lg:flex bottom-[60px]">
+        <%= link to: "https://www.instagram.com/join_uminho/" do %>
+          <Ionicons.Filled.logo_instagram class="w-5 h-auto fill-white hover:fill-primary" />
+        <% end %>
+        <%= link to: "https://www.linkedin.com/company/join-di-uminho/" do %>
+          <Ionicons.Filled.logo_linkedin class="w-5 h-auto fill-white hover:fill-primary" />
+        <% end %>
+        <%= link to: "https://github.com/joinum/" do %>
+          <Ionicons.Filled.logo_github class="w-5 h-auto fill-white hover:fill-primary" />
+        <% end %>
+      </div>
+    </div>
+  </main>
+</body>

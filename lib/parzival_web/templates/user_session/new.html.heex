@@ -1,4 +1,4 @@
-<body class="min-h-screen bg-gradient-to-t sm:bg-gradient-to-l from-primary via-secondary to-tertiary lg:px-[200px]">
+<body class="min-h-screen bg-gradient-to-l from-primary via-secondary to-primary lg:px-[200px]">
   <header>
     <div class="flex justify-between pt-20">
       <%= live_patch to: Routes.landing_home_index_path(@conn, :index), class: "inline-flex items-center px-1 text-sm" do %>
@@ -55,7 +55,7 @@
               </div>
 
               <div class="text-sm">
-                <a href="#" class="font-medium text-white hover:underline">Forgot your password?</a>
+                <a href="/reset_password" class="font-medium text-white hover:underline">Forgot your password?</a>
               </div>
             </div>
 
@@ -65,7 +65,7 @@
             <%= link to: "https://www.instagram.com/join_uminho/" do %>
               <Ionicons.Filled.logo_instagram class="w-5 h-auto fill-white hover:fill-primary" />
             <% end %>
-            <%= link to: "" do %>
+            <%= link to: "https://www.linkedin.com/company/join-di-uminho/" do %>
               <Ionicons.Filled.logo_linkedin class="w-5 h-auto fill-white hover:fill-primary" />
             <% end %>
             <%= link to: "https://github.com/joinum/" do %>
@@ -79,7 +79,7 @@
         <%= link to: "https://www.instagram.com/join_uminho/" do %>
           <Ionicons.Filled.logo_instagram class="w-5 h-auto fill-white hover:fill-primary" />
         <% end %>
-        <%= link to: "" do %>
+        <%= link to: "https://www.linkedin.com/company/join-di-uminho/" do %>
           <Ionicons.Filled.logo_linkedin class="w-5 h-auto fill-white hover:fill-primary" />
         <% end %>
         <%= link to: "https://github.com/joinum/" do %>
