@@ -83,7 +83,7 @@
                   <div class="flex items-center">
                     <div>
                       <div class="flex-shrink-0 w-10 h-10">
-                        <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({post.author.picture, post.author}, :original)) do %>
+                        <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({post.author.picture, post.author}, :medium)) do %>
                           <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
                             <span class="font-medium leading-none text-white text-md">
                               <%= extract_initials(post.author.name) %>
@@ -91,7 +91,7 @@
                           </span>
                         <% else %>
                           <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
-                            <img src={Parzival.Uploaders.ProfilePicture.url({post.author.picture, post.author}, :original)} class="object-center w-10 h-10 rounded-full" />
+                            <img src={Parzival.Uploaders.ProfilePicture.url({post.author.picture, post.author}, :medium)} class="object-center w-10 h-10 rounded-full" />
                           </div>
                         <% end %>
                       </div>
@@ -158,7 +158,7 @@
                       <div class="py-4 text-sm whitespace-nowrap">
                         <div class="flex items-center">
                           <div class="flex-shrink-0 w-10 h-10 lg:w-8 lg:h-8">
-                            <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :original)) do %>
+                            <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)) do %>
                               <span class="inline-flex justify-center items-center w-10 h-10 rounded-full lg:w-8 lg:h-8 bg-secondary">
                                 <span class="text-lg font-medium leading-none text-white lg:text-sm">
                                   <%= extract_initials(user.name) %>
@@ -166,7 +166,7 @@
                               </span>
                             <% else %>
                               <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full lg:w-8 lg:h-8">
-                                <img src={Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :original)} class="object-center w-10 h-10 rounded-full lg:w-8 lg:h-8" />
+                                <img src={Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)} class="object-center w-10 h-10 rounded-full lg:w-8 lg:h-8" />
                               </div>
                             <% end %>
                           </div>
@@ -216,7 +216,7 @@
                       </article>
                       <div class="flex flex-shrink-0 justify-between mt-4">
                         <div class="flex items-center">
-                          <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({announcement.author.picture, announcement.author}, :original)) do %>
+                          <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({announcement.author.picture, announcement.author}, :medium)) do %>
                             <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
                               <span class="text-xs font-medium leading-none text-white">
                                 <%= extract_initials(announcement.author.name) %>
@@ -224,7 +224,7 @@
                             </span>
                           <% else %>
                             <div class="relative flex-shrink-0 mr-2 w-6 h-6 bg-white rounded-full">
-                              <img src={Parzival.Uploaders.ProfilePicture.url({announcement.author.picture, announcement.author}, :original)} class="object-center w-6 h-6 rounded-full" />
+                              <img src={Parzival.Uploaders.ProfilePicture.url({announcement.author.picture, announcement.author}, :medium)} class="object-center w-6 h-6 rounded-full" />
                             </div>
                           <% end %>
                           <p class="text-sm text-gray-500">

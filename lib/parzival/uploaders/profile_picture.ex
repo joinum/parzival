@@ -27,7 +27,7 @@ defmodule Parzival.Uploaders.ProfilePicture do
   end
 
   def transform(:medium, _) do
-    {:convert, "-strip -thumbnail 400x600^ -gravity center -extent 400x600 -format png", :png}
+    {:convert, "-strip -thumbnail 400x400^ -gravity center -extent 400x400 -format png", :png}
   end
 
   def filename(version, _) do

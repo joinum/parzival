@@ -17,7 +17,7 @@ defmodule ParzivalWeb.PdfController do
     |> assign(:curriculum, curriculum)
     |> assign(
       :profile_picture,
-      ProfilePicture.url({current_user.picture, current_user}, :original)
+      ProfilePicture.url({current_user.picture, current_user}, :medium)
     )
     |> render_document("cv", "#{current_user.name} CV")
   end

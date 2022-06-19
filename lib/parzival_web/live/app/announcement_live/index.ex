@@ -15,7 +15,7 @@ defmodule ParzivalWeb.App.AnnouncementLive.Index do
   def handle_params(params, _url, socket) do
     {:noreply,
      socket
-     |> assign(:current_page, :tools)
+     |> assign(:current_page, :announcements)
      |> assign(:params, params)
      |> assign(list_announcements(params))}
   end

@@ -112,6 +112,13 @@ defmodule Parzival.Accounts.User do
     |> generate_random_password(opts)
   end
 
+  def user_info_changeset(user, attrs) do
+    user
+    |> cast(attrs, @required_fields -- [:password])
+    |> cast_attachments(attrs, [:picture])
+    |> validate_email()
+  end
+
   defp validate_email(changeset) do
     changeset
     |> validate_required([:email])

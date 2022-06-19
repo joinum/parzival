@@ -2,6 +2,7 @@ defmodule ParzivalWeb.App.AnnouncementLive.Show do
   @moduledoc false
   use ParzivalWeb, :live_view
 
+  alias Parzival.Accounts
   alias Parzival.Tools
 
   @impl true
@@ -11,9 +12,20 @@ defmodule ParzivalWeb.App.AnnouncementLive.Show do
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
+    user = Accounts.get_user!(socket.assigns.current_user.id)
+
+    case user.role do
+      :admin ->
+        socket
+        |> assign(:current_page, :tools)
+
+      _ ->
+        socket
+        |> assign(:current_page, :announcements)
+    end
+
     {:noreply,
      socket
-     |> assign(:current_page, :tools)
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:announcement, Tools.get_announcement!(id, :author))}
   end
