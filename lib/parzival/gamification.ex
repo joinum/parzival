@@ -527,6 +527,12 @@ defmodule Parzival.Gamification do
     |> Flop.validate_and_run(flop, for: MissionUser)
   end
 
+  def count_missions_users(opts \\ []) when is_list(opts) do
+    MissionUser
+    |> apply_filters(opts)
+    |> Repo.aggregate(:count)
+  end
+
   @doc """
   Gets a single mission_user.
 

@@ -52,7 +52,7 @@ defmodule Parzival.Gamification.Mission do
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> cast_assoc(:tasks,
       required: false,
-      with: &Task.mission_changeset/2
+      with: &Task.task_changeset/2
     )
     |> validate_required(@required_fields)
   end
