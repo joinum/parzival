@@ -112,14 +112,20 @@
           <%= for recruiter <- @recruiters do %>
             <div class="flex relative items-center py-5 px-6 space-x-3 bg-white rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50">
               <div class="flex-shrink-0 w-10 h-10">
-                <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
-                  <span class="text-lg font-medium leading-none text-white">
-                    <%= extract_initials(recruiter.name) %>
+                <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({recruiter.picture, recruiter}, :original)) do %>
+                  <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                    <span class="text-lg font-medium leading-none text-white">
+                      <%= extract_initials(recruiter.name) %>
+                    </span>
                   </span>
-                </span>
+                <% else %>
+                  <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                    <img src={Parzival.Uploaders.ProfilePicture.url({recruiter.picture, recruiter}, :original)} class="object-center w-10 h-10 rounded-full" />
+                  </div>
+                <% end %>
               </div>
               <div class="flex-1 min-w-0">
-                <%= live_redirect to: Routes.profile_index_path(@socket, :index, recruiter) do %>
+                <%= live_redirect to: Routes.profile_show_path(@socket, :show, recruiter) do %>
                   <span class="absolute inset-0" aria-hidden="true"></span>
                   <p class="text-sm font-medium text-gray-900">
                     <%= recruiter.name %>

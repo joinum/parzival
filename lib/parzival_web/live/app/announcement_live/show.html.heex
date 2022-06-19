@@ -31,11 +31,17 @@
   </div>
   <div class="flex flex-shrink-0 justify-between pr-6 pl-4 sm:pl-6 lg:pl-8 xl:pl-6">
     <div class="flex items-center">
-      <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
-        <span class="text-xs font-medium leading-none text-white">
-          <%= extract_initials(@announcement.author.name) %>
+      <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({@announcement.author.picture, @announcement.author}, :original)) do %>
+        <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
+          <span class="text-xs font-medium leading-none text-white">
+            <%= extract_initials(@announcement.author.name) %>
+          </span>
         </span>
-      </span>
+      <% else %>
+        <div class="relative flex-shrink-0 w-6 h-6 bg-white rounded-full">
+          <img src={Parzival.Uploaders.ProfilePicture.url({@announcement.author.picture, @announcement.author}, :original)} class="object-center w-6 h-6 rounded-full" />
+        </div>
+      <% end %>
       <p class="text-sm text-gray-500">
         <%= extract_first_last_name(@announcement.author.name) %>
       </p>

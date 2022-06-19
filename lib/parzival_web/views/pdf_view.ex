@@ -3,8 +3,6 @@ defmodule ParzivalWeb.PdfView do
 
   require Integer
 
-  # alias Parzival.Uploaders
-
   def render("cv.pdf", assigns) do
     # `render("document.html", assigns)` is generated at compile time from the .eex template.
     # Here we explicitly render it to a string and generate a PDF out of that.

@@ -1,9 +1,12 @@
-defmodule ParzivalWeb.Backoffice.UserLive.Show do
+defmodule ParzivalWeb.App.ProfileLive.Show do
   @moduledoc false
   use ParzivalWeb, :live_view
 
   alias Parzival.Accounts
   alias Parzival.Gamification
+  alias Parzival.Uploaders
+
+  import ParzivalWeb.Components.Curriculum
 
   @impl true
   def mount(_params, _session, socket) do
@@ -18,7 +21,7 @@ defmodule ParzivalWeb.Backoffice.UserLive.Show do
       :recruiter ->
         {:noreply,
          socket
-         |> assign(:current_page, :accounts)
+         |> assign(:current_page, :profile)
          |> assign(:current_tab, user.role)
          |> assign(:page_title, "Show User")
          |> assign(:params, params)
@@ -28,7 +31,7 @@ defmodule ParzivalWeb.Backoffice.UserLive.Show do
       :attendee ->
         {:noreply,
          socket
-         |> assign(:current_page, :accounts)
+         |> assign(:current_page, :profile)
          |> assign(:current_tab, user.role)
          |> assign(:page_title, "Show User")
          |> assign(:params, params)
@@ -38,7 +41,7 @@ defmodule ParzivalWeb.Backoffice.UserLive.Show do
       _ ->
         {:noreply,
          socket
-         |> assign(:current_page, :accounts)
+         |> assign(:current_page, :profile)
          |> assign(:current_tab, user.role)
          |> assign(:page_title, "Show User")
          |> assign(:params, params)

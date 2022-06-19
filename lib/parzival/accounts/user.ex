@@ -225,6 +225,11 @@ defmodule Parzival.Accounts.User do
     change(user, confirmed_at: now)
   end
 
+  def picture_changeset(user, attrs) do
+    user
+    |> cast_attachments(attrs, [:picture])
+  end
+
   @doc """
   Verifies the password.
 

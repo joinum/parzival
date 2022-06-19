@@ -35,7 +35,19 @@
 
   <body style="background-color: white">
     <div style="background-color: rgb(234,59,45); height: 37.13cm;" class="absolute py-16 px-10 w-1/3">
-      <img class="mx-auto w-48 rounded-full" src="http://localhost:4000/images/team/luis.png" alt="Profile image" />
+      <div class="relative mx-auto w-48 h-48">
+        <%= if is_nil(@profile_picture) do %>
+          <div style="background-color: rgb(234,59,45); border-width: 5px; border-color: white;" class="w-48 h-48 rounded-full border-white">
+            <div style="color: white; font-size: 72px; line-height: 1; text-align: center; padding-top: 58px;" class="font-bold">
+              <%= extract_initials(@user.name) %>
+            </div>
+          </div>
+        <% else %>
+          <div style="background-color: white;" class="w-48 h-48 rounded-full border-white">
+            <img src={"http://localhost:4000/#{@profile_picture}"} style="border-width: 5px; border-color: white;" class="object-cover object-center w-48 h-48 rounded-full" />
+          </div>
+        <% end %>
+      </div>
       <div style="color: white;" class="mt-12">
         <p style="font-size: 32px; line-height: 37px;" class="font-black"><%= extract_first_last_name(@user.name) %></p>
         <p class="mt-1">

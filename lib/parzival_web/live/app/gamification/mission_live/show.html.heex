@@ -162,11 +162,17 @@
       <%= for {mission_user, index} <- Enum.with_index(@mission_users)  do %>
         <div id={"user-#{index}"} class="flex flex-row gap-x-2 items-center p-2 w-full h-20 rounded-xl border border-gray-200 hover:bg-gray-50">
           <div class="flex-shrink-0 w-14 h-14">
-            <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
-              <span class="text-xl font-medium leading-none text-white">
-                <%= extract_initials(mission_user.user.name) %>
+            <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({mission_user.user.picture, mission_user.user}, :original)) do %>
+              <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
+                <span class="text-xl font-medium leading-none text-white">
+                  <%= extract_initials(mission_user.user.name) %>
+                </span>
               </span>
-            </span>
+            <% else %>
+              <div class="relative flex-shrink-0 w-14 h-14 bg-white rounded-full">
+                <img src={Parzival.Uploaders.ProfilePicture.url({mission_user.user.picture, mission_user.user}, :original)} class="object-center w-14 h-14 rounded-full" />
+              </div>
+            <% end %>
           </div>
           <div class="flex overflow-hidden flex-col w-full">
             <span class="inline-block overflow-hidden w-full text-base whitespace-nowrap text-ellipsis">
