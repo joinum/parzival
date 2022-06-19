@@ -40,7 +40,7 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   end
 
   defp save_user(socket, :edit, user_params) do
-    case Accounts.admin_update_user(
+    case Accounts.admin_change_user_info(
            socket.assigns.user,
            user_params,
            &consume_picture_data(socket, &1)

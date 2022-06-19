@@ -211,6 +211,13 @@ defmodule Parzival.Accounts do
     |> after_save(after_save)
   end
 
+  def admin_change_user_info(%User{} = user, attrs \\ %{}, after_save \\ &{:ok, &1}) do
+    user
+    |> User.user_info_changeset(attrs)
+    |> Repo.update()
+    |> after_save(after_save)
+  end
+
   def admin_update_user_picture(%User{} = user, attrs) do
     user
     |> User.picture_changeset(attrs)

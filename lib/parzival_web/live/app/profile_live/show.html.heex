@@ -8,7 +8,7 @@
       <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
         <div class="-mt-12 sm:flex sm:items-end sm:-mt-16 sm:space-x-5">
           <div>
-            <%= if is_nil(Uploaders.ProfilePicture.url({@user.picture, @user}, :original)) do %>
+            <%= if is_nil(Uploaders.ProfilePicture.url({@user.picture, @user}, :medium)) do %>
               <div class="relative flex-shrink-0 rounded-full ring-4 ring-white min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
                 <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
                   <span class="text-4xl font-medium leading-none text-white select-none sm:text-5xl">
@@ -18,7 +18,7 @@
               </div>
             <% else %>
               <div class="relative flex-shrink-0 w-24 h-24 bg-white rounded-full ring-4 ring-white sm:w-32 sm:h-32">
-                <img src={Uploaders.ProfilePicture.url({@user.picture, @user}, :original)} class="object-center absolute rounded-full w-[98px] h-[98px] sm:w-[130px] sm:h-[130px]" />
+                <img src={Uploaders.ProfilePicture.url({@user.picture, @user}, :medium)} class="object-center absolute rounded-full w-[98px] h-[98px] sm:w-[130px] sm:h-[130px]" />
               </div>
             <% end %>
           </div>
@@ -164,7 +164,7 @@
             <%= for recruiter <- @recruiters do %>
               <div class="flex relative items-center py-5 px-6 space-x-3 bg-white rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50">
                 <div class="flex-shrink-0 w-10 h-10">
-                  <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({recruiter.picture, recruiter}, :original)) do %>
+                  <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({recruiter.picture, recruiter}, :medium)) do %>
                     <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
                       <span class="text-lg font-medium leading-none text-white">
                         <%= extract_initials(recruiter.name) %>
@@ -172,7 +172,7 @@
                     </span>
                   <% else %>
                     <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
-                      <img src={Parzival.Uploaders.ProfilePicture.url({recruiter.picture, recruiter}, :original)} class="object-center w-10 h-10 rounded-full" />
+                      <img src={Parzival.Uploaders.ProfilePicture.url({recruiter.picture, recruiter}, :medium)} class="object-center w-10 h-10 rounded-full" />
                     </div>
                   <% end %>
                 </div>
