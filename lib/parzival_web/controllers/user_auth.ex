@@ -186,7 +186,7 @@ defmodule ParzivalWeb.UserAuth do
   end
 
   def require_not_recruiter(conn, _opts) do
-    unless conn.assigns[:current_user].role in [:recruiter] do
+    if conn.assigns[:current_user].role in [:admin, :staff, :attendee] do
       conn
     else
       conn
