@@ -68,11 +68,17 @@
             <!-- Profile -->
             <div class="flex flex-row items-center space-x-3">
               <div class="flex-shrink-0 w-14 h-14">
-                <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
-                  <span class="text-xl font-medium leading-none text-white">
-                    <%= extract_initials(@current_user.name) %>
+                <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :original)) do %>
+                  <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
+                    <span class="text-xl font-medium leading-none text-white select-none">
+                      <%= extract_initials(@current_user.name) %>
+                    </span>
                   </span>
-                </span>
+                <% else %>
+                  <div class="relative flex-shrink-0 w-14 h-14 bg-white rounded-full">
+                    <img src={Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :original)} class="object-center w-14 h-14 rounded-full" />
+                  </div>
+                <% end %>
               </div>
               <div class="flex overflow-hidden flex-col w-full">
                 <span class="inline-block overflow-hidden w-full text-base font-semibold text-gray-900 whitespace-nowrap text-ellipsis">
@@ -157,17 +163,25 @@
               <div class="flow-root mt-1">
                 <ul role="list" class="divide-y divide-gray-200">
                   <%= for user <- @users do %>
-                    <%= live_patch to: Routes.profile_index_path(@socket, :index, user), class: "group" do %>
+                    <%= live_patch to: Routes.profile_show_path(@socket, :show, user), class: "group" do %>
                       <li id={"user-#{user.id}"} class="relative">
                         <div class="flex justify-between">
                           <div class="py-4 text-sm whitespace-nowrap">
                             <div class="flex items-center">
                               <div class="flex-shrink-0 w-10 h-10 lg:w-8 lg:h-8">
-                                <span class="inline-flex justify-center items-center w-10 h-10 rounded-full lg:w-8 lg:h-8 bg-secondary">
-                                  <span class="text-lg font-medium leading-none text-white lg:text-sm">
-                                    <%= extract_initials(user.name) %>
-                                  </span>
-                                </span>
+                                <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :original)) do %>
+                                  <div class="relative flex-shrink-0 w-10 h-10 rounded-full ring-4 ring-white lg:w-8 lg:h-8">
+                                    <span class="inline-flex justify-center items-center w-10 h-10 rounded-full lg:w-8 lg:h-8 bg-secondary">
+                                      <span class="text-lg font-medium leading-none text-white lg:text-sm">
+                                        <%= extract_initials(user.name) %>
+                                      </span>
+                                    </span>
+                                  </div>
+                                <% else %>
+                                  <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full ring-2 ring-white lg:w-8 lg:h-8">
+                                    <img src={Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :original)} class="object-center absolute w-10 h-10 rounded-full lg:w-8 lg:h-8" />
+                                  </div>
+                                <% end %>
                               </div>
                               <div class="ml-4">
                                 <div class="font-medium text-gray-900 group-hover:underline group-focus:outline-none">
@@ -213,11 +227,17 @@
                           </article>
                           <div class="flex flex-shrink-0 justify-between mt-4">
                             <div class="flex items-center">
-                              <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
-                                <span class="text-xs font-medium leading-none text-white">
-                                  <%= extract_initials(announcement.author.name) %>
+                              <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({announcement.author.picture, announcement.author}, :original)) do %>
+                                <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
+                                  <span class="text-xs font-medium leading-none text-white">
+                                    <%= extract_initials(announcement.author.name) %>
+                                  </span>
                                 </span>
-                              </span>
+                              <% else %>
+                                <div class="relative flex-shrink-0 w-6 h-6 bg-white rounded-full">
+                                  <img src={Parzival.Uploaders.ProfilePicture.url({announcement.author.picture, announcement.author}, :original)} class="object-center absolute w-10 h-10 rounded-full lg:w-8 lg:h-8" />
+                                </div>
+                              <% end %>
                               <p class="text-sm text-gray-500">
                                 <%= extract_first_last_name(announcement.author.name) %>
                               </p>

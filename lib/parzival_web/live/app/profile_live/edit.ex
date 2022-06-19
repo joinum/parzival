@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.Backoffice.UserLive.Edit do
+defmodule ParzivalWeb.App.ProfileLive.Edit do
   @moduledoc false
   use ParzivalWeb, :live_view
 
@@ -15,7 +15,7 @@ defmodule ParzivalWeb.Backoffice.UserLive.Edit do
 
     {:noreply,
      socket
-     |> assign(:current_page, :accounts)
+     |> assign(:current_page, :profile)
      |> assign(:page_title, "Edit User")
      |> assign(:user, user)}
   end

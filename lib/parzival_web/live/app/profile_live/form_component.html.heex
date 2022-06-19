@@ -6,25 +6,47 @@
         <div>
           <img class="object-cover w-full h-32 lg:h-48" src={Routes.static_path(@socket, "/images/banner.svg")} alt="" />
         </div>
-        <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
+        <div class="px-4 mx-auto sm:px-6 lg:px-8">
           <div class="-mt-12 sm:flex sm:items-end sm:-mt-16 sm:space-x-5">
             <div class="flex">
-              <div class="flex-shrink-0 w-24 h-24 rounded-full ring-4 ring-white sm:w-32 sm:h-32">
-                <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
-                  <span class="text-4xl font-medium leading-none text-white sm:text-5xl">
-                    <%= extract_initials(input_value(f, :name)) %>
-                  </span>
-                </span>
-              </div>
+              <%= live_file_input(@uploads.picture, class: "hidden") %>
+              <a onclick={"document.getElementById('#{@uploads.picture.ref}').click()"}>
+                <div class={"#{if length(@uploads.picture.entries) != 0 do
+                    "hidden"
+                  end} relative w-24 h-24 border-4 border-white border-dashed rounded-full cursor-pointer bg-secondary sm:w-32 group sm:h-32 hover:bg-tertiary"}>
+                  <div class="flex absolute justify-center items-center w-full h-full">
+                    <Heroicons.Outline.camera class="mx-auto w-12 h-12 text-white group-hover:text-opacity-70" />
+                  </div>
+                </div>
+                <section>
+                  <%= for entry <- @uploads.picture.entries do %>
+                    <%= for err <- upload_errors(@uploads.picture, entry) do %>
+                      <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
+                    <% end %>
+                    <article class="flex relative items-center w-24 h-24 bg-white rounded-full cursor-pointer sm:w-32 sm:h-32 upload-entry group">
+                      <div class="flex absolute z-10 justify-center items-center w-full h-full rounded-full">
+                        <Heroicons.Outline.camera class="mx-auto w-12 h-12 text-white text-opacity-0 rounded-full group-hover:text-opacity-100" />
+                      </div>
+                      <figure class="flex justify-center items-center w-full h-full rounded-full group-hover:opacity-80">
+                        <%= live_img_preview(entry, class: "rounded-full w-24 h-24 sm:w-32 sm:h-32 border-4 border-white") %>
+                      </figure>
+                    </article>
+                  <% end %>
+                </section>
+              </a>
             </div>
             <div class="mt-6 sm:flex sm:flex-1 sm:justify-end sm:items-center sm:pb-1 sm:space-x-6 sm:min-w-0">
-              <div class="flex-1 mt-6 min-w-0 sm:hidden 2xl:block">
+              <div class="flex-1 min-w-0 sm:hidden md:mt-12 2xl:block">
                 <h1 class="text-2xl font-bold text-gray-900 truncate">
                   <%= input_value(f, :name) %>
                 </h1>
               </div>
 
-              <div class="flex flex-col mt-6 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
+              <div class="mt-6 md:mt-12">
+                <%= live_redirect("< Back", to: @return_to, class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
+              </div>
+
+              <div class="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 md:mt-6 justify-stretch">
                 <%= submit do %>
                   <div type="button" class="py-2 px-4 mt-6 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
                     Save

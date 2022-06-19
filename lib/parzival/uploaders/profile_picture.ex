@@ -40,6 +40,6 @@ defmodule Parzival.Uploaders.ProfilePicture do
 
   # Provide a default URL if there hasn't been a file uploaded
   # def default_url(version) do
-  #   "/images/defaults/profile/profile_picture_#{version}.png"
+  #   "/images/defaults/store/product_image_#{version}.png"
   # end
 end

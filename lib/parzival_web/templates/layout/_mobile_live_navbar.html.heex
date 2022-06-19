@@ -53,7 +53,7 @@
           <%= live_redirect(page.title, to: page.url, class: "#{(page.key == @current_page && "font-extrabold") || "hover:bg-tertiary"} px-3 text-center py-2 rounded-md text-sm font-medium text-white hover:text-white w-full") %>
         <% end %>
       <% end %>
-      <%= link(to: Routes.profile_index_path(@socket, :index, @current_user), class: "w-full text-center hover:text-white text-white font-medium text-sm") do %>
+      <%= link(to: Routes.profile_show_path(@socket, :show, @current_user), class: "w-full text-center hover:text-white text-white font-medium text-sm") do %>
         <div class="py-2 px-3 w-full rounded-md hover:bg-tertiary" role="none">
           Profile
         </div>

@@ -173,11 +173,12 @@ defmodule Parzival.Accounts do
       iex> admin_create_user(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
   """
-  def admin_create_user(attrs \\ %{}, role) do
+  def admin_create_user(attrs \\ %{}, after_save \\ &{:ok, &1}, role) do
     %User{}
     |> Map.put(:role, role)
     |> User.changeset(attrs)
     |> Repo.insert()
+    |> after_save(after_save)
     |> case do
       {:ok, user} ->
         if role in [:attendee] do
@@ -199,9 +200,20 @@ defmodule Parzival.Accounts do
       iex> admin_update_user(user, %{email: bad_value})
       {:error, %Ecto.Changeset{}}
   """
-  def admin_update_user(%User{} = user, attrs \\ %{}, opts \\ []) do
+  def admin_update_user(
+        %User{} = user,
+        attrs,
+        after_save \\ &{:ok, &1}
+      ) do
     user
-    |> User.changeset(attrs, opts)
+    |> User.changeset(attrs)
+    |> Repo.update()
+    |> after_save(after_save)
+  end
+
+  def admin_update_user_picture(%User{} = user, attrs) do
+    user
+    |> User.picture_changeset(attrs)
     |> Repo.update()
   end
 

@@ -86,14 +86,15 @@ defmodule ParzivalWeb.Router do
           live "/:id/tasks/:task_id/redeem", TaskLive.Show, :redeem
         end
 
-        live "/profile/:id", ProfileLive.Index, :index
+        live "/profile/:id", ProfileLive.Show, :show
+        live "/profile/:id/edit", ProfileLive.Edit, :edit
       end
 
       scope "/admin", Backoffice, as: :admin do
         live "/accounts/", UserLive.Index, :index
         live "/accounts/new", UserLive.New, :new
-        live "/accounts/:id", UserLive.Show, :show
-        live "/accounts/:id/edit", UserLive.Edit, :edit
+        # live "/accounts/:id", UserLive.Show, :show
+        # live "/accounts/:id/edit", UserLive.Edit, :edit
 
         scope "/jobs" do
           live "/types/", OfferTypeLive.Index, :index

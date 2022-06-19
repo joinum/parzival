@@ -20,11 +20,17 @@
                     <span class="text-secondary"><%= index + 1 %></span>
                   </div>
                   <div class="flex-shrink-0 w-10 h-10">
-                    <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
-                      <span class="text-lg font-medium leading-none text-white">
-                        <%= extract_initials(user.name) %>
+                    <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :original)) do %>
+                      <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                        <span class="text-lg font-medium leading-none text-white">
+                          <%= extract_initials(user.name) %>
+                        </span>
                       </span>
-                    </span>
+                    <% else %>
+                      <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                        <img src={Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :original)} class="object-center w-10 h-10 rounded-full" />
+                      </div>
+                    <% end %>
                   </div>
                 </div>
                 <div class="ml-4">
@@ -45,7 +51,7 @@
           </div>
         </li>
       <% else %>
-        <%= live_patch(to: Routes.profile_index_path(@socket, :index, user)) do %>
+        <%= live_patch(to: Routes.profile_show_path(@socket, :show, user)) do %>
           <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
             <div class="flex justify-between">
               <div class="py-4 text-sm whitespace-nowrap">
@@ -55,11 +61,17 @@
                       <span class="text-gray-900"><%= index + 1 %></span>
                     </div>
                     <div class="flex-shrink-0 w-10 h-10">
-                      <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
-                        <span class="text-lg font-medium leading-none text-white">
-                          <%= extract_initials(user.name) %>
+                      <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :original)) do %>
+                        <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                          <span class="text-lg font-medium leading-none text-white">
+                            <%= extract_initials(user.name) %>
+                          </span>
                         </span>
-                      </span>
+                      <% else %>
+                        <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                          <img src={Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :original)} class="object-center w-10 h-10 rounded-full" />
+                        </div>
+                      <% end %>
                     </div>
                   </div>
                   <div class="ml-4">
@@ -94,11 +106,17 @@
                     <%= @position %>
                   </div>
                   <div class="flex-shrink-0 w-10 h-10">
-                    <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
-                      <span class="text-lg font-medium leading-none text-white">
-                        <%= extract_initials(@current_user.name) %>
+                    <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :original)) do %>
+                      <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                        <span class="text-lg font-medium leading-none text-white">
+                          <%= extract_initials(@current_user.name) %>
+                        </span>
                       </span>
-                    </span>
+                    <% else %>
+                      <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                        <img src={Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :original)} class="object-center w-10 h-10 rounded-full" />
+                      </div>
+                    <% end %>
                   </div>
                 </div>
                 <div class="ml-4">

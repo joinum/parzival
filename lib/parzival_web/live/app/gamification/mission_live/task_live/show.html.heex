@@ -75,14 +75,20 @@
     <div>
       <ul role="list" class="grid grid-cols-1 gap-4 py-6 px-4 mb-2 border-b border-gray-200 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         <%= for task <- @task_users do %>
-          <%= live_redirect to: Routes.profile_index_path(@socket, :index, task.user) do %>
+          <%= live_redirect to: Routes.profile_show_path(@socket, :show, task.user) do %>
             <div class="flex flex-row gap-x-2 items-center p-2 w-full h-20 rounded-xl border border-gray-200 hover:bg-gray-50">
               <div class="flex-shrink-0 w-14 h-14">
-                <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
-                  <span class="text-xl font-medium leading-none text-white">
-                    <%= extract_initials(task.user.name) %>
+                <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({task.user.picture, task.user}, :original)) do %>
+                  <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
+                    <span class="text-xl font-medium leading-none text-white">
+                      <%= extract_initials(task.user.name) %>
+                    </span>
                   </span>
-                </span>
+                <% else %>
+                  <div class="relative flex-shrink-0 w-14 h-14 bg-white rounded-full">
+                    <img src={Parzival.Uploaders.ProfilePicture.url({task.user.picture, task.user}, :original)} class="object-center w-14 h-14 rounded-full" />
+                  </div>
+                <% end %>
               </div>
               <div class="flex overflow-hidden flex-col w-full">
                 <span class="inline-block overflow-hidden w-full text-base whitespace-nowrap text-ellipsis">
