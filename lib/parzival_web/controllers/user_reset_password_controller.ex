@@ -6,7 +6,9 @@ defmodule ParzivalWeb.UserResetPasswordController do
   plug :get_user_by_reset_password_token when action in [:edit, :update]
 
   def new(conn, _params) do
-    render(conn, "new.html")
+    conn
+    |> put_layout(false)
+    |> render("new.html", error_message: nil)
   end
 
   def create(conn, %{"user" => %{"email" => email}}) do
@@ -18,15 +20,21 @@ defmodule ParzivalWeb.UserResetPasswordController do
     end
 
     conn
+    |> put_layout(false)
     |> put_flash(
       :info,
       "If your email is in our system, you will receive instructions to reset your password shortly."
     )
-    |> redirect(to: "/")
+    |> redirect(to: "/login")
   end
 
   def edit(conn, _params) do
-    render(conn, "edit.html", changeset: Accounts.change_user_password(conn.assigns.user))
+    conn
+    |> put_layout(false)
+    |> render("edit.html",
+      changeset: Accounts.change_user_password(conn.assigns.user),
+      error_message: nil
+    )
   end
 
   # Do not log in the user after reset password to avoid a
@@ -35,6 +43,7 @@ defmodule ParzivalWeb.UserResetPasswordController do
     case Accounts.reset_user_password(conn.assigns.user, user_params) do
       {:ok, _} ->
         conn
+        |> put_layout(false)
         |> put_flash(:info, "Password reset successfully!")
         |> redirect(to: Routes.user_session_path(conn, :new))
 
@@ -47,11 +56,11 @@ defmodule ParzivalWeb.UserResetPasswordController do
     %{"token" => token} = conn.params
 
     if user = Accounts.get_user_by_reset_password_token(token) do
-      conn |> assign(:user, user) |> assign(:token, token)
+      conn |> assign(:user, user) |> assign(:token, token) |> put_layout(false)
     else
       conn
       |> put_flash(:error, "Reset password link is invalid or it has expired.")
-      |> redirect(to: "/")
+      |> redirect(to: "/login")
       |> halt()
     end
   end

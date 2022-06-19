@@ -93,8 +93,6 @@ defmodule ParzivalWeb.Router do
       scope "/admin", Backoffice, as: :admin do
         live "/accounts/", UserLive.Index, :index
         live "/accounts/new", UserLive.New, :new
-        # live "/accounts/:id", UserLive.Show, :show
-        # live "/accounts/:id/edit", UserLive.Edit, :edit
 
         scope "/jobs" do
           live "/types/", OfferTypeLive.Index, :index
