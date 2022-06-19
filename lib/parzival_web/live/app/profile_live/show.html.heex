@@ -36,10 +36,12 @@
                   <% end %>
                 </div>
               <% end %>
-              <a href={"mailto:#{@user.name}"} type="button" class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50">
-                <Heroicons.Solid.mail class="mr-2 -ml-1 w-5 h-5 text-gray-400" />
-                <span>Message</span>
-              </a>
+              <%= if @user.id != @current_user.id do %>
+                <a href={"mailto:#{@user.name}"} type="button" class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50">
+                  <Heroicons.Solid.mail class="mr-2 -ml-1 w-5 h-5 text-gray-400" />
+                  <span>Message</span>
+                </a>
+              <% end %>
               <%= if @user.role in [:attendee] && @current_user.role in [:admin] || @current_user.role in [:attendee] && @user.id == @current_user.id do %>
                 <%= link("Download CV",
                   to: Routes.pdf_path(@socket, :cv, @user),
