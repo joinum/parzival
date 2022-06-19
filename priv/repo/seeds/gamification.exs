@@ -260,7 +260,7 @@ defmodule Parzival.Repo.Seeds.Gamification do
 
       for mission <- Enum.take_random(missions, Enum.random(1..Enum.count(missions))) do
         for task <- Enum.take_random(mission.tasks, Enum.random(1..Enum.count(mission.tasks))) do
-          Gamification.redeem_task(Enum.random(staffs), attendee, task)
+          Gamification.redeem_task(attendee, task, Enum.random(staffs))
         end
       end
     end
