@@ -13,7 +13,7 @@ defmodule Parzival.Gamification.Curriculum.Position do
     field :title, :string
     field :start, :date
     field :finish, :date
-    field :current, :boolean
+    field :current, :boolean, default: false
 
     field :delete, :boolean, virtual: true
 

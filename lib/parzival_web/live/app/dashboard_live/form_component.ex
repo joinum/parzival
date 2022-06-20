@@ -171,7 +171,7 @@ defmodule ParzivalWeb.App.DashboardLive.FormComponent do
 
     experiences =
       existing_experiences
-      |> Enum.concat([Gamification.change_experience(%Experience{})])
+      |> Enum.concat([Gamification.change_experience(%Experience{positions: [%Position{}]})])
 
     changeset =
       socket.assigns.changeset
@@ -192,40 +192,33 @@ defmodule ParzivalWeb.App.DashboardLive.FormComponent do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("add-position", %{"id" => id}, socket) do
-    existing_experiences =
-      Map.get(
-        socket.assigns.changeset.changes,
-        :experiences,
-        socket.assigns.curriculum.experiences
-      )
+  def handle_event("add-position", %{"index" => index}, socket) do
+    experiences =
+      socket.assigns.curriculum
+      |> Map.get(:experiences, [])
 
     experience =
-      existing_experiences
-      |> Enum.filter(&(&1.id == id))
-      |> Kernel.hd()
+      experiences
+      |> Enum.at(String.to_integer(index), [])
 
     positions =
-      experience.positions
-      |> Enum.concat([Gamification.change_position(%Position{})])
+      experience
+      |> Map.get(:positions, [])
+      |> Enum.concat([%Position{}])
 
-    experience =
+    new_experience =
       experience
       |> Map.put(:positions, positions)
 
-    experiences =
-      existing_experiences
-      |> Enum.map(fn e ->
-        if e.id == id do
-          Gamification.change_experience(experience)
-        else
-          e
-        end
-      end)
+    new_experiences =
+      experiences
+      |> List.replace_at(String.to_integer(index), new_experience)
 
-    changeset =
-      socket.assigns.changeset
-      |> Ecto.Changeset.cast_embed(:experiences, experiences)
+    curriculum =
+      socket.assigns.curriculum
+      |> Map.put(:experiences, new_experiences)
+
+    changeset = Gamification.change_curriculum(curriculum)
 
     {:noreply, assign(socket, changeset: changeset)}
   end
@@ -251,6 +244,7 @@ defmodule ParzivalWeb.App.DashboardLive.FormComponent do
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset)
         {:noreply, assign(socket, :changeset, changeset)}
     end
   end
