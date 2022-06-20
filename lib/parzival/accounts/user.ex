@@ -4,6 +4,8 @@ defmodule Parzival.Accounts.User do
   """
   use Parzival.Schema
 
+  alias Parzival.Accounts.QRCode
+
   alias Parzival.Companies.Application
   alias Parzival.Companies.Company
   alias Parzival.Gamification.Curriculum
@@ -60,6 +62,7 @@ defmodule Parzival.Accounts.User do
     field :exp, :integer, default: 0
 
     has_one :curriculum, Curriculum
+    has_one :qrcode, QRCode
 
     has_many :orders, Order
 
@@ -96,6 +99,7 @@ defmodule Parzival.Accounts.User do
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> cast_attachments(attrs, [:picture])
     |> validate_email()
+    |> validate_qr()
     |> validate_password(opts)
   end
 
@@ -109,6 +113,7 @@ defmodule Parzival.Accounts.User do
     |> cast_attachments(attrs, [:picture])
     |> validate_required([:name])
     |> validate_email()
+    |> validate_qr()
     |> generate_random_password(opts)
   end
 
@@ -117,6 +122,17 @@ defmodule Parzival.Accounts.User do
     |> cast(attrs, @required_fields ++ (@optional_fields -- [:password]))
     |> cast_attachments(attrs, [:picture])
     |> validate_email()
+  end
+
+  defp validate_qr(%{params: params} = changeset) do
+    if Map.get(params, :role) == :attendee do
+      changeset
+      |> validate_required([:qrcode])
+      |> unsafe_validate_unique(:qrcode, Parzival.Repo)
+      |> unique_constraint(:qrcode)
+    else
+      changeset
+    end
   end
 
   defp validate_email(changeset) do

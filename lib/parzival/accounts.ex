@@ -6,7 +6,7 @@ defmodule Parzival.Accounts do
 
   import Ecto.Query, warn: false
 
-  alias Parzival.Accounts.{User, UserNotifier, UserToken}
+  alias Parzival.Accounts.{QRCode, User, UserNotifier, UserToken}
   alias Parzival.Gamification
 
   def list_users(params \\ %{})
@@ -49,6 +49,22 @@ defmodule Parzival.Accounts do
   """
   def get_user_by_email(email) when is_binary(email) do
     Repo.get_by(User, email: email)
+  end
+
+  @doc """
+  Gets a qr code by its value.
+
+  ## Examples
+
+      iex> get_qr_code("a5df610e-f0bd-11ec-8ea0-0242ac120002")
+      %QRCode{}
+
+      iex> get_qr_code("404")
+      nil
+
+  """
+  def get_qr_code(uuid) do
+    Repo.get_by(QRCode, uuid: uuid)
   end
 
   @doc """
