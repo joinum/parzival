@@ -26,27 +26,32 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
 
     case user.role do
       :attendee ->
-        socket
-        |> assign(:announcements, list_announcements())
-        |> assign(:curriculum, Gamification.get_user_curriculum(user, []))
-        |> assign(:post, %Post{})
-        |> assign(:action, :new)
-        |> assign(list_applications(params, socket))
+        {:noreply,
+         socket
+         |> assign(:current_page, :dashboard)
+         |> assign(:page_title, "Dashboard")
+         |> assign(:announcements, list_announcements())
+         |> assign(:user, user)
+         |> assign(:params, params)
+         |> assign(:curriculum, Gamification.get_user_curriculum(user, []))
+         |> assign(list_top_users(params))
+         |> assign(list_posts(params))
+         |> assign(:post, %Post{})
+         |> assign(:action, :new)
+         |> assign(:changeset, Tools.change_post(%Post{}))
+         |> assign(list_applications(params, socket))}
 
       _ ->
-        socket
+        {:noreply,
+         socket
+         |> assign(:current_page, :dashboard)
+         |> assign(:page_title, "Dashboard")
+         |> assign(:user, user)
+         |> assign(list_top_users(params))
+         |> assign(list_posts(params))
+         |> assign(:changeset, Tools.change_post(%Post{}))
+         |> assign(:announcements, list_announcements())}
     end
-
-    {:noreply,
-     socket
-     |> assign(:current_page, :dashboard)
-     |> assign(:page_title, "Dashboard")
-     |> assign(:user, user)
-     |> assign(:params, params)
-     |> assign(list_top_users(params))
-     |> assign(list_posts(params))
-     |> assign(:changeset, Tools.change_post(%Post{}))
-     |> assign(:announcements, list_announcements())}
   end
 
   defp list_top_users(params) do

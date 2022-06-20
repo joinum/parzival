@@ -16,18 +16,19 @@ defmodule ParzivalWeb.App.AnnouncementLive.Show do
 
     case user.role do
       :admin ->
-        socket
-        |> assign(:current_page, :tools)
+        {:noreply,
+         socket
+         |> assign(:current_page, :tools)
+         |> assign(:page_title, page_title(socket.assigns.live_action))
+         |> assign(:announcement, Tools.get_announcement!(id, :author))}
 
       _ ->
-        socket
-        |> assign(:current_page, :announcements)
+        {:noreply,
+         socket
+         |> assign(:current_page, :announcements)
+         |> assign(:page_title, page_title(socket.assigns.live_action))
+         |> assign(:announcement, Tools.get_announcement!(id, :author))}
     end
-
-    {:noreply,
-     socket
-     |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:announcement, Tools.get_announcement!(id, :author))}
   end
 
   @impl true

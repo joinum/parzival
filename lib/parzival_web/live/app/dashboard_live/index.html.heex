@@ -138,11 +138,9 @@
           <% end %>
         </div>
 
-        <%= if @user.role in [:attendee] do %>
+        <%= if @user.role in [:attendee] && assigns[:curriculum] do %>
           <!-- Curriculum -->
-          <%= if assigns[:curriculum] do %>
-            <.curriculum curriculum={@curriculum} />
-          <% end %>
+          <.curriculum curriculum={@curriculum} />
         <% end %>
         <!-- Rankings -->
         <div x-bind:class="option =='rankings' ? 'block max-w-5xl px-4 py-4 mx-auto border-b border-gray-200 sm:px-6 lg:px-8' : 'hidden'">
