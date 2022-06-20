@@ -53,7 +53,17 @@ defmodule Parzival.Gamification do
           preload: ^preloads
       )
 
-    unless is_nil(curriculum) do
+    if is_nil(curriculum) do
+      %{
+        summary: nil,
+        experiences: [],
+        educations: [],
+        volunteerings: [],
+        skills: [],
+        languages: [],
+        user_id: user.id
+      }
+    else
       %{
         summary:
           if curriculum.summary do
@@ -62,20 +72,47 @@ defmodule Parzival.Gamification do
             nil
           end,
         experiences:
-          Enum.map(curriculum.experiences, fn experience ->
-            %{
-              organization: experience.organization,
-              positions: Enum.sort_by(experience.positions, & &1.finish, {:desc, Date})
-            }
-          end),
-        educations: Enum.sort_by(curriculum.educations, & &1.finish, {:desc, Date}),
-        volunteerings: Enum.sort_by(curriculum.volunteerings, & &1.finish, {:desc, Date}),
-        skills: curriculum.skills,
-        languages: curriculum.languages,
-        user: curriculum.user
+          if curriculum.experiences do
+            Enum.map(curriculum.experiences, fn experience ->
+              %{
+                organization: experience.organization,
+                positions: Enum.sort_by(experience.positions, & &1.finish, {:desc, Date})
+              }
+            end)
+          else
+            []
+          end,
+        educations:
+          if curriculum.educations do
+            Enum.sort_by(curriculum.educations, & &1.finish, {:desc, Date})
+          else
+            []
+          end,
+        volunteerings:
+          if curriculum.volunteerings do
+            Enum.sort_by(curriculum.volunteerings, & &1.finish, {:desc, Date})
+          else
+            []
+          end,
+        skills:
+          if curriculum.skills do
+            curriculum.skills
+          else
+            []
+          end,
+        languages:
+          if curriculum.languages do
+            curriculum.languages
+          else
+            []
+          end,
+        user_id:
+          if curriculum.user_id do
+            curriculum.user_id
+          else
+            user.id
+          end
       }
-    else
-      nil
     end
   end
 
