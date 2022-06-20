@@ -14,6 +14,7 @@ defmodule ParzivalWeb.App.OrderLive.FormComponent do
      |> assign(:changeset, changeset)}
   end
 
+  @impl true
   def handle_event("save", %{"order" => order_params}, socket) do
     save_order(socket, order_params)
   end

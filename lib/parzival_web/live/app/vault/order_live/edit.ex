@@ -2,7 +2,6 @@ defmodule ParzivalWeb.App.Staff.OrderLive.Edit do
   @moduledoc false
   use ParzivalWeb, :live_view
 
-  alias Parzival.Accounts
   alias Parzival.Store
 
   @impl true
@@ -11,7 +10,7 @@ defmodule ParzivalWeb.App.Staff.OrderLive.Edit do
   end
 
   @impl true
-  def handle_params(%{"id" => id} = params, _, socket) do
+  def handle_params(%{"id" => id} = _params, _, socket) do
     {:noreply,
      socket
      |> assign(:current_page, :vault)
