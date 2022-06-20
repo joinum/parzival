@@ -1,0 +1,76 @@
+<div class="min-h-full bg-white border-r border-gray-200">
+  <.form let={f} for={@changeset} id="order-form" phx-target={@myself} phx-submit="save">
+    <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+      <div class="flex justify-between items-center h-10">
+        <h1 class="flex-1 text-lg font-medium">Vault</h1>
+        <!-- Action buttons -->
+      </div>
+    </div>
+
+    <div class="px-4 mx-auto max-w-2xl bg-white sm:px-6 lg:gap-x-8 lg:px-8 lg:max-w-7xl">
+      <div class="py-6">
+        <%= live_redirect("< Back", to: Routes.order_index_path(@socket, :index), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
+      </div>
+      <p class="text-gray-900">
+        Order number:
+      </p>
+      <p class="text-gray-500">
+        #<%= @order.id %>
+      </p>
+      <p class="flex items-center mt-2 space-x-2 text-sm text-gray-700">
+        <%= if @order.redeemed do %>
+          <Heroicons.Solid.check class="flex-shrink-0 w-5 h-5 text-green-500" />
+          <span>
+            Delivered
+          </span>
+        <% else %>
+          <Heroicons.Solid.clock class="flex-shrink-0 w-5 h-5 text-gray-300" />
+          <span>
+            Ordered
+          </span>
+        <% end %>
+      </p>
+
+      <div class="flex justify-between mt-10">
+        <div>
+          <p class="text-gray-500">
+            Attendee:
+          </p>
+          <p class="text-gray-900">
+            <%= @order.user.name %>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex justify-between mt-10">
+        <div>
+          <p class="text-gray-900">
+            <%= String.upcase(@order.product.name) %>
+          </p>
+          <p class="text-gray-500">
+            #<%= @order.product.id %>
+          </p>
+        </div>
+        <p class="text-gray-900 sm:text-lg text-md">
+          💰 <span class="relative top-0.5"><%= @order.product.price %></span>
+        </p>
+      </div>
+
+      <%= if not @order.redeemed do %>
+        <div class="flex justify-between mt-10">
+          <div>
+            <%= checkbox(f, :redeemed) %>
+            <span class="pl-4 text-gray-900 sm:text-lg text-md">Deliver</span>
+          </div>
+          <div>
+            <%= submit do %>
+              <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm xl:w-full bg-secondary hover:bg-primary">
+                Confirm
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </.form>
+</div>

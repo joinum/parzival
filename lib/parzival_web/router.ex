@@ -88,6 +88,12 @@ defmodule ParzivalWeb.Router do
 
         live "/profile/:id", ProfileLive.Show, :show
         live "/profile/:id/edit", ProfileLive.Edit, :edit
+
+        scope "/staff", Staff, as: :staff do
+          live "/task_redeem/:task/:attendee", TaskUserLive.New, :new
+          live "/order_redeem/:id", OrderLive.Edit, :edit
+          live "/scanner", ScannerLive.Index, :index
+        end
       end
 
       scope "/admin", Backoffice, as: :admin do
