@@ -4,8 +4,6 @@ defmodule Parzival.Accounts.QRCode do
   """
   use Parzival.Schema
 
-  alias Parzival.Accounts
-
   @required_fields ~w(uuid)a
 
   schema "qrcodes" do
