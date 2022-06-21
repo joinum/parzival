@@ -17,6 +17,22 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   def handle_params(%{"id" => id} = params, _url, socket) do
     user = Accounts.get_user!(id, [:company])
 
+    handle_role(socket, params, user)
+  end
+
+  @impl true
+  def handle_params(%{"qr" => qr} = params, _url, socket) do
+    user = Accounts.get_user_by_qr(qr, [:company])
+
+    if user == nil do
+      {:noreply, socket
+      |> push_redirect(to: Routes.user_registration_path(socket, :new, qr))}
+    else
+      handle_role(socket, params, user)
+    end
+  end
+
+  defp handle_role(socket, params, user) do
     case user.role do
       :recruiter ->
         {:noreply,

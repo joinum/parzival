@@ -29,7 +29,8 @@ defmodule Parzival.Accounts.User do
     :twitter,
     :company_id,
     :balance,
-    :exp
+    :exp,
+    :qrcode_id
   ]
 
   @derive {
@@ -62,7 +63,7 @@ defmodule Parzival.Accounts.User do
     field :exp, :integer, default: 0
 
     has_one :curriculum, Curriculum
-    has_one :qrcode, QRCode
+    belongs_to :qrcode, QRCode
 
     has_many :orders, Order
 
@@ -98,6 +99,7 @@ defmodule Parzival.Accounts.User do
     user
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> cast_attachments(attrs, [:picture])
+    #|> cast_assoc(:qrcode)
     |> validate_email()
     |> validate_qr()
     |> validate_password(opts)

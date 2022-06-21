@@ -52,6 +52,29 @@ defmodule Parzival.Accounts do
   end
 
   @doc """
+  Gets a user by their qr code.
+
+  ## Examples
+
+      iex> get_user_by_qr("57c319bc-9a2d-4c74-a9fc-03178d93b85a")
+      %User{}
+
+      iex> get_user_by_email("404")
+      nil
+
+  """
+  def get_user_by_qr(qr_code, preloads \\ []) do
+    qr = Repo.get_by(QRCode, uuid: qr_code)
+
+    query = from u in User,
+          where: u.qrcode_id == ^qr.id
+
+    Repo.one(query)
+    |> Repo.preload(preloads)
+
+  end
+
+  @doc """
   Gets a qr code by its value.
 
   ## Examples
