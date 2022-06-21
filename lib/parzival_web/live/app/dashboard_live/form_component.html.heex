@@ -83,7 +83,7 @@
                               <div class="flex items-end">
                                 Positions
                               </div>
-                              <a phx-click="add-position" phx-target={@myself} phx-value-id={fe.data.id} class="inline-flex justify-center py-1 px-2 my-1 text-xs font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50">
+                              <a phx-click="add-position" phx-target={@myself} phx-value-index={fe.index} class="inline-flex justify-center py-1 px-2 my-1 text-xs font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50">
                                 Add
                               </a>
                             </div>
@@ -103,9 +103,18 @@
                                       <%= checkbox(fp, :delete, id: fp.data.id, class: "hidden") %>
                                     <% end %>
                                   </div>
-                                  <div class="flex mt-1 space-x-1">
+                                  <div x-data={"{checkbox: #{is_nil(fp.data.finish)}}"} class="flex items-center mt-1 space-x-1">
                                     <%= date_input(fp, :start, class: "w-full sm:w-48 block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
-                                    <%= date_input(fp, :finish, class: "w-full sm:w-48 block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                                    <template x-if="checkbox">
+                                      <%= date_input(fp, :finish, class: "hidden w-full sm:w-48 block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs", value: nil) %>
+                                    </template>
+                                    <template x-if="!checkbox">
+                                      <%= date_input(fp, :finish, class: "w-full sm:w-48 block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                                    </template>
+                                    <div>
+                                      <span class="mx-2 text-xs font-medium text-gray-500">Current :</span>
+                                      <input @click="checkbox = !checkbox; console.log(finish)" type="checkbox" :checked="checkbox" class="w-4 h-4 rounded border-gray-300 text-secondary focus:ring-secondary" />
+                                    </div>
                                   </div>
                                 </div>
                               </div>

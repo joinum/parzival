@@ -5,7 +5,7 @@ defmodule Parzival.Gamification.Curriculum.Position do
   use Parzival.Schema
   import Ecto.Changeset
 
-  @required_fields ~w(title start current)a
+  @required_fields ~w(title start)a
 
   @optional_fields [:finish, :delete]
 
@@ -13,7 +13,6 @@ defmodule Parzival.Gamification.Curriculum.Position do
     field :title, :string
     field :start, :date
     field :finish, :date
-    field :current, :boolean
 
     field :delete, :boolean, virtual: true
 

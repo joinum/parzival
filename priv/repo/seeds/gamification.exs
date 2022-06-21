@@ -55,11 +55,13 @@ defmodule Parzival.Repo.Seeds.Gamification do
                                 title: Faker.Person.title(),
                                 start: Faker.DateTime.between(~D[2018-04-11], ~D[2021-04-11]),
                                 finish:
-                                  Faker.DateTime.between(
-                                    ~D[2021-04-11],
-                                    Date.utc_today()
-                                  ),
-                                current: Enum.random([true, false, false, false])
+                                  Enum.random([
+                                    Faker.DateTime.between(
+                                      ~D[2021-04-11],
+                                      Date.utc_today()
+                                    ),
+                                    nil
+                                  ])
                               }
                               | acc
                             ]

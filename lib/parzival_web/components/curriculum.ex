@@ -21,10 +21,10 @@ defmodule ParzivalWeb.Components.Curriculum do
             <%= for experience <- assigns.curriculum.experiences do %>
               <% n_total_months =
                 Enum.reduce(experience.positions, 0, fn position, acc ->
-                  if position.current do
-                    Timex.diff(Date.utc_today(), position.start, :months) + acc
-                  else
+                  if position.finish do
                     Timex.diff(position.finish, position.start, :months) + acc
+                  else
+                    Timex.diff(Date.utc_today(), position.start, :months) + acc
                   end
                 end) %>
               <div>
@@ -45,16 +45,16 @@ defmodule ParzivalWeb.Components.Curriculum do
                     <%= for position <- experience.positions do %>
                       <li>
                         <% n_months =
-                          if position.current do
-                            Timex.diff(Date.utc_today(), position.start, :months)
-                          else
+                          if position.finish do
                             Timex.diff(position.finish, position.start, :months)
+                          else
+                            Timex.diff(Date.utc_today(), position.start, :months)
                           end %>
                         <p class="ml-5">
                           <%= position.title %>
                           <span style="color: rgb(156,163,175)" class="ml-2 text-sm">
                             <%= Calendar.strftime(position.start, "%b %Y") %> -
-                            <%= if position.current do %>
+                            <%= if is_nil(position.finish) do %>
                               Current ·
                             <% else %>
                               <%= Calendar.strftime(position.finish, "%b %Y") %> ·
