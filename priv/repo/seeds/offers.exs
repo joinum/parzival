@@ -5,7 +5,6 @@ defmodule Parzival.Repo.Seeds.Offers do
 
   alias Parzival.Accounts.User
 
-  alias Parzival.Companies.Application
   alias Parzival.Companies.Company
   alias Parzival.Companies.Offer
   alias Parzival.Companies.OfferType

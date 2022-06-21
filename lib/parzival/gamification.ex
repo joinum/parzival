@@ -64,56 +64,69 @@ defmodule Parzival.Gamification do
         user_id: user.id
       }
     else
-      %{
-        summary:
-          if curriculum.summary do
-            curriculum.summary
-          else
-            nil
-          end,
-        experiences:
-          if curriculum.experiences do
-            Enum.map(curriculum.experiences, fn experience ->
-              %{
-                organization: experience.organization,
-                positions: Enum.sort_by(experience.positions, & &1.finish, {:desc, Date})
-              }
-            end)
-          else
-            []
-          end,
-        educations:
-          if curriculum.educations do
-            Enum.sort_by(curriculum.educations, & &1.finish, {:desc, Date})
-          else
-            []
-          end,
-        volunteerings:
-          if curriculum.volunteerings do
-            Enum.sort_by(curriculum.volunteerings, & &1.finish, {:desc, Date})
-          else
-            []
-          end,
-        skills:
-          if curriculum.skills do
-            curriculum.skills
-          else
-            []
-          end,
-        languages:
-          if curriculum.languages do
-            curriculum.languages
-          else
-            []
-          end,
-        user_id:
-          if curriculum.user_id do
-            curriculum.user_id
-          else
-            user.id
-          end
-      }
+      get_ordered_curriculum(curriculum, user)
     end
+  end
+
+  defp get_ordered_curriculum(curriculum, user) do
+    %{
+      summary:
+        if curriculum.summary do
+          curriculum.summary
+        else
+          nil
+        end,
+      experiences:
+        if curriculum.experiences do
+          Enum.map(curriculum.experiences, fn experience ->
+            %{
+              organization: experience.organization,
+              positions:
+                Enum.sort_by(
+                  experience.positions,
+                  &if is_nil(&1.finish) do
+                    Date.utc_today()
+                  else
+                    &1.finish
+                  end,
+                  {:desc, Date}
+                )
+            }
+          end)
+        else
+          []
+        end,
+      educations:
+        if curriculum.educations do
+          Enum.sort_by(curriculum.educations, & &1.finish, {:desc, Date})
+        else
+          []
+        end,
+      volunteerings:
+        if curriculum.volunteerings do
+          Enum.sort_by(curriculum.volunteerings, & &1.finish, {:desc, Date})
+        else
+          []
+        end,
+      skills:
+        if curriculum.skills do
+          curriculum.skills
+        else
+          []
+        end,
+      languages:
+        if curriculum.languages do
+          curriculum.languages
+        else
+          []
+        end,
+      user_id:
+        if curriculum.user_id do
+          curriculum.user_id
+        else
+          user.id
+        end
+    }
   end
 
   @doc """
