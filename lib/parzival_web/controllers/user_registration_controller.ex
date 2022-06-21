@@ -2,7 +2,7 @@ defmodule ParzivalWeb.UserRegistrationController do
   use ParzivalWeb, :controller
 
   alias Parzival.Accounts
-  alias Parzival.Accounts.{QRCode,User}
+  alias Parzival.Accounts.{QRCode, User}
   alias ParzivalWeb.UserAuth
 
   def new(conn, %{"qr" => qr_value}) do
@@ -13,15 +13,21 @@ defmodule ParzivalWeb.UserRegistrationController do
         changeset = Accounts.change_user_registration(%User{}, %{qrcode: qr_code})
         conn
         |> put_layout(false)
-        |> render("new.html", changeset: changeset)
+        |> render("new.html", changeset: changeset, qr: qr_code)
       _ ->
         conn
         |> put_layout(false)
         |> render("404.html", changeset: nil)
     end
   end
+  require Logger
+  def create(conn, %{"user" => user_params, "qr" => qr_code}) do
 
-  def create(conn, %{"user" => user_params}) do
+    user_params = user_params
+    |> Map.put("role", :attendee)
+    |> Map.put("qrcode", qr_code)
+
+    Logger.info (user_params)
     case Accounts.register_user(user_params) do
       {:ok, user} ->
         {:ok, _} =
