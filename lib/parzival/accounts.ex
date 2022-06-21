@@ -213,8 +213,10 @@ defmodule Parzival.Accounts do
       {:error, %Ecto.Changeset{}}
   """
   def admin_create_user(attrs \\ %{}, after_save \\ &{:ok, &1}, role) do
+    qrcode = get_qr_code(attrs["qr"])
     %User{}
     |> Map.put(:role, role)
+    |> Map.put(:qrcode_id, qrcode.id)
     |> User.changeset(attrs)
     |> Repo.insert()
     |> after_save(after_save)

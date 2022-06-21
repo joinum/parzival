@@ -138,10 +138,12 @@
               <%= text_input(f, :twitter, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm text-sm border-gray-300 rounded-md") %>
             </dd>
           </div>
-          <%= if @current_user.role == :admin do %>
+
+
+          <%= if @current_user.role == :admin and @role == :attendee do %>
             <div>
               <h2 class="text-base font-medium text-gray-900">Scan credential to link to user</h2>
-              <input name="qr" type="text" class="hidden">
+              <%= text_input(f, :qr, id: "qr_input", class: "hidden mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
               <div id="loadingMessageWrapper" class="pt-5 pr-6 pb-5 pl-4 mt-16 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6">
                 <div class="flex justify-between items-center h-10">
                   <div id="loadingMessage" class="inline-flex justify-center py-2 text-base font-medium text-gray-900">
@@ -156,6 +158,16 @@
             <script src="/js/qrjs.js">
             </script>
             <script src="/js/qr_reading.js">
+            </script>
+            <script>
+              function onSuccess(code) {
+                code = code.split("/").pop();
+                const input = document.getElementById("qr_input");
+                input.value = code;
+                input.classList.remove("hidden");
+                document.getElementById("canvas").classList.add("hidden");
+              }
+              requestMedia(onSuccess);
             </script>
           <% end %>
         </dl>

@@ -110,7 +110,8 @@ defmodule Parzival.Accounts.User do
     |> cast(attrs, [
       :name,
       :email,
-      :role
+      :role,
+      :qrcode_id
     ])
     |> cast_attachments(attrs, [:picture])
     |> validate_required([:name])

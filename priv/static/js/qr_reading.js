@@ -14,7 +14,10 @@ function drawLine(begin, end, color) {
   canvas.stroke();
 }
 
-function requestMedia() {
+var onSuccessFunc;
+
+function requestMedia(onSuccess) {
+  onSuccessFunc = onSuccess;
   // Use facingMode: environment to attemt to get the front camera on phones
   navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
     video.srcObject = stream;
@@ -42,7 +45,7 @@ function tick() {
       drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
       drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
       drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
-      window.location.replace(code.data);
+      onSuccessFunc(code.data);//window.location.replace(code.data);
       scanning = false;
     } 
   }
@@ -51,5 +54,3 @@ function tick() {
     requestAnimationFrame(tick);
   }
 }
-
-requestMedia();
