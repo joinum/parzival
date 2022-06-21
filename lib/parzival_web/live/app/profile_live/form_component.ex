@@ -59,8 +59,10 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   end
 
   require Logger
+
   defp save_user(socket, :new, user_params) do
     Logger.info(user_params)
+
     case Accounts.admin_create_user(
            user_params,
            &consume_picture_data(socket, &1),

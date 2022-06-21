@@ -99,7 +99,7 @@ defmodule Parzival.Accounts.User do
     user
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> cast_attachments(attrs, [:picture])
-    #|> cast_assoc(:qrcode)
+    # |> cast_assoc(:qrcode)
     |> validate_email()
     |> validate_qr()
     |> validate_password(opts)

@@ -3,7 +3,6 @@ defmodule Parzival.Repo.Seeds.QRCodes do
 
   alias Parzival.Accounts.QRCode
 
-  import Ecto
   require Logger
 
   def run do
@@ -15,12 +14,14 @@ defmodule Parzival.Repo.Seeds.QRCodes do
       [] ->
         for _i <- 1..n do
           uuid = %{uuid: Ecto.UUID.generate()}
+
           %QRCode{}
-          |>QRCode.changeset(uuid)
+          |> QRCode.changeset(uuid)
           |> Repo.insert()
 
-          Logger.info (uuid.uuid)
+          Logger.info(uuid.uuid)
         end
+
       _ ->
         Mix.shell().error("Found qr codes, aborting seeding qr codes.")
     end

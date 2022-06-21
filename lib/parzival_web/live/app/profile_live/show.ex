@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.App.ProfileLive.Show do
+defmodule ParzivalWeb.ProfileLive.Show do
   @moduledoc false
   use ParzivalWeb, :live_view
 
@@ -25,8 +25,9 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
     user = Accounts.get_user_by_qr(qr, [:company])
 
     if user == nil do
-      {:noreply, socket
-      |> push_redirect(to: Routes.user_registration_path(socket, :new, qr))}
+      {:noreply,
+       socket
+       |> push_redirect(to: Routes.user_registration_path(socket, :new, qr))}
     else
       handle_role(socket, params, user)
     end

@@ -4,7 +4,6 @@
     <li><%= link("Settings", to: Routes.user_settings_path(ParzivalWeb.Endpoint, :edit)) %></li>
     <li><%= link("Log out", to: Routes.user_session_path(ParzivalWeb.Endpoint, :delete), method: :delete) %></li>
   <% else %>
-    <!--li><%= link("Register", to: Routes.user_registration_path(ParzivalWeb.Endpoint, :new)) %></li-->
     <li><%= link("Log in", to: Routes.user_session_path(ParzivalWeb.Endpoint, :new)) %></li>
   <% end %>
 </ul>

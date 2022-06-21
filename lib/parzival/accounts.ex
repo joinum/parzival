@@ -66,12 +66,12 @@ defmodule Parzival.Accounts do
   def get_user_by_qr(qr_code, preloads \\ []) do
     qr = Repo.get_by(QRCode, uuid: qr_code)
 
-    query = from u in User,
-          where: u.qrcode_id == ^qr.id
+    query =
+      from u in User,
+        where: u.qrcode_id == ^qr.id
 
     Repo.one(query)
     |> Repo.preload(preloads)
-
   end
 
   @doc """
@@ -214,6 +214,7 @@ defmodule Parzival.Accounts do
   """
   def admin_create_user(attrs \\ %{}, after_save \\ &{:ok, &1}, role) do
     qrcode = get_qr_code(attrs["qr"])
+
     %User{}
     |> Map.put(:role, role)
     |> Map.put(:qrcode_id, qrcode.id)

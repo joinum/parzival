@@ -89,9 +89,6 @@ defmodule ParzivalWeb.Router do
         live "/profile/:id", ProfileLive.Show, :show
         live "/profile/:id/edit", ProfileLive.Edit, :edit
 
-        live "/profile/qr/:qr", ProfileLive.Show, :qr_show
-        live "/profile/qr/:qr/edit", ProfileLive.Edit, :qr_edit
-
         scope "/staff", Staff, as: :staff do
           live "/task_redeem/:task/:attendee", TaskUserLive.New, :new
           live "/order_redeem/:id", OrderLive.Edit, :edit
@@ -158,6 +155,8 @@ defmodule ParzivalWeb.Router do
     post "/confirm", UserConfirmationController, :create
     get "/confirm/:token", UserConfirmationController, :edit
     post "/confirm/:token", UserConfirmationController, :update
+
+    live "/profile/qr/:qr", ProfileLive.Show, :qr_show
   end
 
   # Other scopes may use custom stacks.
