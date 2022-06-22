@@ -14,14 +14,7 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id} = params, _url, socket) do
-    user = Accounts.get_user!(id, [:company])
-
-    handle_role(socket, params, user)
-  end
-
-  @impl true
-  def handle_params(%{"qr" => qr} = params, _url, socket) do
+  def handle_params(%{"qr" => qr} = _params, _url, socket) do
     user = Accounts.get_user_by_qr(qr, [:company])
 
     if user == nil do
@@ -35,37 +28,34 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
     end
   end
 
+  @impl true
+  def handle_params(%{"id" => id} = params, _url, socket) do
+    user = Accounts.get_user!(id, [:company])
+
+    handle_role(socket, params, user)
+  end
+
   defp handle_role(socket, params, user) do
-    case user.role do
-      :recruiter ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :profile)
-         |> assign(:current_tab, user.role)
-         |> assign(:page_title, "Show User")
-         |> assign(:params, params)
-         |> assign(:recruiters, list_recruiters(user.company.id))
-         |> assign(:user, user)}
+    socket =
+      case user.role do
+        :recruiter ->
+          socket
+          |> assign(:recruiters, list_recruiters(user.company.id))
 
-      :attendee ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :profile)
-         |> assign(:current_tab, user.role)
-         |> assign(:page_title, "Show User")
-         |> assign(:params, params)
-         |> assign(:curriculum, Gamification.get_user_curriculum(user, []))
-         |> assign(:user, user)}
+        :attendee ->
+          socket
+          |> assign(:curriculum, Gamification.get_user_curriculum(user, []))
 
-      _ ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :profile)
-         |> assign(:current_tab, user.role)
-         |> assign(:page_title, "Show User")
-         |> assign(:params, params)
-         |> assign(:user, user)}
-    end
+        _ ->
+          socket
+      end
+
+    {:noreply,
+     socket
+     |> assign(:current_page, :profile)
+     |> assign(:current_tab, user.role)
+     |> assign(:page_title, "Show User")
+     |> assign(:params, params)}
   end
 
   @impl true

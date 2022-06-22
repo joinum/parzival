@@ -13,8 +13,7 @@ defmodule Parzival.Repo.Seeds do
       "gamification.exs",
       "store.exs",
       "tools.exs",
-      "applications.exs",
-      "qr_codes.exs"
+      "applications.exs"
     ]
     |> Enum.each(fn file ->
       Code.require_file("#{@seeds_dir}/#{file}")

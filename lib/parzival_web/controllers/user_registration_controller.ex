@@ -23,8 +23,6 @@ defmodule ParzivalWeb.UserRegistrationController do
     end
   end
 
-  require Logger
-
   def create(conn, %{"user" => user_params, "qr" => qr}) do
     qr_code = Accounts.get_qr_code(qr)
 
@@ -33,12 +31,8 @@ defmodule ParzivalWeb.UserRegistrationController do
       |> Map.put("role", :attendee)
       |> Map.put("qrcode_id", qr_code.id)
 
-    Logger.info(user_params)
-
     case Accounts.register_user(user_params) do
       {:ok, user} ->
-        Logger.info("Aqui")
-
         {:ok, _} =
           Accounts.deliver_user_confirmation_instructions(
             user,
@@ -50,8 +44,6 @@ defmodule ParzivalWeb.UserRegistrationController do
         |> UserAuth.log_in_user(user)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        Logger.info("Merda")
-        Logger.info(changeset)
         render(conn, "new.html", changeset: changeset, qr: qr, current_page: "Register")
     end
   end
