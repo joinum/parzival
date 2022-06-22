@@ -4,9 +4,9 @@ defmodule ParzivalWeb.Components.Curriculum do
 
   def curriculum(assigns) do
     ~H"""
-    <div x-bind:class="option =='curriculum' ? 'block' : 'hidden'" class="px-4 pb-8 mx-auto mt-6 max-w-5xl border-b border-gray-200 sm:px-6 lg:px-8">
-      <dl class="flex flex-col space-y-8">
-        <div>
+    <div x-bind:class="option =='curriculum' ? 'block' : 'hidden'" class="mx-auto max-w-5xl">
+      <dl class="flex flex-col">
+        <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
           <dt class="text-sm font-medium text-gray-500">About</dt>
           <dd class="mt-1 text-sm text-gray-900">
             <p>
@@ -15,7 +15,7 @@ defmodule ParzivalWeb.Components.Curriculum do
           </dd>
         </div>
 
-        <div>
+        <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
           <dt class="text-sm font-medium text-gray-500">Experience</dt>
           <dd class="mt-1 space-y-1 text-sm text-gray-900">
             <%= for experience <- assigns.curriculum.experiences do %>
@@ -76,7 +76,7 @@ defmodule ParzivalWeb.Components.Curriculum do
           </dd>
         </div>
 
-        <div>
+        <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
           <dt class="text-sm font-medium text-gray-500">
             Education
           </dt>
@@ -97,7 +97,7 @@ defmodule ParzivalWeb.Components.Curriculum do
           </dd>
         </div>
 
-        <div>
+        <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
           <dt class="text-sm font-medium text-gray-500">
             Volunteering
           </dt>
@@ -125,7 +125,7 @@ defmodule ParzivalWeb.Components.Curriculum do
           </dd>
         </div>
 
-        <div>
+        <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
           <dt class="text-sm font-medium text-gray-500">
             Skills
           </dt>
@@ -140,7 +140,7 @@ defmodule ParzivalWeb.Components.Curriculum do
           </dd>
         </div>
 
-        <div>
+        <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
           <dt class="text-sm font-medium text-gray-500">
             Languages
           </dt>

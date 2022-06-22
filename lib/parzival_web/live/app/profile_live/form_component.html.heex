@@ -79,8 +79,8 @@
         </div>
       </div>
       <!-- Profile -->
-      <div x-bind:class="option =='profile' ? 'block' : 'hidden'" class="px-4 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
-        <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+      <div x-bind:class="option =='profile' ? 'block' : 'hidden'" class="mx-auto max-w-5xl">
+        <dl class="grid grid-cols-1 gap-4 py-6 px-4 border-b border-gray-200 sm:grid-cols-2 sm:px-6 lg:px-8">
           <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">Name</dt>
             <dd class="mt-1 text-sm text-gray-900">
@@ -91,6 +91,13 @@
             </div>
           </div>
           <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Course</dt>
+            <dd class="flex flex-row gap-x-4 mt-1 text-sm text-gray-900">
+              <%= select(f, :cycle, @cycles, prompt: "Choose a Cycle", selected: f.data.cycle, class: "mt-1 block border-gray-300 rounded-md shadow-sm focus:ring-red-800 focus:border-red-800 text-sm") %>
+              <%= text_input(f, :course, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm text-sm border-gray-300 rounded-md") %>
+            </dd>
+          </div>
+          <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">Email</dt>
             <dd class="mt-1 text-sm text-gray-900">
               <%= text_input(f, :email, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
@@ -98,6 +105,38 @@
             <div class="flex text-red-500">
               <%= error_tag(f, :email) %>
             </div>
+          </div>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Cellphone</dt>
+            <dd class="flex flex-row gap-x-4 mt-1 text-sm text-gray-900">
+              <%= text_input(f, :cellphone, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm text-sm border-gray-300 rounded-md") %>
+            </dd>
+          </div>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Website</dt>
+            <dd class="flex flex-row gap-x-4 mt-1 text-sm text-gray-900">
+              <%= text_input(f, :website, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm text-sm border-gray-300 rounded-md") %>
+            </dd>
+          </div>
+        </dl>
+        <dl class="grid grid-cols-1 gap-4 py-6 px-4 border-b border-gray-200 sm:grid-cols-2 sm:px-6 lg:px-8">
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Linkedin</dt>
+            <dd class="flex flex-row gap-x-4 mt-1 text-sm text-gray-900">
+              <%= text_input(f, :linkedin, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm text-sm border-gray-300 rounded-md") %>
+            </dd>
+          </div>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Github</dt>
+            <dd class="flex flex-row gap-x-4 mt-1 text-sm text-gray-900">
+              <%= text_input(f, :github, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm text-sm border-gray-300 rounded-md") %>
+            </dd>
+          </div>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Twitter</dt>
+            <dd class="flex flex-row gap-x-4 mt-1 text-sm text-gray-900">
+              <%= text_input(f, :twitter, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm text-sm border-gray-300 rounded-md") %>
+            </dd>
           </div>
         </dl>
       </div>

@@ -105,11 +105,20 @@
           </div>
         <% end %>
 
-        <%= if @user.course do %>
+        <%= if @user.cycle && @user.course do %>
           <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">Course</dt>
             <dd class="mt-1 text-sm text-gray-900">
               <%= @user.cycle %> in <%= @user.course %>
+            </dd>
+          </div>
+        <% end %>
+
+        <%= if @user.email do %>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Email</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <%= @user.email %>
             </dd>
           </div>
         <% end %>
@@ -123,11 +132,38 @@
           </div>
         <% end %>
 
-        <%= if @user.email do %>
+        <%= if @user.website do %>
           <div class="sm:col-span-1">
-            <dt class="text-sm font-medium text-gray-500">Email</dt>
+            <dt class="text-sm font-medium text-gray-500">Website</dt>
             <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.email %>
+              <%= @user.website %>
+            </dd>
+          </div>
+        <% end %>
+
+        <%= if @user.linkedin do %>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Linkedin</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <%= @user.linkedin %>
+            </dd>
+          </div>
+        <% end %>
+
+        <%= if @user.github do %>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Github</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <%= @user.github %>
+            </dd>
+          </div>
+        <% end %>
+
+        <%= if @user.twitter do %>
+          <div class="sm:col-span-1">
+            <dt class="text-sm font-medium text-gray-500">Twitter</dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              <%= @user.twitter %>
             </dd>
           </div>
         <% end %>
