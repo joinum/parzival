@@ -34,7 +34,7 @@
   </head>
 
   <body style="background-color: white">
-    <div style="background-color: rgb(234,59,45); height: 37.13cm;" class="absolute py-16 px-10 w-1/3">
+    <div style="background-color: rgb(234,59,45); height: 37.13cm; z-index: -20;" class="absolute py-16 px-10 w-1/3">
       <div class="relative mx-auto w-48 h-48">
         <%= if is_nil(@profile_picture) do %>
           <div style="background-color: rgb(234,59,45); border-width: 5px; border-color: white;" class="w-48 h-48 rounded-full border-white">
@@ -43,8 +43,8 @@
             </div>
           </div>
         <% else %>
-          <div style="background-color: white;" class="w-48 h-48 rounded-full border-white">
-            <img src={"http://localhost:4000/#{@profile_picture}"} style="border-width: 5px; border-color: white;" class="object-cover object-center w-48 h-48 rounded-full" />
+          <div style="background-color: white;" class="relative rounded-full border-white ring-4 w-[204px] h-[204px]">
+            <img src={"http://localhost:4000/#{@profile_picture}"} width="192px" height="192px" class="object-cover object-center absolute rounded-full border top-[6px] left-[6px]" />
           </div>
         <% end %>
       </div>
@@ -132,7 +132,7 @@
                   <%= for experience <- @curriculum.experiences do %>
                     <% n_total_months =
                       Enum.reduce(experience.positions, 0, fn position, acc ->
-                        if position.current do
+                        if is_nil(position.finish) do
                           Timex.diff(Date.utc_today(), position.start, :months) + acc
                         else
                           Timex.diff(position.finish, position.start, :months) + acc
@@ -154,7 +154,7 @@
                       <div style="border-left: rgb(209,213,219) 1.5px solid; border-top-style: none; border-bottom-style: none; border-right-style: none;" class="mt-2 ml-2 w-full">
                         <%= for position <- experience.positions do %>
                           <% n_months =
-                            if position.current do
+                            if is_nil(position.finish) do
                               Timex.diff(Date.utc_today(), position.start, :months)
                             else
                               Timex.diff(position.finish, position.start, :months)
@@ -163,7 +163,7 @@
                             <%= position.title %>
                             <span style="color: rgb(156,163,175)" class="ml-2 text-sm">
                               <%= Calendar.strftime(position.start, "%b %Y") %> -
-                              <%= if position.current do %>
+                              <%= if is_nil(position.finish) do %>
                                 Current ·
                               <% else %>
                                 <%= Calendar.strftime(position.finish, "%b %Y") %> ·

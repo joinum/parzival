@@ -6,6 +6,7 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   alias Parzival.Accounts.User
 
   @extensions_whitelist ~w(.jpg .jpeg .gif .png)
+  @cycles [:Bachelors, :Masters, :Phd]
 
   @impl true
   def mount(socket) do
@@ -20,8 +21,9 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
 
     {:ok,
      socket
-     |> assign(:user, user)
      |> assign(assigns)
+     |> assign(:user, user)
+     |> assign(:cycles, @cycles)
      |> assign(:changeset, changeset)}
   end
 
