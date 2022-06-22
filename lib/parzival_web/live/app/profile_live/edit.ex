@@ -26,8 +26,6 @@ defmodule ParzivalWeb.App.ProfileLive.Edit do
 
     {:noreply,
      socket
-     |> assign(:current_page, :profile)
-     |> assign(:page_title, "Edit User")
-     |> assign(:user, user)}
+     |> push_redirect(to: Routes.profile_edit_path(socket, :edit, user.id))}
   end
 end

@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.ProfileLive.Show do
+defmodule ParzivalWeb.App.ProfileLive.Show do
   @moduledoc false
   use ParzivalWeb, :live_view
 
@@ -29,7 +29,9 @@ defmodule ParzivalWeb.ProfileLive.Show do
        socket
        |> push_redirect(to: Routes.user_registration_path(socket, :new, qr))}
     else
-      handle_role(socket, params, user)
+      {:noreply,
+       socket
+       |> push_redirect(to: Routes.profile_edit_path(socket, :edit, user.id))}
     end
   end
 

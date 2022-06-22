@@ -156,7 +156,7 @@ defmodule ParzivalWeb.Router do
     get "/confirm/:token", UserConfirmationController, :edit
     post "/confirm/:token", UserConfirmationController, :update
 
-    live "/profile/qr/:qr", ProfileLive.Show, :qr_show
+    live "/profile/:qr", App.ProfileLive.Show, :qr_show
   end
 
   # Other scopes may use custom stacks.
