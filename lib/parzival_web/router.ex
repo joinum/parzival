@@ -39,9 +39,9 @@ defmodule ParzivalWeb.Router do
 
         live "/schedule", ScheduleLive.Index, :index
         live "/missions", MissionsLive.Index, :index
-        #live "/speakers", SpeakersLive.Index, :index
+        # live "/speakers", SpeakersLive.Index, :index
         live "/faqs", FaqsLive.Index, :index
-        #live "/team", TeamLive.Index, :index
+        # live "/team", TeamLive.Index, :index
       end
     end
   end

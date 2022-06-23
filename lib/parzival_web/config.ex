@@ -54,7 +54,9 @@ defmodule ParzivalWeb.Config do
         title: "Faqs",
         url: Routes.landing_faqs_index_path(@conn, :index),
         tabs: []
-      }#,
+      }
+
+      # ,
       # %{
       #   key: :team,
       #   title: "Team",

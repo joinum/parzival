@@ -9,7 +9,10 @@
       JOIN us for a week full of <span class="underline decoration-4 sm:decoration-8">surprises</span>.
     </div>
   </div>
-  <div x-data={"{ date: new Date().toISOString() >= '#{hd(@schedule["tuesday"])["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(@schedule["thursday"])["hours"]}.to_iso8601!()' ? new Date().getDay() : 2 }"} class="flex flex-row my-10 h-auto lg:my-20 1.5xl:h-[740px]">
+  <div
+    x-data={"{ date: new Date().toISOString() >= '#{hd(@schedule["tuesday"])["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(@schedule["thursday"])["hours"]}.to_iso8601!()' ? new Date().getDay() : 2 }"}
+    class="flex flex-row my-10 h-auto lg:my-20 1.5xl:min-h-[1000px] xl:min-h-[700px]"
+  >
     <div class="hidden relative w-full 1.5xl:block">
       <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@socket, "/images/cords/schedule_cords.svg")} alt="hero cords" />
 
