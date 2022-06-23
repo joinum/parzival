@@ -280,6 +280,7 @@ body {
   -webkit-text-stroke: 2px white;
   color: transparent;
   opacity: 0.15;
+  white-space: nowrap;
 }
 
 @media (min-width: 1024px) {
