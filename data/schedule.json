@@ -1,278 +1,290 @@
 {
   "tuesday": [
     {
+      "title": "Acreditação",
+      "hours": "28/06/2022 8:30 AM",
+      "speaker": null,
+      "company": null
+    },
+    {
       "title": "Sessão de abertura",
-      "hours": "28/06/2022 9:15 AM",
+      "hours": "28/06/2022 9:00 AM",
       "speaker": null,
       "company": null
     },
     {
-      "title": "How to orchestrate the Trading platform",
+      "title": "[Talk] Set the stage",
       "hours": "28/06/2022 10:00 AM",
-      "speaker": "Marco Machado",
-      "company": "Eurotux"
+      "speaker": "Roberto Machado",
+      "company": "Subvisual"
     },
     {
-      "title": "WHAT IS A BLOCKCHAIN? UNDERSTANDING THE TECHNOLOGY, PURPOSE AND SCOPE.",
-      "hours": "28/06/2022 10:20 AM",
-      "speaker": "Filipe Castro",
-      "company": null
+      "title": "[Talk] Intro to the blockchain",
+      "hours": "28/06/2022 10:30 AM",
+      "speaker": "Mário Gago",
+      "company": "Subvisual"
     },
     {
-      "title": "COFFEE BREAK",
-      "hours": "28/06/2022 11:05 AM",
+      "title": "☕ Coffee break",
+      "hours": "28/06/2022 11:00 AM",
       "speaker": null,
       "company": null
     },
     {
-      "title": "AI @ ACCENTURE - RPA & CHATBOTS",
-      "hours": "28/06/2022 11:35 AM",
-      "speaker": "Rui Pires",
-      "company": "Accenture"
+      "title": "[Talk] An Ethereum Network Explorer using Elixir and Neo4J",
+      "hours": "28/06/2022 11:30 AM",
+      "speaker": "Diogo",
+      "company": "Subvisual"
     },
     {
-      "title": "Almoço",
-      "hours": "28/06/2022 12:20 PM",
+      "title": "[Talk] Mobile development for the web3",
+      "hours": "28/06/2022 12:00 PM",
+      "speaker": "André Maximino",
+      "company": "Subvisual"
+    },
+    {
+      "title": "🍝 Almoço",
+      "hours": "28/06/2022 12:30 PM",
       "speaker": null,
       "company": null
     },
     {
-      "title": "BUILDING A BLOCKCHAIN",
-      "hours": "28/06/2022 02:30 PM",
+      "title": "[Workshop] Intro to Solidity",
+      "hours": "28/06/2022 02:00 PM",
       "speaker": "Miguel Palhas",
+      "company": "Subvisual"
+    },
+    {
+      "title": "[Talk] TBA",
+      "hours": "28/06/2022 02:00 PM",
+      "speaker": null,
       "company": null
     },
     {
-      "title": "CARS, THE NEXT BIG THING IN THE INTERNET OF THINGS",
-      "hours": "28/06/2022 03:20 PM",
-      "speaker": "João Esteves",
-      "company": "Critical Techworks"
+      "title": "[Talk] TBA",
+      "hours": "28/06/2022 03:00 PM",
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "COFFEE BREAK",
+      "title": "☕ Coffee break",
       "hours": "28/06/2022 04:00 PM",
       "speaker": null,
       "company": null
     },
     {
-      "title": "PITCH",
+      "title": "[Pitch] Continental",
       "hours": "28/06/2022 04:30 PM",
-      "speaker": "Luís Fernandes",
-      "company": "Bold"
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "28/06/2022 04:40 PM",
-      "speaker": "Andreia Gonçalves",
-      "company": "Kwan"
+      "title": "[Pitch] Mercedes Benz IO",
+      "hours": "28/06/2022 04:45 PM",
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "28/06/2022 04:50 PM",
-      "speaker": "André Silva",
-      "company": "Prime IT"
-    },
-    {
-      "title": "PITCH",
+      "title": "[Pitch] TBA",
       "hours": "28/06/2022 05:00 PM",
-      "speaker": "Inês Monteiro",
-      "company": "Aubay"
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "28/06/2022 05:10 PM",
-      "speaker": "Ernesto Pedrosa",
-      "company": "Automaise"
+      "title": "[Pitch] TBA",
+      "hours": "28/06/2022 05:15 PM",
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "28/06/2022 05:20 PM",
-      "speaker": "Filipe Duarte",
-      "company": "Winprovit"
+      "title": "[Pitch] TBA",
+      "hours": "28/06/2022 05:30 PM",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "TBA",
+      "hours": "28/06/2022 06:30 PM",
+      "speaker": null,
+      "company": null
     }
   ],
   "wednesday": [
     {
-      "title": "INTEGRAÇÕES CONTÍNUAS",
-      "hours": "29/06/2022 09:35 AM",
-      "speaker": "Tiago Gomes",
-      "company": "Vilt"
-    },
-    {
-      "title": "O FANTÁSTICO MUNDO DO FRONTEND",
-      "hours": "29/06/2022 10:20 AM",
-      "speaker": "Bruno Lourenço",
-      "company": null
-    },
-    {
-      "title": "COFFEE BREAK",
-      "hours": "29/06/2022 11:05 AM",
+      "title": "[Workshop] TBA",
+      "hours": "29/06/2022 09:00 AM",
       "speaker": null,
       "company": null
     },
     {
-      "title": "SHIFTING TO MICROSERVICES IN THE REAL WORLD",
-      "hours": "29/06/2022 11:35 AM",
-      "speaker": "Luís Barbosa e Hugo Neto",
-      "company": "360 Imprimir"
+      "title": "[Workshop] TBA",
+      "hours": "29/06/2022 09:00 AM",
+      "speaker": null,
+      "company": "Checkmarx"
     },
     {
-      "title": "ALMOÇO",
-      "hours": "29/06/2022 12:20 PM",
+      "title": "☕ Coffee break",
+      "hours": "29/06/2022 11:00 AM",
       "speaker": null,
       "company": null
     },
     {
-      "title": "CONTINUOUS DELIVERY",
-      "hours": "29/06/2022 02:30 PM",
-      "speaker": "Pedro Costa",
+      "title": "[Talk] Combining professional success and well-being in Portugal",
+      "hours": "29/06/2022 11:30 AM",
+      "speaker": null,
+      "company": "Catedra Proef/Dstelecom/IB-S"
+    },
+    {
+      "title": "🍝 Almoço",
+      "hours": "29/06/2022 12:30 PM",
+      "speaker": null,
       "company": null
     },
     {
-      "title": "O QUE AS EMPRESAS ESPERAM DE UM WEB DEVELOPER",
-      "hours": "29/06/2022 03:20 PM",
-      "speaker": "Daniela Costa",
-      "company": "Eurotux"
+      "title": "[Workshop] TBA",
+      "hours": "29/06/2022 02:00 PM",
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "ARE U A TECH BFF?",
-      "hours": "29/06/2022 03:40 PM",
-      "speaker": "Jorge Ribeiro e Hugo Lourenço",
-      "company": "Primavera BSS"
+      "title": "[Talk] TBA",
+      "hours": "29/06/2022 02:00 PM",
+      "speaker": null,
+      "company": "Continental"
     },
     {
-      "title": "COFFEE BREAK",
+      "title": "[Talk] TBA",
+      "hours": "29/06/2022 03:00 PM",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "☕ Coffee break",
       "hours": "29/06/2022 04:00 PM",
       "speaker": null,
       "company": null
     },
     {
-      "title": "PITCH",
+      "title": "[Pitch] Catedra Proef/Dstelecom/IB-S",
       "hours": "29/06/2022 04:30 PM",
-      "speaker": "Pedro Alves",
-      "company": "Wintouch"
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "29/06/2022 04:40 PM",
-      "speaker": "Joana Gonçalves",
-      "company": "IT Sector"
+      "title": "[Pitch] Inovaria",
+      "hours": "29/06/2022 04:45 PM",
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "29/06/2022 04:50 PM",
-      "speaker": "Cláudia Gonçalves, Vasco Bessa",
-      "company": "Gfi Portugal"
+      "title": "[Pitch] TBA",
+      "hours": "29/06/2022 05:00 PM",
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "29/06/2022 05:10 PM",
-      "speaker": "Gabriela Moura",
-      "company": "Inova-Ria"
+      "title": "[Pitch] ANO",
+      "hours": "29/06/2022 05:15 PM",
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "29/06/2022 05:20 PM",
-      "speaker": "Carlos Viana",
-      "company": "GO Contact"
+      "title": "[Pitch] TBA",
+      "hours": "29/06/2022 05:30 PM",
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "SUNSET",
+      "title": "[Pitch] TBA",
+      "hours": "29/06/2022 05:45 PM",
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "TBA",
       "hours": "29/06/2022 06:30 PM",
-      "speaker": "Restaurante Panorâmico",
+      "speaker": null,
       "company": null
     }
   ],
   "thursday": [
     {
-      "title": "COMPUTER VISION- APTIV PRODUCTS AND PROCESS.",
-      "hours": "30/06/2022 10:00 AM",
-      "speaker": "Luis Costa",
-      "company": "Aptiv"
+      "title": "[Workshop] TBA",
+      "hours": "29/06/2022 09:00 AM",
+      "speaker": null,
+      "company": "Kelvin"
     },
     {
-      "title": "COMPUTAÇÃO VISUAL PARA A INDÚSTRIA 4.0",
-      "hours": "30/06/2022 10:20 AM",
-      "speaker": "Nuno Sousa",
-      "company": null
+      "title": "[Workshop] TBA",
+      "hours": "29/06/2022 09:00 AM",
+      "speaker": null,
+      "company": "Deloitte"
     },
     {
-      "title": "COFFEE BREAK",
-      "hours": "30/06/2022 11:05 AM",
+      "title": "☕ Coffee break",
+      "hours": "29/06/2022 11:00 AM",
       "speaker": null,
       "company": null
     },
     {
-      "title": "THE ILLUSION OF LIFE- MAKING 'THEBREADWINNER'",
-      "hours": "30/06/2022 11:35 AM",
-      "speaker": "João Martins",
-      "company": "Smith Micro"
+      "title": "[Talk] TBA",
+      "hours": "29/06/2022 11:30 AM",
+      "speaker": null,
+      "company": "Mini Clip"
     },
     {
-      "title": "ALMOÇO",
-      "hours": "30/06/2022 12:20 PM",
+      "title": "🍝 Almoço",
+      "hours": "29/06/2022 12:30 PM",
       "speaker": null,
       "company": null
     },
     {
-      "title": "A ÁREA DA COMPUTAÇÃO GRÁFICA E OS SEUS ATUAIS DESAFIOS",
-      "hours": "30/06/2022 02:30 PM",
-      "speaker": "António Ramires Fernandes",
-      "company": null
+      "title": "[Talk] TBA",
+      "hours": "30/06/2022 02:00 PM",
+      "speaker": null,
+      "company": "Mini Clip"
     },
     {
-      "title": "TBA",
-      "hours": "30/06/2022 03:20 PM",
-      "speaker": "TBA",
-      "company": "Outsystems"
+      "title": "[Talk] TBA",
+      "hours": "30/06/2022 03:00 PM",
+      "speaker": null,
+      "company": "Optare Solutions"
     },
     {
-      "title": "TBA",
-      "hours": "30/06/2022 03:40 PM",
-      "speaker": "TBA",
-      "company": "Ordem dos Engenheiros - Região Norte"
-    },
-    {
-      "title": "COFFEE BREAK",
+      "title": "☕ Coffee break",
       "hours": "30/06/2022 04:00 PM",
       "speaker": null,
       "company": null
     },
     {
-      "title": "PITCH",
+      "title": "[Pitch] TBA",
       "hours": "30/06/2022 04:30 PM",
-      "speaker": "Filipe Ferreira",
-      "company": "Fujitsu"
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "30/06/2022 04:40 PM",
-      "speaker": "Isabel Martins, Tiago Largato",
-      "company": "Johnson Controls"
+      "title": "[Pitch] TBA",
+      "hours": "30/06/2022 04:45 PM",
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "30/06/2022 04:50 PM",
-      "speaker": "TBA",
-      "company": "Logic Info"
+      "title": "Cerimónia de encerramento",
+      "hours": "30/06/2022 05:00 PM",
+      "speaker": null,
+      "company": null
     },
     {
-      "title": "PITCH",
-      "hours": "30/06/2022 05:10 PM",
-      "speaker": "Helena Castro",
-      "company": "EBanKit"
-    },
-    {
-      "title": "PITCH",
-      "hours": "30/06/2022 05:20 PM",
-      "speaker": "Ricardo Lopes",
-      "company": "Fast-mp - Live Marketplace"
-    },
-    {
-      "title": "PITCH",
+      "title": "Entrega de prémios",
       "hours": "30/06/2022 05:30 PM",
-      "speaker": "TBA",
-      "company": "Konk Consulting"
+      "speaker": null,
+      "company": null
+    },
+    {
+      "title": "Jantar de enceramento",
+      "hours": "30/06/2022 08:30 PM",
+      "speaker": null,
+      "company": null
     }
   ]
 }
