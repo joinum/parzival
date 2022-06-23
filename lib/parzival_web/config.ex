@@ -43,30 +43,30 @@ defmodule ParzivalWeb.Config do
         url: Routes.landing_missions_index_path(@conn, :index),
         tabs: []
       },
-      %{
-        key: :speakers,
-        title: "Speakers",
-        url: Routes.landing_speakers_index_path(@conn, :index),
-        tabs: []
-      },
+      # %{
+      #   key: :speakers,
+      #   title: "Speakers",
+      #   url: Routes.landing_speakers_index_path(@conn, :index),
+      #   tabs: []
+      # },
       %{
         key: :faqs,
         title: "Faqs",
         url: Routes.landing_faqs_index_path(@conn, :index),
         tabs: []
-      },
-      %{
-        key: :team,
-        title: "Team",
-        url: Routes.landing_team_index_path(@conn, :index),
-        tabs: []
-      },
-      %{
-        key: :login,
-        title: "Login",
-        url: Routes.user_session_path(@conn, :new),
-        tabs: []
-      }
+      }#,
+      # %{
+      #   key: :team,
+      #   title: "Team",
+      #   url: Routes.landing_team_index_path(@conn, :index),
+      #   tabs: []
+      # },
+      # %{
+      #   key: :login,
+      #   title: "Login",
+      #   url: Routes.user_session_path(@conn, :new),
+      #   tabs: []
+      # }
     ]
   end
 
