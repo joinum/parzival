@@ -11,7 +11,7 @@
       <%= if @current_user.role in [:attendee] do %>
         <div class="flex flex-row gap-x-4">
           <%= if @is_task_completed == false do %>
-            <%= live_patch to: Routes.mission_task_show_path(@socket, :redeem, @mission, @task), class: "button" do %>
+            <%= live_patch to: Routes.mission_task_show_url(@socket, :redeem, @mission, @task), class: "button" do %>
               <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm cursor-pointer xl:w-full bg-secondary hover:bg-primary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
                 Complete task
               </div>
