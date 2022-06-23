@@ -11,9 +11,9 @@ codes =
     qr =
       "https://join.di.uminho.pt/profile/#{code}"
       |> QRCodeEx.encode()
-      |> QRCodeEx.svg(shape: "circle", width: 460)
+      |> QRCodeEx.png(width: 460)
 
-    File.write("qrs/#{index}.svg", qr, [:binary])
+    File.write("qrs/#{index}.png", qr, [:binary])
 
     "#{index},#{code}"
     |> IO.inspect
