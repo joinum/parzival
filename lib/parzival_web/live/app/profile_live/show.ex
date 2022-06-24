@@ -14,7 +14,7 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   end
 
   @impl true
-  def handle_params(%{"qr" => qr} = _params, _url, socket) do
+  def handle_params(%{"qr" => qr}, _url, socket) do
     user = Accounts.get_user_by_qr(qr, [:company])
 
     if user == nil do
@@ -53,6 +53,7 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
     {:noreply,
      socket
      |> assign(:current_page, :profile)
+     |> assign(:user, user)
      |> assign(:current_tab, user.role)
      |> assign(:page_title, "Show User")
      |> assign(:params, params)}

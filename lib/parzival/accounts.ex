@@ -144,6 +144,17 @@ defmodule Parzival.Accounts do
     %User{}
     |> User.registration_changeset(attrs)
     |> Repo.insert()
+    |> case do
+      {:ok, user} ->
+        if user.role in [:attendee] do
+          Gamification.create_curriculum(%{user_id: user.id})
+        end
+
+        {:ok, user}
+
+      error ->
+        error
+    end
   end
 
   @doc """
