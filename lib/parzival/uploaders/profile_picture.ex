@@ -7,6 +7,7 @@ defmodule Parzival.Uploaders.ProfilePicture do
   use Waffle.Ecto.Definition
 
   alias Parzival.Accounts.User
+  alias Parzival.Companies.Company
 
   @versions [:original, :medium, :thumb]
   @extension_whitelist ~w(.jpg .jpeg .gif .png)
@@ -36,6 +37,10 @@ defmodule Parzival.Uploaders.ProfilePicture do
 
   def storage_dir(_version, {_file, %User{} = scope}) do
     "uploads/profile/#{scope.id}"
+  end
+
+  def storage_dir(_version, {_file, %Company{} = scope}) do
+    "uploads/company/#{scope.id}"
   end
 
   # Provide a default URL if there hasn't been a file uploaded

@@ -176,10 +176,11 @@ defmodule Parzival.Companies do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_company(attrs \\ %{}) do
+  def create_company(attrs \\ %{}, after_save \\ &{:ok, &1}) do
     %Company{}
     |> Company.changeset(attrs)
     |> Repo.insert()
+    |> after_save(after_save)
   end
 
   @doc """
@@ -194,10 +195,11 @@ defmodule Parzival.Companies do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_company(%Company{} = company, attrs) do
+  def update_company(%Company{} = company, attrs, after_save \\ &{:ok, &1}) do
     company
     |> Company.changeset(attrs)
     |> Repo.update()
+    |> after_save(after_save)
   end
 
   @doc """
@@ -237,6 +239,12 @@ defmodule Parzival.Companies do
   """
   def change_company(%Company{} = company, attrs \\ %{}) do
     Company.changeset(company, attrs)
+  end
+
+  def update_company_picture(%Company{} = company, attrs) do
+    company
+    |> Company.picture_changeset(attrs)
+    |> Repo.update()
   end
 
   alias Parzival.Companies.Level

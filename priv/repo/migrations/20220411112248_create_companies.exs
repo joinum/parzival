@@ -9,6 +9,8 @@ defmodule Parzival.Repo.Migrations.CreateCompanies do
 
       add :level_id, references(:levels, on_delete: :nothing, type: :binary_id)
 
+      add :picture, :string
+
       timestamps()
     end
   end
