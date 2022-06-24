@@ -16,7 +16,6 @@ codes =
     File.write("qrs/#{index}.png", qr, [:binary])
 
     "#{index},#{code}"
-    |> IO.inspect
   end)
 
 File.write("codes.csv", Enum.join(codes, "\n"))
