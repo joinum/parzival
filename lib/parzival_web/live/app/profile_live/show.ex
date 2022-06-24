@@ -14,39 +14,49 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   end
 
   @impl true
+  def handle_params(%{"qr" => qr}, _url, socket) do
+    user = Accounts.get_user_by_qr(qr, [:company])
+
+    if user == nil do
+      {:noreply,
+       socket
+       |> push_redirect(to: Routes.user_registration_path(socket, :new, qr))}
+    else
+      {:noreply,
+       socket
+       |> push_redirect(to: Routes.profile_edit_path(socket, :edit, user.id))}
+    end
+  end
+
+  @impl true
   def handle_params(%{"id" => id} = params, _url, socket) do
     user = Accounts.get_user!(id, [:company])
 
-    case user.role do
-      :recruiter ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :profile)
-         |> assign(:current_tab, user.role)
-         |> assign(:page_title, "Show User")
-         |> assign(:params, params)
-         |> assign(:recruiters, list_recruiters(user.company.id))
-         |> assign(:user, user)}
+    handle_role(socket, params, user)
+  end
 
-      :attendee ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :profile)
-         |> assign(:current_tab, user.role)
-         |> assign(:page_title, "Show User")
-         |> assign(:params, params)
-         |> assign(:curriculum, Gamification.get_user_curriculum(user, []))
-         |> assign(:user, user)}
+  defp handle_role(socket, params, user) do
+    socket =
+      case user.role do
+        :recruiter ->
+          socket
+          |> assign(:recruiters, list_recruiters(user.company.id))
 
-      _ ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :profile)
-         |> assign(:current_tab, user.role)
-         |> assign(:page_title, "Show User")
-         |> assign(:params, params)
-         |> assign(:user, user)}
-    end
+        :attendee ->
+          socket
+          |> assign(:curriculum, Gamification.get_user_curriculum(user, []))
+
+        _ ->
+          socket
+      end
+
+    {:noreply,
+     socket
+     |> assign(:current_page, :profile)
+     |> assign(:user, user)
+     |> assign(:current_tab, user.role)
+     |> assign(:page_title, "Show User")
+     |> assign(:params, params)}
   end
 
   @impl true

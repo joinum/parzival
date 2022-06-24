@@ -18,4 +18,11 @@
   </script>
   <script src="/js/qr_reading.js">
   </script>
+
+  <script>
+    function onSuccess(code) {
+      window.location.replace(code);
+    }
+    requestMedia(onSuccess);
+  </script>
 </div>

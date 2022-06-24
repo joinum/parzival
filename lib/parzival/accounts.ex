@@ -6,7 +6,7 @@ defmodule Parzival.Accounts do
 
   import Ecto.Query, warn: false
 
-  alias Parzival.Accounts.{User, UserNotifier, UserToken}
+  alias Parzival.Accounts.{QRCode, User, UserNotifier, UserToken}
   alias Parzival.Gamification
 
   def list_users(params \\ %{})
@@ -49,6 +49,45 @@ defmodule Parzival.Accounts do
   """
   def get_user_by_email(email) when is_binary(email) do
     Repo.get_by(User, email: email)
+  end
+
+  @doc """
+  Gets a user by their qr code.
+
+  ## Examples
+
+      iex> get_user_by_qr("57c319bc-9a2d-4c74-a9fc-03178d93b85a")
+      %User{}
+
+      iex> get_user_by_email("404")
+      nil
+
+  """
+  def get_user_by_qr(qr_code, preloads \\ []) do
+    qr = Repo.get_by(QRCode, uuid: qr_code)
+
+    query =
+      from u in User,
+        where: u.qrcode_id == ^qr.id
+
+    Repo.one(query)
+    |> Repo.preload(preloads)
+  end
+
+  @doc """
+  Gets a qr code by its value.
+
+  ## Examples
+
+      iex> get_qr_code("a5df610e-f0bd-11ec-8ea0-0242ac120002")
+      %QRCode{}
+
+      iex> get_qr_code("404")
+      nil
+
+  """
+  def get_qr_code(uuid) do
+    Repo.get_by(QRCode, uuid: uuid)
   end
 
   @doc """
@@ -105,6 +144,17 @@ defmodule Parzival.Accounts do
     %User{}
     |> User.registration_changeset(attrs)
     |> Repo.insert()
+    |> case do
+      {:ok, user} ->
+        if user.role in [:attendee] do
+          Gamification.create_curriculum(%{user_id: user.id})
+        end
+
+        {:ok, user}
+
+      error ->
+        error
+    end
   end
 
   @doc """
@@ -174,8 +224,11 @@ defmodule Parzival.Accounts do
       {:error, %Ecto.Changeset{}}
   """
   def admin_create_user(attrs \\ %{}, after_save \\ &{:ok, &1}, role) do
+    qrcode = get_qr_code(attrs["qr"])
+
     %User{}
     |> Map.put(:role, role)
+    |> Map.put(:qrcode_id, qrcode.id)
     |> User.changeset(attrs)
     |> Repo.insert()
     |> after_save(after_save)

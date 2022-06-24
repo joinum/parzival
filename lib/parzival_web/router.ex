@@ -20,8 +20,8 @@ defmodule ParzivalWeb.Router do
   scope "/", ParzivalWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
-    get "/register", UserRegistrationController, :new
-    post "/register", UserRegistrationController, :create
+    get "/register/:qr", UserRegistrationController, :new
+    post "/register/:qr", UserRegistrationController, :create
     get "/login", UserSessionController, :new
     post "/login", UserSessionController, :create
     get "/reset_password", UserResetPasswordController, :new
@@ -155,6 +155,8 @@ defmodule ParzivalWeb.Router do
     post "/confirm", UserConfirmationController, :create
     get "/confirm/:token", UserConfirmationController, :edit
     post "/confirm/:token", UserConfirmationController, :update
+
+    live "/profile/:qr", App.ProfileLive.Show, :qr_show
   end
 
   # Other scopes may use custom stacks.

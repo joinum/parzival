@@ -11,24 +11,14 @@ defmodule ParzivalWeb.App.AnnouncementLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"id" => id} = _params, _url, socket) do
     user = Accounts.get_user!(socket.assigns.current_user.id)
 
-    case user.role do
-      :admin ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :tools)
-         |> assign(:page_title, page_title(socket.assigns.live_action))
-         |> assign(:announcement, Tools.get_announcement!(id, :author))}
-
-      _ ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :announcements)
-         |> assign(:page_title, page_title(socket.assigns.live_action))
-         |> assign(:announcement, Tools.get_announcement!(id, :author))}
-    end
+    {:noreply,
+     socket
+     |> assign(:current_page, (user.role == :admin && :tools) || :announcements)
+     |> assign(:page_title, page_title(socket.assigns.live_action))
+     |> assign(:announcement, Tools.get_announcement!(id, :author))}
   end
 
   @impl true
