@@ -6,7 +6,7 @@ defmodule Parzival.Repo.Seeds.Gamification do
   alias Parzival.Gamification
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Mission
-  alias Parzival.Gamification.Mission.Dificulty
+  alias Parzival.Gamification.Mission.Difficulty
   alias Parzival.Gamification.Mission.Task
 
   @education_titles File.read!("priv/fake/uminho_courses.txt") |> String.split("\n")
@@ -15,7 +15,7 @@ defmodule Parzival.Repo.Seeds.Gamification do
 
   def run do
     seed_curriculums()
-    seed_dificulties()
+    seed_difficulties()
     seed_missions()
     seed_tasks()
     seed_redeem_tasks()
@@ -148,8 +148,8 @@ defmodule Parzival.Repo.Seeds.Gamification do
     end
   end
 
-  def seed_dificulties do
-    case Repo.all(Dificulty) do
+  def seed_difficulties do
+    case Repo.all(Difficulty) do
       [] ->
         [
           %{
@@ -169,24 +169,24 @@ defmodule Parzival.Repo.Seeds.Gamification do
             color: "purple"
           }
         ]
-        |> Enum.each(&insert_dificulty/1)
+        |> Enum.each(&insert_difficulty/1)
 
       _ ->
-        Mix.shell().error("Found Dificulties, aborting seeding dificulties.")
+        Mix.shell().error("Found Difficulties, aborting seeding difficulties.")
     end
   end
 
-  def insert_dificulty(data) do
-    %Dificulty{}
-    |> Dificulty.changeset(data)
+  def insert_difficulty(data) do
+    %Difficulty{}
+    |> Difficulty.changeset(data)
     |> Repo.insert!()
   end
 
   def seed_missions do
     case Repo.all(Mission) do
       [] ->
-        dificulties =
-          Dificulty
+        difficulties =
+          Difficulty
           |> Repo.all()
 
         for _n <- 1..Enum.random(10..30) do
@@ -196,7 +196,7 @@ defmodule Parzival.Repo.Seeds.Gamification do
             tokens: Enum.random(400..600),
             exp: Enum.random(100..800),
             level: Enum.random(1..10),
-            dificulty_id: Enum.random(dificulties).id,
+            difficulty_id: Enum.random(difficulties).id,
             start:
               Faker.NaiveDateTime.between(
                 ~N[2022-06-28 09:30:00.000000],

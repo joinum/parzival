@@ -14,7 +14,7 @@ defmodule Parzival.Repo.Migrations.CreateMissions do
 
       add :created_by_id, references(:companies, on_delete: :nothing, type: :binary_id)
 
-      add :dificulty_id, references(:dificulties, on_delete: :nothing, type: :binary_id)
+      add :difficulty_id, references(:difficulties, on_delete: :nothing, type: :binary_id)
 
       timestamps()
     end

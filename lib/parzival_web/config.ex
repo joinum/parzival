@@ -177,8 +177,8 @@ defmodule ParzivalWeb.Config do
           },
           %{
             key: :missions,
-            title: "Dificulties",
-            url: Routes.admin_dificulty_index_path(conn, :index)
+            title: "Difficulties",
+            url: Routes.admin_difficulty_index_path(conn, :index)
           }
         ]
       },

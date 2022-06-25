@@ -6,11 +6,11 @@ defmodule Parzival.Gamification.Mission do
 
   alias Parzival.Accounts.User
   alias Parzival.Companies.Company
-  alias Parzival.Gamification.Mission.Dificulty
+  alias Parzival.Gamification.Mission.Difficulty
   alias Parzival.Gamification.Mission.MissionUser
   alias Parzival.Gamification.Mission.Task
 
-  @required_fields ~w(title description exp level tokens dificulty_id)a
+  @required_fields ~w(title description exp level tokens difficulty_id)a
 
   @optional_fields [
     :start,
@@ -38,7 +38,7 @@ defmodule Parzival.Gamification.Mission do
 
     belongs_to :created_by, Company
 
-    belongs_to :dificulty, Dificulty
+    belongs_to :difficulty, Difficulty
 
     has_many :tasks, Task, on_replace: :delete_if_exists
 

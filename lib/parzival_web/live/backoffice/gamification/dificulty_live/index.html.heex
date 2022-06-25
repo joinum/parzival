@@ -1,6 +1,6 @@
 <%= if @live_action in [:new, :edit] do %>
-  <.modal return_to={Routes.admin_dificulty_index_path(@socket, :index)}>
-    <.live_component module={ParzivalWeb.Backoffice.DificultyLive.FormComponent} id={@dificulty.id || :new} title={@page_title} action={@live_action} dificulty={@dificulty} return_to={Routes.admin_dificulty_index_path(@socket, :index)} />
+  <.modal return_to={Routes.admin_difficulty_index_path(@socket, :index)}>
+    <.live_component module={ParzivalWeb.Backoffice.DifficultyLive.FormComponent} id={@difficulty.id || :new} title={@page_title} action={@live_action} difficulty={@difficulty} return_to={Routes.admin_difficulty_index_path(@socket, :index)} />
   </.modal>
 <% end %>
 
@@ -8,11 +8,11 @@
   <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
     <div class="flex justify-between items-center h-10">
       <h1 class="flex-1 text-lg font-medium">
-        Dificulties
+        Difficulties
       </h1>
       <%= if @current_user.role in [:admin] do %>
         <div class="flex flex-col sm:flex-row xl:flex-col">
-          <%= live_patch("New", to: Routes.admin_dificulty_index_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+          <%= live_patch("New", to: Routes.admin_difficulty_index_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
         </div>
       <% end %>
     </div>
@@ -35,24 +35,24 @@
     </div>
   </div>
   <ul role="list" class="relative z-0">
-    <%= for dificulty <- @dificulties do %>
-      <li id={"dificulty-#{dificulty.id}"} class="relative pr-6 border-b border-gray-200">
+    <%= for difficulty <- @difficulties do %>
+      <li id={"difficulty-#{difficulty.id}"} class="relative pr-6 border-b border-gray-200">
         <div class="flex justify-between">
           <div class="py-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6">
             <div class="flex items-center">
               <label class="flex relative justify-center items-center p-0.5 -m-0.5 rounded-full">
-                <span aria-hidden="true" class={"h-6 w-6 #{bg_500(dificulty.color)} border border-black border-opacity-10 rounded-full"}></span>
+                <span aria-hidden="true" class={"h-6 w-6 #{bg_500(difficulty.color)} border border-black border-opacity-10 rounded-full"}></span>
               </label>
               <div class="ml-4">
                 <div class="font-medium text-gray-900">
-                  <%= dificulty.name %>
+                  <%= difficulty.name %>
                 </div>
               </div>
             </div>
           </div>
           <div class="flex items-center space-x-2">
             <span>
-              <%= live_patch to: Routes.admin_dificulty_index_path(@socket, :edit, dificulty), class: "inline-flex items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" do %>
+              <%= live_patch to: Routes.admin_difficulty_index_path(@socket, :edit, difficulty), class: "inline-flex items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50" do %>
                 <Heroicons.Solid.pencil class="mr-2 -ml-1 w-5 h-5 text-gray-400" /> Edit
               <% end %>
             </span>
@@ -60,7 +60,7 @@
               <%= link("Delete",
                 to: "#",
                 phx_click: "delete",
-                phx_value_id: dificulty.id,
+                phx_value_id: difficulty.id,
                 data: [confirm: "Are you sure?"],
                 class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
               ) %>
@@ -70,5 +70,5 @@
       </li>
     <% end %>
   </ul>
-  <.pagination items={@dificulties} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+  <.pagination items={@difficulties} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
 </div>
