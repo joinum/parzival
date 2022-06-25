@@ -9,7 +9,7 @@
         <div class="-mt-12 sm:flex sm:items-end sm:-mt-16 sm:space-x-5">
           <div>
             <%= if is_nil(Uploaders.ProfilePicture.url({@user.picture, @user}, :medium)) do %>
-              <div class="relative flex-shrink-0 rounded-full ring-4 ring-white min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
+              <div class="relative flex-shrink-0 w-24 h-24 rounded-full ring-4 ring-white sm:w-32 sm:h-32">
                 <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
                   <span class="text-4xl font-medium leading-none text-white select-none sm:text-5xl">
                     <%= extract_initials(@user.name) %>
@@ -30,8 +30,13 @@
             </div>
             <div class="flex flex-col mt-6 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
               <%= if @current_user.role in [:admin] || @user.id == @current_user.id do %>
-                <div class="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
+                <div x-bind:class="option !='profile' ? 'hidden' : ''" class="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
                   <%= live_patch to: Routes.profile_edit_path(@socket, :edit, @user), class: "inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50" do %>
+                    <Heroicons.Solid.pencil class="mr-2 -ml-1 w-5 h-5 text-gray-400" /> Edit
+                  <% end %>
+                </div>
+                <div x-bind:class="option =='profile' ? 'hidden' : ''">
+                  <%= live_patch to: Routes.dashboard_edit_path(@socket, :edit), class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
                     <Heroicons.Solid.pencil class="mr-2 -ml-1 w-5 h-5 text-gray-400" /> Edit
                   <% end %>
                 </div>
@@ -42,7 +47,7 @@
                   <span>Message</span>
                 </a>
               <% end %>
-              <%= if @user.role in [:attendee] && @current_user.role in [:admin] || @current_user.role in [:attendee] && @user.id == @current_user.id do %>
+              <%= if @user.role in [:attendee] && @current_user.role in [:admin, :recruiter] || @current_user.role in [:attendee] && @user.id == @current_user.id do %>
                 <%= link("Download CV",
                   to: Routes.pdf_path(@socket, :cv, @user),
                   class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
@@ -171,7 +176,7 @@
     </div>
     <!-- Curriculum -->
     <%= if @user.role in [:attendee] do %>
-      <.curriculum curriculum_assigns={assigns[:curriculum]} curriculum={@curriculum} />
+      <.curriculum user={@user} socket={@socket} curriculum={@curriculum} current_page={@current_page} />
     <% end %>
     <!-- Company -->
     <%= if @user.role in [:recruiter] do %>
