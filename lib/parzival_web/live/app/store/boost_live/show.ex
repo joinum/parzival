@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.App.ProductLive.Show do
+defmodule ParzivalWeb.App.BoostLive.Show do
   @moduledoc false
   use ParzivalWeb, :live_view
 
@@ -8,34 +8,12 @@ defmodule ParzivalWeb.App.ProductLive.Show do
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do
-    if connected?(socket) do
-      Store.subscribe("product_purchased")
-      Store.subscribe("product_updated")
-      Store.subscribe("product_deleted")
-    end
-
     {:ok, assign(socket, :id, id)}
   end
 
   @impl true
-  def handle_params(%{"id" => _id}, _, socket) do
+  def handle_params(%{"id" => id}, _, socket) do
     {:noreply, reload(socket)}
-  end
-
-  def redeem_quantity(user_id, product_id) do
-    order_quantity = Enum.count(Store.list_orders(where: [user_id: user_id]))
-
-    quantity =
-      case order_quantity do
-        0 -> Store.get_product!(product_id).max_per_user
-        _ -> Store.get_product!(product_id).max_per_user - order_quantity
-      end
-
-    if quantity < 0 do
-      0
-    else
-      quantity
-    end
   end
 
   @impl true
@@ -57,14 +35,14 @@ defmodule ParzivalWeb.App.ProductLive.Show do
 
   @impl true
   def handle_event("purchase", _payload, socket) do
-    product = socket.assigns.product
+    boost = socket.assigns.boost
     current_user = socket.assigns.current_user
 
-    case Store.purchase_product(current_user, product) do
-      {:ok, _product} ->
+    case Store.purchase_boost(current_user, boost) do
+      {:ok, _boost} ->
         {:noreply,
          socket
-         |> put_flash(:success, "Product purchased successfully!")
+         |> put_flash(:success, "Boost purchased successfully!")
          |> reload()}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -73,12 +51,11 @@ defmodule ParzivalWeb.App.ProductLive.Show do
   end
 
   @impl true
-  def handle_info({event, _changes}, socket)
-      when event in [:product_purchased, :product_updated] do
+  def handle_info({event, _changes}, socket) when event in [:boost_purchased, :boost_updated] do
     {:noreply, reload(socket)}
   end
 
-  def handle_info({event, _changes}, socket) when event in [:product_deleted] do
+  def handle_info({event, _changes}, socket) when event in [:boost_deleted] do
     {:noreply, push_redirect(socket, to: Routes.product_index_path(socket, :index))}
   end
 
@@ -87,9 +64,12 @@ defmodule ParzivalWeb.App.ProductLive.Show do
 
     socket
     |> assign(:current_page, :store)
+    |> assign(
+      inventory:
+        Store.list_inventory(where: [user_id: socket.assigns.current_user.id], preloads: [:boost])
+    )
     |> assign(:page_title, page_title(socket.assigns.live_action))
-    |> assign(:redeem_quantity, redeem_quantity(socket.assigns.current_user.id, id))
-    |> assign(:product, Store.get_product!(id))
+    |> assign(:boost, Store.get_boost!(id))
     |> assign(
       current_user:
         Accounts.get_user!(socket.assigns.current_user.id, [
@@ -100,6 +80,6 @@ defmodule ParzivalWeb.App.ProductLive.Show do
     )
   end
 
-  defp page_title(:show), do: "Show Product"
-  defp page_title(:edit), do: "Edit Product"
+  defp page_title(:show), do: "Show Boost"
+  defp page_title(:edit), do: "Edit Boost"
 end

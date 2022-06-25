@@ -70,6 +70,9 @@ defmodule ParzivalWeb.Router do
         live "/store/", ProductLive.Index, :index
         live "/store/:id", ProductLive.Show, :show
 
+        live "/boosts/", BoostLive.Index, :index
+        live "/boosts/:id", BoostLive.Show, :show
+
         live "/vault", OrderLive.Index, :index
         live "/vault/:id", OrderLive.Show, :show
 

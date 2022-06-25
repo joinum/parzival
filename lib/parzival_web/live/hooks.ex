@@ -5,12 +5,13 @@ defmodule ParzivalWeb.Hooks do
   import Phoenix.LiveView
 
   alias Parzival.Accounts
+  alias Parzival.Store
 
   def on_mount(:default, _params, _session, socket) do
     {:cont, assign(socket, :page_title, "JOIN")}
   end
 
-  def on_mount(:current_user, _params, %{"user_token" => user_token}, socket) do
+  def on_mount(:current_user, params, %{"user_token" => user_token}, socket) do
     current_user = Accounts.get_user_by_session_token(user_token)
 
     if is_nil(current_user) do
@@ -18,6 +19,9 @@ defmodule ParzivalWeb.Hooks do
     else
       {:cont,
        socket
+       |> assign(
+         inventory: Store.list_inventory(where: [user_id: current_user.id], preloads: [:boost])
+       )
        |> assign(current_user: Accounts.load_user_fields(current_user, [:company, :missions]))}
     end
   end

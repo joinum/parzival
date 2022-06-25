@@ -7,6 +7,7 @@ defmodule Parzival.Gamification do
 
   alias Ecto.Multi
 
+  alias Parzival.Accounts
   alias Parzival.Accounts.User
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Curriculum.Education
@@ -786,7 +787,7 @@ defmodule Parzival.Gamification do
 
           user
           |> User.task_completion_changeset(%{
-            balance: user.balance + mission.tokens,
+            balance: user.balance + mission.tokens * get_tokens_multiplier(user),
             exp: user.exp + mission.exp
           })
           |> repo.update()
@@ -805,6 +806,22 @@ defmodule Parzival.Gamification do
       {:error, _transaction, changeset, _} ->
         {:error, changeset}
     end
+  end
+
+  defp get_tokens_multiplier(%User{} = user) do
+    user = Accounts.load_user_fields(user, inventory: [:boost])
+
+    item =
+      user.inventory
+      |> Enum.find_value(
+        1.0,
+        fn item ->
+          if item.boost.type == :tokens &&
+               Timex.diff(DateTime.utc_now(), item.boost.expires_at, :minutes) <= 60 do
+            item.boost.multiplier
+          end
+        end
+      )
   end
 
   def is_task_completed?(task_id, user_id) do

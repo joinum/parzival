@@ -1,4 +1,4 @@
-<div x-data="{option: 'all'}" class="h-full bg-white border-r border-gray-200">
+<div class="h-full bg-white border-r border-gray-200">
   <div class={"#{@current_user.role in [:admin, :recruiter] && "flex justify-between items-center pb-4"} pt-5 pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y"}>
     <h1 class="flex-1 text-lg font-medium">Jobs</h1>
     <!-- Tabs -->
@@ -7,10 +7,10 @@
         <%= if @current_user.role in [:attendee] do %>
           <nav class="flex -mb-px space-x-8" aria-label="Tabs">
             <%= live_patch to: "?tab=all", class: "#{@current_tab == "all" && "border-b-2 border-red-500 text-gray-900" || "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
-              <%= "All" %>
+              All
             <% end %>
             <%= live_patch to: "?tab=mine", class: "#{@current_tab == "mine" && "border-b-2 border-red-500 text-gray-900" || "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
-              <%= "Mine" %>
+              Mine
             <% end %>
           </nav>
         <% end %>

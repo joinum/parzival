@@ -5,45 +5,45 @@
     <div class="flex justify-between items-center mt-2 2xl:mt-5">
       <div class="flex justify-between items-center">
         <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-          <%= live_patch to: "", class: "border-b-2 border-red-500 text-gray-900 py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
+          <%= live_patch to: Routes.product_index_path(@socket, :index), class: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
             Merch
           <% end %>
-          <%= live_patch to: Routes.boost_index_path(@socket, :index), class: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
+          <%= live_patch to: "", class: "border-b-2 border-red-500 text-gray-900 py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
             Boosts
           <% end %>
         </nav>
       </div>
       <%= if @current_user.role in [:admin] do %>
         <div class="flex flex-col sm:flex-row xl:flex-col">
-          <%= live_patch("New", to: Routes.admin_product_new_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
+          <%= live_patch("New", to: Routes.offer_new_path(@socket, :new), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
         </div>
       <% end %>
     </div>
   </div>
   <div class="min-h-full bg-white border-r border-gray-200">
     <ul class="grid grid-cols-1 gap-x-6 px-10 pt-8 sm:grid-cols-2 lg:grid-cols-3 lg:px-4">
-      <%= for product <- @products do %>
-        <%= live_patch to: Routes.product_show_path(@socket, :show, product) do %>
-          <li class="relative mb-6 group" id={"product-#{product.id}"}>
+      <%= for boost <- @boosts do %>
+        <%= live_patch to: Routes.boost_show_path(@socket, :show, boost) do %>
+          <li class="relative mb-6 group" id={"boost-#{boost.id}"}>
             <div class="overflow-hidden w-full bg-gray-50 rounded-md lg:h-80 group-hover:opacity-75 min-h-80 aspect-w-1 aspect-h-1 lg:aspect-none">
-              <img src={Uploaders.ProductImage.url({product.image, product}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full" />
+              <img src={Uploaders.BoostImage.url({boost.image, boost}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full" />
             </div>
             <div class="flex flex-col justify-between pl-1 mt-4">
               <h3 class="text-sm text-gray-700">
                 <span aria-hidden="true" class="absolute inset-0"></span>
-                <%= product.name %>
+                <%= boost.name %>
               </h3>
               <p class="mt-1 text-sm text-gray-500">
-                <%= product.description %>
+                <%= boost.description %>
               </p>
               <p class="relative right-1 text-sm font-medium text-gray-900">
-                💰 <span class="relative top-0.5"><%= product.price %></span>
+                💰 <span class="relative top-0.5"><%= boost.price %></span>
               </p>
             </div>
           </li>
         <% end %>
       <% end %>
     </ul>
-    <.pagination items={@products} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+    <.pagination items={@boosts} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
   </div>
 </div>
