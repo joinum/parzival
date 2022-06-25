@@ -6,6 +6,7 @@ defmodule ParzivalWeb.App.CompanyLive.Show do
 
   alias Parzival.Accounts
   alias Parzival.Companies
+  alias Parzival.Uploaders
 
   @impl true
   def mount(_params, _session, socket) do

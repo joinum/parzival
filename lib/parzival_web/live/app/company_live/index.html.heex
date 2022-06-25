@@ -35,12 +35,20 @@
           <div class="flex justify-between items-center">
             <div class="py-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6">
               <div class="flex items-center">
-                <div class="flex-shrink-0 w-10 h-10">
-                  <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
-                    <span class="text-lg font-medium leading-none text-white">
-                      <%= extract_initials(company.name) %>
-                    </span>
-                  </span>
+                <div>
+                  <%= if is_nil(Uploaders.ProfilePicture.url({company.picture, company}, :medium)) do %>
+                    <div class="relative flex-shrink-0 rounded-full ring-4 ring-white min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
+                      <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
+                        <span class="text-4xl font-medium leading-none text-white select-none sm:text-5xl">
+                          <%= extract_initials(company.name) %>
+                        </span>
+                      </span>
+                    </div>
+                  <% else %>
+                    <div class="relative flex-shrink-0 w-24 h-24 bg-white rounded-full ring-4 ring-white sm:w-32 sm:h-32">
+                      <img src={Uploaders.ProfilePicture.url({company.picture, company}, :medium)} class="object-center absolute rounded-full w-[98px] h-[98px] sm:w-[130px] sm:h-[130px]" />
+                    </div>
+                  <% end %>
                 </div>
                 <div class="ml-4">
                   <div class="font-medium text-gray-900">

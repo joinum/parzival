@@ -7,6 +7,7 @@ defmodule Parzival.Companies.Company do
   alias Parzival.Accounts.User
   alias Parzival.Companies.Level
   alias Parzival.Companies.Offer
+  alias Parzival.Uploaders
 
   @required_fields ~w(name description level_id)a
 
@@ -30,6 +31,8 @@ defmodule Parzival.Companies.Company do
 
     belongs_to :level, Level
 
+    field :picture, Uploaders.ProfilePicture.Type
+
     timestamps()
   end
 
@@ -37,6 +40,12 @@ defmodule Parzival.Companies.Company do
   def changeset(company, attrs) do
     company
     |> cast(attrs, @required_fields ++ @optional_fields)
+    |> cast_attachments(attrs, [:picture])
     |> validate_required(@required_fields)
+  end
+
+  def picture_changeset(company, attrs) do
+    company
+    |> cast_attachments(attrs, [:picture])
   end
 end

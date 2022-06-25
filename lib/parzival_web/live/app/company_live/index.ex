@@ -5,6 +5,7 @@ defmodule ParzivalWeb.App.CompanyLive.Index do
   import ParzivalWeb.Components.Pagination
 
   alias Parzival.Companies
+  alias Parzival.Uploaders
 
   @impl true
   def mount(_params, _session, socket) do
