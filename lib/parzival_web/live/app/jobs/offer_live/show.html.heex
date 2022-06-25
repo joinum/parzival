@@ -112,7 +112,7 @@
                 <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0">
                   <div class="flex flex-1 items-center min-w-0">
                     <div class="flex-shrink-0">
-                      <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({application.user.picture, application.user}, :medium)) do %>
+                      <%= if is_nil(application.user.picture) do %>
                         <span class="inline-flex justify-center items-center mr-2 w-12 h-12 rounded-full group-hover:opacity-75 bg-secondary">
                           <span class="text-lg font-medium leading-none text-white">
                             <%= extract_initials(application.user.name) %>

@@ -11,6 +11,15 @@
                 Welcome, <%= @user.name %> 👋
               </h1>
             </div>
+            <div x-bind:class="option =='curriculum' ? 'xl:mt-4 flex xl:hidden' : 'hidden'">
+              <%= live_patch to: Routes.dashboard_edit_path(@socket, :edit), class: "mr-2 bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
+                <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" /> Edit
+              <% end %>
+              <%= link("Download CV",
+                to: Routes.pdf_path(@socket, :cv, @user),
+                class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
+              ) %>
+            </div>
           </div>
         </div>
         <!-- Tabs -->
@@ -74,7 +83,7 @@
                   <div class="flex items-center">
                     <div>
                       <div class="flex-shrink-0 w-10 h-10">
-                        <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({post.author.picture, post.author}, :medium)) do %>
+                        <%= if is_nil(post.author.picture) do %>
                           <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
                             <span class="font-medium leading-none text-white text-md">
                               <%= extract_initials(post.author.name) %>
@@ -148,7 +157,7 @@
                       <div class="py-4 text-sm whitespace-nowrap">
                         <div class="flex items-center">
                           <div class="flex-shrink-0 w-10 h-10 lg:w-8 lg:h-8">
-                            <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)) do %>
+                            <%= if is_nil(user.picture) do %>
                               <span class="inline-flex justify-center items-center w-10 h-10 rounded-full lg:w-8 lg:h-8 bg-secondary">
                                 <span class="text-lg font-medium leading-none text-white lg:text-sm">
                                   <%= extract_initials(user.name) %>
@@ -206,7 +215,7 @@
                       </article>
                       <div class="flex flex-shrink-0 justify-between mt-4">
                         <div class="flex items-center">
-                          <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({announcement.author.picture, announcement.author}, :medium)) do %>
+                          <%= if is_nil(announcement.author.picture) do %>
                             <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
                               <span class="text-xs font-medium leading-none text-white">
                                 <%= extract_initials(announcement.author.name) %>

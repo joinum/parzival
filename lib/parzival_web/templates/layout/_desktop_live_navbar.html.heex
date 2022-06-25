@@ -51,7 +51,7 @@
               <div x-data="{ open: false }" @click.away="open = false">
                 <button x-on:click="open = ! open" class="flex text-sm rounded-full ring-2 ring-white ring-opacity-20 focus:ring-opacity-100 focus:outline-none">
                   <span class="sr-only">Open user menu</span>
-                  <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :medium)) do %>
+                  <%= if is_nil(@current_user.picture) do %>
                     <span class="inline-flex justify-center items-center w-10 h-10 rounded-full">
                       <span class="text-lg font-medium leading-none text-white">
                         <%= extract_initials(@current_user.name) %>
