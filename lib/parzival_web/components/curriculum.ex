@@ -5,6 +5,17 @@ defmodule ParzivalWeb.Components.Curriculum do
   def curriculum(assigns) do
     ~H"""
     <div x-bind:class="option =='curriculum' ? 'block' : 'hidden'" class="mx-auto max-w-5xl">
+      <%= if assigns.current_page == :dashboard do %>
+        <div class="flex flex-row mt-4 ml-4 lg:hidden">
+          <%= live_patch to: Routes.dashboard_edit_path(assigns.socket, :edit), class: "mr-2 bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
+            <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" /> Edit
+          <% end %>
+          <%= link("Download CV",
+            to: Routes.pdf_path(assigns.socket, :cv, assigns.user),
+            class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
+          ) %>
+        </div>
+      <% end %>
       <dl class="flex flex-col">
         <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
           <dt class="text-sm font-medium text-gray-500">About</dt>
@@ -15,7 +26,7 @@ defmodule ParzivalWeb.Components.Curriculum do
           </dd>
         </div>
 
-        <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
+        <div class="p-4 border-b border-gray-200 sm:px-6 lg:px-8">
           <dt class="text-sm font-medium text-gray-500">Experience</dt>
           <dd class="mt-1 space-y-1 text-sm text-gray-900">
             <%= for experience <- assigns.curriculum.experiences do %>
