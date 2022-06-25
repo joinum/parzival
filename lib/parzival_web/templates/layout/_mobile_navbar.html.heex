@@ -31,7 +31,7 @@
       </button>
     </div>
 
-    <div class="flex flex-col items-center justify-center w-full mx-auto overflow-scroll gap-y-8 my-14 h-[70%]">
+    <div class="flex flex-col items-center w-full mx-auto overflow-scroll gap-y-8 my-6 h-[75%]">
       <%= for page <- ParzivalWeb.Config.pages() do %>
         <%= if page.key != :login || ! assigns[:current_user] do %>
           <%= live_redirect to: page.url do %>
@@ -54,7 +54,7 @@
         <% end %>
       <% end %>
     </div>
-    <div class="flex absolute bottom-6 justify-between items-center px-8 mx-auto w-full">
+    <div class="flex absolute bottom-0 justify-between items-center py-4 px-8 mx-auto w-full bg-primary">
       <%= link to: "https://cesium.di.uminho.pt/" do %>
         <img class="h-auto text-white w-[70px]" src={Routes.static_path(ParzivalWeb.Endpoint, "/images/logos/cesium.svg")} alt="CeSIUM Logo" />
       <% end %>
