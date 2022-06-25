@@ -76,8 +76,14 @@
         </div>
         <!-- Feed -->
         <div x-bind:class="option =='feed' ? 'block' : 'hidden'">
-          <%= for post <- @posts do %>
-            <div class="py-4 px-4 mx-auto max-w-5xl border-b border-gray-200 sm:px-6 lg:px-8">
+          <%= for {post, index} <- Enum.with_index(@posts) do %>
+            <div id={"index-#{index}"} class="py-4 px-4 mx-auto max-w-5xl border-b border-gray-200 sm:px-6 lg:px-8">
+              <div phx-hook="Clock" phx-update="ignore" id={"clock-#{index}"} data-start_date={NaiveDateTime.utc_now()} data-end_date={~N[2022-06-25 04:00:58.861338]} />
+              <div>
+                <p>Time for initial bids : <span id={"countdown-for-phase2-#{index}"} phx-update="ignore" phx-hook="Countdown" data-end_date={~N[2022-06-26 01:31:58.861338]} /></p>
+                <p>Time for post to end : <span id={"countdown-for-end-#{index}"} phx-update="ignore" phx-hook="Countdown" data-end_date={~N[2022-06-25 05:31:58.861338]} /></p>
+                <p>Decision Period : <span id={"countdown-for-decision_period-#{index}"} phx-update="ignore" phx-hook="Countdown" data-end_date={~N[2022-10-25 01:31:58.861338]} /></p>
+              </div>
               <div class="flex flex-shrink-0">
                 <%= live_redirect to: Routes.profile_show_path(@socket, :show, post.author), class: "block flex-shrink-0 group" do %>
                   <div class="flex items-center">
@@ -144,14 +150,14 @@
         <% end %>
         <!-- Rankings -->
         <div x-bind:class="option =='rankings' ? 'block max-w-5xl px-4 py-4 mx-auto border-b border-gray-200 sm:px-6 lg:px-8' : 'hidden'">
-          <h2 class="pt-6 text-base font-medium text-gray-900" id="rankings-title">
+          <h2 class="pt-6 text-base font-medium text-gray-900">
             Current Rankings
           </h2>
           <div class="flow-root mt-1">
             <ul role="list" class="divide-y divide-gray-200">
-              <%= for user <- @users do %>
+              <%= for {user, index} <- Enum.with_index(@users) do %>
                 <%= live_patch to: Routes.profile_show_path(@socket, :show, user), class: "group" do %>
-                  <li id={"user-#{user.id}"} class="relative">
+                  <li id={"user-#{index}"} class="relative">
                     <div class="flex justify-between">
                       <div class="py-4 text-sm whitespace-nowrap">
                         <div class="flex items-center">
@@ -202,8 +208,8 @@
           </h2>
           <div class="flow-root mt-1">
             <ul role="list" class="divide-y divide-gray-200">
-              <%= for announcement <- @announcements do %>
-                <li class="py-5">
+              <%= for {announcement, index} <- Enum.with_index(@announcements) do %>
+                <li class="py-5" id={"announcement_#{index}"}>
                   <%= live_patch to: Routes.announcement_show_path(@socket, :show, announcement), class: "group" do %>
                     <div>
                       <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">

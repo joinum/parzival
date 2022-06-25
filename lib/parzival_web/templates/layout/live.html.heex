@@ -157,14 +157,14 @@
         <section aria-labelledby="rankings-title">
           <div class="overflow-hidden">
             <div class="">
-              <h2 class="pt-6 text-base font-medium text-gray-900" id="rankings-title">
+              <h2 class="pt-6 text-base font-medium text-gray-900">
                 Current Rankings
               </h2>
               <div class="flow-root mt-1">
                 <ul role="list" class="divide-y divide-gray-200">
-                  <%= for user <- @users do %>
+                  <%= for {user, index} <- Enum.with_index(@users) do %>
                     <%= live_patch to: Routes.profile_show_path(@socket, :show, user), class: "group" do %>
-                      <li id={"user-#{user.id}"} class="relative">
+                      <li id={"user_live-#{index}"} class="relative">
                         <div class="flex justify-between">
                           <div class="py-4 text-sm whitespace-nowrap">
                             <div class="flex items-center">
@@ -210,13 +210,13 @@
         <section aria-labelledby="announcements-title">
           <div class="overflow-hidden">
             <div class="">
-              <h2 class="pt-6 text-base font-medium text-gray-900" id="announcements-title">
+              <h2 class="pt-6 text-base font-medium text-gray-900">
                 Announcements
               </h2>
               <div class="flow-root mt-1">
                 <ul role="list" class="divide-y divide-gray-200">
-                  <%= for announcement <- @announcements do %>
-                    <li class="py-5">
+                  <%= for {announcement, index} <- Enum.with_index(@announcements) do %>
+                    <li id={"announcement_live-#{index}"} class="py-5">
                       <%= live_patch to: Routes.announcement_show_path(@socket, :show, announcement), class: "group" do %>
                         <div>
                           <h3 class="text-sm font-semibold text-gray-800 group-hover:underline group-focus:outline-none">
