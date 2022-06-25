@@ -1,5 +1,5 @@
 <div>
-  <.form let={f} for={@changeset} id="dificulty-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+  <.form let={f} for={@changeset} id="difficulty-form" phx-target={@myself} phx-change="validate" phx-submit="save">
     <fieldset class="mt-4 w-full">
       <legend class="block font-medium text-left text-gray-700 text-md">Name</legend>
       <div class="mt-2 w-full">
@@ -13,7 +13,7 @@
     <fieldset class="mt-4">
       <legend class="block font-medium text-left text-gray-700 text-md">Color</legend>
       <div class="grid grid-cols-4 gap-2 items-center mt-2 sm:grid-cols-6 xl:grid-cols-9">
-        <%= for color <- Ecto.Enum.values(Gamification.Mission.Dificulty, :color) do %>
+        <%= for color <- Ecto.Enum.values(Gamification.Mission.Difficulty, :color) do %>
           <.radio_button color={color} active={input_value(f, :color) in [color, Atom.to_string(color)]}>
             <%= radio_button(f, :color, color, class: "hidden") %>
           </.radio_button>

@@ -123,9 +123,9 @@ defmodule ParzivalWeb.Router do
           live "/new", MissionLive.New, :new
           live "/:id/edit", MissionLive.Edit, :edit
 
-          live "/dificulty/", DificultyLive.Index, :index
-          live "/dificulty/new", DificultyLive.Index, :new
-          live "/dificulty/:id/edit", DificultyLive.Index, :edit
+          live "/difficulty/", DifficultyLive.Index, :index
+          live "/difficulty/new", DifficultyLive.Index, :new
+          live "/difficulty/:id/edit", DifficultyLive.Index, :edit
         end
 
         scope "/tools" do
