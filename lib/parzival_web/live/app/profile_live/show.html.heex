@@ -9,7 +9,7 @@
         <div class="-mt-12 sm:flex sm:items-end sm:-mt-16 sm:space-x-5">
           <div>
             <%= if is_nil(Uploaders.ProfilePicture.url({@user.picture, @user}, :medium)) do %>
-              <div class="relative flex-shrink-0 rounded-full ring-4 ring-white min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
+              <div class="relative flex-shrink-0 mt-24 rounded-full ring-4 ring-white sm:mt-0 min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
                 <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
                   <span class="text-4xl font-medium leading-none text-white select-none sm:text-5xl">
                     <%= extract_initials(@user.name) %>
@@ -17,7 +17,7 @@
                 </span>
               </div>
             <% else %>
-              <div class="relative flex-shrink-0 w-24 h-24 bg-white rounded-full ring-4 ring-white sm:w-32 sm:h-32">
+              <div class="relative flex-shrink-0 mt-24 w-24 h-24 bg-white rounded-full ring-4 ring-white sm:mt-0 sm:w-32 sm:h-32">
                 <img src={Uploaders.ProfilePicture.url({@user.picture, @user}, :medium)} class="object-center absolute rounded-full w-[98px] h-[98px] sm:w-[130px] sm:h-[130px]" />
               </div>
             <% end %>
