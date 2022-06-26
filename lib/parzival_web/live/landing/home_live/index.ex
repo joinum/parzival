@@ -2,6 +2,8 @@ defmodule ParzivalWeb.Landing.HomeLive.Index do
   @moduledoc false
   use ParzivalWeb, [:live_view, {ParzivalWeb.LayoutView, "landing.html"}]
 
+  import ParzivalWeb.Components.WorkshopButton
+
   @schedule Jason.decode!(File.read!("data/schedule.json"))
             |> Enum.map(fn {key, value} ->
               {key,

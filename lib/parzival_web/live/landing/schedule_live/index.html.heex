@@ -14,7 +14,7 @@
     class="flex flex-row my-10 h-auto lg:my-20 1.5xl:min-h-[1000px] xl:min-h-[900px]"
   >
     <div class="hidden relative w-full 1.5xl:block">
-      <img class="absolute -right-24 w-[1200px] h-[740px]" src={Routes.static_path(@socket, "/images/cords/schedule_cords.svg")} alt="hero cords" />
+      <img class="absolute -right-24 w-[1200px] h-[740px] -z-40" src={Routes.static_path(@socket, "/images/cords/schedule_cords.svg")} alt="hero cords" />
 
       <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
         <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F] font-bold' : 'bg-[#BB2A22]' "} class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do
@@ -38,14 +38,17 @@
             else
               nil
             end %>
-          <%= for activity <- Map.get(@schedule, day) do %>
+          <%= for {activity, idx} <- Enum.with_index(Map.get(@schedule, day)) do %>
+            <%= if activity["href"] do %>
+              <.workshop_button top={1.8 + 12.4 * div(idx, 5)} left={2 + 11 * rem(idx, 5)} href={activity["href"]} />
+            <% end %>
             <div class={"#{if activity["hours"] == next_activity do
                 "border-2 border-white"
               end} #{if NaiveDateTime.compare(NaiveDateTime.utc_now(), activity["hours"]) == :lt do
                 "bg-[#E0483F]"
               else
                 "bg-[#BB2A22]"
-              end}  w-36 h-44 rounded-3xl relative -z-10"}>
+              end} w-36 h-44 rounded-3xl relative -z-50"}>
               <span class="text-white">
                 <p class="absolute left-3 top-4 w-32 text-sm font-light">
                   <%= if String.length(activity["title"]) < 50 do
@@ -116,12 +119,17 @@
                 <div class={"flex flex-row gap-x-8 items-center #{if activity["hours"] == next_activity do
                     'font-bold py-4 text-[13px] md:text-[17px]'
                   else
-                    'font-thin text-[12px] md:text-[16px] opacity-50'
+                    'font-thin text-[12px] md:text-[16px] opacity-70'
                   end} text-white"}>
                   <div class="flex flex-col w-40 text-right sm:w-96 md:w-[420px]">
-                    <span class="">
+                    <span>
                       <%= activity["title"] %>
                     </span>
+                    <%= if activity["href"] do %>
+                      <a href={activity["href"]} class="text-xs font-bold text-white underline animate-bounce md:text-base">
+                        Register
+                      </a>
+                    <% end %>
                     <%= if activity["speaker"] && activity["hours"] == next_activity do %>
                       <span class="text-sm font-thin">
                         By <%= activity["speaker"] %>

@@ -4,109 +4,129 @@
       "title": "Acreditação",
       "hours": "28/06/2022 8:30 AM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "Sessão de abertura",
       "hours": "28/06/2022 9:00 AM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Talk] Set the stage",
       "hours": "28/06/2022 10:00 AM",
       "speaker": "Roberto Machado",
-      "company": "Subvisual"
+      "company": "Subvisual",
+      "href": null
     },
     {
       "title": "[Talk] Intro to the blockchain",
       "hours": "28/06/2022 10:30 AM",
       "speaker": "Mário Gago",
-      "company": "Pink Room"
+      "company": "Pink Room",
+      "href": null
     },
     {
       "title": "☕ Coffee break",
       "hours": "28/06/2022 11:00 AM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Talk] An Ethereum Network Explorer using Elixir and Neo4J",
       "hours": "28/06/2022 11:30 AM",
       "speaker": "Diogo Viana",
-      "company": "Finiam"
+      "company": "Finiam",
+      "href": null
     },
     {
       "title": "[Talk] Mobile development for the web3",
       "hours": "28/06/2022 12:00 PM",
       "speaker": "André Maximino",
-      "company": "Pink Room"
+      "company": "Pink Room",
+      "href": null
     },
     {
       "title": "🍝 Almoço",
       "hours": "28/06/2022 12:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Workshop] Intro to Solidity",
       "hours": "28/06/2022 02:00 PM",
       "speaker": "Miguel Palhas",
-      "company": "Subvisual"
+      "company": "Subvisual",
+      "top": 14.2,
+      "left": 35,
+      "href": "/schedule"
     },
     {
       "title": "[Talk] TBA",
       "hours": "28/06/2022 02:00 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Talk] TBA",
       "hours": "28/06/2022 03:00 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "☕ Coffee break",
       "hours": "28/06/2022 04:00 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] Continental",
       "hours": "28/06/2022 04:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] Mercedes Benz IO",
       "hours": "28/06/2022 04:45 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] TBA",
       "hours": "28/06/2022 05:00 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] TBA",
       "hours": "28/06/2022 05:15 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] TBA",
       "hours": "28/06/2022 05:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "TBA",
       "hours": "28/06/2022 06:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     }
   ],
   "wednesday": [
@@ -114,19 +134,24 @@
       "title": "[Workshop] TBA",
       "hours": "29/06/2022 09:00 AM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": "/"
     },
     {
       "title": "[Workshop] TBA",
       "hours": "29/06/2022 09:00 AM",
       "speaker": null,
-      "company": "Checkmarx"
+      "company": "Checkmarx",
+      "top": 2,
+      "left": 12.8,
+      "href": "/"
     },
     {
       "title": "☕ Coffee break",
       "hours": "29/06/2022 11:00 AM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Talk] Combining professional success and well-being in Portugal",
@@ -138,73 +163,85 @@
       "title": "🍝 Almoço",
       "hours": "29/06/2022 12:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Workshop] TBA",
       "hours": "29/06/2022 02:00 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Talk] TBA",
       "hours": "29/06/2022 02:00 PM",
       "speaker": null,
-      "company": "Continental"
+      "company": "Continental",
+      "href": null
     },
     {
       "title": "[Talk] TBA",
       "hours": "29/06/2022 03:00 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "☕ Coffee break",
       "hours": "29/06/2022 04:00 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] Catedra Proef/Dstelecom/IB-S",
       "hours": "29/06/2022 04:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] Inovaria",
       "hours": "29/06/2022 04:45 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] TBA",
       "hours": "29/06/2022 05:00 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] ANO",
       "hours": "29/06/2022 05:15 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] TBA",
       "hours": "29/06/2022 05:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] TBA",
       "hours": "29/06/2022 05:45 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "TBA",
       "hours": "29/06/2022 06:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     }
   ],
   "thursday": [
@@ -212,79 +249,92 @@
       "title": "[Workshop] TBA",
       "hours": "29/06/2022 09:00 AM",
       "speaker": null,
-      "company": "Kelvin"
+      "company": "Kelvin",
+      "href": "/"
     },
     {
       "title": "[Workshop] TBA",
       "hours": "29/06/2022 09:00 AM",
       "speaker": null,
-      "company": "Deloitte"
+      "company": "Deloitte",
+      "href": "/"
     },
     {
       "title": "☕ Coffee break",
       "hours": "29/06/2022 11:00 AM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Talk] TBA",
       "hours": "29/06/2022 11:30 AM",
       "speaker": null,
-      "company": "Mini Clip"
+      "company": "Mini Clip",
+      "href": null
     },
     {
       "title": "🍝 Almoço",
       "hours": "29/06/2022 12:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Talk] TBA",
       "hours": "30/06/2022 02:00 PM",
       "speaker": null,
-      "company": "Mini Clip"
+      "company": "Mini Clip",
+      "href": null
     },
     {
       "title": "[Talk] TBA",
       "hours": "30/06/2022 03:00 PM",
       "speaker": null,
-      "company": "Optare Solutions"
+      "company": "Optare Solutions",
+      "href": null
     },
     {
       "title": "☕ Coffee break",
       "hours": "30/06/2022 04:00 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] TBA",
       "hours": "30/06/2022 04:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "[Pitch] TBA",
       "hours": "30/06/2022 04:45 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "Cerimónia de encerramento",
       "hours": "30/06/2022 05:00 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "Entrega de prémios",
       "hours": "30/06/2022 05:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     },
     {
       "title": "Jantar de enceramento",
       "hours": "30/06/2022 08:30 PM",
       "speaker": null,
-      "company": null
+      "company": null,
+      "href": null
     }
   ]
 }

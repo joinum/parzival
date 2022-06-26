@@ -20,7 +20,7 @@
                     <span class="text-secondary"><%= index + 1 %></span>
                   </div>
                   <div class="flex-shrink-0 w-10 h-10">
-                    <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)) do %>
+                    <%= if is_nil(user.picture) do %>
                       <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
                         <span class="text-lg font-medium leading-none text-white">
                           <%= extract_initials(user.name) %>
@@ -61,7 +61,7 @@
                       <span class="text-gray-900"><%= index + 1 %></span>
                     </div>
                     <div class="flex-shrink-0 w-10 h-10">
-                      <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)) do %>
+                      <%= if is_nil(user.picture) do %>
                         <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
                           <span class="text-lg font-medium leading-none text-white">
                             <%= extract_initials(user.name) %>
@@ -106,7 +106,7 @@
                     <%= @position %>
                   </div>
                   <div class="flex-shrink-0 w-10 h-10">
-                    <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :medium)) do %>
+                    <%= if is_nil(@current_user.picture) do %>
                       <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
                         <span class="text-lg font-medium leading-none text-white">
                           <%= extract_initials(@current_user.name) %>

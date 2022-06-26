@@ -68,7 +68,7 @@
             <!-- Profile -->
             <div class="flex flex-row items-center space-x-3">
               <div class="flex-shrink-0 w-14 h-14">
-                <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :medium)) do %>
+                <%= if is_nil(@current_user.picture) do %>
                   <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
                     <span class="text-xl font-medium leading-none text-white select-none">
                       <%= extract_initials(@current_user.name) %>
@@ -169,7 +169,7 @@
                           <div class="py-4 text-sm whitespace-nowrap">
                             <div class="flex items-center">
                               <div class="flex-shrink-0 w-10 h-10 lg:w-8 lg:h-8">
-                                <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)) do %>
+                                <%= if is_nil(user.picture) do %>
                                   <div class="relative flex-shrink-0 w-10 h-10 rounded-full ring-4 ring-white lg:w-8 lg:h-8">
                                     <span class="inline-flex justify-center items-center w-10 h-10 rounded-full lg:w-8 lg:h-8 bg-secondary">
                                       <span class="text-lg font-medium leading-none text-white lg:text-sm">
@@ -227,7 +227,7 @@
                           </article>
                           <div class="flex flex-shrink-0 justify-between mt-4">
                             <div class="flex items-center">
-                              <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({announcement.author.picture, announcement.author}, :medium)) do %>
+                              <%= if is_nil(announcement.author.picture) do %>
                                 <span class="inline-flex justify-center items-center mr-2 w-6 h-6 bg-gray-500 rounded-full">
                                   <span class="text-xs font-medium leading-none text-white">
                                     <%= extract_initials(announcement.author.name) %>
