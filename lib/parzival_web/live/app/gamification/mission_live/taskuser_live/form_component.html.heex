@@ -4,9 +4,9 @@
       <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
         <div class="flex justify-between items-center h-10">
           <h1 class="flex-1 text-lg font-medium">Task</h1>
-          <%= if @current_user.role in [:staff] do %>
+          <%= if @current_user.role in [:staff, :admin] do %>
             <div class="flex flex-row gap-x-4">
-              <%= if @is_completed do %>
+              <%= if not @is_completed? do %>
                 <%= submit do %>
                   <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm cursor-pointer xl:w-full bg-secondary hover:bg-primary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
                     Redeem task
@@ -54,7 +54,7 @@
         </div>
         <div>
           <%= live_redirect to: Routes.profile_show_path(@socket, :show, @attendee) do %>
-            <div class="flex flex-row gap-x-2 items-center p-2 mx-6 w-full h-20 rounded-xl border border-gray-200 hover:bg-gray-50">
+            <div class="flex flex-row gap-x-2 items-center py-2 px-4 w-full h-20 rounded-xl border-b border-gray-200 hover:bg-gray-50">
               <div class="flex-shrink-0 w-14 h-14">
                 <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
                   <span class="text-xl font-medium leading-none text-white">
