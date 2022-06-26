@@ -77,11 +77,21 @@
           <h2 class="text-lg font-medium text-gray-900">About the Company</h2>
           <%= live_redirect to: Routes.company_show_path(@socket, :show, @offer.company), class: "mt-4 flex border border-gray-300 shadow-sm hover:bg-gray-50 px-6 py-6 rounded-md items-center" do %>
             <div class="flex-shrink-0 mr-4 md:mb-4">
-              <span class="inline-flex justify-center items-center w-16 h-16 rounded-full md:w-24 md:h-24 bg-secondary">
-                <span class="text-3xl font-medium leading-none text-white md:text-5xl">
-                  <%= extract_initials(@offer.company.name) %>
-                </span>
-              </span>
+              <div>
+                <%= if is_nil(@offer.company.picture) do %>
+                  <div class="relative flex-shrink-0 rounded-full ring-4 ring-white min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
+                    <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
+                      <span class="text-4xl font-medium leading-none text-white select-none sm:text-5xl">
+                        <%= extract_initials(@offer.company.name) %>
+                      </span>
+                    </span>
+                  </div>
+                <% else %>
+                  <div class="relative flex-shrink-0 w-24 h-24 bg-white rounded-full ring-4 ring-white sm:w-32 sm:h-32">
+                    <img src={Parzival.Uploaders.ProfilePicture.url({@offer.company.picture, @offer.company}, :medium)} class="object-center absolute rounded-full w-[98px] h-[98px] sm:w-[130px] sm:h-[130px]" />
+                  </div>
+                <% end %>
+              </div>
             </div>
             <div>
               <h4 class="text-lg font-bold text-gray-800">
