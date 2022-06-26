@@ -58,7 +58,7 @@
                   <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" /> Edit
                 <% end %>
                 <%= link("Download CV",
-                  to: Routes.pdf_path(@socket, :cv, @user),
+                  to: Routes.pdf_path(@socket, :download_cv, @user),
                   class: "inline-flex items-center justify-center px-4 py-2 whitespace-nowrap border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
                 ) %>
               </div>

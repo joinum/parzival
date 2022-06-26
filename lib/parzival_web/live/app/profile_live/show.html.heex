@@ -49,7 +49,7 @@
               <% end %>
               <%= if @user.role in [:attendee] && @current_user.role in [:admin, :recruiter] || @current_user.role in [:attendee] && @user.id == @current_user.id do %>
                 <%= link("Download CV",
-                  to: Routes.pdf_path(@socket, :cv, @user),
+                  to: Routes.pdf_path(@socket, :download_cv, @user),
                   class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
                 ) %>
               <% end %>
