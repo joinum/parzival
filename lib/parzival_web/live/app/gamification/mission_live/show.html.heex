@@ -114,7 +114,7 @@
     <div x-bind:class="tasks ?'block' : 'hidden'">
       <ul role="list">
         <%= for {task, index} <- Enum.with_index(@mission.tasks) do %>
-          <%= live_patch to: Routes.mission_task_show_path(@socket, :show, @mission, task) do %>
+          <%= live_patch to: Routes.task_show_path(@socket, :show, @mission, task) do %>
             <li id={"task-#{index}"} class="flex flex-row justify-between items-center p-4 text-gray-400 border-b border-gray-200 cursor-pointer sm:px-6 hover:bg-gray-50">
               <div class="flex flex-col gap-y-1">
                 <span class="font-medium text-gray-900">

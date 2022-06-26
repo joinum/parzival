@@ -151,7 +151,7 @@ defmodule ParzivalWeb.Config do
       %{
         key: :scanner,
         title: "Scan",
-        url: Routes.staff_scanner_index_path(conn, :index),
+        url: Routes.admin_scanner_index_path(conn, :index),
         tabs: []
       }
     ]
@@ -289,7 +289,7 @@ defmodule ParzivalWeb.Config do
       %{
         key: :scanner,
         title: "Scan",
-        url: Routes.staff_scanner_index_path(conn, :index),
+        url: Routes.admin_scanner_index_path(conn, :index),
         tabs: []
       }
     ]

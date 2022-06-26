@@ -42,6 +42,10 @@ defmodule ParzivalWeb.Router do
         live "/speakers", SpeakersLive.Index, :index
         live "/faqs", FaqsLive.Index, :index
         live "/team", TeamLive.Index, :index
+
+        scope "/", App do
+          live "/profile/:qr", ProfileLive.Show, :qr_show
+        end
       end
     end
   end
@@ -78,9 +82,9 @@ defmodule ParzivalWeb.Router do
 
         live "/missions", MissionLive.Index, :index
 
-        scope "/missions", MissionLive do
+        scope "/missions" do
           pipe_through [:require_level]
-          live "/:id", Show, :show
+          live "/:id", MissionLive.Show, :show
 
           live "/:id/tasks/:task_id", TaskLive.Show, :show
           live "/:id/tasks/:task_id/redeem", TaskLive.Show, :redeem
@@ -88,12 +92,6 @@ defmodule ParzivalWeb.Router do
 
         live "/profile/:id", ProfileLive.Show, :show
         live "/profile/:id/edit", ProfileLive.Edit, :edit
-
-        scope "/staff", Staff, as: :staff do
-          live "/task_redeem/:task/:attendee", TaskUserLive.New, :new
-          live "/order_redeem/:id", OrderLive.Edit, :edit
-          live "/scanner", ScannerLive.Index, :index
-        end
       end
 
       scope "/admin", Backoffice, as: :admin do
@@ -118,6 +116,7 @@ defmodule ParzivalWeb.Router do
 
         live "/store/new", ProductLive.New, :new
         live "/store/:id/edit", ProductLive.Edit, :edit
+        live "/order/:id/redeem", OrderLive.Edit, :edit
 
         scope "/missions" do
           live "/new", MissionLive.New, :new
@@ -126,6 +125,8 @@ defmodule ParzivalWeb.Router do
           live "/difficulty/", DifficultyLive.Index, :index
           live "/difficulty/new", DifficultyLive.Index, :new
           live "/difficulty/:id/edit", DifficultyLive.Index, :edit
+
+          live "/task/:task_id/redeem/:attendee_id", TaskLive.Redeem, :redeem
         end
 
         scope "/tools" do
@@ -136,6 +137,8 @@ defmodule ParzivalWeb.Router do
 
           live "/announcements/new", AnnouncementLive.New, :new
           live "/announcements/:id/edit", AnnouncementLive.Edit, :edit
+
+          live "/scanner", ScannerLive.Index, :index
         end
       end
     end
@@ -155,8 +158,6 @@ defmodule ParzivalWeb.Router do
     post "/confirm", UserConfirmationController, :create
     get "/confirm/:token", UserConfirmationController, :edit
     post "/confirm/:token", UserConfirmationController, :update
-
-    live "/profile/:qr", App.ProfileLive.Show, :qr_show
   end
 
   # Other scopes may use custom stacks.

@@ -11,15 +11,9 @@ defmodule ParzivalWeb.Hooks do
   end
 
   def on_mount(:current_user, _params, %{"user_token" => user_token}, socket) do
-    current_user = Accounts.get_user_by_session_token(user_token)
+    current_user = Accounts.get_user_by_session_token(user_token, [:company, :missions])
 
-    if is_nil(current_user) do
-      {:cont, socket}
-    else
-      {:cont,
-       socket
-       |> assign(current_user: Accounts.load_user_fields(current_user, [:company, :missions]))}
-    end
+    {:cont, assign(socket, current_user: current_user)}
   end
 
   def on_mount(:current_user, _params, _session, socket) do
