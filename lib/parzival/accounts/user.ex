@@ -123,6 +123,7 @@ defmodule Parzival.Accounts.User do
     user
     |> cast(attrs, @required_fields ++ (@optional_fields -- [:password]))
     |> cast_attachments(attrs, [:picture])
+    |> validate_required([:name])
     |> validate_email()
   end
 
