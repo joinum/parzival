@@ -124,8 +124,6 @@ defmodule Parzival.Accounts do
   """
   def get_user!(id, preloads \\ []), do: Repo.get!(User, id) |> Repo.preload(preloads)
 
-  def load_user_fields(%User{} = user, preloads), do: Repo.preload(user, preloads)
-
   ## User registration
 
   @doc """
@@ -390,9 +388,12 @@ defmodule Parzival.Accounts do
   @doc """
   Gets the user with the given signed token.
   """
-  def get_user_by_session_token(token) do
+  def get_user_by_session_token(token, preloads \\ []) do
     {:ok, query} = UserToken.verify_session_token_query(token)
-    Repo.one(query)
+
+    query
+    |> Repo.one()
+    |> Repo.preload(preloads)
   end
 
   @doc """
