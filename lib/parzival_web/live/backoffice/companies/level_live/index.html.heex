@@ -1,5 +1,6 @@
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.admin_level_index_path(@socket, :index)}>
+    <h2 class="mb-5 text-2xl font-bold text-left text-gray-900">Edit level</h2>
     <.live_component module={ParzivalWeb.Backoffice.LevelLive.FormComponent} id={@level.id || :new} title={@page_title} action={@live_action} level={@level} return_to={Routes.admin_level_index_path(@socket, :index)} />
   </.modal>
 <% end %>

@@ -1,5 +1,6 @@
 <%= if @live_action in [:redeem] do %>
   <.modal return_to={Routes.task_show_path(@socket, :show, @mission, @task)}>
+    <h2 class="mb-5 text-2xl font-bold text-center text-gray-900">Show this QR code to a staff member</h2>
     <div class="flex items-center mx-auto w-min">
       <div class="items-center m-auto">
         <%= @qrcode |> raw %>
