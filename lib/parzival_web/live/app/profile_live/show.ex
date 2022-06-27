@@ -2,11 +2,12 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   @moduledoc false
   use ParzivalWeb, :live_view
 
+  import ParzivalWeb.Components.Buttons
+  import ParzivalWeb.Components.Curriculum
+
   alias Parzival.Accounts
   alias Parzival.Gamification
   alias Parzival.Uploaders
-
-  import ParzivalWeb.Components.Curriculum
 
   @impl true
   def mount(_params, _session, socket) do

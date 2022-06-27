@@ -27,6 +27,7 @@
               <h1 class="text-2xl font-bold text-gray-900 truncate">
                 <%= @user.name %>
               </h1>
+              <.social_icons twitter={@user.twitter} github={@user.github} linkedin={@user.linkedin} />
             </div>
             <div class="flex flex-col mt-6 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
               <%= if @current_user.role in [:admin] || @user.id == @current_user.id do %>
@@ -60,6 +61,7 @@
           <h1 class="text-2xl font-bold text-gray-900 truncate">
             <%= @user.name %>
           </h1>
+          <.social_icons twitter={@user.twitter} github={@user.github} linkedin={@user.linkedin} />
         </div>
       </div>
     </div>
@@ -123,7 +125,9 @@
           <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">Email</dt>
             <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.email %>
+              <a class="text-blue-400" href={"mailto:#{@user.email}"}>
+                <%= @user.email %>
+              </a>
             </dd>
           </div>
         <% end %>
@@ -132,7 +136,9 @@
           <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">Phone</dt>
             <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.cellphone %>
+              <a class="text-blue-400" href={"tel:#{@user.cellphone}"}>
+                <%= @user.cellphone %>
+              </a>
             </dd>
           </div>
         <% end %>
@@ -141,34 +147,9 @@
           <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">Website</dt>
             <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.website %>
-            </dd>
-          </div>
-        <% end %>
-
-        <%= if @user.linkedin do %>
-          <div class="sm:col-span-1">
-            <dt class="text-sm font-medium text-gray-500">Linkedin</dt>
-            <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.linkedin %>
-            </dd>
-          </div>
-        <% end %>
-
-        <%= if @user.github do %>
-          <div class="sm:col-span-1">
-            <dt class="text-sm font-medium text-gray-500">Github</dt>
-            <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.github %>
-            </dd>
-          </div>
-        <% end %>
-
-        <%= if @user.twitter do %>
-          <div class="sm:col-span-1">
-            <dt class="text-sm font-medium text-gray-500">Twitter</dt>
-            <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.twitter %>
+              <a class="text-blue-400" href={(String.starts_with?(@user.website, "http") && @user.website) || "https://#{@user.website}"} target="_blank">
+                <%= @user.website %>
+              </a>
             </dd>
           </div>
         <% end %>
