@@ -63,20 +63,13 @@
       "company": "Subvisual",
       "top": 14.2,
       "left": 35,
-      "href": "/schedule"
+      "href": "/"
     },
     {
       "title": "[Talk] TBA",
       "hours": "28/06/2022 02:00 PM",
       "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "[Talk] TBA",
-      "hours": "28/06/2022 03:00 PM",
-      "speaker": null,
-      "company": null,
+      "company": "Accenture",
       "href": null
     },
     {
@@ -101,7 +94,7 @@
       "href": null
     },
     {
-      "title": "[Pitch] TBA",
+      "title": "[Pitch] Optare Solutions",
       "hours": "28/06/2022 05:00 PM",
       "speaker": null,
       "company": null,
@@ -122,7 +115,7 @@
       "href": null
     },
     {
-      "title": "TBA",
+      "title": "Braga, Blockchain Meetup",
       "hours": "28/06/2022 06:30 PM",
       "speaker": null,
       "company": null,
@@ -131,16 +124,9 @@
   ],
   "wednesday": [
     {
-      "title": "[Workshop] TBA",
+      "title": "[Workshop] Securing Cloud Infrastructure using KICS",
       "hours": "29/06/2022 09:00 AM",
-      "speaker": null,
-      "company": null,
-      "href": "/"
-    },
-    {
-      "title": "[Workshop] TBA",
-      "hours": "29/06/2022 09:00 AM",
-      "speaker": null,
+      "speaker": "João Reijota",
       "company": "Checkmarx",
       "top": 2,
       "left": 12.8,
@@ -167,14 +153,7 @@
       "href": null
     },
     {
-      "title": "[Workshop] TBA",
-      "hours": "29/06/2022 02:00 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "[Talk] TBA",
+      "title": "[Talk] Digital Solutions",
       "hours": "29/06/2022 02:00 PM",
       "speaker": null,
       "company": "Continental",
@@ -235,20 +214,13 @@
       "speaker": null,
       "company": null,
       "href": null
-    },
-    {
-      "title": "TBA",
-      "hours": "29/06/2022 06:30 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
     }
   ],
   "thursday": [
     {
-      "title": "[Workshop] TBA",
+      "title": "[Workshop] Containers & Terraform na Google Cloud",
       "hours": "30/06/2022 09:00 AM",
-      "speaker": null,
+      "speaker": "Carlos Mendes",
       "company": "Kelvin",
       "href": "/"
     },
@@ -267,10 +239,10 @@
       "href": null
     },
     {
-      "title": "[Talk] TBA",
+      "title": "[Talk] Pago para jogar",
       "hours": "30/06/2022 11:30 AM",
-      "speaker": null,
-      "company": "Mini Clip",
+      "speaker": "Pedro Nunes",
+      "company": "Miniclip",
       "href": null
     },
     {
@@ -281,16 +253,16 @@
       "href": null
     },
     {
-      "title": "[Talk] TBA",
+      "title": "[Talk] Desafios de um Game Developer (Remote)",
       "hours": "30/06/2022 02:00 PM",
-      "speaker": null,
-      "company": "Mini Clip",
+      "speaker": "António Pacheco",
+      "company": "Miniclip",
       "href": null
     },
     {
-      "title": "[Talk] TBA",
+      "title": "[Talk] A tecnologia ao serviço do negócio ou o negócio ao serviço da tecnologia? Uma visão da Optare",
       "hours": "30/06/2022 03:00 PM",
-      "speaker": null,
+      "speaker": "José Cunha, Rafael Cunha e Roberto Pérez",
       "company": "Optare Solutions",
       "href": null
     },
@@ -302,29 +274,36 @@
       "href": null
     },
     {
-      "title": "[Pitch] TBA",
+      "title": "[Pitch] Eurotux",
       "hours": "30/06/2022 04:30 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Pitch] TBA",
+      "title": "[Pitch] Wintouch",
       "hours": "30/06/2022 04:45 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "Cerimónia de encerramento",
+      "title": "[Pitch] TBA",
       "hours": "30/06/2022 05:00 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
+      "title": "Cerimónia de encerramento",
+      "hours": "30/06/2022 05:15 PM",
+      "speaker": null,
+      "company": null,
+      "href": null
+    },
+    {
       "title": "Entrega de prémios",
-      "hours": "30/06/2022 05:30 PM",
+      "hours": "30/06/2022 05:45 PM",
       "speaker": null,
       "company": null,
       "href": null
