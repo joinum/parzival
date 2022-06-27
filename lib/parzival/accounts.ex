@@ -518,26 +518,4 @@ defmodule Parzival.Accounts do
     |> User.exp_changeset(%{exp: user.exp + 500})
     |> Repo.update()
   end
-
-  @doc """
-  Gets the position of a user in the leaderboard.
-
-  In case of a tie, the user has the highest (best) position amongst those who have that score (i.e., is tied for x-th place).any()
-
-  This means the same position can appear for multiple users at the same time
-
-  ## Examples
-
-      iex> get_user_position(user)
-      1
-
-  """
-  def get_user_position(user) do
-    x =
-      User
-      |> where([u], u.exp > ^user.exp)
-      |> Repo.aggregate(:count, :id)
-
-    x + 1
-  end
 end

@@ -7,6 +7,7 @@ defmodule Parzival.Gamification do
 
   alias Ecto.Multi
 
+  alias Parzival.Accounts
   alias Parzival.Accounts.User
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Curriculum.Education
@@ -692,6 +693,110 @@ defmodule Parzival.Gamification do
     TaskUser
     |> apply_filters(opts)
     |> Flop.validate_and_run(flop, for: TaskUser)
+  end
+
+  def get_leaderboard(params, day, number_entries) do
+    case day do
+      0 -> get_general_leaderboard(params, number_entries)
+      1 -> get_daily_leaderboard(~N[2022-06-28 00:00:00], ~N[2022-06-28 23:59:59], number_entries)
+      2 -> get_daily_leaderboard(~N[2022-06-29 00:00:00], ~N[2022-06-29 23:59:59], number_entries)
+      3 -> get_daily_leaderboard(~N[2022-06-30 00:00:00], ~N[2022-06-30 23:59:59], number_entries)
+    end
+  end
+
+  def get_exp(user, day) do
+    case day do
+      1 -> get_exp(user, ~N[2022-06-28 00:00:00], ~N[2022-06-28 23:59:59])
+      2 -> get_exp(user, ~N[2022-06-29 00:00:00], ~N[2022-06-29 23:59:59])
+      3 -> get_exp(user, ~N[2022-06-30 00:00:00], ~N[2022-06-30 23:59:59])
+    end
+  end
+
+  defp get_exp(user, start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    res =
+      subquery(q2)
+      |> where([t], t.user == ^user.id)
+      |> select([t], t.experience)
+      |> Repo.one()
+
+    if res == nil do
+      0
+    else
+      res
+    end
+  end
+
+  defp get_general_leaderboard(params, number_entries) do
+    Accounts.list_users(params,
+      where: [role: :attendee],
+      order_by: [desc: :exp],
+      limir: number_entries
+    )
+  end
+
+  defp get_leaderboard_query(start_time, end_time) do
+    q1 =
+      TaskUser
+      |> where([tu], tu.inserted_at <= ^end_time and tu.inserted_at >= ^start_time)
+      |> join(:inner, [tu], t in Task, on: t.id == tu.task_id)
+      |> join(:inner, [t], u in User, on: u.id == t.user_id)
+      |> select([tu, t], %{task: tu.task_id, exp: t.exp, user: tu.user_id})
+
+    q2 =
+      subquery(q1)
+      |> group_by([t], t.user)
+      |> select([t], %{user: t.user, experience: sum(t.exp)})
+  end
+
+  defp get_daily_leaderboard(start_time, end_time, number_entries) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    subquery(q2)
+    |> order_by([t], desc: t.experience)
+    |> limit(^number_entries)
+    |> join(:inner, [t], u in User, on: t.user == u.id)
+    |> Repo.all()
+  end
+
+  def get_user_position(user, day) do
+    case day do
+      0 -> get_user_position_general(user)
+      1 -> get_user_position_by_day(user, ~N[2022-06-28 00:00:00], ~N[2022-06-28 23:59:59])
+      2 -> get_user_position_by_day(user, ~N[2022-06-29 00:00:00], ~N[2022-06-29 23:59:59])
+      3 -> get_user_position_by_day(user, ~N[2022-06-30 00:00:00], ~N[2022-06-30 23:59:59])
+    end
+  end
+
+  defp get_user_position_general(user) do
+    x =
+      User
+      |> where([u], u.exp > ^user.exp)
+      |> Repo.aggregate(:count, :id)
+
+    x + 1
+  end
+
+  defp get_user_position_by_day(user, start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    exp =
+      subquery(q2)
+      |> where([t], t.user == ^user.id)
+      |> select([t], t.experience)
+      |> Repo.one()
+
+    if exp == nil do
+      '-'
+    else
+      x =
+        subquery(q2)
+        |> where([t], t.experience > ^exp)
+        |> Repo.aggergate(:count, :user)
+
+      x + 1
+    end
   end
 
   @doc """
