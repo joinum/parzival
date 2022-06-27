@@ -19,7 +19,7 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   def handle_params(%{"qr" => qr}, _url, socket) do
     user = Accounts.get_user_by_qr(qr)
 
-    if (socket.assigns.current_user.role == :recruiter && user.role == :attendee) do
+    if socket.assigns.current_user.role == :recruiter && user.role == :attendee do
       company = Companies.get_company!(socket.assigns.current_user.company_id)
 
       case Companies.create_connection(company, user) do
@@ -31,10 +31,9 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
         {:error, error} ->
           Logger.error(error)
 
-        {:noreply, socket}
+          {:noreply, socket}
       end
     end
-
 
     if user == nil do
       {:noreply,
@@ -51,7 +50,7 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   def handle_params(%{"id" => id} = params, _url, socket) do
     user = Accounts.get_user!(id, [:company])
 
-    if (socket.assigns.current_user.role == :recruiter && user.role == :attendee) do
+    if socket.assigns.current_user.role == :recruiter && user.role == :attendee do
       company = Companies.get_company!(socket.assigns.current_user.company_id)
 
       case Companies.create_connection(company, user) do
@@ -63,10 +62,9 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
         {:error, error} ->
           Logger.error(error)
 
-        {:noreply, socket}
+          {:noreply, socket}
       end
     end
-
 
     {:noreply,
      socket

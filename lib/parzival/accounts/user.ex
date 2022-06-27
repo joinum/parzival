@@ -7,8 +7,8 @@ defmodule Parzival.Accounts.User do
   alias Parzival.Accounts.QRCode
 
   alias Parzival.Companies.Application
-  alias Parzival.Companies.Connection
   alias Parzival.Companies.Company
+  alias Parzival.Companies.Connection
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Mission
   alias Parzival.Store.Order

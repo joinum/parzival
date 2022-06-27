@@ -11,7 +11,8 @@ defmodule ParzivalWeb.Hooks do
   end
 
   def on_mount(:current_user, _params, %{"user_token" => user_token}, socket) do
-    current_user = Accounts.get_user_by_session_token(user_token, [:missions, company: [:connections]])
+    current_user =
+      Accounts.get_user_by_session_token(user_token, [:missions, company: [:connections]])
 
     {:cont, assign(socket, current_user: current_user)}
   end

@@ -21,7 +21,6 @@ defmodule Parzival.Companies.Connection do
   }
 
   schema "connections" do
-
     belongs_to :company, Company
     belongs_to :user, User
 

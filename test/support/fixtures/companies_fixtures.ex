@@ -99,9 +99,7 @@ defmodule Parzival.CompaniesFixtures do
   def connection_fixture(attrs \\ %{}) do
     {:ok, connection} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> Parzival.Companies.create_connection()
 
     connection

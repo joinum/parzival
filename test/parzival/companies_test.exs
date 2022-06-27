@@ -389,7 +389,8 @@ defmodule Parzival.CompaniesTest do
       connection = connection_fixture()
       update_attrs = %{}
 
-      assert {:ok, %Connection{} = connection} = Companies.update_connection(connection, update_attrs)
+      assert {:ok, %Connection{} = connection} =
+               Companies.update_connection(connection, update_attrs)
     end
 
     test "update_connection/2 with invalid data returns error changeset" do
