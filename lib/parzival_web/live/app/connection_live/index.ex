@@ -4,6 +4,8 @@ defmodule ParzivalWeb.App.ConnectionLive.Index do
 
   alias Parzival.Companies
 
+  import ParzivalWeb.Components.Pagination
+
   @impl true
   def mount(_params, _session, socket) do
     {:ok, socket}
@@ -14,6 +16,7 @@ defmodule ParzivalWeb.App.ConnectionLive.Index do
     {:noreply,
      socket
      |> assign(:current_page, :connections)
+     |> assign(:params, params)
      |> assign(:page_title, "Listing Connections")
      |> assign(list_connections(params, socket))}
   end

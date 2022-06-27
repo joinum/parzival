@@ -29,8 +29,6 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
            |> put_flash(:success, gettext("New Connection!"))}
 
         {:error, error} ->
-          Logger.error(error)
-
           {:noreply, socket}
       end
     end
@@ -60,8 +58,6 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
            |> put_flash(:success, gettext("New Connection!"))}
 
         {:error, error} ->
-          Logger.error(error)
-
           {:noreply, socket}
       end
     end
