@@ -5,6 +5,7 @@ defmodule Parzival.Companies.Company do
   use Parzival.Schema
 
   alias Parzival.Accounts.User
+  alias Parzival.Companies.Connection
   alias Parzival.Companies.Level
   alias Parzival.Companies.Offer
   alias Parzival.Uploaders
@@ -32,6 +33,8 @@ defmodule Parzival.Companies.Company do
     belongs_to :level, Level
 
     field :picture, Uploaders.ProfilePicture.Type
+
+    has_many :connections, Connection
 
     timestamps()
   end

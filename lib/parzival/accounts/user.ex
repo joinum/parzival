@@ -7,6 +7,7 @@ defmodule Parzival.Accounts.User do
   alias Parzival.Accounts.QRCode
 
   alias Parzival.Companies.Application
+  alias Parzival.Companies.Connection
   alias Parzival.Companies.Company
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Mission
@@ -72,6 +73,8 @@ defmodule Parzival.Accounts.User do
     belongs_to :company, Company
 
     has_many :applications, Application
+
+    has_many :connections, Connection
 
     field :picture, Uploaders.ProfilePicture.Type
 

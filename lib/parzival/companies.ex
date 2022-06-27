@@ -747,4 +747,117 @@ defmodule Parzival.Companies do
     Phoenix.PubSub.broadcast!(Parzival.PubSub, "deleted_application", {event, nil})
     {number, nil}
   end
+
+  alias Parzival.Companies.Connection
+
+  @doc """
+  Returns the list of connections.
+
+  ## Examples
+
+      iex> list_connections()
+      [%Connection{}, ...]
+
+  """
+  def list_connections(params \\ %{})
+
+  def list_connections(opts) when is_list(opts) do
+    Connection
+    |> apply_filters(opts)
+    |> Repo.all()
+  end
+
+  def list_connections(flop) do
+    Flop.validate_and_run(Connection, flop, for: Connection)
+  end
+
+  def list_connections(%{} = flop, opts) when is_list(opts) do
+    Connection
+    |> apply_filters(opts)
+    |> Flop.validate_and_run(flop, for: Connection)
+  end
+
+  @doc """
+  Gets a single connection.
+
+  Raises `Ecto.NoResultsError` if the Connection does not exist.
+
+  ## Examples
+
+      iex> get_connection!(123)
+      %Connection{}
+
+      iex> get_connection!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_connection!(id), do: Repo.get!(Connection, id)
+
+  @doc """
+  Creates a connection.
+
+  ## Examples
+
+      iex> create_connection(%{field: value})
+      {:ok, %Connection{}}
+
+      iex> create_connection(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_connection(%Company{} = company, %User{} = user) do
+    %Connection{}
+    |> Connection.changeset(%{
+      company_id: company.id,
+      user_id: user.id
+    })
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a connection.
+
+  ## Examples
+
+      iex> update_connection(connection, %{field: new_value})
+      {:ok, %Connection{}}
+
+      iex> update_connection(connection, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_connection(%Connection{} = connection, attrs) do
+    connection
+    |> Connection.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a connection.
+
+  ## Examples
+
+      iex> delete_connection(connection)
+      {:ok, %Connection{}}
+
+      iex> delete_connection(connection)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_connection(%Connection{} = connection) do
+    Repo.delete(connection)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking connection changes.
+
+  ## Examples
+
+      iex> change_connection(connection)
+      %Ecto.Changeset{data: %Connection{}}
+
+  """
+  def change_connection(%Connection{} = connection, attrs \\ %{}) do
+    Connection.changeset(connection, attrs)
+  end
 end
