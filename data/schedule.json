@@ -69,7 +69,7 @@
       "title": "[Talk] TBA",
       "hours": "28/06/2022 02:00 PM",
       "speaker": null,
-      "company": null,
+      "company": "Accenture",
       "href": null
     },
     {
@@ -94,7 +94,7 @@
       "href": null
     },
     {
-      "title": "[Pitch] TBA",
+      "title": "[Pitch] Optare Solutions",
       "hours": "28/06/2022 05:00 PM",
       "speaker": null,
       "company": null,
@@ -115,7 +115,7 @@
       "href": null
     },
     {
-      "title": "TBA",
+      "title": "Braga, Blockchain Meetup",
       "hours": "28/06/2022 06:30 PM",
       "speaker": null,
       "company": null,
@@ -225,7 +225,7 @@
       "href": "/"
     },
     {
-      "title": "[Workshop]",
+      "title": "[Workshop] TBA",
       "hours": "30/06/2022 09:00 AM",
       "speaker": null,
       "company": "Deloitte",
@@ -260,9 +260,9 @@
       "href": null
     },
     {
-      "title": "[Talk] TBA",
+      "title": "[Talk] A tecnologia ao serviço do negócio ou o negócio ao serviço da tecnologia? Uma visão da Optare",
       "hours": "30/06/2022 03:00 PM",
-      "speaker": null,
+      "speaker": "José Cunha, Rafael Cunha e Roberto Pérez",
       "company": "Optare Solutions",
       "href": null
     },
@@ -288,15 +288,22 @@
       "href": null
     },
     {
-      "title": "Cerimónia de encerramento",
+      "title": "[Pitch] TBA",
       "hours": "30/06/2022 05:00 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
+      "title": "Cerimónia de encerramento",
+      "hours": "30/06/2022 05:15 PM",
+      "speaker": null,
+      "company": null,
+      "href": null
+    },
+    {
       "title": "Entrega de prémios",
-      "hours": "30/06/2022 05:30 PM",
+      "hours": "30/06/2022 05:45 PM",
       "speaker": null,
       "company": null,
       "href": null
