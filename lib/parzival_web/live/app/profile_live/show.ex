@@ -29,8 +29,6 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
            |> put_flash(:success, gettext("New Connection!"))}
 
         {:error, error} ->
-          Logger.error(error)
-
           {:noreply, socket}
       end
     end
@@ -60,8 +58,6 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
            |> put_flash(:success, gettext("New Connection!"))}
 
         {:error, error} ->
-          Logger.error(error)
-
           {:noreply, socket}
       end
     end
@@ -73,10 +69,11 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
      |> assign(:page_title, "Show User")
      |> assign(:params, params)
      |> assign(:user, user)
-     |> handle_role(user)}
+     |> handle_user_role(user)
+     |> handle_current_user_role(socket.assigns.current_user)}
   end
 
-  defp handle_role(socket, user) do
+  defp handle_user_role(socket, user) do
     case user.role do
       :recruiter ->
         socket
@@ -85,6 +82,33 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
       :attendee ->
         socket
         |> assign(:curriculum, Gamification.get_user_curriculum(user))
+
+      _ ->
+        socket
+    end
+  end
+
+  defp handle_current_user_role(socket, user) do
+    case user.role do
+      :staff ->
+        socket
+        |> assign(
+          :connections,
+          Companies.list_connections(
+            where: [user_id: socket.assigns.user.id],
+            preloads: :company
+          )
+        )
+
+      :admin ->
+        socket
+        |> assign(
+          :connections,
+          Companies.list_connections(
+            where: [user_id: socket.assigns.user.id],
+            preloads: :company
+          )
+        )
 
       _ ->
         socket
