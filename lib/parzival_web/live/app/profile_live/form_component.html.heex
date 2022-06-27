@@ -1,5 +1,5 @@
 <main x-data="{option: 'profile'}" class="overflow-y-auto relative z-0 flex-1 mb-4 min-h-screen border-r border-gray-200 xl:order-last focus:outline-none">
-  <.form let={f} for={@changeset} id="user-form" phx-target={@myself} phx-submit="save">
+  <.form let={f} for={@changeset} id="user-form" phx-change="validate" phx-target={@myself} phx-submit="save">
     <article>
       <!-- Profile header -->
       <div>

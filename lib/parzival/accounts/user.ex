@@ -143,7 +143,6 @@ defmodule Parzival.Accounts.User do
     |> validate_required([:email])
     |> validate_email_address(:email)
     |> validate_length(:email, max: 160)
-    |> unsafe_validate_unique(:email, Parzival.Repo)
     |> unique_constraint(:email)
   end
 

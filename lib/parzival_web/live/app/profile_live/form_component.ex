@@ -3,6 +3,7 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   use ParzivalWeb, :live_component
 
   alias Parzival.Accounts
+  alias Parzival.Accounts.User
 
   @extensions_whitelist ~w(.jpg .jpeg .gif .png)
   @cycles [:Bachelors, :Masters, :Phd]
@@ -27,6 +28,16 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
      |> assign(:user, user)
      |> assign(:cycles, @cycles)
      |> assign(:changeset, changeset)}
+  end
+
+  @impl true
+  def handle_event("validate", %{"user" => params}, socket) do
+    changeset =
+      %User{}
+      |> Accounts.change_user(params)
+      |> Map.put(:action, :insert)
+
+    {:noreply, assign(socket, changeset: changeset)}
   end
 
   @impl true
