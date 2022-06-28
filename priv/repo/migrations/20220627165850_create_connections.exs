@@ -10,5 +10,7 @@ defmodule Parzival.Repo.Migrations.CreateConnections do
 
       timestamps()
     end
+
+    create unique_index(:connections, [:company_id, :user_id])
   end
 end

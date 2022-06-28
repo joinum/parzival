@@ -17,28 +17,8 @@
       </div>
     </div>
   </div>
-  <div class="overflow-hidden bg-white">
-    <div class="flex flex-1 justify-center items-center">
-      <div class="w-full border-b border-gray-200">
-        <label for="search" class="sr-only">Search</label>
-        <form phx-submit="search" phx-change="search" class="relative" method="#">
-          <div class="flex absolute inset-y-0 left-0 items-center pl-6 pointer-events-none">
-            <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20">
-              <path fill="currentColor" fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8ZM2 8a6 6 0 1 1 10.89 3.476l4.817 4.817a1 1 0 0 1-1.414 1.414l-4.816-4.816A6 6 0 0 1 2 8Z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          <%= text_input(:search, :query,
-            placeholder: "Search",
-            autofocus: true,
-            "phx-debounce": "300",
-            class: "block w-full py-3 pl-14 pr-3 leading-5 placeholder-gray-400 bg-white border-0 focus:ring-primary focus:ring-0 focus:outline-none"
-          ) %>
-        </form>
-      </div>
-    </div>
-  </div>
   <!-- Candidates List -->
-  <ul role="list" class="mt-5 border-t border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
+  <ul role="list" class="mt-5 border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
     <%= for connection <- @connections do %>
       <li>
         <%= live_patch to: Routes.profile_show_path(@socket, :show, connection.user), class: "group group-hover:bg-gray-50 border-b border-gray-200" do %>
@@ -72,7 +52,7 @@
                 <div class="hidden md:block">
                   <div class="flex items-center h-full">
                     <p class="text-sm text-gray-900">
-                      Applied <%= relative_datetime(connection.inserted_at) %>
+                      Connected <%= relative_datetime(connection.inserted_at) %>
                     </p>
                   </div>
                 </div>
@@ -86,4 +66,5 @@
       </li>
     <% end %>
   </ul>
+  <.pagination items={@connections} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
 </div>

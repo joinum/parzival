@@ -32,5 +32,6 @@ defmodule Parzival.Companies.Connection do
     connection
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> unique_constraint([:company_id, :user_id])
   end
 end
