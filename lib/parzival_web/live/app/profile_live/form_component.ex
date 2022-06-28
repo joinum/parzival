@@ -4,9 +4,13 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
 
   alias Parzival.Accounts
   alias Parzival.Accounts.User
+  alias Parzival.Companies
 
   @extensions_whitelist ~w(.jpg .jpeg .gif .png)
   @cycles [:Bachelors, :Masters, :Phd]
+
+  defguard is_admin?(socket) when socket.assigns.current_user.role == :admin
+  defguard is_current_user?(socket, id) when socket.assigns.current_user.id == id
 
   @impl true
   def mount(socket) do
@@ -24,14 +28,11 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
      |> assign(assigns)
      |> assign(:user, user)
      |> assign(:cycles, @cycles)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> assign(list_companies(assigns))}
   end
 
   @impl true
-  def handle_event("save", %{"user" => user}, socket) do
-    save_user(socket, socket.assigns.action, user)
-  end
-
   def handle_event("validate", %{"user" => params}, socket) do
     changeset =
       %User{}
@@ -41,7 +42,13 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  defp save_user(socket, :edit, user_params) do
+  @impl true
+  def handle_event("save", %{"user" => user_params}, socket) do
+    save_user(socket, socket.assigns.action, user_params)
+  end
+
+  defp save_user(socket, :edit, user_params)
+       when is_admin?(socket) or is_current_user?(socket, socket.assigns.user.id) do
     case Accounts.admin_change_user_info(
            socket.assigns.user,
            user_params,
@@ -91,6 +98,16 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
 
       _errors ->
         {:ok, user}
+    end
+  end
+
+  defp list_companies(params) do
+    case Companies.list_companies(params) do
+      {:ok, {companies, _meta}} ->
+        %{companies: companies}
+
+      {:error, _flop} ->
+        %{companies: []}
     end
   end
 end

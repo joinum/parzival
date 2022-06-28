@@ -22,9 +22,23 @@ config :parzival, ParzivalWeb.Endpoint,
   live_view: [signing_salt: "h9dkyv4j"]
 
 config :waffle,
-  storage: Waffle.Storage.Local,
-  storage_dir_prefix: "priv",
+  storage: Waffle.Storage.S3,
+  bucket: {:system, "AWS_S3_BUCKET"},
   asset_host: {:system, "ASSET_HOST"}
+
+config :ex_aws,
+  json_codec: Jason,
+  access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
+  secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"},
+  region: "eu-west-2",
+  s3: [
+    scheme: "https://",
+    host: "s3.eu-west-2.amazonaws.com",
+    region: "eu-west-2",
+    access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
+    secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"}
+  ]
+
 
 # Configures the mailer
 #
@@ -33,7 +47,9 @@ config :waffle,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :parzival, Parzival.Mailer, adapter: Swoosh.Adapters.Local
+config :parzival,
+  mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
+  mailgun_key: System.get_env("MAILGUN_API_KEY")
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false

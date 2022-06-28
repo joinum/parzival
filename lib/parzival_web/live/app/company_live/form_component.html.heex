@@ -19,23 +19,43 @@
         <%= live_redirect("< Back", to: @return_to, class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
       </div>
       <div class="px-4 sm:px-0">
-        <div class="mt-6 sm:flex sm:items-center">
-          <div class="flex-shrink-0 mb-4 sm:mr-4 sm:mb-0">
-            <span class="inline-flex justify-center items-center w-24 h-24 rounded-full bg-secondary">
-              <span class="text-5xl font-medium leading-none text-white">
-                <%= extract_initials(input_value(f, :name)) %>
-              </span>
-            </span>
-          </div>
-          <div class="w-full">
+        <div class="flex flex-col justify-center items-center mt-6 sm:flex-row sm:gap-x-5">
+          <%= live_file_input(@uploads.picture, class: "hidden") %>
+          <a onclick={"document.getElementById('#{@uploads.picture.ref}').click()"}>
+            <div class={"#{if length(@uploads.picture.entries) != 0 do
+                "hidden"
+              end} relative w-24 h-24 ring-4 ring-white rounded-full cursor-pointer bg-secondary sm:w-32 group sm:h-32 hover:bg-tertiary"}>
+              <div class="flex absolute justify-center items-center w-full h-full">
+                <Heroicons.Outline.camera class="mx-auto w-12 h-12 text-white group-hover:text-opacity-70" />
+              </div>
+            </div>
+            <section>
+              <%= for entry <- @uploads.picture.entries do %>
+                <%= for err <- upload_errors(@uploads.picture, entry) do %>
+                  <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
+                <% end %>
+                <article class="flex relative items-center w-24 h-24 bg-white rounded-full cursor-pointer sm:w-32 sm:h-32 upload-entry group">
+                  <div class="flex absolute z-10 justify-center items-center w-full h-full rounded-full">
+                    <Heroicons.Outline.camera class="mx-auto w-12 h-12 text-white text-opacity-0 rounded-full group-hover:text-opacity-100" />
+                  </div>
+                  <figure class="flex justify-center items-center w-full h-full rounded-full group-hover:opacity-80">
+                    <%= live_img_preview(entry, class: "object-cover object-center rounded-full w-24 h-24 sm:w-32 sm:h-32 border-4 border-white") %>
+                  </figure>
+                </article>
+              <% end %>
+            </section>
+          </a>
+          <div class="flex flex-col gap-y-1 w-full">
             <%= text_input(f, :name, placeholder: "Choose title", phx_debounce: "blur", class: "mt-6 text-gray-800 text-2xl leading-7 text-gray-900 sm:text-3xl sm:truncate mt-1 font-bold focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
             <div class="flex text-red-500">
               <%= error_tag(f, :name) %>
             </div>
-            <%= select(f, :level_id, Enum.map(@levels, &{&1.name, &1.id}), prompt: "Choose a Sponsorship Level", selected: f.data.level_id, class: "mt-1 block border-gray-300 rounded-md shadow-sm focus:ring-red-800 focus:border-red-800") %>
-            <div class="flex text-red-500">
-              <%= error_tag(f, :level_id) %>
-            </div>
+            <%= if @current_user.role in [:admin] do %>
+              <%= select(f, :level_id, Enum.map(@levels, &{&1.name, &1.id}), prompt: "Choose a Sponsorship Level", selected: f.data.level_id, class: "mt-1 block border-gray-300 rounded-md w-full shadow-sm sm:w-64 focus:ring-red-800 focus:border-red-800") %>
+              <div class="flex text-red-500">
+                <%= error_tag(f, :level_id) %>
+              </div>
+            <% end %>
             <%= textarea(f, :description, placeholder: "Choose description", rows: 3, phx_debounce: "blur", class: "mt-1 text-gray-500 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             <div class="flex text-red-500">
               <%= error_tag(f, :description) %>

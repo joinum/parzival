@@ -2,50 +2,98 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   @moduledoc false
   use ParzivalWeb, :live_view
 
+  import ParzivalWeb.Components.Buttons
+  import ParzivalWeb.Components.Curriculum
+
   alias Parzival.Accounts
+  alias Parzival.Companies
   alias Parzival.Gamification
   alias Parzival.Uploaders
 
-  import ParzivalWeb.Components.Curriculum
+  require Logger
+
+  @impl true
+  def mount(%{"qr" => qr} = _params, _session, socket) do
+    user = Accounts.get_user_by_qr(qr)
+
+    if Map.has_key?(socket.assigns, :current_user) and user != nil and socket.assigns.current_user.role == :recruiter and user.role == :attendee do
+      company = Companies.get_company!(socket.assigns.current_user.company_id)
+
+      case Companies.create_connection(company, user) do
+        {:ok, _connection} ->
+          {:ok,
+           socket
+           |> put_flash(:success, gettext("New Connection!"))}
+
+        {:error, error} ->
+          Logger.error(error)
+
+          {:ok, socket}
+      end
+    else
+      if user == nil do
+        res = {:ok,
+         socket
+         |> push_redirect(to: Routes.user_registration_path(socket, :new, qr))}
+      else
+        res = {:ok,
+         socket
+         |> push_redirect(to: Routes.profile_show_path(socket, :show, user.id))}
+      end
+    end
+  end
 
   @impl true
   def mount(_params, _session, socket) do
     {:ok, socket}
   end
-
   @impl true
   def handle_params(%{"id" => id} = params, _url, socket) do
     user = Accounts.get_user!(id, [:company])
 
+    if socket.assigns.current_user.role == :recruiter && user.role == :attendee do
+      company = Companies.get_company!(socket.assigns.current_user.company_id)
+
+      case Companies.create_connection(company, user) do
+        {:ok, _connection} ->
+          {:noreply,
+           socket
+           |> put_flash(:success, gettext("New Connection!"))}
+
+        {:error, error} ->
+          Logger.error(error)
+
+          {:noreply, socket}
+      end
+    end
+
+    {:noreply,
+     socket
+     |> assign(:current_page, :profile)
+     |> assign(:current_tab, user.role)
+     |> assign(:page_title, "Show User")
+     |> assign(:params, params)
+     |> assign(:user, user)
+     |> handle_role(user)}
+  end
+
+  defp handle_role(socket, user) do
     case user.role do
       :recruiter ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :profile)
-         |> assign(:current_tab, user.role)
-         |> assign(:page_title, "Show User")
-         |> assign(:params, params)
-         |> assign(:recruiters, list_recruiters(user.company.id))
-         |> assign(:user, user)}
+        if user.company do
+          socket
+          |> assign(:recruiters, list_recruiters(user.company.id))
+        else
+          socket
+          |> assign(:recruiters, [])
+        end
 
       :attendee ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :profile)
-         |> assign(:current_tab, user.role)
-         |> assign(:page_title, "Show User")
-         |> assign(:params, params)
-         |> assign(:curriculum, Gamification.get_user_curriculum(user, []))
-         |> assign(:user, user)}
+        socket
+        |> assign(:curriculum, Gamification.get_user_curriculum(user))
 
       _ ->
-        {:noreply,
-         socket
-         |> assign(:current_page, :profile)
-         |> assign(:current_tab, user.role)
-         |> assign(:page_title, "Show User")
-         |> assign(:params, params)
-         |> assign(:user, user)}
+        socket
     end
   end
 

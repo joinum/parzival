@@ -16,7 +16,7 @@ defmodule Parzival.Gamification.Curriculum.Experience do
 
     field :delete, :boolean, virtual: true
 
-    embeds_many :positions, Curriculum.Position
+    embeds_many :positions, Curriculum.Position, on_replace: :delete
 
     timestamps()
   end

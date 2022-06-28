@@ -25,8 +25,8 @@
         <%= @mission.title %>
       </h1>
       <div class="flex justify-center items-center px-4 text-gray-500">
-        <span class={"inline-flex items-center justify-center px-2 text-xs h-6 font-semibold leading-5 border #{bg_100(@mission.dificulty.color)} #{border_200(@mission.dificulty.color)} rounded-full shrink-0"}>
-          <%= @mission.dificulty.name %>
+        <span class={"inline-flex items-center justify-center px-2 text-xs h-6 font-semibold leading-5 border #{bg_100(@mission.difficulty.color)} #{border_200(@mission.difficulty.color)} rounded-full shrink-0"}>
+          <%= @mission.difficulty.name %>
         </span>
       </div>
     </div>
@@ -114,7 +114,7 @@
     <div x-bind:class="tasks ?'block' : 'hidden'">
       <ul role="list">
         <%= for {task, index} <- Enum.with_index(@mission.tasks) do %>
-          <%= live_patch to: Routes.mission_task_show_path(@socket, :show, @mission, task) do %>
+          <%= live_patch to: Routes.task_show_path(@socket, :show, @mission, task) do %>
             <li id={"task-#{index}"} class="flex flex-row justify-between items-center p-4 text-gray-400 border-b border-gray-200 cursor-pointer sm:px-6 hover:bg-gray-50">
               <div class="flex flex-col gap-y-1">
                 <span class="font-medium text-gray-900">
@@ -162,7 +162,7 @@
       <%= for {mission_user, index} <- Enum.with_index(@mission_users)  do %>
         <div id={"user-#{index}"} class="flex flex-row gap-x-2 items-center p-2 w-full h-20 rounded-xl border border-gray-200 hover:bg-gray-50">
           <div class="flex-shrink-0 w-14 h-14">
-            <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({mission_user.user.picture, mission_user.user}, :medium)) do %>
+            <%= if is_nil(mission_user.user.picture) do %>
               <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
                 <span class="text-xl font-medium leading-none text-white">
                   <%= extract_initials(mission_user.user.name) %>

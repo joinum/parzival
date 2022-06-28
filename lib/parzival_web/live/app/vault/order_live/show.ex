@@ -20,7 +20,7 @@ defmodule ParzivalWeb.App.OrderLive.Show do
   end
 
   defp qr_code(socket, id) do
-    Routes.staff_order_edit_path(socket, :edit, id)
+    Routes.admin_order_edit_url(socket, :edit, id)
     |> QRCodeEx.encode()
     |> QRCodeEx.svg(color: "#1F2937", width: 295, background_color: :transparent)
   end

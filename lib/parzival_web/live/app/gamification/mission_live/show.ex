@@ -51,7 +51,10 @@ defmodule ParzivalWeb.App.MissionLive.Show do
     id = socket.assigns.id
 
     socket
-    |> assign(:mission, Gamification.get_mission!(id, [:dificulty, :created_by, tasks: [:users]]))
+    |> assign(
+      :mission,
+      Gamification.get_mission!(id, [:difficulty, :created_by, tasks: [:users]])
+    )
     |> assign(:count_mission_users, Gamification.count_missions_users(where: [mission_id: id]))
     |> assign(
       :mission_users,

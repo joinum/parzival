@@ -1,0 +1,113 @@
+<%= if @live_action in [:redeem] do %>
+  <.modal return_to={Routes.task_show_path(@socket, :show, @mission, @task)}>
+    <h2 class="mb-5 text-2xl font-bold text-center text-gray-900">Show this QR code to a staff member</h2>
+    <div class="flex items-center mx-auto w-min">
+      <div class="items-center m-auto">
+        <%= @qrcode |> raw %>
+      </div>
+    </div>
+  </.modal>
+<% end %>
+
+<div class="min-h-full bg-white border-r border-gray-200">
+  <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+    <div class="flex justify-between items-center h-10">
+      <h1 class="flex-1 text-lg font-medium">Task</h1>
+      <%= if @current_user.role in [:attendee] do %>
+        <div class="flex flex-row gap-x-4">
+          <%= if @is_task_completed? do %>
+            <div class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white bg-green-400 rounded-md border border-transparent shadow-sm xl:w-full">
+              Completed
+            </div>
+          <% else %>
+            <%= live_patch to: Routes.task_show_url(@socket, :redeem, @mission, @task), class: "button" do %>
+              <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm cursor-pointer xl:w-full bg-secondary hover:bg-primary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
+                Complete task
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="flex flex-col py-6 px-4 mx-auto w-full border-b border-gray-200 sm:px-6 lg:px-8">
+    <div>
+      <%= live_redirect("< Back", to: Routes.mission_show_path(@socket, :show, @mission), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
+    </div>
+    <div class="flex flex-col gap-4 justify-between mt-6 text-gray-400">
+      <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl">
+        <%= @task.title %>
+      </h1>
+      <div>
+        <p class="text-base font-medium text-black sm:text-lg">
+          Description
+        </p>
+        <span an class="mt-2 text-sm md:text-base">
+          <%= @task.description %>
+        </span>
+      </div>
+      <div>
+        <p class="text-base text-black sm:text-lg">
+          Users that completed this task ( <%= @meta.total_count %> / <%= @attendees_count %> )
+        </p>
+        <div style="box-shadow: nset 0.1em 0.1em 0.2em #99b5d2, inset -0.1em -0.1em 0.2em #fff; background: #edf2f7" class="w-full h-5 rounded-full">
+          <div style={"width: #{if @attendees_count > 0 do
+                @meta.total_count / @attendees_count * 100
+              else
+                100
+              end}% ;background: linear-gradient(145deg, #CDE2F5, #96BEE3);"} class="w-1/2 h-5 rounded-full" />
+        </div>
+      </div>
+      <div>
+        <p class="text-base text-black sm:text-lg">
+          Rewards
+        </p>
+        <span class="mt-2 text-sm sm:text-base">
+          💰 <%= @task.tokens %>
+        </span>
+        <span class="ml-4 text-sm sm:text-base">
+          <%= @task.exp %> EXP
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col mx-auto w-full">
+    <div class="flex flex-row justify-between items-center py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
+      <h2 class="text-lg font-medium sm:text-xl">
+        Users that completed this task
+      </h2>
+    </div>
+    <div>
+      <ul role="list" class="grid grid-cols-1 gap-4 py-6 px-4 mb-2 border-b border-gray-200 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <%= for task <- @task_users do %>
+          <%= live_redirect to: Routes.profile_show_path(@socket, :show, task.user) do %>
+            <div class="flex flex-row gap-x-2 items-center p-2 w-full h-20 rounded-xl border border-gray-200 hover:bg-gray-50">
+              <div class="flex-shrink-0 w-14 h-14">
+                <%= if is_nil(task.user.picture) do %>
+                  <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
+                    <span class="text-xl font-medium leading-none text-white">
+                      <%= extract_initials(task.user.name) %>
+                    </span>
+                  </span>
+                <% else %>
+                  <div class="relative flex-shrink-0 w-14 h-14 bg-white rounded-full">
+                    <img src={Parzival.Uploaders.ProfilePicture.url({task.user.picture, task.user}, :medium)} class="object-center w-14 h-14 rounded-full" />
+                  </div>
+                <% end %>
+              </div>
+              <div class="flex overflow-hidden flex-col w-full">
+                <span class="inline-block overflow-hidden w-full text-base whitespace-nowrap text-ellipsis">
+                  <%= task.user.name %>
+                </span>
+                <span class="text-sm font-light text-gray-400">
+                  Missions complited: <%= Enum.count(task.user.missions) %>
+                </span>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </ul>
+      <.pagination items={@task_users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+    </div>
+  </div>
+</div>

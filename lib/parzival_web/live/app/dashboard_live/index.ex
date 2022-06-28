@@ -9,6 +9,7 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
   alias Parzival.Tools.Post
 
   import ParzivalWeb.Components.Curriculum
+  import ParzivalWeb.Components.Pagination
 
   @impl true
   def mount(_params, _session, socket) do
@@ -39,7 +40,8 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
          |> assign(:post, %Post{})
          |> assign(:action, :new)
          |> assign(:changeset, Tools.change_post(%Post{}))
-         |> assign(list_applications(params, socket))}
+         |> assign(list_applications(params, socket))
+         |> assign(:params, params)}
 
       _ ->
         {:noreply,
@@ -50,7 +52,8 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
          |> assign(list_top_users(params))
          |> assign(list_posts(params))
          |> assign(:changeset, Tools.change_post(%Post{}))
-         |> assign(:announcements, list_announcements())}
+         |> assign(:announcements, list_announcements())
+         |> assign(:params, params)}
     end
   end
 

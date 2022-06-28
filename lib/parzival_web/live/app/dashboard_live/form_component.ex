@@ -194,8 +194,8 @@ defmodule ParzivalWeb.App.DashboardLive.FormComponent do
 
   def handle_event("add-position", %{"index" => index}, socket) do
     experiences =
-      socket.assigns.curriculum
-      |> Map.get(:experiences, [])
+      socket.assigns.changeset
+      |> Ecto.Changeset.get_field(:experiences)
 
     experience =
       experiences

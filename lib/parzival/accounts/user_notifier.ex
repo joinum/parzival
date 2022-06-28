@@ -9,11 +9,12 @@ defmodule Parzival.Accounts.UserNotifier do
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, body) do
     email =
-      new()
-      |> to(recipient)
-      |> from({"MyApp", "contact@example.com"})
-      |> subject(subject)
-      |> text_body(body)
+      %{
+        from: "noreply@joinum.link",
+        recipient: recipient,
+        subject: subject,
+        body: body
+      }
 
     with {:ok, _metadata} <- Mailer.deliver(email) do
       {:ok, email}

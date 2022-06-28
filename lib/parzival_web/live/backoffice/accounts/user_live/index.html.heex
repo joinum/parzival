@@ -51,7 +51,7 @@
             <div class="py-4 text-sm whitespace-nowrap">
               <div class="flex items-center">
                 <div class="flex-shrink-0 w-10 h-10">
-                  <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)) do %>
+                  <%= if is_nil(user.picture) do %>
                     <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
                       <span class="text-lg font-medium leading-none text-white">
                         <%= extract_initials(user.name) %>
@@ -72,7 +72,9 @@
                       <% :attendee -> %>
                         <%= user.cycle %> in <%= user.course %>
                       <% :recruiter -> %>
-                        <%= user.company.name %>
+                        <%= if not is_nil(user.company) do %>
+                          <%= user.company.name %>
+                        <% end %>
                       <% _ -> %>
                         <%= user.email %>
                     <% end %>

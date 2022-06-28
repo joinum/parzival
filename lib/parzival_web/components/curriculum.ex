@@ -5,20 +5,31 @@ defmodule ParzivalWeb.Components.Curriculum do
   def curriculum(assigns) do
     ~H"""
     <div x-bind:class="option =='curriculum' ? 'block' : 'hidden'" class="mx-auto max-w-5xl">
+      <%= if @current_page == :dashboard do %>
+        <div class="flex flex-row mt-4 ml-4 lg:hidden">
+          <%= live_patch to: Routes.dashboard_edit_path(@socket, :edit), class: "mr-2 bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
+            <Heroicons.Solid.pencil class="mr-3 w-5 h-5 text-gray-400" /> Edit
+          <% end %>
+          <%= link("Download CV",
+            to: Routes.pdf_path(@socket, :download_cv, @user),
+            class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
+          ) %>
+        </div>
+      <% end %>
       <dl class="flex flex-col">
         <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
           <dt class="text-sm font-medium text-gray-500">About</dt>
           <dd class="mt-1 text-sm text-gray-900">
             <p>
-              <%= assigns.curriculum.summary %>
+              <%= @curriculum.summary %>
             </p>
           </dd>
         </div>
 
-        <div class="py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
+        <div class="p-4 border-b border-gray-200 sm:px-6 lg:px-8">
           <dt class="text-sm font-medium text-gray-500">Experience</dt>
           <dd class="mt-1 space-y-1 text-sm text-gray-900">
-            <%= for experience <- assigns.curriculum.experiences do %>
+            <%= for experience <- @curriculum.experiences do %>
               <% n_total_months =
                 Enum.reduce(experience.positions, 0, fn position, acc ->
                   if position.finish do
@@ -81,7 +92,7 @@ defmodule ParzivalWeb.Components.Curriculum do
             Education
           </dt>
           <dd class="mt-1 space-y-1 text-sm text-gray-900">
-            <%= for education <- assigns.curriculum.educations do %>
+            <%= for education <- @curriculum.educations do %>
               <div>
                 <p class="text-sm font-bold">
                   <%= education.institution %>
@@ -102,7 +113,7 @@ defmodule ParzivalWeb.Components.Curriculum do
             Volunteering
           </dt>
           <dd class="mt-1 space-y-1 text-sm text-gray-900">
-            <%= for volunteering <- assigns.curriculum.volunteerings do %>
+            <%= for volunteering <- @curriculum.volunteerings do %>
               <div>
                 <p class="text-sm font-bold">
                   <%= volunteering.position %>
@@ -130,7 +141,7 @@ defmodule ParzivalWeb.Components.Curriculum do
             Skills
           </dt>
           <dd class="grid grid-cols-2 mt-1 text-sm text-gray-900 sm:grid-cols-3 lg:grid-cols-4">
-            <%= for skill <- assigns.curriculum.skills do %>
+            <%= for skill <- @curriculum.skills do %>
               <div>
                 <p class="text-sm font-bold">
                   <%= skill.name %>
@@ -145,7 +156,7 @@ defmodule ParzivalWeb.Components.Curriculum do
             Languages
           </dt>
           <dd class="grid grid-cols-2 mt-1 space-y-1 text-sm text-gray-900 md:grid-cols-4">
-            <%= for language <- assigns.curriculum.languages do %>
+            <%= for language <- @curriculum.languages do %>
               <div>
                 <p class="text-sm font-bold">
                   <%= language.idiom %>
