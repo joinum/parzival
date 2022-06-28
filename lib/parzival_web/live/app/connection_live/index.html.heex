@@ -18,7 +18,7 @@
     </div>
   </div>
   <!-- Candidates List -->
-  <ul role="list" class="mt-5 border-t border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
+  <ul role="list" class="mt-5 border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
     <%= for connection <- @connections do %>
       <li>
         <%= live_patch to: Routes.profile_show_path(@socket, :show, connection.user), class: "group group-hover:bg-gray-50 border-b border-gray-200" do %>

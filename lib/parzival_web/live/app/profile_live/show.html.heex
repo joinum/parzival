@@ -79,7 +79,7 @@
             >
               Profile
             </button>
-            <%= if @user.role in [:attendee] && (@current_user.role in [:recruiter, :admin] || @user.id == @current_user.id) do %>
+            <%= if @user.role in [:attendee] and (@current_user.role in [:recruiter, :admin] or @user.id == @current_user.id) do %>
               <button
                 x-on:click="option = 'curriculum'"
                 x-bind:class="option =='curriculum' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
@@ -99,7 +99,7 @@
               </button>
             <% end %>
 
-            <%= if @current_user.role in [:admin, :staff] do %>
+            <%= if @current_user.role in [:admin, :staff] and @user.role in [:attendee] do %>
               <button
                 x-on:click="option = 'connections'"
                 x-bind:class="option =='connections' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
