@@ -179,7 +179,11 @@ defmodule ParzivalWeb.ViewUtils do
     end
   end
 
-  def calc_level(user) do
-    Gamification.calc_level(user.exp)
+  def calc_level(exp) do
+    Gamification.calc_level(exp)
+  end
+
+  def calc_exp(user, day) do
+    Gamification.get_exp(user, day)
   end
 end
