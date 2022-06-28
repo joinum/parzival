@@ -92,4 +92,16 @@ defmodule Parzival.CompaniesFixtures do
 
     level
   end
+
+  @doc """
+  Generate a connection.
+  """
+  def connection_fixture(attrs \\ %{}) do
+    {:ok, connection} =
+      attrs
+      |> Enum.into(%{})
+      |> Parzival.Companies.create_connection()
+
+    connection
+  end
 end

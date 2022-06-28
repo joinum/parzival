@@ -357,4 +357,57 @@ defmodule Parzival.CompaniesTest do
       assert %Ecto.Changeset{} = Companies.change_level(level)
     end
   end
+
+  describe "connections" do
+    alias Parzival.Companies.Connection
+
+    import Parzival.CompaniesFixtures
+
+    @invalid_attrs %{}
+
+    test "list_connections/0 returns all connections" do
+      connection = connection_fixture()
+      assert Companies.list_connections() == [connection]
+    end
+
+    test "get_connection!/1 returns the connection with given id" do
+      connection = connection_fixture()
+      assert Companies.get_connection!(connection.id) == connection
+    end
+
+    test "create_connection/1 with valid data creates a connection" do
+      valid_attrs = %{}
+
+      assert {:ok, %Connection{} = connection} = Companies.create_connection(valid_attrs)
+    end
+
+    test "create_connection/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Companies.create_connection(@invalid_attrs)
+    end
+
+    test "update_connection/2 with valid data updates the connection" do
+      connection = connection_fixture()
+      update_attrs = %{}
+
+      assert {:ok, %Connection{} = connection} =
+               Companies.update_connection(connection, update_attrs)
+    end
+
+    test "update_connection/2 with invalid data returns error changeset" do
+      connection = connection_fixture()
+      assert {:error, %Ecto.Changeset{}} = Companies.update_connection(connection, @invalid_attrs)
+      assert connection == Companies.get_connection!(connection.id)
+    end
+
+    test "delete_connection/1 deletes the connection" do
+      connection = connection_fixture()
+      assert {:ok, %Connection{}} = Companies.delete_connection(connection)
+      assert_raise Ecto.NoResultsError, fn -> Companies.get_connection!(connection.id) end
+    end
+
+    test "change_connection/1 returns a connection changeset" do
+      connection = connection_fixture()
+      assert %Ecto.Changeset{} = Companies.change_connection(connection)
+    end
+  end
 end

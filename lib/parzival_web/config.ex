@@ -137,6 +137,12 @@ defmodule ParzivalWeb.Config do
         tabs: []
       },
       %{
+        key: :connections,
+        title: "Connections",
+        url: Routes.connection_index_path(conn, :index),
+        tabs: []
+      },
+      %{
         key: :companies,
         title: "Company",
         url: Routes.company_show_path(conn, :show, user),
