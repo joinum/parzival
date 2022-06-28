@@ -42,10 +42,10 @@ defmodule ParzivalWeb.Router do
         live "/speakers", SpeakersLive.Index, :index
         live "/faqs", FaqsLive.Index, :index
         live "/team", TeamLive.Index, :index
+      end
 
-        scope "/", App do
-          live "/profile/:qr", ProfileLive.Show, :qr_show
-        end
+      scope "/", App do
+        live "/profile/:qr", ProfileLive.Show, :qr_show
       end
     end
   end
