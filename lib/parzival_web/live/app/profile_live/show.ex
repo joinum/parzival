@@ -10,6 +10,8 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   alias Parzival.Gamification
   alias Parzival.Uploaders
 
+  require Logger
+
   @impl true
   def mount(_params, _session, socket) do
     {:ok, socket}
