@@ -1,4 +1,7 @@
 {
+  "scripts": {
+      "deploy": "echo \"trying hard\""
+  },
   "devDependencies": {
     "rustywind": "^0.15.0"
   }

@@ -44,7 +44,7 @@
           </div>
         <% else %>
           <div style="background-color: white;" class="relative rounded-full border-white ring-4 w-[204px] h-[204px]">
-            <img src={"http://join.di.uminho.pt/#{@avatar}"} width="192px" height="192px" class="object-cover object-center absolute rounded-full border top-[6px] left-[6px]" />
+            <img src={image_path(@user)} width="192px" height="192px" class="object-cover object-center absolute rounded-full border top-[6px] left-[6px]" />
           </div>
         <% end %>
       </div>

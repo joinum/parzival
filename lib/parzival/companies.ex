@@ -126,6 +126,10 @@ defmodule Parzival.Companies do
       [%Company{}, ...]
 
   """
+  def list_companies_all() do
+    Company
+    |> Repo.all()
+  end
   def list_companies(params \\ %{})
 
   def list_companies(opts) when is_list(opts) do
