@@ -29,7 +29,7 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
      |> assign(:user, user)
      |> assign(:cycles, @cycles)
      |> assign(:changeset, changeset)
-     |> assign(list_companies(assigns))}
+     |> assign(:companies, Companies.list_companies()}
   end
 
   @impl true
@@ -98,16 +98,6 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
 
       _errors ->
         {:ok, user}
-    end
-  end
-
-  defp list_companies(params) do
-    case Companies.list_companies(params) do
-      {:ok, {companies, _meta}} ->
-        %{companies: companies}
-
-      {:error, _flop} ->
-        %{companies: []}
     end
   end
 end
