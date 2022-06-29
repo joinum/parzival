@@ -76,6 +76,7 @@ defmodule Parzival.MixProject do
 
       # mailer
       {:swoosh, "~> 1.3"},
+      {:mailgun, "~> 0.1.2"},
 
       # utilities
       {:pdf_generator, "~> 0.6.2"},
@@ -100,10 +101,7 @@ defmodule Parzival.MixProject do
       {:floki, ">= 0.30.0", only: :test},
 
       # tools
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-
-      #mailer
-      {:mailgun, "~> 0.1.2"}
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 
