@@ -22,8 +22,13 @@ import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import "../vendor/alpine.js";
 import topbar from "../vendor/topbar.js";
+import countdown from "./countdown.js"
+import clock from "./clock.js"
 
 let Hooks = {};
+
+Hooks.Countdown = countdown
+Hooks.Clock = clock
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
