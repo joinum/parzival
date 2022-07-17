@@ -16,7 +16,7 @@ defmodule ParzivalWeb.Backoffice.UserLive.New do
         "admin" -> :admin
         "staff" -> :staff
         "attendee" -> :attendee
-        "company" -> :company
+        "recruiter" -> :recruiter
       end
 
     {:noreply,
