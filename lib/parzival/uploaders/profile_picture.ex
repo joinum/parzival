@@ -43,8 +43,4 @@ defmodule Parzival.Uploaders.ProfilePicture do
     "uploads/company/#{scope.id}"
   end
 
-  # Provide a default URL if there hasn't been a file uploaded
-  # def default_url(version) do
-  #   "/images/defaults/store/product_image_#{version}.png"
-  # end
 end
