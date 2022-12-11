@@ -1,6 +1,6 @@
 defmodule Parzival.Uploaders.ProfilePicture do
   @moduledoc """
-  ProductImage is used for product images.
+  ProfileImage is used for profile images.
   """
 
   use Waffle.Definition
