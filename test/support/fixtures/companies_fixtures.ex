@@ -14,7 +14,9 @@ defmodule Parzival.CompaniesFixtures do
         maximum_salary: 42,
         minimum_salary: 42,
         title: "some title",
-        type: "some type"
+        location: "some location",
+        description: "some description",
+        applied: 42,
       })
       |> Parzival.Companies.create_offer()
 

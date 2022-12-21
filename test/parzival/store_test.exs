@@ -12,7 +12,7 @@ defmodule Parzival.StoreTest do
 
     test "list_products/0 returns all products" do
       product = product_fixture()
-      assert Store.list_products() == [product]
+      assert Store.list_products() == {:ok, {[product], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:name], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Store.Product, start_cursor: nil, total_count: 1, total_pages: 1}}}
     end
 
     test "get_product!/1 returns the product with given id" do
@@ -80,14 +80,16 @@ defmodule Parzival.StoreTest do
 
   describe "orders" do
     alias Parzival.Store.Order
-
+    import Parzival.AccountsFixtures
     import Parzival.StoreFixtures
 
     @invalid_attrs %{quantity: nil, redeemed: nil}
 
     test "list_orders/0 returns all orders" do
       order = order_fixture()
-      assert Store.list_orders() == [order]
+
+
+      assert Store.list_orders() == {:ok, {[order], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Store.Order, start_cursor: nil, total_count: 1, total_pages: 1}}}
     end
 
     test "get_order!/1 returns the order with given id" do

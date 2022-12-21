@@ -29,8 +29,9 @@ defmodule Parzival.StoreFixtures do
     {:ok, order} =
       attrs
       |> Enum.into(%{
-        quantity: 42,
-        redeemed: 42
+        product_id: Parzival.StoreFixtures.product_fixture().id,
+        user_id: Parzival.AccountsFixtures.user_fixture().id,
+        redeemed: false
       })
       |> Parzival.Store.create_order()
 

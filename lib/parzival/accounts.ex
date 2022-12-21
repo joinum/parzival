@@ -147,9 +147,7 @@ defmodule Parzival.Accounts do
         if user.role in [:attendee] do
           Gamification.create_curriculum(%{user_id: user.id})
         end
-
         {:ok, user}
-
       error ->
         error
     end
