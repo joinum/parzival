@@ -11,6 +11,7 @@ defmodule Parzival.GamificationFixtures do
     {:ok, curriculum} =
       attrs
       |> Enum.into(%{
+        user_id: Parzival.AccountsFixtures.user_fixture().id,
         summary: "some summary"
       })
       |> Parzival.Gamification.create_curriculum()

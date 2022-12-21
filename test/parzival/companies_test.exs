@@ -12,7 +12,7 @@ defmodule Parzival.CompaniesTest do
 
     test "list_offers/0 returns all offers" do
       offer = offer_fixture()
-      assert Companies.list_offers() == [offer]
+      assert Companies.list_offers() == {:ok, {[offer], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:minimum_salary, :maximum_salary], order_directions: [:desc, :desc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.Offer, start_cursor: nil, total_count: 1, total_pages: 1}}}
     end
 
     test "get_offer!/1 returns the offer with given id" do
@@ -25,14 +25,19 @@ defmodule Parzival.CompaniesTest do
         maximum_salary: 42,
         minimum_salary: 42,
         title: "some title",
-        type: "some type"
+        location: "somewhere over the rainbow",
+        description: "i like you",
+        offer_type_id: offer_type_fixture().id,
+        offer_time_id: offer_time_fixture().id,
+        company_id: company_fixture().id
       }
 
       assert {:ok, %Offer{} = offer} = Companies.create_offer(valid_attrs)
       assert offer.maximum_salary == 42
       assert offer.minimum_salary == 42
       assert offer.title == "some title"
-      assert offer.type == "some type"
+      assert offer.location == "somewhere over the rainbow"
+      assert offer.description == "i like you"
     end
 
     test "create_offer/1 with invalid data returns error changeset" do
@@ -46,14 +51,12 @@ defmodule Parzival.CompaniesTest do
         maximum_salary: 43,
         minimum_salary: 43,
         title: "some updated title",
-        type: "some updated type"
       }
 
       assert {:ok, %Offer{} = offer} = Companies.update_offer(offer, update_attrs)
       assert offer.maximum_salary == 43
       assert offer.minimum_salary == 43
       assert offer.title == "some updated title"
-      assert offer.type == "some updated type"
     end
 
     test "update_offer/2 with invalid data returns error changeset" do
@@ -83,7 +86,7 @@ defmodule Parzival.CompaniesTest do
 
     test "list_companies/0 returns all companies" do
       company = company_fixture()
-      assert Companies.list_companies() == [company]
+      assert Companies.list_companies() == {:ok, {[company], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:name], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.Company, start_cursor: nil, total_count: 1, total_pages: 1}}}
     end
 
     test "get_company!/1 returns the company with given id" do
@@ -92,7 +95,7 @@ defmodule Parzival.CompaniesTest do
     end
 
     test "create_company/1 with valid data creates a company" do
-      valid_attrs = %{description: "some description", name: "some name"}
+      valid_attrs = %{description: "some description", name: "some name", level_id: level_fixture().id}
 
       assert {:ok, %Company{} = company} = Companies.create_company(valid_attrs)
       assert company.description == "some description"
@@ -139,7 +142,7 @@ defmodule Parzival.CompaniesTest do
 
     test "list_offer_types/0 returns all offer_types" do
       offer_type = offer_type_fixture()
-      assert Companies.list_offer_types() == [offer_type]
+      assert Companies.list_offer_types() == {:ok, {[offer_type], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:name], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.OfferType, start_cursor: nil, total_count: 1, total_pages: 1}}}
     end
 
     test "get_offer_type!/1 returns the offer_type with given id" do
@@ -148,10 +151,10 @@ defmodule Parzival.CompaniesTest do
     end
 
     test "create_offer_type/1 with valid data creates a offer_type" do
-      valid_attrs = %{color: "some color", name: "some name"}
+      valid_attrs = %{color: "red", name: "some name"}
 
       assert {:ok, %OfferType{} = offer_type} = Companies.create_offer_type(valid_attrs)
-      assert offer_type.color == "some color"
+      assert offer_type.color == :red
       assert offer_type.name == "some name"
     end
 
@@ -161,12 +164,12 @@ defmodule Parzival.CompaniesTest do
 
     test "update_offer_type/2 with valid data updates the offer_type" do
       offer_type = offer_type_fixture()
-      update_attrs = %{color: "some updated color", name: "some updated name"}
+      update_attrs = %{color: "green", name: "some updated name"}
 
       assert {:ok, %OfferType{} = offer_type} =
                Companies.update_offer_type(offer_type, update_attrs)
 
-      assert offer_type.color == "some updated color"
+      assert offer_type.color == :green
       assert offer_type.name == "some updated name"
     end
 
@@ -197,7 +200,7 @@ defmodule Parzival.CompaniesTest do
 
     test "list_offer_times/0 returns all offer_times" do
       offer_time = offer_time_fixture()
-      assert Companies.list_offer_times() == [offer_time]
+      assert Companies.list_offer_times() == {:ok, {[offer_time], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:name], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.OfferTime, start_cursor: nil, total_count: 1, total_pages: 1}}}
     end
 
     test "get_offer_time!/1 returns the offer_time with given id" do
@@ -206,10 +209,10 @@ defmodule Parzival.CompaniesTest do
     end
 
     test "create_offer_time/1 with valid data creates a offer_time" do
-      valid_attrs = %{color: "some color", name: "some name"}
+      valid_attrs = %{color: "red", name: "some name"}
 
       assert {:ok, %OfferTime{} = offer_time} = Companies.create_offer_time(valid_attrs)
-      assert offer_time.color == "some color"
+      assert offer_time.color == :red
       assert offer_time.name == "some name"
     end
 
@@ -219,12 +222,12 @@ defmodule Parzival.CompaniesTest do
 
     test "update_offer_time/2 with valid data updates the offer_time" do
       offer_time = offer_time_fixture()
-      update_attrs = %{color: "some updated color", name: "some updated name"}
+      update_attrs = %{color: "orange", name: "some updated name"}
 
       assert {:ok, %OfferTime{} = offer_time} =
                Companies.update_offer_time(offer_time, update_attrs)
 
-      assert offer_time.color == "some updated color"
+      assert offer_time.color == :orange
       assert offer_time.name == "some updated name"
     end
 
@@ -255,7 +258,7 @@ defmodule Parzival.CompaniesTest do
 
     test "list_applications/0 returns all applications" do
       application = application_fixture()
-      assert Companies.list_applications() == [application]
+      assert Companies.list_applications() == {:ok, {[application], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.Application, start_cursor: nil, total_count: 1, total_pages: 1}}}
     end
 
     test "get_application!/1 returns the application with given id" do
@@ -264,30 +267,13 @@ defmodule Parzival.CompaniesTest do
     end
 
     test "create_application/1 with valid data creates a application" do
-      valid_attrs = %{}
+      valid_attrs = %{user_id: Parzival.AccountsFixtures.user_fixture().id, offer_id: offer_fixture().id}
 
       assert {:ok, %Application{} = application} = Companies.create_application(valid_attrs)
     end
 
     test "create_application/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Companies.create_application(@invalid_attrs)
-    end
-
-    test "update_application/2 with valid data updates the application" do
-      application = application_fixture()
-      update_attrs = %{}
-
-      assert {:ok, %Application{} = application} =
-               Companies.update_application(application, update_attrs)
-    end
-
-    test "update_application/2 with invalid data returns error changeset" do
-      application = application_fixture()
-
-      assert {:error, %Ecto.Changeset{}} =
-               Companies.update_application(application, @invalid_attrs)
-
-      assert application == Companies.get_application!(application.id)
     end
 
     test "delete_application/1 deletes the application" do
@@ -311,7 +297,7 @@ defmodule Parzival.CompaniesTest do
 
     test "list_levels/0 returns all levels" do
       level = level_fixture()
-      assert Companies.list_levels() == [level]
+      assert Companies.list_levels() == {:ok, {[level], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:name], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.Level, start_cursor: nil, total_count: 1, total_pages: 1}}}
     end
 
     test "get_level!/1 returns the level with given id" do
@@ -320,10 +306,10 @@ defmodule Parzival.CompaniesTest do
     end
 
     test "create_level/1 with valid data creates a level" do
-      valid_attrs = %{color: "some color", name: "some name"}
+      valid_attrs = %{color: "red", name: "some name"}
 
       assert {:ok, %Level{} = level} = Companies.create_level(valid_attrs)
-      assert level.color == "some color"
+      assert level.color == :red
       assert level.name == "some name"
     end
 
@@ -333,10 +319,10 @@ defmodule Parzival.CompaniesTest do
 
     test "update_level/2 with valid data updates the level" do
       level = level_fixture()
-      update_attrs = %{color: "some updated color", name: "some updated name"}
+      update_attrs = %{color: "red", name: "some updated name"}
 
       assert {:ok, %Level{} = level} = Companies.update_level(level, update_attrs)
-      assert level.color == "some updated color"
+      assert level.color == :red
       assert level.name == "some updated name"
     end
 
@@ -363,11 +349,11 @@ defmodule Parzival.CompaniesTest do
 
     import Parzival.CompaniesFixtures
 
-    @invalid_attrs %{}
+    @invalid_attrs %{user_id: -1}
 
     test "list_connections/0 returns all connections" do
       connection = connection_fixture()
-      assert Companies.list_connections() == [connection]
+      assert Companies.list_connections() == {:ok, {[connection], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.Connection, start_cursor: nil, total_count: 1, total_pages: 1}}}
     end
 
     test "get_connection!/1 returns the connection with given id" do
@@ -376,7 +362,7 @@ defmodule Parzival.CompaniesTest do
     end
 
     test "create_connection/1 with valid data creates a connection" do
-      valid_attrs = %{}
+      valid_attrs = %{company_id: company_fixture().id, user_id: Parzival.AccountsFixtures.user_fixture().id}
 
       assert {:ok, %Connection{} = connection} = Companies.create_connection(valid_attrs)
     end

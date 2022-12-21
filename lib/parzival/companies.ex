@@ -805,12 +805,9 @@ defmodule Parzival.Companies do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_connection(%Company{} = company, %User{} = user) do
+  def create_connection(attrs \\ %{}) do
     %Connection{}
-    |> Connection.changeset(%{
-      company_id: company.id,
-      user_id: user.id
-    })
+    |> Connection.changeset(attrs)
     |> Repo.insert()
   end
 

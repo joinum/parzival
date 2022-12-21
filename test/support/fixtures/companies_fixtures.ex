@@ -17,6 +17,9 @@ defmodule Parzival.CompaniesFixtures do
         location: "some location",
         description: "some description",
         applied: 42,
+        company_id: company_fixture().id,
+        offer_type_id: offer_type_fixture().id,
+        offer_time_id: offer_time_fixture().id
       })
       |> Parzival.Companies.create_offer()
 
@@ -31,7 +34,8 @@ defmodule Parzival.CompaniesFixtures do
       attrs
       |> Enum.into(%{
         description: "some description",
-        name: "some name"
+        name: "some name",
+        level_id: level_fixture().id
       })
       |> Parzival.Companies.create_company()
 
@@ -45,7 +49,7 @@ defmodule Parzival.CompaniesFixtures do
     {:ok, offer_type} =
       attrs
       |> Enum.into(%{
-        color: "some color",
+        color: "gray",
         name: "some name"
       })
       |> Parzival.Companies.create_offer_type()
@@ -60,7 +64,7 @@ defmodule Parzival.CompaniesFixtures do
     {:ok, offer_time} =
       attrs
       |> Enum.into(%{
-        color: "some color",
+        color: "gray",
         name: "some name"
       })
       |> Parzival.Companies.create_offer_time()
@@ -74,7 +78,10 @@ defmodule Parzival.CompaniesFixtures do
   def application_fixture(attrs \\ %{}) do
     {:ok, application} =
       attrs
-      |> Enum.into(%{})
+      |> Enum.into(%{
+        user_id: Parzival.AccountsFixtures.user_fixture().id,
+        offer_id: offer_fixture().id
+      })
       |> Parzival.Companies.create_application()
 
     application
@@ -87,7 +94,7 @@ defmodule Parzival.CompaniesFixtures do
     {:ok, level} =
       attrs
       |> Enum.into(%{
-        color: "some color",
+        color: "gray",
         name: "some name"
       })
       |> Parzival.Companies.create_level()
@@ -101,7 +108,10 @@ defmodule Parzival.CompaniesFixtures do
   def connection_fixture(attrs \\ %{}) do
     {:ok, connection} =
       attrs
-      |> Enum.into(%{})
+      |> Enum.into(%{
+        user_id: Parzival.AccountsFixtures.user_fixture().id,
+        company_id: company_fixture().id
+      })
       |> Parzival.Companies.create_connection()
 
     connection
