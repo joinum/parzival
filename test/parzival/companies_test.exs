@@ -12,7 +12,41 @@ defmodule Parzival.CompaniesTest do
 
     test "list_offers/0 returns all offers" do
       offer = offer_fixture()
-      assert Companies.list_offers() == {:ok, {[offer], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:minimum_salary, :maximum_salary], order_directions: [:desc, :desc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.Offer, start_cursor: nil, total_count: 1, total_pages: 1}}}
+
+      assert Companies.list_offers() ==
+               {:ok,
+                {[offer],
+                 %Flop.Meta{
+                   current_offset: 0,
+                   current_page: 1,
+                   end_cursor: nil,
+                   errors: [],
+                   flop: %Flop{
+                     after: nil,
+                     before: nil,
+                     filters: [],
+                     first: nil,
+                     last: nil,
+                     limit: 9,
+                     offset: nil,
+                     order_by: [:minimum_salary, :maximum_salary],
+                     order_directions: [:desc, :desc],
+                     page: nil,
+                     page_size: nil
+                   },
+                   has_next_page?: false,
+                   has_previous_page?: false,
+                   next_offset: nil,
+                   next_page: nil,
+                   page_size: 9,
+                   params: %{},
+                   previous_offset: nil,
+                   previous_page: nil,
+                   schema: Parzival.Companies.Offer,
+                   start_cursor: nil,
+                   total_count: 1,
+                   total_pages: 1
+                 }}}
     end
 
     test "get_offer!/1 returns the offer with given id" do
@@ -50,7 +84,7 @@ defmodule Parzival.CompaniesTest do
       update_attrs = %{
         maximum_salary: 43,
         minimum_salary: 43,
-        title: "some updated title",
+        title: "some updated title"
       }
 
       assert {:ok, %Offer{} = offer} = Companies.update_offer(offer, update_attrs)
@@ -86,7 +120,41 @@ defmodule Parzival.CompaniesTest do
 
     test "list_companies/0 returns all companies" do
       company = company_fixture()
-      assert Companies.list_companies() == {:ok, {[company], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:name], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.Company, start_cursor: nil, total_count: 1, total_pages: 1}}}
+
+      assert Companies.list_companies() ==
+               {:ok,
+                {[company],
+                 %Flop.Meta{
+                   current_offset: 0,
+                   current_page: 1,
+                   end_cursor: nil,
+                   errors: [],
+                   flop: %Flop{
+                     after: nil,
+                     before: nil,
+                     filters: [],
+                     first: nil,
+                     last: nil,
+                     limit: 9,
+                     offset: nil,
+                     order_by: [:name],
+                     order_directions: [:asc],
+                     page: nil,
+                     page_size: nil
+                   },
+                   has_next_page?: false,
+                   has_previous_page?: false,
+                   next_offset: nil,
+                   next_page: nil,
+                   page_size: 9,
+                   params: %{},
+                   previous_offset: nil,
+                   previous_page: nil,
+                   schema: Parzival.Companies.Company,
+                   start_cursor: nil,
+                   total_count: 1,
+                   total_pages: 1
+                 }}}
     end
 
     test "get_company!/1 returns the company with given id" do
@@ -95,7 +163,11 @@ defmodule Parzival.CompaniesTest do
     end
 
     test "create_company/1 with valid data creates a company" do
-      valid_attrs = %{description: "some description", name: "some name", level_id: level_fixture().id}
+      valid_attrs = %{
+        description: "some description",
+        name: "some name",
+        level_id: level_fixture().id
+      }
 
       assert {:ok, %Company{} = company} = Companies.create_company(valid_attrs)
       assert company.description == "some description"
@@ -142,7 +214,41 @@ defmodule Parzival.CompaniesTest do
 
     test "list_offer_types/0 returns all offer_types" do
       offer_type = offer_type_fixture()
-      assert Companies.list_offer_types() == {:ok, {[offer_type], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:name], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.OfferType, start_cursor: nil, total_count: 1, total_pages: 1}}}
+
+      assert Companies.list_offer_types() ==
+               {:ok,
+                {[offer_type],
+                 %Flop.Meta{
+                   current_offset: 0,
+                   current_page: 1,
+                   end_cursor: nil,
+                   errors: [],
+                   flop: %Flop{
+                     after: nil,
+                     before: nil,
+                     filters: [],
+                     first: nil,
+                     last: nil,
+                     limit: 9,
+                     offset: nil,
+                     order_by: [:name],
+                     order_directions: [:asc],
+                     page: nil,
+                     page_size: nil
+                   },
+                   has_next_page?: false,
+                   has_previous_page?: false,
+                   next_offset: nil,
+                   next_page: nil,
+                   page_size: 9,
+                   params: %{},
+                   previous_offset: nil,
+                   previous_page: nil,
+                   schema: Parzival.Companies.OfferType,
+                   start_cursor: nil,
+                   total_count: 1,
+                   total_pages: 1
+                 }}}
     end
 
     test "get_offer_type!/1 returns the offer_type with given id" do
@@ -200,7 +306,41 @@ defmodule Parzival.CompaniesTest do
 
     test "list_offer_times/0 returns all offer_times" do
       offer_time = offer_time_fixture()
-      assert Companies.list_offer_times() == {:ok, {[offer_time], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:name], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.OfferTime, start_cursor: nil, total_count: 1, total_pages: 1}}}
+
+      assert Companies.list_offer_times() ==
+               {:ok,
+                {[offer_time],
+                 %Flop.Meta{
+                   current_offset: 0,
+                   current_page: 1,
+                   end_cursor: nil,
+                   errors: [],
+                   flop: %Flop{
+                     after: nil,
+                     before: nil,
+                     filters: [],
+                     first: nil,
+                     last: nil,
+                     limit: 9,
+                     offset: nil,
+                     order_by: [:name],
+                     order_directions: [:asc],
+                     page: nil,
+                     page_size: nil
+                   },
+                   has_next_page?: false,
+                   has_previous_page?: false,
+                   next_offset: nil,
+                   next_page: nil,
+                   page_size: 9,
+                   params: %{},
+                   previous_offset: nil,
+                   previous_page: nil,
+                   schema: Parzival.Companies.OfferTime,
+                   start_cursor: nil,
+                   total_count: 1,
+                   total_pages: 1
+                 }}}
     end
 
     test "get_offer_time!/1 returns the offer_time with given id" do
@@ -258,7 +398,41 @@ defmodule Parzival.CompaniesTest do
 
     test "list_applications/0 returns all applications" do
       application = application_fixture()
-      assert Companies.list_applications() == {:ok, {[application], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.Application, start_cursor: nil, total_count: 1, total_pages: 1}}}
+
+      assert Companies.list_applications() ==
+               {:ok,
+                {[application],
+                 %Flop.Meta{
+                   current_offset: 0,
+                   current_page: 1,
+                   end_cursor: nil,
+                   errors: [],
+                   flop: %Flop{
+                     after: nil,
+                     before: nil,
+                     filters: [],
+                     first: nil,
+                     last: nil,
+                     limit: 9,
+                     offset: nil,
+                     order_by: [],
+                     order_directions: [:asc],
+                     page: nil,
+                     page_size: nil
+                   },
+                   has_next_page?: false,
+                   has_previous_page?: false,
+                   next_offset: nil,
+                   next_page: nil,
+                   page_size: 9,
+                   params: %{},
+                   previous_offset: nil,
+                   previous_page: nil,
+                   schema: Parzival.Companies.Application,
+                   start_cursor: nil,
+                   total_count: 1,
+                   total_pages: 1
+                 }}}
     end
 
     test "get_application!/1 returns the application with given id" do
@@ -267,7 +441,10 @@ defmodule Parzival.CompaniesTest do
     end
 
     test "create_application/1 with valid data creates a application" do
-      valid_attrs = %{user_id: Parzival.AccountsFixtures.user_fixture().id, offer_id: offer_fixture().id}
+      valid_attrs = %{
+        user_id: Parzival.AccountsFixtures.user_fixture().id,
+        offer_id: offer_fixture().id
+      }
 
       assert {:ok, %Application{} = application} = Companies.create_application(valid_attrs)
     end
@@ -297,7 +474,41 @@ defmodule Parzival.CompaniesTest do
 
     test "list_levels/0 returns all levels" do
       level = level_fixture()
-      assert Companies.list_levels() == {:ok, {[level], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [:name], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.Level, start_cursor: nil, total_count: 1, total_pages: 1}}}
+
+      assert Companies.list_levels() ==
+               {:ok,
+                {[level],
+                 %Flop.Meta{
+                   current_offset: 0,
+                   current_page: 1,
+                   end_cursor: nil,
+                   errors: [],
+                   flop: %Flop{
+                     after: nil,
+                     before: nil,
+                     filters: [],
+                     first: nil,
+                     last: nil,
+                     limit: 9,
+                     offset: nil,
+                     order_by: [:name],
+                     order_directions: [:asc],
+                     page: nil,
+                     page_size: nil
+                   },
+                   has_next_page?: false,
+                   has_previous_page?: false,
+                   next_offset: nil,
+                   next_page: nil,
+                   page_size: 9,
+                   params: %{},
+                   previous_offset: nil,
+                   previous_page: nil,
+                   schema: Parzival.Companies.Level,
+                   start_cursor: nil,
+                   total_count: 1,
+                   total_pages: 1
+                 }}}
     end
 
     test "get_level!/1 returns the level with given id" do
@@ -353,7 +564,41 @@ defmodule Parzival.CompaniesTest do
 
     test "list_connections/0 returns all connections" do
       connection = connection_fixture()
-      assert Companies.list_connections() == {:ok, {[connection], %Flop.Meta{current_offset: 0, current_page: 1, end_cursor: nil, errors: [], flop: %Flop{after: nil, before: nil, filters: [], first: nil, last: nil, limit: 9, offset: nil, order_by: [], order_directions: [:asc], page: nil, page_size: nil}, has_next_page?: false, has_previous_page?: false, next_offset: nil, next_page: nil, page_size: 9, params: %{}, previous_offset: nil, previous_page: nil, schema: Parzival.Companies.Connection, start_cursor: nil, total_count: 1, total_pages: 1}}}
+
+      assert Companies.list_connections() ==
+               {:ok,
+                {[connection],
+                 %Flop.Meta{
+                   current_offset: 0,
+                   current_page: 1,
+                   end_cursor: nil,
+                   errors: [],
+                   flop: %Flop{
+                     after: nil,
+                     before: nil,
+                     filters: [],
+                     first: nil,
+                     last: nil,
+                     limit: 9,
+                     offset: nil,
+                     order_by: [],
+                     order_directions: [:asc],
+                     page: nil,
+                     page_size: nil
+                   },
+                   has_next_page?: false,
+                   has_previous_page?: false,
+                   next_offset: nil,
+                   next_page: nil,
+                   page_size: 9,
+                   params: %{},
+                   previous_offset: nil,
+                   previous_page: nil,
+                   schema: Parzival.Companies.Connection,
+                   start_cursor: nil,
+                   total_count: 1,
+                   total_pages: 1
+                 }}}
     end
 
     test "get_connection!/1 returns the connection with given id" do
@@ -362,7 +607,10 @@ defmodule Parzival.CompaniesTest do
     end
 
     test "create_connection/1 with valid data creates a connection" do
-      valid_attrs = %{company_id: company_fixture().id, user_id: Parzival.AccountsFixtures.user_fixture().id}
+      valid_attrs = %{
+        company_id: company_fixture().id,
+        user_id: Parzival.AccountsFixtures.user_fixture().id
+      }
 
       assert {:ok, %Connection{} = connection} = Companies.create_connection(valid_attrs)
     end

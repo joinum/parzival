@@ -165,10 +165,10 @@ defmodule Parzival.StoreTest do
 
     test "create_order/1 with valid data creates a order" do
       valid_attrs = %{
-      user_id: user_fixture().id,
-      product_id: product_fixture().id,
-      redeemed: false
-    }
+        user_id: user_fixture().id,
+        product_id: product_fixture().id,
+        redeemed: false
+      }
 
       assert {:ok, %Order{} = order} = Store.create_order(valid_attrs)
       assert order.redeemed == false

@@ -21,7 +21,7 @@ defmodule ParzivalWeb.UserAuthTest do
       conn = UserAuth.log_in_user(conn, user)
       assert token = get_session(conn, :user_token)
       assert get_session(conn, :live_socket_id) == "users_sessions:#{Base.url_encode64(token)}"
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/app/"
       assert Accounts.get_user_by_session_token(token)
     end
 
@@ -78,7 +78,7 @@ defmodule ParzivalWeb.UserAuthTest do
       conn = conn |> fetch_cookies() |> UserAuth.log_out_user()
       refute get_session(conn, :user_token)
       assert %{max_age: 0} = conn.resp_cookies[@remember_me_cookie]
-      assert redirected_to(conn) == "/app/"
+      assert redirected_to(conn) == "/"
     end
   end
 

@@ -21,7 +21,10 @@ defmodule Parzival.GamificationTest do
     end
 
     test "create_curriculum/1 with valid data creates a curriculum" do
-      valid_attrs = %{summary: "some summary abc", user_id: Parzival.AccountsFixtures.user_fixture().id}
+      valid_attrs = %{
+        summary: "some summary abc",
+        user_id: Parzival.AccountsFixtures.user_fixture().id
+      }
 
       assert {:ok, %Curriculum{} = curriculum} = Gamification.create_curriculum(valid_attrs)
       assert curriculum.summary == "some summary abc"
