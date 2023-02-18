@@ -42,5 +42,4 @@ defmodule Parzival.Uploaders.ProfilePicture do
   def storage_dir(_version, {_file, %Company{} = scope}) do
     "uploads/company/#{scope.id}"
   end
-
 end
