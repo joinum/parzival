@@ -793,7 +793,7 @@ defmodule Parzival.Gamification do
       x =
         subquery(q2)
         |> where([t], t.experience > ^exp)
-        |> Repo.aggergate(:count, :user)
+        |> Repo.aggregate(:count, :user)
 
       x + 1
     end
