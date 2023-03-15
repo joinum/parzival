@@ -123,7 +123,7 @@ defmodule Parzival.MixProject do
         "deps.unlock --check-unused",
         "test",
         "lint"
-      ],
+      ], # To run this command MIX_ENV=test mix check
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
   end
