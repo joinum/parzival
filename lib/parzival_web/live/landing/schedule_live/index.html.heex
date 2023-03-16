@@ -85,13 +85,10 @@
       <% end %>
     </div>
 
-
     <div class="flex relative flex-row-reverse mt-10 w-full 1.5xl:hidden">
       <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
         <div x-show={"date == #{index + 2}"} class="flex flex-col w-full sm:w-96 md:w-[450px] lg:w-[500px]">
           <div class="flex flex-row justify-between items-center px-0 pt-4 pb-10 sm:px-6">
-
-
             <button @click="date = date > 2 ? date - 1 : date">
               <Heroicons.Solid.chevron_left class={"#{if day == :tuesday do
                   'fill-transparent'
@@ -125,12 +122,12 @@
                   else
                     'font-thin text-[12px] md:text-[16px] opacity-70'
                   end} text-white"}>
-                  <div class="flex flex-col w-40 text-right font-semibold opacity-100 sm:w-96 md:w-[420px]">
-                    <span class="opacity-100 text-red-100">
+                  <div class="flex flex-col w-40 font-semibold text-right opacity-100 sm:w-96 md:w-[420px]">
+                    <span class="text-red-100 opacity-100">
                       <%= activity["title"] %>
                     </span>
                     <%= if activity["href"] do %>
-                      <a href={activity["href"]} class="text-xs font-black text-white underline underline-offset-3 animate-bounce md:text-base">
+                      <a href={activity["href"]} class="text-xs font-black text-white underline animate-bounce md:text-base underline-offset-3">
                         Register
                       </a>
                     <% end %>
@@ -145,7 +142,7 @@
                       </span>
                     <% end %>
                   </div>
-                  <span class="text-center font-normal w-[60px] md:w-[70px]">
+                  <span class="font-normal text-center w-[60px] md:w-[70px]">
                     <%= Calendar.strftime(activity["hours"], "%Hh%M") %>
                   </span>
                 </div>

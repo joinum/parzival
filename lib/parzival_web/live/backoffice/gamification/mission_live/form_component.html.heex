@@ -106,50 +106,62 @@
         </div>
       </div>
       <div clas="flex flex-col">
-        <%= for {fs, index} <- Enum.with_index(inputs_for(f, :tasks)) do %>
-          <%= hidden_input(fs, :mission_id) %>
-          <div class="flex flex-col gap-2 py-3 px-4 border-b border-gray-200 sm:py-4 sm:px-6 lg:px-8">
-            <span class="text-lg font-bold sm:text-xl">
-              Task <%= index + 1 %>
-            </span>
-            <div>
-              <%= text_input(fs, :title, placeholder: "Choose title", phx_debounce: "blur", class: "leading-7 text-gray-700 text-base sm:text-lg sm:truncate mt-1 font-bold focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
-              <div class="flex text-red-500">
-                <%= error_tag(fs, :title) %>
-              </div>
-            </div>
-            <div class="flex flex-col gap-y-1">
-              <span class="pl-1 text-sm font-medium text-gray-800 sm:text-base">
-                Description
+        <%= inputs_for f, :tasks, fn fs -> %>
+          <div x-bind:class="! show ? 'hidden' : 'block space-y-2'" x-data="{ show: true }">
+            <%= hidden_input(fs, :mission_id) %>
+            <div class="flex flex-col gap-2 py-3 px-4 border-b border-gray-200 sm:py-4 sm:px-6 lg:px-8">
+              <span class="text-lg font-bold sm:text-xl">
+                Task <%= fs.index + 1 %>
               </span>
-              <span class="text-sm text-gray-700 line-clamp-3">
-                <%= textarea(fs, :description, placeholder: "Choose description", rows: 15, phx_debounce: "blur", class: "focus:ring-red-500 h-24 font-medium focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
-              </span>
-              <div class="flex text-red-500">
-                <%= error_tag(fs, :description) %>
-              </div>
-            </div>
-            <div class="flex flex-col gap-y-1">
-              <span class="pl-1 text-sm font-medium text-gray-800 sm:text-base">
-                Rewards
-              </span>
-              <div class="flex flex-col gap-4 sm:flex-row">
-                <div class="relative">
-                  <div class="absolute ml-3 top-[22%]">
-                    💰
-                  </div>
-                  <%= number_input(fs, :tokens, placeholder: "Choose tokens", phx_debounce: "blur", class: "w-64 pl-9 leading-7 text-gray-700 sm:truncate text-sm focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
-                  <div class="text-red-500">
-                    <%= error_tag(fs, :tokens) %>
-                  </div>
+              <%= if is_nil(fs.data.id) do %>
+                <a class="absolute right-2 cursor-pointer" phx-click="rm-task" phx-target={@myself} phx-value-index={fs.index}>
+                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                </a>
+              <% else %>
+                <a class="absolute right-2 cursor-pointer" onclick={"document.getElementById('#{fs.data.id}').click()"} x-on:click="show = false">
+                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                </a>
+                <%= checkbox(fs, :delete, id: fs.data.id, class: "hidden") %>
+              <% end %>
+              <div>
+                <%= text_input(fs, :title, placeholder: "Choose title", phx_debounce: "blur", class: "leading-7 text-gray-700 text-base sm:text-lg sm:truncate mt-1 font-bold focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+                <div class="flex text-red-500">
+                  <%= error_tag(fs, :title) %>
                 </div>
-                <div class="relative">
-                  <div class="absolute ml-2 top-[28%] text-gray-300 text-sm">
-                    EXP
+              </div>
+              <div class="flex flex-col gap-y-1">
+                <span class="pl-1 text-sm font-medium text-gray-800 sm:text-base">
+                  Description
+                </span>
+                <span class="text-sm text-gray-700 line-clamp-3">
+                  <%= textarea(fs, :description, placeholder: "Choose description", rows: 15, phx_debounce: "blur", class: "focus:ring-red-500 h-24 font-medium focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+                </span>
+                <div class="flex text-red-500">
+                  <%= error_tag(fs, :description) %>
+                </div>
+              </div>
+              <div class="flex flex-col gap-y-1">
+                <span class="pl-1 text-sm font-medium text-gray-800 sm:text-base">
+                  Rewards
+                </span>
+                <div class="flex flex-col gap-4 sm:flex-row">
+                  <div class="relative">
+                    <div class="absolute ml-3 top-[22%]">
+                      💰
+                    </div>
+                    <%= number_input(fs, :tokens, placeholder: "Choose tokens", phx_debounce: "blur", class: "w-64 pl-9 leading-7 text-gray-700 sm:truncate text-sm focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+                    <div class="text-red-500">
+                      <%= error_tag(fs, :tokens) %>
+                    </div>
                   </div>
-                  <%= number_input(fs, :exp, placeholder: "Choose experience", phx_debounce: "blur", class: "w-64 pl-9 leading-7 text-gray-700 sm:truncate text-sm focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
-                  <div class="text-red-500">
-                    <%= error_tag(fs, :exp) %>
+                  <div class="relative">
+                    <div class="absolute ml-2 top-[28%] text-gray-300 text-sm">
+                      EXP
+                    </div>
+                    <%= number_input(fs, :exp, placeholder: "Choose experience", phx_debounce: "blur", class: "w-64 pl-9 leading-7 text-gray-700 sm:truncate text-sm focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
+                    <div class="text-red-500">
+                      <%= error_tag(fs, :exp) %>
+                    </div>
                   </div>
                 </div>
               </div>
