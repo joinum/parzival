@@ -17,7 +17,8 @@ defmodule Parzival.MixProject do
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      preferred_cli_env: [check: :test]
     ]
   end
 
@@ -124,8 +125,6 @@ defmodule Parzival.MixProject do
         "test",
         "lint"
       ],
-
-      # To run this command MIX_ENV=test mix check
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
   end
