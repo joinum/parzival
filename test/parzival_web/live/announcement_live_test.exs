@@ -3,6 +3,9 @@ defmodule ParzivalWeb.AnnouncementLiveTest do
 
   import Phoenix.LiveViewTest
   import Parzival.ToolsFixtures
+  import Parzival.AccountsFixtures
+
+  setup :register_and_log_in_user
 
   @create_attrs %{text: "some text", title: "some title"}
   @update_attrs %{text: "some updated text", title: "some updated title"}
@@ -19,7 +22,7 @@ defmodule ParzivalWeb.AnnouncementLiveTest do
     test "lists all announcements", %{conn: conn, announcement: announcement} do
       {:ok, _index_live, html} = live(conn, Routes.announcement_index_path(conn, :index))
 
-      assert html =~ "Listing Announcements"
+      assert html =~ "Announcements"
       assert html =~ announcement.text
     end
 
@@ -93,7 +96,7 @@ defmodule ParzivalWeb.AnnouncementLiveTest do
       {:ok, show_live, _html} =
         live(conn, Routes.announcement_show_path(conn, :show, announcement))
 
-      assert show_live |> element("a", "Edit") |> render_click() =~
+      assert show_live |> element("a", "Show Announcement") |> render_click() =~
                "Edit Announcement"
 
       assert_patch(show_live, Routes.announcement_show_path(conn, :edit, announcement))

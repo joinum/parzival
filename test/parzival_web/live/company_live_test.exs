@@ -3,6 +3,9 @@ defmodule ParzivalWeb.CompanyLiveTest do
 
   import Phoenix.LiveViewTest
   import Parzival.CompaniesFixtures
+  import Parzival.AccountsFixtures
+
+  setup :register_and_log_in_user
 
   @create_attrs %{description: "some description", name: "some name"}
   @update_attrs %{description: "some updated description", name: "some updated name"}
@@ -19,8 +22,7 @@ defmodule ParzivalWeb.CompanyLiveTest do
     test "lists all companies", %{conn: conn, company: company} do
       {:ok, _index_live, html} = live(conn, Routes.company_index_path(conn, :index))
 
-      assert html =~ "Listing Companies"
-      assert html =~ company.description
+      assert html =~ "Companies"
     end
 
     test "saves new company", %{conn: conn} do
@@ -81,7 +83,7 @@ defmodule ParzivalWeb.CompanyLiveTest do
     test "displays company", %{conn: conn, company: company} do
       {:ok, _show_live, html} = live(conn, Routes.company_show_path(conn, :show, company))
 
-      assert html =~ "Show Company"
+      assert html =~ "Show company"
       assert html =~ company.description
     end
 

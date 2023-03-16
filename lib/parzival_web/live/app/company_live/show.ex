@@ -18,7 +18,7 @@ defmodule ParzivalWeb.App.CompanyLive.Show do
     {:noreply,
      socket
      |> assign(:current_page, :companies)
-     |> assign(:page_title, "Show company")
+     |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:company, Companies.get_company!(id, preloads: :level))
      |> assign(:params, params)
      |> assign(:recruiters, list_recruiters(params))
@@ -66,4 +66,6 @@ defmodule ParzivalWeb.App.CompanyLive.Show do
       where: [company_id: id]
     )
   end
+
+  defp page_title(:show), do: "Show Company"
 end
