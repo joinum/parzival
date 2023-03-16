@@ -110,19 +110,21 @@
           <div x-bind:class="! show ? 'hidden' : 'block space-y-2'" x-data="{ show: true }">
             <%= hidden_input(fs, :mission_id) %>
             <div class="flex flex-col gap-2 py-3 px-4 border-b border-gray-200 sm:py-4 sm:px-6 lg:px-8">
-              <span class="text-lg font-bold sm:text-xl">
-                Task <%= fs.index + 1 %>
-              </span>
-              <%= if is_nil(fs.data.id) do %>
-                <a class="absolute right-2 cursor-pointer" phx-click="rm-task" phx-target={@myself} phx-value-index={fs.index}>
-                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
-                </a>
-              <% else %>
-                <a class="absolute right-2 cursor-pointer" onclick={"document.getElementById('#{fs.data.id}').click()"} x-on:click="show = false">
-                  <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
-                </a>
-                <%= checkbox(fs, :delete, id: fs.data.id, class: "hidden") %>
-              <% end %>
+              <div class="flex flex-row justify-between">
+                <span class="text-lg font-bold sm:text-xl">
+                  Task <%= fs.index + 1 %>
+                </span>
+                <%= if is_nil(fs.data.id) do %>
+                  <a phx-click="rm-task" phx-target={@myself} phx-value-index={fs.index} class="justify-center py-2 px-4 text-sm font-medium bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50 text-primary">
+                    Delete
+                  </a>
+                <% else %>
+                  <a onclick={"document.getElementById('#{fs.data.id}').click()"} x-on:click="show = false" class="justify-center py-2 px-4 text-sm font-medium bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50 text-primary">
+                    Delete
+                  </a>
+                  <%= checkbox(fs, :delete, id: fs.data.id, class: "hidden") %>
+                <% end %>
+              </div>
               <div>
                 <%= text_input(fs, :title, placeholder: "Choose title", phx_debounce: "blur", class: "leading-7 text-gray-700 text-base sm:text-lg sm:truncate mt-1 font-bold focus:ring-red-500 focus:border-red-500 block w-full shadow-sm border-gray-300 rounded-md") %>
                 <div class="flex text-red-500">
