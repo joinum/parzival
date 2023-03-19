@@ -66,7 +66,7 @@ defmodule Parzival.MixProject do
       {:qrcode_ex, "~> 0.1.0"},
 
       # i18n
-      {:gettext, "~> 0.18"},
+      {:gettext, "~> 0.22.1"},
 
       # security
       {:bcrypt_elixir, "~> 3.0"},
