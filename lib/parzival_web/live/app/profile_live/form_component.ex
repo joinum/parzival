@@ -8,6 +8,9 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   @extensions_whitelist ~w(.jpg .jpeg .gif .png)
   @cycles [:Bachelors, :Masters, :Phd]
 
+  defguard is_admin?(socket) when socket.assigns.current_user.role == :admin
+  defguard is_current_user?(socket, id) when socket.assigns.current_user.id == id
+
   @impl true
   def mount(socket) do
     {:ok,
@@ -28,10 +31,6 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   end
 
   @impl true
-  def handle_event("save", %{"user" => user}, socket) do
-    save_user(socket, socket.assigns.action, user)
-  end
-
   def handle_event("validate", %{"user" => params}, socket) do
     changeset =
       %User{}
@@ -41,7 +40,13 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  defp save_user(socket, :edit, user_params) do
+  @impl true
+  def handle_event("save", %{"user" => user_params}, socket) do
+    save_user(socket, socket.assigns.action, user_params)
+  end
+
+  defp save_user(socket, :edit, user_params)
+       when is_admin?(socket) or is_current_user?(socket, socket.assigns.user.id) do
     case Accounts.admin_change_user_info(
            socket.assigns.user,
            user_params,

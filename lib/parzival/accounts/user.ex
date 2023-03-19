@@ -8,6 +8,7 @@ defmodule Parzival.Accounts.User do
 
   alias Parzival.Companies.Application
   alias Parzival.Companies.Company
+  alias Parzival.Companies.Connection
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Mission
   alias Parzival.Store.Order
@@ -73,6 +74,8 @@ defmodule Parzival.Accounts.User do
 
     has_many :applications, Application
 
+    has_many :connections, Connection
+
     field :picture, Uploaders.ProfilePicture.Type
 
     timestamps()
@@ -123,6 +126,7 @@ defmodule Parzival.Accounts.User do
     user
     |> cast(attrs, @required_fields ++ (@optional_fields -- [:password]))
     |> cast_attachments(attrs, [:picture])
+    |> validate_required([:name])
     |> validate_email()
   end
 
@@ -142,7 +146,6 @@ defmodule Parzival.Accounts.User do
     |> validate_required([:email])
     |> validate_email_address(:email)
     |> validate_length(:email, max: 160)
-    |> unsafe_validate_unique(:email, Parzival.Repo)
     |> unique_constraint(:email)
   end
 

@@ -42,10 +42,10 @@ defmodule ParzivalWeb.Router do
         live "/speakers", SpeakersLive.Index, :index
         live "/faqs", FaqsLive.Index, :index
         live "/team", TeamLive.Index, :index
+      end
 
-        scope "/", App do
-          live "/profile/:qr", ProfileLive.Show, :qr_show
-        end
+      scope "/", App do
+        live "/profile/:qr", ProfileLive.Show, :qr_show
       end
     end
   end
@@ -81,6 +81,8 @@ defmodule ParzivalWeb.Router do
         live "/announcements/:id", AnnouncementLive.Show, :show
 
         live "/missions", MissionLive.Index, :index
+
+        live "/connections", ConnectionLive.Index, :index
 
         scope "/missions" do
           pipe_through [:require_level]

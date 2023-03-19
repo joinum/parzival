@@ -18,7 +18,18 @@ defmodule ParzivalWeb.App.OrderLive.Index do
      socket
      |> assign(:current_page, :vault)
      |> assign(:params, params)
+     |> assign(list_products(params))
      |> assign(list_orders(params, socket))}
+  end
+
+  defp list_products(params) do
+    case Store.list_products(params, limit: 2) do
+      {:ok, {products, meta}} ->
+        %{products: products, meta: meta}
+
+      {:error, flop} ->
+        %{products: [], meta: flop}
+    end
   end
 
   defp list_orders(params, socket) do

@@ -71,16 +71,22 @@ defmodule ParzivalWeb.ViewUtils do
   def get_next_activity(schedule, day) do
     now = NaiveDateTime.utc_now()
 
-    schedule
-    |> Map.get(day)
-    |> Enum.reduce([], fn x, acc ->
-      if NaiveDateTime.compare(now, x["hours"]) == :lt do
-        acc ++ [x["hours"]]
-      else
-        acc
-      end
-    end)
-    |> Enum.min_by(&abs(NaiveDateTime.diff(&1, now)))
+    schedule =
+      schedule
+      |> Map.get(day)
+      |> Enum.reduce([], fn x, acc ->
+        if NaiveDateTime.compare(now, x["hours"]) == :lt do
+          acc ++ [x["hours"]]
+        else
+          acc
+        end
+      end)
+
+    if schedule != [] do
+      Enum.min_by(schedule, &abs(NaiveDateTime.diff(&1, now)))
+    else
+      []
+    end
   end
 
   # credo:disable-for-next-line Credo.Check.Refactor.CyclomaticComplexity
