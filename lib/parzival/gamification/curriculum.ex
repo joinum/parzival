@@ -16,7 +16,7 @@ defmodule Parzival.Gamification.Curriculum do
   schema "curriculums" do
     field :summary, :string
 
-    embeds_many :experiences, Curriculum.Experience
+    embeds_many :experiences, Curriculum.Experience, on_replace: :delete
     embeds_many :educations, Curriculum.Education
     embeds_many :volunteerings, Curriculum.Volunteering
     embeds_many :skills, Curriculum.Skill
