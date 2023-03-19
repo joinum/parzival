@@ -160,29 +160,31 @@
     </a>
     <div x-bind:class="last_users?'flex' : 'hidden'" class="grid grid-cols-1 gap-4 py-6 px-4 mb-2 border-b border-gray-200 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <%= for {mission_user, index} <- Enum.with_index(@mission_users)  do %>
-        <div id={"user-#{index}"} class="flex flex-row gap-x-2 items-center p-2 w-full h-20 rounded-xl border border-gray-200 hover:bg-gray-50">
-          <div class="flex-shrink-0 w-14 h-14">
-            <%= if is_nil(mission_user.user.picture) do %>
-              <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
-                <span class="text-xl font-medium leading-none text-white">
-                  <%= extract_initials(mission_user.user.name) %>
+        <%= live_redirect to: Routes.profile_show_path(@socket, :show, mission_user.user) do %>
+          <div id={"user-#{index}"} class="flex flex-row gap-x-2 items-center p-2 w-full h-20 rounded-xl border border-gray-200 hover:bg-gray-50">
+            <div class="flex-shrink-0 w-14 h-14">
+              <%= if is_nil(mission_user.user.picture) do %>
+                <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
+                  <span class="text-xl font-medium leading-none text-white">
+                    <%= extract_initials(mission_user.user.name) %>
+                  </span>
                 </span>
+              <% else %>
+                <div class="relative flex-shrink-0 w-14 h-14 bg-white rounded-full">
+                  <img src={Parzival.Uploaders.ProfilePicture.url({mission_user.user.picture, mission_user.user}, :medium)} class="object-center w-14 h-14 rounded-full" />
+                </div>
+              <% end %>
+            </div>
+            <div class="flex overflow-hidden flex-col w-full">
+              <span class="inline-block overflow-hidden w-full text-base whitespace-nowrap text-ellipsis">
+                <%= mission_user.user.name %>
               </span>
-            <% else %>
-              <div class="relative flex-shrink-0 w-14 h-14 bg-white rounded-full">
-                <img src={Parzival.Uploaders.ProfilePicture.url({mission_user.user.picture, mission_user.user}, :medium)} class="object-center w-14 h-14 rounded-full" />
-              </div>
-            <% end %>
+              <span class="text-sm font-light text-gray-400">
+                Missions completed: <%= Enum.count(mission_user.user.missions) %>
+              </span>
+            </div>
           </div>
-          <div class="flex overflow-hidden flex-col w-full">
-            <span class="inline-block overflow-hidden w-full text-base whitespace-nowrap text-ellipsis">
-              <%= mission_user.user.name %>
-            </span>
-            <span class="text-sm font-light text-gray-400">
-              Missions complited: <%= Enum.count(mission_user.user.missions) %>
-            </span>
-          </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
   </div>
