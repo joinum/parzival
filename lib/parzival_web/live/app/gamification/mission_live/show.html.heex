@@ -187,8 +187,10 @@
         <% end %>
       <% end %>
     </div>
-    <div x-bind:class="last_users?'flex' : 'hidden'">
-      <.pagination items={@mission_users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
-    </div>
+    <%= if length(@mission_users) > 0 do %>
+      <div x-bind:class="last_users?'flex' : 'hidden'">
+        <.pagination items={@mission_users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+      </div>
+    <% end %>
   </div>
 </div>
