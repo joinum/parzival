@@ -10,6 +10,7 @@ defmodule Parzival.Repo.Migrations.CreateOffers do
       add :minimum_salary, :integer
       add :maximum_salary, :integer
       add :location, :text
+      add :work_model, :text
       add :description, :text
 
       add :company_id, references(:companies, on_delete: :nothing, type: :binary_id)
