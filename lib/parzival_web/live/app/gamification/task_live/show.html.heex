@@ -74,7 +74,7 @@
   <div class="flex flex-col mx-auto w-full">
     <div class="flex flex-row justify-between items-center py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
       <h2 class="text-lg font-medium sm:text-xl">
-        Last users that completed this task
+        Users that completed this task
       </h2>
     </div>
     <div>
@@ -107,7 +107,9 @@
           <% end %>
         <% end %>
       </ul>
-      <.pagination items={@task_users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+      <%= if length(@task_users) > 0 do %>
+        <.pagination items={@task_users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+      <% end %>
     </div>
   </div>
 </div>
