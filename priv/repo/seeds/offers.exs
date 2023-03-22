@@ -101,13 +101,12 @@ defmodule Parzival.Repo.Seeds.Offers do
           for _n <- 1..10 do
             minimum_salary = Enum.random(1000..3000)
 
-
             recruiters =
               User
               |> where(role: :recruiter)
               |> Repo.all()
 
-              {:ok, offer} =
+            {:ok, offer} =
               Offer.changeset(
                 %Offer{},
                 %{
