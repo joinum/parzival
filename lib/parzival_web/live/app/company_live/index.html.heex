@@ -37,16 +37,16 @@
               <div class="flex items-center">
                 <div>
                   <%= if is_nil(Uploaders.ProfilePicture.url({company.picture, company}, :medium)) do %>
-                    <div class="relative flex-shrink-0 rounded-full ring-4 ring-white min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
-                      <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
+                    <div class="relative flex-shrink-0 rounded-2xl ring-4 ring-white min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
+                      <span class="inline-flex justify-center items-center w-24 h-24 rounded-2xl sm:w-32 sm:h-32 bg-secondary">
                         <span class="text-4xl font-medium leading-none text-white select-none sm:text-5xl">
                           <%= extract_initials(company.name) %>
                         </span>
                       </span>
                     </div>
                   <% else %>
-                    <div class="relative flex-shrink-0 w-24 h-24 bg-white rounded-full ring-4 ring-white sm:w-32 sm:h-32">
-                      <img src={Uploaders.ProfilePicture.url({company.picture, company}, :medium)} class="object-center absolute rounded-full w-[98px] h-[98px] sm:w-[130px] sm:h-[130px]" />
+                    <div class="relative flex-shrink-0 w-24 h-24 bg-white rounded-2xl ring-4 ring-white sm:w-32 sm:h-32">
+                      <img src={Uploaders.ProfilePicture.url({company.picture, company}, :medium)} class="object-center absolute rounded-2xl w-[98px] h-[98px] sm:w-[130px] sm:h-[130px]" />
                     </div>
                   <% end %>
                 </div>
@@ -58,7 +58,7 @@
               </div>
             </div>
             <div>
-              <span class={"inline-flex items-center justify-center px-2 text-xs font-semibold leading-5 border #{border_200(company.level.color)} #{bg_100(company.level.color)} rounded-full"}>
+              <span class={"inline-flex items-center justify-center px-2 text-xs font-semibold leading-5 border #{border_200(company.level.color)} #{bg_100(company.level.color)} rounded-2xl"}>
                 <%= company.level.name %>
               </span>
             </div>
