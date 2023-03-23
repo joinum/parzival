@@ -132,6 +132,24 @@ defmodule Parzival.Repo.Seeds.Accounts do
             email: "mj@nefum.pt",
             password: "Password1234",
             role: :admin
+          },
+          %{
+            name: "Rui Lopes",
+            email: "rui@cesium.pt",
+            password: "Password1234",
+            role: :admin
+          },
+          %{
+            name: "Vitor Lelis",
+            email: "vitor@cesium.pt",
+            password: "Password1234",
+            role: :admin
+          },
+          %{
+            name: "Mafalda Couto",
+            email: "mf@nefum.pt",
+            password: "Password1234",
+            role: :admin
           }
         ]
         |> Enum.each(&insert_user/1)
