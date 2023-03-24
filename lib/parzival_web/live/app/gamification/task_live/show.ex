@@ -29,6 +29,10 @@ defmodule ParzivalWeb.App.TaskLive.Show do
        :has_skip_task?,
        Store.has_skip_task?(socket.assigns.current_user.id)
      )
+     |> assign(
+       :skip_task_boost,
+       Store.get_skip_task_boost
+     )
      |> assign(list_completed_tasks_users(params))
      |> assign(:task, Gamification.get_task!(task_id))
      |> assign(:qrcode, qrcode(socket, task_id))

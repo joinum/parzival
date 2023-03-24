@@ -342,6 +342,13 @@ defmodule Parzival.Store do
   """
   def get_boost!(id), do: Repo.get!(Boost, id)
 
+  # This function assumes the existance of a boost of type skip_task
+  def get_skip_task_boost do
+    Boost
+    |> where([b], b.type == :skip_task)
+    |> Repo.one()
+  end
+
   @doc """
   Creates a boost.
 
