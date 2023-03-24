@@ -100,14 +100,16 @@
                   <%= task.user.name %>
                 </span>
                 <span class="text-sm font-light text-gray-400">
-                  Missions complited: <%= Enum.count(task.user.missions) %>
+                  Missions completed: <%= Enum.count(task.user.missions) %>
                 </span>
               </div>
             </div>
           <% end %>
         <% end %>
       </ul>
-      <.pagination items={@task_users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+      <%= if length(@task_users) > 0 do %>
+        <.pagination items={@task_users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+      <% end %>
     </div>
   </div>
 </div>

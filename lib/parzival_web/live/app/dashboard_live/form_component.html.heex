@@ -92,15 +92,16 @@
                                 <div class="w-full">
                                   <div class="flex relative mt-1">
                                     <%= text_input(fp, :title, placeholder: "Add a institution, e.g. 'CeSIUM'", class: "w-full block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
-                                    <%= if is_nil(fp.data.id) do %>
-                                      <a class="absolute right-2 cursor-pointer" phx-click="rm-position" phx-target={@myself} phx-value-index={fp.index}>
-                                        <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
-                                      </a>
-                                    <% else %>
-                                      <a class="absolute right-2 cursor-pointer" onclick={"document.getElementById('#{fp.data.id}').click()"} x-on:click="show = false">
-                                        <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
-                                      </a>
-                                      <%= checkbox(fp, :delete, id: fp.data.id, class: "hidden") %>
+                                    <%= if length(fe.data.positions) > 1 do %>
+                                      <%= if is_nil(fp.data.id) do %>
+                                        <a class="absolute right-2 cursor-pointer" phx-click="rm-position" phx-target={@myself} phx-value-index={fp.index} phx-value-experience_index={fe.index}>
+                                          <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                        </a>
+                                      <% else %>
+                                        <a class="absolute right-2 cursor-pointer" phx-click="rm-position" phx-target={@myself} phx-value-index={fp.index} phx-value-experience_index={fe.index}>
+                                          <Heroicons.Solid.x class="mt-2.5 w-4 h-4 text-gray-500 hover:text-gray-700" />
+                                        </a>
+                                      <% end %>
                                     <% end %>
                                   </div>
                                   <div x-data={"{checkbox: #{is_nil(fp.data.finish)}}"} class="flex items-center mt-1 space-x-1">

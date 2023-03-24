@@ -9,9 +9,11 @@ defmodule Parzival.Companies.Offer do
   alias Parzival.Companies.OfferTime
   alias Parzival.Companies.OfferType
 
-  @required_fields ~w(maximum_salary minimum_salary title location description company_id offer_type_id offer_time_id)a
+  @required_fields ~w(maximum_salary minimum_salary title location work_model description company_id offer_type_id offer_time_id)a
 
   @optional_fields []
+
+  @work_models ~w(remote hybrid on_site)a
 
   @derive {
     Flop.Schema,
@@ -27,6 +29,7 @@ defmodule Parzival.Companies.Offer do
     field :minimum_salary, :integer
     field :title, :string
     field :location, :string
+    field :work_model, Ecto.Enum, values: @work_models
     field :description, :string
 
     field :applied, :integer, virtual: true

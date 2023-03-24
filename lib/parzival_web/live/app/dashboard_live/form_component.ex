@@ -223,14 +223,37 @@ defmodule ParzivalWeb.App.DashboardLive.FormComponent do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("rm-position", %{"index" => index}, socket) do
+  def handle_event(
+        "rm-position",
+        %{"index" => index, "experience_index" => experience_index},
+        socket
+      ) do
+    experiences =
+      socket.assigns.changeset
+      |> Ecto.Changeset.get_field(:experiences)
+
+    experience =
+      experiences
+      |> Enum.at(String.to_integer(experience_index), [])
+
     positions =
-      Map.get(socket.assigns.changeset.changes, :positions)
+      experience
+      |> Map.get(:positions, [])
       |> List.delete_at(String.to_integer(index))
 
-    changeset =
-      socket.assigns.changeset
-      |> Ecto.Changeset.put_embed(:positions, positions)
+    new_experience =
+      experience
+      |> Map.put(:positions, positions)
+
+    new_experiences =
+      experiences
+      |> List.replace_at(String.to_integer(experience_index), new_experience)
+
+    curriculum =
+      socket.assigns.curriculum
+      |> Map.put(:experiences, new_experiences)
+
+    changeset = Gamification.change_curriculum(curriculum)
 
     {:noreply, assign(socket, changeset: changeset)}
   end
