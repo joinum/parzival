@@ -5,11 +5,11 @@ defmodule Parzival.Gamification do
 
   use Parzival.Context
 
-  alias ParzivalWeb.Components.Boost
   alias Ecto.Multi
 
   alias Parzival.Accounts
   alias Parzival.Accounts.User
+  alias Parzival.Gamification
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Curriculum.Education
   alias Parzival.Gamification.Curriculum.Experience
@@ -17,6 +17,9 @@ defmodule Parzival.Gamification do
   alias Parzival.Gamification.Curriculum.Position
   alias Parzival.Gamification.Curriculum.Skill
   alias Parzival.Gamification.Curriculum.Volunteering
+  alias Parzival.Store
+  alias Parzival.Gamification.Mission.TaskUser
+  alias Parzival.Gamification.Mission.MissionUser
 
   @doc """
   Returns the list of curriculums.
@@ -434,6 +437,58 @@ defmodule Parzival.Gamification do
     Task.changeset(task, attrs)
   end
 
+  def skip_task(%User{} = user, %Task{} = task) do
+    Multi.new()
+    |> Multi.insert(
+      :task_user,
+      TaskUser.changeset(%TaskUser{}, %{
+        user_id: user.id,
+        task_id: task.id
+      })
+    )
+    |> Multi.update(
+      :update_user,
+      User.task_completion_changeset(user, %{
+        balance: user.balance + task.tokens,
+        exp: user.exp + task.exp
+      })
+    )
+    |> Multi.run(:mission, fn repo, _change ->
+      mission = Gamification.get_mission!(task.mission_id, tasks: [:users])
+
+      case Enum.all?(mission.tasks, fn task -> Enum.any?(task.users, &(&1.id == user.id)) end) do
+        true ->
+          %MissionUser{}
+          |> MissionUser.changeset(%{mission_id: mission.id, user_id: user.id})
+          |> repo.insert()
+
+          user
+          |> User.task_completion_changeset(%{
+            balance: user.balance + mission.tokens * get_tokens_multiplier(user),
+            exp: user.exp + mission.exp
+          })
+          |> repo.update()
+
+          {:ok, mission}
+
+        _ ->
+          {:ok, mission}
+      end
+    end)
+    |> Multi.delete(
+      :redeem_boost,
+      Store.get_skip_task_from_inventory(user.id)
+    )
+    |> Repo.transaction()
+    |> case do
+      {:ok, transaction} ->
+        broadcast({:ok, transaction}, :updated)
+
+      {:error, _transaction, changeset, _} ->
+        {:error, changeset}
+    end
+  end
+
   alias Parzival.Gamification.Mission.Difficulty
 
   @doc """
@@ -778,7 +833,7 @@ defmodule Parzival.Gamification do
       })
     )
     |> Multi.run(:mission, fn repo, _change ->
-      mission = Parzival.Gamification.get_mission!(task.mission_id, tasks: [:users])
+      mission = Gamification.get_mission!(task.mission_id, tasks: [:users])
 
       case Enum.all?(mission.tasks, fn task -> Enum.any?(task.users, &(&1.id == user.id)) end) do
         true ->

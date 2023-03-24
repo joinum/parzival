@@ -468,6 +468,14 @@ defmodule Parzival.Store do
     |> Repo.all()
   end
 
+  def get_skip_task_from_inventory(user_id) do
+    Item
+    |> where(user_id: ^user_id)
+    |> join(:inner, [i], b in Boost, on: i.boost_id == b.id)
+    |> where([i, b], b.type == :skip_task)
+    |> Repo.one()
+  end
+
   @doc """
   Gets a single item.
 
@@ -521,7 +529,7 @@ defmodule Parzival.Store do
   end
 
   @doc """
-  Deletes a item.
+  Deletes an item.
 
   ## Examples
 

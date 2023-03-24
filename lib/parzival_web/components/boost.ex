@@ -10,7 +10,7 @@ defmodule ParzivalWeb.Components.Boost do
     <div class="w-12 h-12">
       <%= if ! assigns.item.expires_at do %>
         <%= if assigns.item.boost.type in [:exp, :tokens] do %>
-          <button phx-click="activate_boost" phx-value-item_id={assigns.item.id} phx-target={@myself} data-confirm={"Are you sure you wanna activate #{assigns.item.boost.name}? #{assigns.item.boost.description}."}>
+          <button phx-click="activate-boost" phx-value-item_id={assigns.item.id} phx-target={@myself} data-confirm={"Are you sure you wanna activate #{assigns.item.boost.name}? #{assigns.item.boost.description}."}>
             <img src={Uploaders.BoostImage.url({assigns.item.boost.image, assigns.item.boost}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full hover:opacity-70" />
           </button>
         <% else %>
@@ -26,7 +26,7 @@ defmodule ParzivalWeb.Components.Boost do
     """
   end
 
-  def handle_event("activate_boost", %{"item_id" => item_id}, socket) do
+  def handle_event("activate-boost", %{"item_id" => item_id}, socket) do
     item = Store.get_item!(item_id)
 
     Store.update_item(item, %{expires_at: Timex.shift(NaiveDateTime.utc_now(), minutes: 1)})
