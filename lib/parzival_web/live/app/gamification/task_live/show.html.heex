@@ -22,7 +22,11 @@
           <% else %>
             <%= live_patch to: Routes.task_show_url(@socket, :redeem, @mission, @task), class: "button" do %>
               <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm cursor-pointer xl:w-full bg-secondary hover:bg-primary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
-                Complete task
+                <%= if @has_skip_task? do %>
+                  Skip task
+                <% else %>
+                  Complete task
+                <% end %>
               </div>
             <% end %>
           <% end %>

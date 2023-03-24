@@ -541,4 +541,12 @@ defmodule Parzival.Store do
   def change_item(%Item{} = item, attrs \\ %{}) do
     Item.changeset(item, attrs)
   end
+
+  def has_skip_task?(user_id) do
+    Item
+    |> where([i], i.user_id == ^user_id)
+    |> join(:inner, [i], b in Boost, on: i.boost_id == b.id)
+    |> where([i, b], b.type == :skip_task)
+    |> Repo.exists?()
+  end
 end

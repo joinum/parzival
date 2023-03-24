@@ -5,6 +5,7 @@ defmodule Parzival.Gamification do
 
   use Parzival.Context
 
+  alias ParzivalWeb.Components.Boost
   alias Ecto.Multi
 
   alias Parzival.Accounts
@@ -811,17 +812,16 @@ defmodule Parzival.Gamification do
   defp get_tokens_multiplier(%User{} = user) do
     user = Accounts.load_user_fields(user, inventory: [:boost])
 
-    item =
-      user.inventory
-      |> Enum.find_value(
-        1.0,
-        fn item ->
-          if item.boost.type == :tokens &&
-               Timex.diff(DateTime.utc_now(), item.boost.expires_at, :minutes) <= 60 do
-            item.boost.multiplier
-          end
+    user.inventory
+    |> Enum.find_value(
+      1.0,
+      fn item ->
+        if item.boost.type == :tokens &&
+             Timex.diff(DateTime.utc_now(), item.boost.expires_at, :minutes) <= 60 do
+          item.boost.multiplier
         end
-      )
+      end
+    )
   end
 
   def is_task_completed?(task_id, user_id) do

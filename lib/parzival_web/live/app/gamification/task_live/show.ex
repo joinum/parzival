@@ -6,6 +6,7 @@ defmodule ParzivalWeb.App.TaskLive.Show do
 
   alias Parzival.Accounts
   alias Parzival.Gamification
+  alias Parzival.Store
 
   @impl true
   def mount(_params, _session, socket) do
@@ -23,6 +24,10 @@ defmodule ParzivalWeb.App.TaskLive.Show do
      |> assign(
        :is_task_completed?,
        Gamification.is_task_completed?(task_id, socket.assigns.current_user.id)
+     )
+     |> assign(
+       :has_skip_task?,
+       Store.has_skip_task?(socket.assigns.current_user.id)
      )
      |> assign(list_completed_tasks_users(params))
      |> assign(:task, Gamification.get_task!(task_id))
