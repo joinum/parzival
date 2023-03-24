@@ -1,12 +1,13 @@
 defmodule Parzival.Uploaders.ProfilePicture do
   @moduledoc """
-  ProductImage is used for product images.
+  ProfileImage is used for profile images.
   """
 
   use Waffle.Definition
   use Waffle.Ecto.Definition
 
   alias Parzival.Accounts.User
+  alias Parzival.Companies.Company
 
   @versions [:original, :medium, :thumb]
   @extension_whitelist ~w(.jpg .jpeg .gif .png)
@@ -38,8 +39,7 @@ defmodule Parzival.Uploaders.ProfilePicture do
     "uploads/profile/#{scope.id}"
   end
 
-  # Provide a default URL if there hasn't been a file uploaded
-  # def default_url(version) do
-  #   "/images/defaults/store/product_image_#{version}.png"
-  # end
+  def storage_dir(_version, {_file, %Company{} = scope}) do
+    "uploads/company/#{scope.id}"
+  end
 end

@@ -1,5 +1,6 @@
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.admin_offer_time_index_path(@socket, :index)}>
+    <h2 class="mb-5 text-2xl font-bold text-left text-gray-900">Edit time</h2>
     <.live_component module={ParzivalWeb.Backoffice.OfferTimeLive.FormComponent} id={@offer_time.id || :new} title={@page_title} action={@live_action} offer_time={@offer_time} return_to={Routes.admin_offer_time_index_path(@socket, :index)} />
   </.modal>
 <% end %>

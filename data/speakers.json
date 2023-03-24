@@ -1,38 +1,38 @@
 [
   {
-    "name": "Luis Araújo",
-    "photo": "luis",
-    "job": "Organizer",
-    "company": "CeSIUM"
+    "name": "Roberto Machado",
+    "photo": "roberto",
+    "job": "Co-Founder & CEO",
+    "company": "Subvisual"
   },
   {
-    "name": "Luis Araújo",
-    "photo": "luis",
-    "job": "Organizer",
-    "company": "CeSIUM"
+    "name": "Mário Gago",
+    "photo": "mario",
+    "job": "CEO",
+    "company": "Pink Room"
   },
   {
-    "name": "Luis Araújo",
-    "photo": "luis",
-    "job": "Organizer",
-    "company": "CeSIUM"
+    "name": "Diogo Viana",
+    "photo": "diogo_viana",
+    "job": "Full Stack Software Engineer",
+    "company": "Finiam"
   },
   {
-    "name": "Filipe Felício",
-    "photo": "luis",
-    "job": "Organizer",
-    "company": "CeSIUM"
+    "name": "André Maximino",
+    "photo": "andre_maximino",
+    "job": "",
+    "company": "Pink Room"
   },
   {
-    "name": "Filipe Felício",
-    "photo": "filipe",
-    "job": "Organizer",
-    "company": "CeSIUM"
+    "name": "Miguel Palhas",
+    "photo": "miguel_palhas",
+    "job": "Blockchain Developer",
+    "company": "Subvisual"
   },
   {
-    "name": "Filipe Felício",
-    "photo": "filipe",
-    "job": "Organizer",
-    "company": "CeSIUM"
+    "name": "Diogo Teixeira",
+    "photo": "diogo_teixeira",
+    "job": "Advanced Application Specialist",
+    "company": "Accenture"
   }
 ]

@@ -11,15 +11,19 @@
     <style>
       * {
         -webkit-box-sizing: border-box;
+        box-sizing: border-box;
       }
       .flexrow {
         display: -webkit-box;
+        display: box;
         display: -webkit-flex;
         display: flex;
       }
       .flexrow > div {
         -webkit-box-pack: justify;
+        box-pack: justify;
         -webkit-box-flex: 1;
+        box-flex: 1;
         -webkit-flex: 1;
         flex: 1;
       }
@@ -36,7 +40,7 @@
   <body style="background-color: white">
     <div style="background-color: rgb(234,59,45); height: 37.13cm; z-index: -20;" class="absolute py-16 px-10 w-1/3">
       <div class="relative mx-auto w-48 h-48">
-        <%= if is_nil(@profile_picture) do %>
+        <%= if is_nil(@avatar) do %>
           <div style="background-color: rgb(234,59,45); border-width: 5px; border-color: white;" class="w-48 h-48 rounded-full border-white">
             <div style="color: white; font-size: 72px; line-height: 1; text-align: center; padding-top: 58px;" class="font-bold">
               <%= extract_initials(@user.name) %>
@@ -44,7 +48,7 @@
           </div>
         <% else %>
           <div style="background-color: white;" class="relative rounded-full border-white ring-4 w-[204px] h-[204px]">
-            <img src={"http://localhost:4000/#{@profile_picture}"} width="192px" height="192px" class="object-cover object-center absolute rounded-full border top-[6px] left-[6px]" />
+            <img src={"http://localhost:4000/#{@avatar}"} width="192px" height="192px" class="object-cover object-center absolute rounded-full border top-[6px] left-[6px]" />
           </div>
         <% end %>
       </div>
@@ -125,7 +129,7 @@
               </tr>
             <% end %>
 
-            <%= if @curriculum.experiences do %>
+            <%= if length(@curriculum.experiences) > 0 do %>
               <tr class="mt-10 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EXPERIENCE</p>
@@ -184,7 +188,7 @@
               </tr>
             <% end %>
 
-            <%= if @curriculum.educations do %>
+            <%= if length(@curriculum.educations) > 0 do %>
               <tr class="mt-8 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EDUCATION</p>
@@ -205,7 +209,7 @@
               </tr>
             <% end %>
 
-            <%= if @curriculum.volunteerings do %>
+            <%= if length(@curriculum.volunteerings) > 0 do %>
               <tr class="mt-10 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">VOLUNTEERING</p>
@@ -233,7 +237,7 @@
               </tr>
             <% end %>
 
-            <%= if @curriculum.skills do %>
+            <%= if length(@curriculum.skills) > 0 do %>
               <tr class="mt-10 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-4 text-2xl font-bold tracking-wider">SKILLS</p>
@@ -260,7 +264,7 @@
               </tr>
             <% end %>
 
-            <%= if @curriculum.languages do %>
+            <%= if length(@curriculum.languages) > 0 do %>
               <tr class="mt-10 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-4 text-2xl font-bold tracking-wider">LANGUAGES</p>

@@ -1,6 +1,7 @@
 defmodule Parzival.Repo.Seeds.Accounts do
   alias Parzival.Repo
 
+  alias Parzival.Accounts.QRCode
   alias Parzival.Accounts.User
   alias Parzival.Companies.Company
   alias Parzival.Companies.Offer
@@ -11,7 +12,24 @@ defmodule Parzival.Repo.Seeds.Accounts do
   @courses File.read!("priv/fake/uminho_courses.txt") |> String.split("\n")
 
   def run do
+    seed_qrs(100)
     seed_users()
+  end
+
+  def seed_qrs(n) do
+    case Repo.all(QRCode) do
+      [] ->
+        for _i <- 1..n do
+          uuid = %{uuid: Ecto.UUID.generate()}
+
+          %QRCode{}
+          |> QRCode.changeset(uuid)
+          |> Repo.insert()
+        end
+
+      _ ->
+        Mix.shell().error("Found qr codes, aborting seeding qr codes.")
+    end
   end
 
   def seed_users do
@@ -112,6 +130,24 @@ defmodule Parzival.Repo.Seeds.Accounts do
           %{
             name: "Maria João Portela",
             email: "mj@nefum.pt",
+            password: "Password1234",
+            role: :admin
+          },
+          %{
+            name: "Rui Lopes",
+            email: "rui@cesium.pt",
+            password: "Password1234",
+            role: :admin
+          },
+          %{
+            name: "Vitor Lelis",
+            email: "vitor@cesium.pt",
+            password: "Password1234",
+            role: :admin
+          },
+          %{
+            name: "Mafalda Couto",
+            email: "mf@nefum.pt",
             password: "Password1234",
             role: :admin
           }

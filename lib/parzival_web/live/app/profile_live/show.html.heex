@@ -8,8 +8,8 @@
       <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
         <div class="-mt-12 sm:flex sm:items-end sm:-mt-16 sm:space-x-5">
           <div>
-            <%= if is_nil(Uploaders.ProfilePicture.url({@user.picture, @user}, :medium)) do %>
-              <div class="relative flex-shrink-0 rounded-full ring-4 ring-white min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
+            <%= if is_nil(@user.picture) do %>
+              <div class="relative flex-shrink-0 w-24 h-24 rounded-full ring-4 ring-white sm:w-32 sm:h-32">
                 <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
                   <span class="text-4xl font-medium leading-none text-white select-none sm:text-5xl">
                     <%= extract_initials(@user.name) %>
@@ -27,11 +27,19 @@
               <h1 class="text-2xl font-bold text-gray-900 truncate">
                 <%= @user.name %>
               </h1>
+              <.social_icons twitter={@user.twitter} github={@user.github} linkedin={@user.linkedin} />
             </div>
             <div class="flex flex-col mt-6 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
-              <%= if @current_user.role in [:admin] || @user.id == @current_user.id do %>
-                <div class="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
+              <%= if @current_user.role == :admin || @user.id == @current_user.id do %>
+                <div x-bind:class="option !='profile' ? 'hidden' : ''" class="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
                   <%= live_patch to: Routes.profile_edit_path(@socket, :edit, @user), class: "inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50" do %>
+                    <Heroicons.Solid.pencil class="mr-2 -ml-1 w-5 h-5 text-gray-400" /> Edit
+                  <% end %>
+                </div>
+              <% end %>
+              <%= if @user.id == @current_user.id do %>
+                <div x-bind:class="option =='profile' ? 'hidden' : ''">
+                  <%= live_patch to: Routes.dashboard_edit_path(@socket, :edit), class: "bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50" do %>
                     <Heroicons.Solid.pencil class="mr-2 -ml-1 w-5 h-5 text-gray-400" /> Edit
                   <% end %>
                 </div>
@@ -42,9 +50,9 @@
                   <span>Message</span>
                 </a>
               <% end %>
-              <%= if @user.role in [:attendee] && @current_user.role in [:admin] || @current_user.role in [:attendee] && @user.id == @current_user.id do %>
+              <%= if @user.role in [:attendee] && @current_user.role in [:admin, :recruiter] || @current_user.role in [:attendee] && @user.id == @current_user.id do %>
                 <%= link("Download CV",
-                  to: Routes.pdf_path(@socket, :cv, @user),
+                  to: Routes.pdf_path(@socket, :download_cv, @user),
                   class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
                 ) %>
               <% end %>
@@ -55,6 +63,7 @@
           <h1 class="text-2xl font-bold text-gray-900 truncate">
             <%= @user.name %>
           </h1>
+          <.social_icons twitter={@user.twitter} github={@user.github} linkedin={@user.linkedin} />
         </div>
       </div>
     </div>
@@ -70,7 +79,7 @@
             >
               Profile
             </button>
-            <%= if @user.role in [:attendee] && (@current_user.role in [:admin] || @user.id == @current_user.id) do %>
+            <%= if @user.role in [:attendee] and (@current_user.role in [:recruiter, :admin] or @user.id == @current_user.id) do %>
               <button
                 x-on:click="option = 'curriculum'"
                 x-bind:class="option =='curriculum' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
@@ -87,6 +96,16 @@
                 class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
               >
                 Company
+              </button>
+            <% end %>
+
+            <%= if @current_user.role in [:admin, :staff] and @user.role in [:attendee] do %>
+              <button
+                x-on:click="option = 'connections'"
+                x-bind:class="option =='connections' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+              >
+                Connections
               </button>
             <% end %>
           </nav>
@@ -118,16 +137,20 @@
           <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">Email</dt>
             <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.email %>
+              <a class="text-blue-400" href={"mailto:#{@user.email}"}>
+                <%= @user.email %>
+              </a>
             </dd>
           </div>
         <% end %>
 
-        <%= if @user.cellphone do %>
+        <%= if @user.cellphone && @user.id == @current_user.id do %>
           <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">Phone</dt>
             <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.cellphone %>
+              <a class="text-blue-400" href={"tel:#{@user.cellphone}"}>
+                <%= @user.cellphone %>
+              </a>
             </dd>
           </div>
         <% end %>
@@ -136,34 +159,9 @@
           <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">Website</dt>
             <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.website %>
-            </dd>
-          </div>
-        <% end %>
-
-        <%= if @user.linkedin do %>
-          <div class="sm:col-span-1">
-            <dt class="text-sm font-medium text-gray-500">Linkedin</dt>
-            <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.linkedin %>
-            </dd>
-          </div>
-        <% end %>
-
-        <%= if @user.github do %>
-          <div class="sm:col-span-1">
-            <dt class="text-sm font-medium text-gray-500">Github</dt>
-            <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.github %>
-            </dd>
-          </div>
-        <% end %>
-
-        <%= if @user.twitter do %>
-          <div class="sm:col-span-1">
-            <dt class="text-sm font-medium text-gray-500">Twitter</dt>
-            <dd class="mt-1 text-sm text-gray-900">
-              <%= @user.twitter %>
+              <a class="text-blue-400" href={(String.starts_with?(@user.website, "http") && @user.website) || "https://#{@user.website}"} target="_blank">
+                <%= @user.website %>
+              </a>
             </dd>
           </div>
         <% end %>
@@ -171,18 +169,58 @@
     </div>
     <!-- Curriculum -->
     <%= if @user.role in [:attendee] do %>
-      <.curriculum curriculum_assigns={assigns[:curriculum]} curriculum={@curriculum} />
+      <.curriculum user={@user} socket={@socket} curriculum={@curriculum} current_page={@current_page} />
+    <% end %>
+    <!-- Connections -->
+    <%= if @current_user.role in [:admin, :staff] and @user.role in [:attendee] do %>
+      <div x-bind:class="option =='connections' ? 'block' : 'hidden'" class="grid grid-cols-1 gap-4 px-4 pt-4 mx-auto max-w-5xl sm:grid-cols-2 sm:px-6 lg:px-8">
+        <%= for connection <- @connections do %>
+          <div class="flex relative items-center py-5 px-6 space-x-3 bg-white rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50">
+            <div class="flex-shrink-0 w-10 h-10">
+              <%= if is_nil(connection.company.picture) do %>
+                <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                  <span class="text-lg font-medium leading-none text-white">
+                    <%= extract_initials(connection.company.name) %>
+                  </span>
+                </span>
+              <% else %>
+                <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                  <img src={Parzival.Uploaders.ProfilePicture.url({connection.company.picture, connection.company}, :medium)} class="object-center w-10 h-10 rounded-full" />
+                </div>
+              <% end %>
+            </div>
+            <div class="flex-1 min-w-0">
+              <%= live_redirect to: Routes.company_show_path(@socket, :show, connection.company) do %>
+                <span class="absolute inset-0" aria-hidden="true"></span>
+                <p class="text-sm font-medium text-gray-900">
+                  <%= connection.company.name %>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     <% end %>
     <!-- Company -->
     <%= if @user.role in [:recruiter] do %>
       <div x-bind:class="option =='company' ? 'block' : 'hidden'" class="px-4 pb-12 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
         <%= live_redirect to: Routes.company_show_path(@socket, :show, @user.company), class: "mt-4 flex border border-gray-300 shadow-sm hover:bg-gray-50 px-6 py-6 rounded-md items-center" do %>
           <div class="flex-shrink-0 mr-4 md:mb-4">
-            <span class="inline-flex justify-center items-center w-16 h-16 rounded-full md:w-24 md:h-24 bg-secondary">
-              <span class="text-3xl font-medium leading-none text-white md:text-5xl">
-                <%= extract_initials(@user.company.name) %>
-              </span>
-            </span>
+            <div>
+              <%= if is_nil(@user.company.picture) do %>
+                <div class="relative flex-shrink-0 rounded-full ring-4 ring-white min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
+                  <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
+                    <span class="text-4xl font-medium leading-none text-white select-none sm:text-5xl">
+                      <%= extract_initials(@user.company.name) %>
+                    </span>
+                  </span>
+                </div>
+              <% else %>
+                <div class="relative flex-shrink-0 w-24 h-24 bg-white rounded-full ring-4 ring-white sm:w-32 sm:h-32">
+                  <img src={Parzival.Uploaders.ProfilePicture.url({@user.company.picture, @user.company}, :medium)} class="object-center absolute rounded-full w-[98px] h-[98px] sm:w-[130px] sm:h-[130px]" />
+                </div>
+              <% end %>
+            </div>
           </div>
           <div>
             <h4 class="text-lg font-bold text-gray-800">
@@ -202,7 +240,7 @@
             <%= for recruiter <- @recruiters do %>
               <div class="flex relative items-center py-5 px-6 space-x-3 bg-white rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50">
                 <div class="flex-shrink-0 w-10 h-10">
-                  <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({recruiter.picture, recruiter}, :medium)) do %>
+                  <%= if is_nil(recruiter.picture) do %>
                     <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
                       <span class="text-lg font-medium leading-none text-white">
                         <%= extract_initials(recruiter.name) %>

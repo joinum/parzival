@@ -4,18 +4,18 @@ defmodule Parzival.Repo.Seeds.Offers do
   alias Parzival.Repo
 
   alias Parzival.Accounts.User
-
+  alias Parzival.Companies.Application
   alias Parzival.Companies.Company
   alias Parzival.Companies.Offer
-  alias Parzival.Companies.OfferType
   alias Parzival.Companies.OfferTime
-
+  alias Parzival.Companies.OfferType
   alias Parzival.Tools.Post
 
   def run do
     seed_types()
     seed_times()
     seed_offers()
+    seed_applications()
   end
 
   def seed_types() do
@@ -115,6 +115,7 @@ defmodule Parzival.Repo.Seeds.Offers do
                   title: Faker.Lorem.sentence(2),
                   description: Faker.Lorem.sentence(100..300),
                   location: "#{Faker.Address.En.city()}, #{Faker.Address.En.country()}",
+                  work_model: Enum.random([:remote, :hybrid, :on_site]),
                   offer_time_id: Enum.random(offer_times).id,
                   offer_type_id: Enum.random(offer_types).id,
                   company_id: company.id
@@ -136,6 +137,28 @@ defmodule Parzival.Repo.Seeds.Offers do
 
       _ ->
         Mix.shell().error("Found offers, aborting seeding offers.")
+    end
+  end
+
+  def seed_applications() do
+    users = Repo.all(where(User, role: :attendee))
+    offers = Repo.all(Offer)
+
+    case Repo.all(Application) do
+      [] ->
+        for _n <- 1..200 do
+          Application.changeset(
+            %Application{},
+            %{
+              user_id: Enum.random(users).id,
+              offer_id: Enum.random(offers).id
+            }
+          )
+          |> Repo.insert!()
+        end
+
+      _ ->
+        Mix.shell().error("Found applications, aborting seeding applications.")
     end
   end
 end

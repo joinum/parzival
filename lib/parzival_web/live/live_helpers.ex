@@ -29,7 +29,7 @@ defmodule ParzivalWeb.LiveHelpers do
 
     ~H"""
     <div id="modal" class="phx-modal fade-in" phx-remove={hide_modal()}>
-      <div id="modal-content" class="!w-min rounded-lg phx-modal-content fade-in-scale w-min" phx-click-away={JS.dispatch("click", to: "#close")} phx-window-keydown={JS.dispatch("click", to: "#close")} phx-key="escape">
+      <div id="modal-content" class="rounded-lg phx-modal-content fade-in-scale" phx-click-away={JS.dispatch("click", to: "#close")} phx-window-keydown={JS.dispatch("click", to: "#close")} phx-key="escape">
         <%= if @return_to do %>
           <%= live_patch to: @return_to, id: "close", class: "phx-modal-close", phx_click: hide_modal() do %>
             <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-8 h-8 lg:mr-3 lg:w-6 lg:h-6" viewBox="0 0 20 20" fill="currentColor">
@@ -43,7 +43,6 @@ defmodule ParzivalWeb.LiveHelpers do
             </svg>
           </a>
         <% end %>
-        <h2 class="mb-5 text-2xl font-bold text-left text-gray-900">Show this QR code to a staff member</h2>
         <%= render_slot(@inner_block) %>
       </div>
     </div>

@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.Backoffice.DificultyLive.FormComponent do
+defmodule ParzivalWeb.Backoffice.DifficultyLive.FormComponent do
   @moduledoc false
   use ParzivalWeb, :live_component
 
@@ -7,8 +7,8 @@ defmodule ParzivalWeb.Backoffice.DificultyLive.FormComponent do
   alias Parzival.Gamification
 
   @impl true
-  def update(%{dificulty: dificulty} = assigns, socket) do
-    changeset = Gamification.change_dificulty(dificulty)
+  def update(%{difficulty: difficulty} = assigns, socket) do
+    changeset = Gamification.change_difficulty(difficulty)
 
     {:ok,
      socket
@@ -17,25 +17,25 @@ defmodule ParzivalWeb.Backoffice.DificultyLive.FormComponent do
   end
 
   @impl true
-  def handle_event("validate", %{"dificulty" => dificulty_params}, socket) do
+  def handle_event("validate", %{"difficulty" => difficulty_params}, socket) do
     changeset =
-      socket.assigns.dificulty
-      |> Gamification.change_dificulty(dificulty_params)
+      socket.assigns.difficulty
+      |> Gamification.change_difficulty(difficulty_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_event("save", %{"dificulty" => dificulty_params}, socket) do
-    save_dificulty(socket, socket.assigns.action, dificulty_params)
+  def handle_event("save", %{"difficulty" => difficulty_params}, socket) do
+    save_difficulty(socket, socket.assigns.action, difficulty_params)
   end
 
-  defp save_dificulty(socket, :edit, dificulty_params) do
-    case Gamification.update_dificulty(socket.assigns.dificulty, dificulty_params) do
-      {:ok, _dificulty} ->
+  defp save_difficulty(socket, :edit, difficulty_params) do
+    case Gamification.update_difficulty(socket.assigns.difficulty, difficulty_params) do
+      {:ok, _difficulty} ->
         {:noreply,
          socket
-         |> put_flash(:success, "Dificulty updated successfully")
+         |> put_flash(:success, "Difficulty updated successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -43,12 +43,12 @@ defmodule ParzivalWeb.Backoffice.DificultyLive.FormComponent do
     end
   end
 
-  defp save_dificulty(socket, :new, dificulty_params) do
-    case Gamification.create_dificulty(dificulty_params) do
-      {:ok, _dificulty} ->
+  defp save_difficulty(socket, :new, difficulty_params) do
+    case Gamification.create_difficulty(difficulty_params) do
+      {:ok, _difficulty} ->
         {:noreply,
          socket
-         |> put_flash(:success, "Dificulty created successfully")
+         |> put_flash(:success, "Difficulty created successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

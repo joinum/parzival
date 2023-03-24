@@ -13,7 +13,7 @@ defmodule ParzivalWeb.App.MissionLive.Index do
   @impl true
   def handle_params(_params, _url, socket) do
     missions_levels =
-      Gamification.list_missions(preloads: [:dificulty, :created_by, tasks: [:users]])
+      Gamification.list_missions(preloads: [:difficulty, :created_by, tasks: [:users]])
       |> Enum.group_by(& &1.level)
 
     current_user = Accounts.get_user!(socket.assigns.current_user.id)
@@ -49,8 +49,8 @@ defmodule ParzivalWeb.App.MissionLive.Index do
               <div class="mt-3 text-gray-500">
                 <div class="flex flex-row gap-x-5">
                   <div class="flex text-right text-gray-500 lg:hidden lg:pl-0 items-centertext-xs">
-                    <span class={"inline-flex items-center justify-center px-2 text-xs font-semibold leading-5 border #{border_200(@mission.dificulty.color)} #{bg_100(@mission.dificulty.color)} rounded-full"}>
-                      <%= assigns.mission.dificulty.name %>
+                    <span class={"inline-flex items-center justify-center px-2 text-xs font-semibold leading-5 border #{border_200(@mission.difficulty.color)} #{bg_100(@mission.difficulty.color)} rounded-full"}>
+                      <%= assigns.mission.difficulty.name %>
                     </span>
                   </div>
                   <div class="flex flex-row gap-x-1 text-sm">
@@ -77,8 +77,8 @@ defmodule ParzivalWeb.App.MissionLive.Index do
         </div>
         <div class="flex flex-row pb-2 mt-2 w-full lg:flex-col lg:justify-between lg:pt-2 lg:pb-0 lg:mt-0 lg:w-auto">
           <div class="hidden flex-shrink-0 justify-end lg:flex lg:ml-2">
-            <p class={"inline-flex items-center justify-center px-2 text-xs font-semibold leading-5 #{border_200(@mission.dificulty.color)} #{bg_100(@mission.dificulty.color)} border rounded-full"}>
-              <%= assigns.mission.dificulty.name %>
+            <p class={"inline-flex items-center justify-center px-2 text-xs font-semibold leading-5 #{border_200(@mission.difficulty.color)} #{bg_100(@mission.difficulty.color)} border rounded-full"}>
+              <%= assigns.mission.difficulty.name %>
             </p>
           </div>
           <div class="hidden items-center px-2 ml-5 text-xs text-right text-gray-500 lg:flex lg:pb-1 lg:pl-0">

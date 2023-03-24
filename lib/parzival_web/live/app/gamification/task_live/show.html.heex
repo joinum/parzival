@@ -1,6 +1,11 @@
 <%= if @live_action in [:redeem] do %>
-  <.modal return_to={Routes.mission_task_show_path(@socket, :show, @mission, @task)}>
-    <.live_component module={ParzivalWeb.App.MissionLive.TaskLive.FormComponent} id={@task.id} title={@page_title} action={@live_action} task={@task} mission={@mission} user_id={@current_user.id} return_to={Routes.mission_task_show_path(@socket, :show, @mission, @task)} />
+  <.modal return_to={Routes.task_show_path(@socket, :show, @mission, @task)}>
+    <h2 class="mb-5 text-2xl font-bold text-center text-gray-900">Show this QR code to a staff member</h2>
+    <div class="flex items-center mx-auto w-min">
+      <div class="items-center m-auto">
+        <%= @qrcode |> raw %>
+      </div>
+    </div>
   </.modal>
 <% end %>
 
@@ -10,16 +15,16 @@
       <h1 class="flex-1 text-lg font-medium">Task</h1>
       <%= if @current_user.role in [:attendee] do %>
         <div class="flex flex-row gap-x-4">
-          <%= if @is_task_completed == false do %>
-            <%= live_patch to: Routes.mission_task_show_url(@socket, :redeem, @mission, @task), class: "button" do %>
+          <%= if @is_task_completed? do %>
+            <div class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white bg-green-400 rounded-md border border-transparent shadow-sm xl:w-full">
+              Completed
+            </div>
+          <% else %>
+            <%= live_patch to: Routes.task_show_url(@socket, :redeem, @mission, @task), class: "button" do %>
               <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm cursor-pointer xl:w-full bg-secondary hover:bg-primary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
                 Complete task
               </div>
             <% end %>
-          <% else %>
-            <div class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white bg-green-400 rounded-md border border-transparent shadow-sm xl:w-full">
-              Completed
-            </div>
           <% end %>
         </div>
       <% end %>
@@ -78,7 +83,7 @@
           <%= live_redirect to: Routes.profile_show_path(@socket, :show, task.user) do %>
             <div class="flex flex-row gap-x-2 items-center p-2 w-full h-20 rounded-xl border border-gray-200 hover:bg-gray-50">
               <div class="flex-shrink-0 w-14 h-14">
-                <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({task.user.picture, task.user}, :medium)) do %>
+                <%= if is_nil(task.user.picture) do %>
                   <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
                     <span class="text-xl font-medium leading-none text-white">
                       <%= extract_initials(task.user.name) %>
@@ -95,14 +100,16 @@
                   <%= task.user.name %>
                 </span>
                 <span class="text-sm font-light text-gray-400">
-                  Missions complited: <%= Enum.count(task.user.missions) %>
+                  Missions completed: <%= Enum.count(task.user.missions) %>
                 </span>
               </div>
             </div>
           <% end %>
         <% end %>
       </ul>
-      <.pagination items={@task_users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+      <%= if length(@task_users) > 0 do %>
+        <.pagination items={@task_users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+      <% end %>
     </div>
   </div>
 </div>

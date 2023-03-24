@@ -1,0 +1,70 @@
+<div x-data="{option: 'all'}" class="h-full bg-white border-r border-gray-200">
+  <div class={"#{@current_user.role in [:admin, :recruiter] && "flex justify-between items-center pb-4"} pt-5 pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y"}>
+    <h1 class="flex-1 text-lg font-medium">Connections</h1>
+    <!-- Tabs -->
+    <div class="mt-2 2xl:mt-5">
+      <div class="flex justify-between items-center">
+        <%= if @current_user.role in [:attendee] do %>
+          <nav class="flex -mb-px space-x-8" aria-label="Tabs">
+            <%= live_patch to: "?tab=all", class: "#{@current_tab == "all" && "border-b-2 border-red-500 text-gray-900" || "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
+              <%= "All" %>
+            <% end %>
+            <%= live_patch to: "?tab=mine", class: "#{@current_tab == "mine" && "border-b-2 border-red-500 text-gray-900" || "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
+              <%= "Mine" %>
+            <% end %>
+          </nav>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!-- Candidates List -->
+  <ul role="list" class="mt-5 border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
+    <%= for connection <- @connections do %>
+      <li>
+        <%= live_patch to: Routes.profile_show_path(@socket, :show, connection.user), class: "group group-hover:bg-gray-50 border-b border-gray-200" do %>
+          <div class="flex flex-row py-4 px-4 sm:px-6 group-hover:bg-gray-50">
+            <div class="flex flex-1 items-center min-w-0">
+              <div class="flex-shrink-0 group-hover:opacity-75">
+                <%= if is_nil(connection.user.picture) do %>
+                  <span class="inline-flex justify-center items-center mr-2 w-12 h-12 rounded-full bg-secondary">
+                    <span class="text-lg font-medium leading-none text-white">
+                      <%= extract_initials(connection.user.name) %>
+                    </span>
+                  </span>
+                <% else %>
+                  <div class="relative flex-shrink-0 w-12 h-12 bg-white rounded-full">
+                    <img src={Parzival.Uploaders.ProfilePicture.url({connection.user.picture, connection.user}, :medium)} class="object-center w-12 h-12 rounded-full" />
+                  </div>
+                <% end %>
+              </div>
+              <div class="flex-1 px-4 min-w-0 md:grid md:grid-cols-2 md:gap-4">
+                <div>
+                  <p class="text-sm font-medium text-red-600 truncate">
+                    <%= connection.user.name %>
+                  </p>
+                  <p class="flex items-center mt-2 text-sm text-gray-500">
+                    <Heroicons.Solid.mail class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+                    <span class="truncate">
+                      <%= connection.user.email %>
+                    </span>
+                  </p>
+                </div>
+                <div class="hidden md:block">
+                  <div class="flex items-center h-full">
+                    <p class="text-sm text-gray-900">
+                      Connected <%= relative_datetime(connection.inserted_at) %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <Heroicons.Solid.chevron_right class="mt-4 w-5 h-5 text-gray-400" />
+            </div>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <.pagination items={@connections} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+</div>

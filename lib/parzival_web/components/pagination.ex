@@ -11,11 +11,12 @@ defmodule ParzivalWeb.Components.Pagination do
         <div class="flex flex-1 -mt-px w-0">
           <%= if @meta.has_previous_page? do %>
             <%= live_patch to: build_query(@meta.previous_page, @params), class: "inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-500 hover:text-gray-700" do %>
-              <Heroicons.Solid.arrow_narrow_left class="mr-3 w-5 h-5 text-gray-400" /> Previous
+              <Heroicons.Solid.arrow_narrow_left class="mr-3 w-5 h-5 text-gray-400" />
+              <p class="hidden sm:flex">Previous</p>
             <% end %>
           <% end %>
         </div>
-        <div class="hidden lg:flex lg:-mt-px">
+        <div class="flex lg:-mt-px">
           <%= if max(1, @meta.current_page - 2) != 1 do %>
             <%= live_patch("1", to: build_query(1, @params), class: "inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 hover:text-gray-700 ") %>
 
@@ -46,7 +47,8 @@ defmodule ParzivalWeb.Components.Pagination do
         <div class="flex flex-1 justify-end -mt-px w-0">
           <%= if @meta.has_next_page? do %>
             <%= live_patch to: build_query(@meta.next_page, @params), class: "inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-500 hover:text-gray-700" do %>
-              Next <Heroicons.Solid.arrow_narrow_right class="ml-3 w-5 h-5 text-gray-400" />
+              <p class="hidden sm:flex">Next</p>
+              <Heroicons.Solid.arrow_narrow_right class="ml-3 w-5 h-5 text-gray-400" />
             <% end %>
           <% end %>
         </div>

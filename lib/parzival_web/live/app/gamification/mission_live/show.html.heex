@@ -25,8 +25,8 @@
         <%= @mission.title %>
       </h1>
       <div class="flex justify-center items-center px-4 text-gray-500">
-        <span class={"inline-flex items-center justify-center px-2 text-xs h-6 font-semibold leading-5 border #{bg_100(@mission.dificulty.color)} #{border_200(@mission.dificulty.color)} rounded-full shrink-0"}>
-          <%= @mission.dificulty.name %>
+        <span class={"inline-flex items-center justify-center px-2 text-xs h-6 font-semibold leading-5 border #{bg_100(@mission.difficulty.color)} #{border_200(@mission.difficulty.color)} rounded-full shrink-0"}>
+          <%= @mission.difficulty.name %>
         </span>
       </div>
     </div>
@@ -114,7 +114,7 @@
     <div x-bind:class="tasks ?'block' : 'hidden'">
       <ul role="list">
         <%= for {task, index} <- Enum.with_index(@mission.tasks) do %>
-          <%= live_patch to: Routes.mission_task_show_path(@socket, :show, @mission, task) do %>
+          <%= live_patch to: Routes.task_show_path(@socket, :show, @mission, task) do %>
             <li id={"task-#{index}"} class="flex flex-row justify-between items-center p-4 text-gray-400 border-b border-gray-200 cursor-pointer sm:px-6 hover:bg-gray-50">
               <div class="flex flex-col gap-y-1">
                 <span class="font-medium text-gray-900">
@@ -153,37 +153,44 @@
     <a @click="last_users = !last_users" class="cursor-pointer hover:bg-gray-50">
       <div class="flex flex-row justify-between items-center py-6 px-4 border-b border-gray-200 sm:px-6 lg:px-8">
         <h2 class="text-lg font-medium sm:text-xl">
-          Last users that completed this mission
+          Users that completed this mission
         </h2>
         <Heroicons.Solid.chevron_right x-bind:class="last_users?'rotate-90' : 'rotate-0'" class="w-6 h-6 text-black" />
       </div>
     </a>
     <div x-bind:class="last_users?'flex' : 'hidden'" class="grid grid-cols-1 gap-4 py-6 px-4 mb-2 border-b border-gray-200 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <%= for {mission_user, index} <- Enum.with_index(@mission_users)  do %>
-        <div id={"user-#{index}"} class="flex flex-row gap-x-2 items-center p-2 w-full h-20 rounded-xl border border-gray-200 hover:bg-gray-50">
-          <div class="flex-shrink-0 w-14 h-14">
-            <%= if is_nil(Parzival.Uploaders.ProfilePicture.url({mission_user.user.picture, mission_user.user}, :medium)) do %>
-              <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
-                <span class="text-xl font-medium leading-none text-white">
-                  <%= extract_initials(mission_user.user.name) %>
+        <%= live_redirect to: Routes.profile_show_path(@socket, :show, mission_user.user) do %>
+          <div id={"user-#{index}"} class="flex flex-row gap-x-2 items-center p-2 w-full h-20 rounded-xl border border-gray-200 hover:bg-gray-50">
+            <div class="flex-shrink-0 w-14 h-14">
+              <%= if is_nil(mission_user.user.picture) do %>
+                <span class="inline-flex justify-center items-center w-14 h-14 rounded-full bg-secondary">
+                  <span class="text-xl font-medium leading-none text-white">
+                    <%= extract_initials(mission_user.user.name) %>
+                  </span>
                 </span>
+              <% else %>
+                <div class="relative flex-shrink-0 w-14 h-14 bg-white rounded-full">
+                  <img src={Parzival.Uploaders.ProfilePicture.url({mission_user.user.picture, mission_user.user}, :medium)} class="object-center w-14 h-14 rounded-full" />
+                </div>
+              <% end %>
+            </div>
+            <div class="flex overflow-hidden flex-col w-full">
+              <span class="inline-block overflow-hidden w-full text-base whitespace-nowrap text-ellipsis">
+                <%= mission_user.user.name %>
               </span>
-            <% else %>
-              <div class="relative flex-shrink-0 w-14 h-14 bg-white rounded-full">
-                <img src={Parzival.Uploaders.ProfilePicture.url({mission_user.user.picture, mission_user.user}, :medium)} class="object-center w-14 h-14 rounded-full" />
-              </div>
-            <% end %>
+              <span class="text-sm font-light text-gray-400">
+                Missions completed: <%= Enum.count(mission_user.user.missions) %>
+              </span>
+            </div>
           </div>
-          <div class="flex overflow-hidden flex-col w-full">
-            <span class="inline-block overflow-hidden w-full text-base whitespace-nowrap text-ellipsis">
-              <%= mission_user.user.name %>
-            </span>
-            <span class="text-sm font-light text-gray-400">
-              Missions complited: <%= Enum.count(mission_user.user.missions) %>
-            </span>
-          </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
+    <%= if length(@mission_users) > 0 do %>
+      <div x-bind:class="last_users?'flex' : 'hidden'">
+        <.pagination items={@mission_users} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+      </div>
+    <% end %>
   </div>
 </div>

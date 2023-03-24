@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.App.Staff.ScannerLive.Index do
+defmodule ParzivalWeb.Backoffice.ScannerLive.Index do
   @moduledoc false
   use ParzivalWeb, :live_view
 

@@ -24,7 +24,7 @@ defmodule ParzivalWeb.Endpoint do
     at: "/",
     from: :parzival,
     gzip: false,
-    only: ~w(assets fonts images js favicon favicon.ico robots.txt)
+    only: ~w(assets docs fonts images js favicon favicon.ico robots.txt)
 
   plug Plug.Static,
     at: "/uploads",

@@ -433,120 +433,120 @@ defmodule Parzival.Gamification do
     Task.changeset(task, attrs)
   end
 
-  alias Parzival.Gamification.Mission.Dificulty
+  alias Parzival.Gamification.Mission.Difficulty
 
   @doc """
-  Returns the list of dificulties.
+  Returns the list of difficulties.
 
   ## Examples
 
-      iex> list_dificulties()
-      [%Dificulty{}, ...]
+      iex> list_difficulties()
+      [%Difficulty{}, ...]
 
   """
-  def list_dificulties(params \\ %{})
+  def list_difficulties(params \\ %{})
 
-  def list_dificulties(opts) when is_list(opts) do
-    Dificulty
+  def list_difficulties(opts) when is_list(opts) do
+    Difficulty
     |> apply_filters(opts)
     |> Repo.all()
   end
 
-  def list_dificulties(flop) do
-    Flop.validate_and_run(Dificulty, flop, for: Dificulty)
+  def list_difficulties(flop) do
+    Flop.validate_and_run(Difficulty, flop, for: Difficulty)
   end
 
-  def list_dificulties(%{} = flop, opts) when is_list(opts) do
-    Dificulty
+  def list_difficulties(%{} = flop, opts) when is_list(opts) do
+    Difficulty
     |> apply_filters(opts)
-    |> Flop.validate_and_run(flop, for: Dificulty)
+    |> Flop.validate_and_run(flop, for: Difficulty)
   end
 
   @doc """
-  Gets a single dificulty.
+  Gets a single difficulty.
 
   Raises `Ecto.NoResultsError` if the Offer type does not exist.
 
   ## Examples
 
-      iex> get_dificulty!(123)
-      %Dificulty{}
+      iex> get_difficulty!(123)
+      %Difficulty{}
 
-      iex> get_dificulty!(456)
+      iex> get_difficulty!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_dificulty!(id), do: Repo.get!(Dificulty, id)
+  def get_difficulty!(id), do: Repo.get!(Difficulty, id)
 
   @doc """
-  Creates a dificulty.
+  Creates a difficulty.
 
   ## Examples
 
-      iex> create_dificulty(%{field: value})
-      {:ok, %Dificulty{}}
+      iex> create_difficulty(%{field: value})
+      {:ok, %Difficulty{}}
 
-      iex> create_dificulty(%{field: bad_value})
+      iex> create_difficulty(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_dificulty(attrs \\ %{}) do
-    %Dificulty{}
-    |> Dificulty.changeset(attrs)
+  def create_difficulty(attrs \\ %{}) do
+    %Difficulty{}
+    |> Difficulty.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a dificulty.
+  Updates a difficulty.
 
   ## Examples
 
-      iex> update_dificulty(dificulty, %{field: new_value})
-      {:ok, %Dificulty{}}
+      iex> update_difficulty(difficulty, %{field: new_value})
+      {:ok, %Difficulty{}}
 
-      iex> update_dificulty(dificulty, %{field: bad_value})
+      iex> update_difficulty(difficulty, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_dificulty(%Dificulty{} = dificulty, attrs) do
-    dificulty
-    |> Dificulty.changeset(attrs)
+  def update_difficulty(%Difficulty{} = difficulty, attrs) do
+    difficulty
+    |> Difficulty.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a dificulty.
+  Deletes a difficulty.
 
   ## Examples
 
-      iex> delete_dificulty(dificulty)
-      {:ok, %Dificulty{}}
+      iex> delete_difficulty(difficulty)
+      {:ok, %Difficulty{}}
 
-      iex> delete_dificulty(dificulty)
+      iex> delete_difficulty(difficulty)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_dificulty(%Dificulty{} = dificulty) do
-    dificulty
+  def delete_difficulty(%Difficulty{} = difficulty) do
+    difficulty
     |> Ecto.Changeset.change()
-    |> Ecto.Changeset.foreign_key_constraint(:dificulties,
-      name: :missions_dificulty_id_fkey,
-      message: "This dificulty cant be deleted, because some mission has it!"
+    |> Ecto.Changeset.foreign_key_constraint(:difficulties,
+      name: :missions_difficulty_id_fkey,
+      message: "This difficulty cant be deleted, because some mission has it!"
     )
     |> Repo.delete()
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking dificulty changes.
+  Returns an `%Ecto.Changeset{}` for tracking difficulty changes.
 
   ## Examples
 
-      iex> change_dificulty(dificulty)
-      %Ecto.Changeset{data: %Dificulty{}}
+      iex> change_difficulty(difficulty)
+      %Ecto.Changeset{data: %Difficulty{}}
 
   """
-  def change_dificulty(%Dificulty{} = dificulty, attrs \\ %{}) do
-    Dificulty.changeset(dificulty, attrs)
+  def change_difficulty(%Difficulty{} = difficulty, attrs \\ %{}) do
+    Difficulty.changeset(difficulty, attrs)
   end
 
   alias Parzival.Gamification.Mission.MissionUser

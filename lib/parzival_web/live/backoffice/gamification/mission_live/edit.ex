@@ -15,6 +15,6 @@ defmodule ParzivalWeb.Backoffice.MissionLive.Edit do
      socket
      |> assign(:current_page, :missions)
      |> assign(:page_title, "Edit Mission")
-     |> assign(:mission, Gamification.get_mission!(id, [:tasks, :dificulty]))}
+     |> assign(:mission, Gamification.get_mission!(id, [:tasks, :difficulty]))}
   end
 end

@@ -1,4 +1,4 @@
-defmodule ParzivalWeb.App.Staff.TaskUserLive.FormComponent do
+defmodule ParzivalWeb.Backoffice.TaskLive.FormComponent do
   @moduledoc false
   use ParzivalWeb, :live_component
 
@@ -18,7 +18,7 @@ defmodule ParzivalWeb.App.Staff.TaskUserLive.FormComponent do
   end
 
   defp redeem_task(socket, staff, attendee, task) do
-    case Gamification.redeem_task(staff, attendee, task) do
+    case Gamification.redeem_task(attendee, task, staff) do
       {:ok, __taskuser} ->
         {:noreply,
          socket

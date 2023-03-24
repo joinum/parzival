@@ -63,7 +63,7 @@
                     <div class="flex flex-col lg:flex-row">
                       <p class="flex items-center mr-5 text-sm text-gray-500">
                         <Heroicons.Solid.location_marker class="flex-shrink-0 mr-0.5 w-5 h-5 text-gray-400" />
-                        <%= offer.location %>
+                        <%= offer.location %> (<%= offer.work_model |> to_string() |> String.replace("_", "-") |> String.capitalize() %>)
                       </p>
                       <p class="flex items-center text-sm text-gray-500">
                         <Heroicons.Solid.currency_euro class="flex-shrink-0 mr-0.5 w-5 h-5 text-gray-400" />

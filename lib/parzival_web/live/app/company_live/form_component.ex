@@ -4,6 +4,15 @@ defmodule ParzivalWeb.App.CompanyLive.FormComponent do
 
   alias Parzival.Companies
 
+  @extensions_whitelist ~w(.jpg .jpeg .gif .png)
+
+  @impl true
+  def mount(socket) do
+    {:ok,
+     socket
+     |> allow_upload(:picture, accept: @extensions_whitelist, max_entries: 1)}
+  end
+
   @impl true
   def update(%{company: company} = assigns, socket) do
     changeset = Companies.change_company(company)
@@ -30,7 +39,11 @@ defmodule ParzivalWeb.App.CompanyLive.FormComponent do
   end
 
   defp save_company(socket, :edit, company_params) do
-    case Companies.update_company(socket.assigns.company, company_params) do
+    case Companies.update_company(
+           socket.assigns.company,
+           company_params,
+           &consume_picture_data(socket, &1)
+         ) do
       {:ok, _company} ->
         {:noreply,
          socket
@@ -43,7 +56,7 @@ defmodule ParzivalWeb.App.CompanyLive.FormComponent do
   end
 
   defp save_company(socket, :new, company_params) do
-    case Companies.create_company(company_params) do
+    case Companies.create_company(company_params, &consume_picture_data(socket, &1)) do
       {:ok, _company} ->
         {:noreply,
          socket
@@ -52,6 +65,25 @@ defmodule ParzivalWeb.App.CompanyLive.FormComponent do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  defp consume_picture_data(socket, company) do
+    consume_uploaded_entries(socket, :picture, fn %{path: path}, entry ->
+      Companies.update_company_picture(company, %{
+        "picture" => %Plug.Upload{
+          content_type: entry.client_type,
+          filename: entry.client_name,
+          path: path
+        }
+      })
+    end)
+    |> case do
+      [{:ok, company}] ->
+        {:ok, company}
+
+      _errors ->
+        {:ok, company}
     end
   end
 

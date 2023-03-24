@@ -1,4 +1,4 @@
-defmodule Parzival.Gamification.Mission.Dificulty do
+defmodule Parzival.Gamification.Mission.Difficulty do
   @moduledoc """
   A type of job offer.
   """
@@ -17,7 +17,7 @@ defmodule Parzival.Gamification.Mission.Dificulty do
     default_order_directions: [:asc]
   }
 
-  schema "dificulties" do
+  schema "difficulties" do
     field :name, :string
     field :color, Ecto.Enum, values: @colors
 

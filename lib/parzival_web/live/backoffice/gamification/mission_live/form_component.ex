@@ -13,7 +13,7 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:dificulties, list_dificulties())
+     |> assign(:difficulties, list_difficulties())
      |> assign(:companies, list_companies())
      |> assign(:changeset, changeset)}
   end
@@ -49,7 +49,7 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
 
   def handle_event("save", %{"mission" => mission_params}, socket) do
     mission_params =
-      if socket.assigns.current_user.role in [:recruter] do
+      if socket.assigns.current_user.role in [:recruiter] do
         mission_params
         |> Map.put("created_by_id", socket.assigns.current_user.company_id)
       else
@@ -59,8 +59,8 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
     save_mission(socket, socket.assigns.action, mission_params)
   end
 
-  defp list_dificulties do
-    Gamification.list_dificulties(fields: [:name, :id])
+  defp list_difficulties do
+    Gamification.list_difficulties(fields: [:name, :id])
   end
 
   defp list_companies do
