@@ -36,7 +36,6 @@ defmodule ParzivalWeb.Components.Boost do
      socket
      |> assign(
        inventory: Store.list_inventory(where: [user_id: item.user_id], preloads: [:boost])
-     )
-     |> IO.inspect()}
+     )}
   end
 end
