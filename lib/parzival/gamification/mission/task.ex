@@ -24,7 +24,7 @@ defmodule Parzival.Gamification.Mission.Task do
 
     belongs_to :mission, Mission
 
-    many_to_many :users, User, join_through: TaskUser
+    many_to_many :users, User, join_through: TaskUser, on_delete: :delete_all
 
     timestamps()
   end
