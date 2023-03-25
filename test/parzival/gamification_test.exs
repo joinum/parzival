@@ -72,7 +72,9 @@ defmodule Parzival.GamificationTest do
     test "redeem_task/3 single task" do
       attendee = user_fixture()
       staff = user_fixture(%{role: :staff})
-      mission = mission_fixture(2)
+
+      mission =
+        mission_fixture(2)
         |> Repo.preload(:tasks)
 
       task0 = Enum.at(mission.tasks, 0)
@@ -81,8 +83,8 @@ defmodule Parzival.GamificationTest do
       assert {:ok, updated = %Mission{}} = Gamification.redeem_task(attendee, task0, staff)
 
       assert attendee.id in Enum.map(Repo.preload(task0, :users).users, fn u -> u.id end)
-      assert not attendee.id in Enum.map(Repo.preload(task1, :users).users, fn u -> u.id end)
-      assert not attendee.id in Enum.map(Repo.preload(updated, :users).users, fn u -> u.id end)
+      assert attendee.id not in Enum.map(Repo.preload(task1, :users).users, fn u -> u.id end)
+      assert attendee.id not in Enum.map(Repo.preload(updated, :users).users, fn u -> u.id end)
 
       assert Parzival.Accounts.get_user!(attendee.id).balance == task0.tokens
       assert Parzival.Accounts.get_user!(attendee.id).exp == task0.exp
@@ -91,7 +93,9 @@ defmodule Parzival.GamificationTest do
     test "redeem_task/3 all tasks" do
       attendee = user_fixture()
       staff = user_fixture(%{role: :staff})
-      mission = mission_fixture(2)
+
+      mission =
+        mission_fixture(2)
         |> Repo.preload(:tasks)
 
       task0 = Enum.at(mission.tasks, 0)

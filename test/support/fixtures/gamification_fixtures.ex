@@ -3,7 +3,7 @@ defmodule Parzival.GamificationFixtures do
   This module defines test helpers for creating
   entities via the `Parzival.Gamification` context.
   """
-alias Parzival.Gamification
+  alias Parzival.Gamification
 
   @doc """
   Generate a curriculum.
