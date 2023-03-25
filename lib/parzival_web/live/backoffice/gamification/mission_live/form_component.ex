@@ -77,6 +77,13 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
   end
 
   defp save_mission(socket, :new, mission_params) do
+    tasks =
+      mission_params
+      |> Map.get("tasks")
+      |> Enum.map(fn {_id, task} -> Map.drop(task, ["id", "mission_id"]) end)
+
+    mission_params = Map.replace!(mission_params, "tasks", tasks)
+
     case Gamification.create_mission(mission_params) do
       {:ok, _mission} ->
         {:noreply,
