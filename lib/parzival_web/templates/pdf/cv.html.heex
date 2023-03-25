@@ -11,15 +11,19 @@
     <style>
       * {
         -webkit-box-sizing: border-box;
+        box-sizing: border-box;
       }
       .flexrow {
         display: -webkit-box;
+        display: box;
         display: -webkit-flex;
         display: flex;
       }
       .flexrow > div {
         -webkit-box-pack: justify;
+        box-pack: justify;
         -webkit-box-flex: 1;
+        box-flex: 1;
         -webkit-flex: 1;
         flex: 1;
       }
@@ -125,7 +129,7 @@
               </tr>
             <% end %>
 
-            <%= if @curriculum.experiences do %>
+            <%= if length(@curriculum.experiences) > 0 do %>
               <tr class="mt-10 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EXPERIENCE</p>
@@ -184,7 +188,7 @@
               </tr>
             <% end %>
 
-            <%= if @curriculum.educations do %>
+            <%= if length(@curriculum.educations) > 0 do %>
               <tr class="mt-8 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">EDUCATION</p>
@@ -205,7 +209,7 @@
               </tr>
             <% end %>
 
-            <%= if @curriculum.volunteerings do %>
+            <%= if length(@curriculum.volunteerings) > 0 do %>
               <tr class="mt-10 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-1 text-2xl font-bold tracking-wider">VOLUNTEERING</p>
@@ -233,7 +237,7 @@
               </tr>
             <% end %>
 
-            <%= if @curriculum.skills do %>
+            <%= if length(@curriculum.skills) > 0 do %>
               <tr class="mt-10 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-4 text-2xl font-bold tracking-wider">SKILLS</p>
@@ -260,7 +264,7 @@
               </tr>
             <% end %>
 
-            <%= if @curriculum.languages do %>
+            <%= if length(@curriculum.languages) > 0 do %>
               <tr class="mt-10 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-4 text-2xl font-bold tracking-wider">LANGUAGES</p>
