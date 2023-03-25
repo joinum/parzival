@@ -44,12 +44,15 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
   end
 
   def handle_event("rm-task", %{"index" => index}, socket) do
+    changeset = socket.assigns.changeset
+
     tasks =
-      Map.get(socket.assigns.changeset.changes, :tasks)
+      changeset
+      |> Ecto.Changeset.get_field(:tasks)
       |> List.delete_at(String.to_integer(index))
 
     changeset =
-      socket.assigns.changeset
+      changeset
       |> Ecto.Changeset.put_assoc(:tasks, tasks)
 
     {:noreply, assign(socket, changeset: changeset)}
