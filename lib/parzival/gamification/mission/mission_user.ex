@@ -9,6 +9,15 @@ defmodule Parzival.Gamification.Mission.MissionUser do
 
   @required_fields ~w(user_id mission_id)a
 
+  @derive {
+    Flop.Schema,
+    filterable: [],
+    sortable: [:inserted_at],
+    compound_fields: [],
+    default_order_by: [:inserted_at],
+    default_order_directions: [:desc]
+  }
+
   schema "missions_users" do
     belongs_to :mission, Mission
     belongs_to :user, User
