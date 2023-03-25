@@ -27,15 +27,20 @@ defmodule ParzivalWeb.Components.Boost do
   end
 
   def handle_event("activate-boost", %{"item_id" => item_id}, socket) do
-    item = Store.get_item!(item_id)
+    user_id = socket.assigns.item.user_id
 
-    Store.update_item(item, %{expires_at: Timex.shift(NaiveDateTime.utc_now(), minutes: 1)})
-    # Store.update_item(item, %{expires_at: Timex.shift(NaiveDateTime.utc_now(), hours: 1)})
+    if Store.already_has_active_boost?(user_id) do
+      send(self(), {:error, "You already have an active boost!"})
+      {:noreply, socket}
+    else
+      item = Store.get_item!(item_id)
+      Store.update_item(item, %{expires_at: Timex.shift(NaiveDateTime.utc_now(), minutes: 60)})
 
-    {:noreply,
-     socket
-     |> assign(
-       inventory: Store.list_inventory(where: [user_id: item.user_id], preloads: [:boost])
-     )}
+      {:noreply,
+       socket
+       |> assign(
+         inventory: Store.list_inventory(where: [user_id: item.user_id], preloads: [:boost])
+       )}
+    end
   end
 end

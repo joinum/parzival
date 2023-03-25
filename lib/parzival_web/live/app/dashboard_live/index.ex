@@ -110,4 +110,11 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
   def handle_info({event, _post}, socket) when event in [:new_post] do
     {:noreply, assign(socket, list_posts(socket.assigns.params))}
   end
+
+  @impl true
+  def handle_info({:error, reason}, socket) do
+    {:noreply,
+     socket
+     |> put_flash(:error, reason)}
+  end
 end

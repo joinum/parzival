@@ -416,6 +416,15 @@ defmodule Parzival.Store do
 
   alias Parzival.Store.Item
 
+  def already_has_active_boost?(user_id) do
+    Item
+    |> where([i], i.user_id == ^user_id)
+    |> join(:inner, [i], b in Boost, on: i.boost_id == b.id)
+    |> where([i, b], b.type == :exp or b.type == :tokens)
+    |> where([i, b], fragment("now() - ? <= interval '60 minutes'", i.expires_at))
+    |> Repo.exists?()
+  end
+
   def purchase_boost(user, boost) do
     Multi.new()
     |> Multi.update(
