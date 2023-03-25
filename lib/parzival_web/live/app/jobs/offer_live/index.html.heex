@@ -46,7 +46,7 @@
         <li>
           <%= live_redirect to: Routes.offer_show_path(@socket, :show, offer), class: "block hover:bg-gray-50 border-b border-gray-200" do %>
             <div class="flex flex-row py-4 px-4 sm:px-6">
-              <div class="inline-flex justify-center items-center h-10 rounded-full lg:h-16 aspect-square bg-secondary">
+              <div class="inline-flex justify-center items-center h-10 rounded-2xl lg:h-16 aspect-square bg-secondary">
                 <span class="text-xl font-medium leading-none text-white md:text-2xl">
                   <%= extract_initials(offer.company.name) %>
                 </span>

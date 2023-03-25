@@ -31,16 +31,16 @@
       <div class="flex flex-col gap-2 mt-6 sm:flex-row sm:items-center">
         <div>
           <%= if is_nil(Uploaders.ProfilePicture.url({@company.picture, @company}, :medium)) do %>
-            <div class="relative flex-shrink-0 rounded-full min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
-              <span class="inline-flex justify-center items-center w-24 h-24 rounded-full sm:w-32 sm:h-32 bg-secondary">
+            <div class="relative flex-shrink-0 rounded-2xl min-w-24 min-h-24 sm:min-w-32 sm:min-h-32">
+              <span class="inline-flex justify-center items-center w-24 h-24 rounded-2xl sm:w-32 sm:h-32 bg-secondary">
                 <span class="text-4xl font-medium leading-none text-white select-none sm:text-5xl">
                   <%= extract_initials(@company.name) %>
                 </span>
               </span>
             </div>
           <% else %>
-            <div class="relative flex-shrink-0 w-24 h-24 bg-white rounded-full sm:w-32 sm:h-32">
-              <img src={Uploaders.ProfilePicture.url({@company.picture, @company}, :medium)} class="object-center absolute rounded-full w-[98px] h-[98px] sm:w-[130px] sm:h-[130px]" />
+            <div class="relative flex-shrink-0 w-24 h-24 bg-white rounded-2xl sm:w-32 sm:h-32">
+              <img src={Uploaders.ProfilePicture.url({@company.picture, @company}, :medium)} class="object-center absolute rounded-2xl w-[98px] h-[98px] sm:w-[130px] sm:h-[130px]" />
             </div>
           <% end %>
         </div>
