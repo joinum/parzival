@@ -43,6 +43,21 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
+  def handle_event("rm-task", %{"index" => index}, socket) do
+    changeset = socket.assigns.changeset
+
+    tasks =
+      changeset
+      |> Ecto.Changeset.get_field(:tasks)
+      |> List.delete_at(String.to_integer(index))
+
+    changeset =
+      changeset
+      |> Ecto.Changeset.put_assoc(:tasks, tasks)
+
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
   def handle_event("save", %{"mission" => mission_params}, socket) do
     mission_params =
       if socket.assigns.current_user.role in [:recruiter] do

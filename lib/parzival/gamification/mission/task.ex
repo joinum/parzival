@@ -13,7 +13,8 @@ defmodule Parzival.Gamification.Mission.Task do
 
   @optional_fields [
     :tokens,
-    :exp
+    :exp,
+    :delete
   ]
 
   schema "tasks" do
@@ -21,6 +22,8 @@ defmodule Parzival.Gamification.Mission.Task do
     field :description, :string
     field :tokens, :integer
     field :exp, :integer
+
+    field :delete, :boolean, virtual: true
 
     belongs_to :mission, Mission
 
@@ -34,11 +37,23 @@ defmodule Parzival.Gamification.Mission.Task do
     task
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> maybe_mark_for_deletion()
   end
 
   def task_changeset(task, attrs) do
     task
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields -- [:mission_id])
+    |> maybe_mark_for_deletion()
+  end
+
+  defp maybe_mark_for_deletion(%{data: %{id: nil}} = changeset), do: changeset
+
+  defp maybe_mark_for_deletion(changeset) do
+    if get_change(changeset, :delete) do
+      %{changeset | action: :delete}
+    else
+      changeset
+    end
   end
 end
