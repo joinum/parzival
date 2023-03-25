@@ -58,7 +58,7 @@ defmodule Parzival.GamificationFixtures do
       })
       |> Gamification.create_mission()
 
-    Enum.map(1..task_no, fn _ ->
+    Enum.each(1..task_no, fn _ ->
       task_fixture(%{mission_id: mission.id})
     end)
 

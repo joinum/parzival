@@ -110,10 +110,6 @@ defmodule Parzival.GamificationTest do
       assert attendee.id in Enum.map(Repo.preload(task1, :users).users, fn u -> u.id end)
       assert attendee.id in Enum.map(Repo.preload(mission, :users).users, fn u -> u.id end)
 
-      IO.inspect(task0.tokens)
-      IO.inspect(task1.tokens)
-      IO.inspect(mission.tokens)
-
       assert attendee.balance == task0.tokens + task1.tokens + mission.tokens
       assert attendee.exp == task0.exp + task1.exp + mission.exp
     end
