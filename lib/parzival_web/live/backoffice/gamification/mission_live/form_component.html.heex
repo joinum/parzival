@@ -114,15 +114,17 @@
                 <span class="text-lg font-bold sm:text-xl">
                   Task <%= fs.index + 1 %>
                 </span>
-                <%= if is_nil(fs.data.id) do %>
-                  <a phx-click="rm-task" phx-target={@myself} phx-value-index={fs.index} class="justify-center py-2 px-4 text-sm font-medium bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50 text-primary">
-                    Delete
-                  </a>
-                <% else %>
-                  <a onclick={"document.getElementById('#{fs.data.id}').click()"} x-on:click="show = false" class="justify-center py-2 px-4 text-sm font-medium bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50 text-primary">
-                    Delete
-                  </a>
-                  <%= checkbox(fs, :delete, id: fs.data.id, class: "hidden") %>
+                <%= if fs.index != 0 do %>
+                  <%= if is_nil(fs.data.id) do %>
+                    <a phx-click="rm-task" phx-target={@myself} phx-value-index={fs.index} class="justify-center py-2 px-4 text-sm font-medium bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50 text-primary">
+                      Delete
+                    </a>
+                  <% else %>
+                    <a onclick={"document.getElementById('#{fs.data.id}').click()"} x-on:click="show = false" class="justify-center py-2 px-4 text-sm font-medium bg-white rounded-md border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50 text-primary">
+                      Delete
+                    </a>
+                    <%= checkbox(fs, :delete, id: fs.data.id, class: "hidden") %>
+                  <% end %>
                 <% end %>
               </div>
               <div>
