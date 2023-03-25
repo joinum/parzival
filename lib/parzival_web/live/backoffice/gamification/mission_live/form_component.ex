@@ -29,19 +29,15 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
   end
 
   def handle_event("add-task", _, socket) do
-    existing_tasks =
-      Map.get(
-        socket.assigns.changeset.changes,
-        :tasks,
-        socket.assigns.mission.tasks
-      )
+    changeset = socket.assigns.changeset
 
     tasks =
-      existing_tasks
+      changeset
+      |> Ecto.Changeset.get_field(:tasks)
       |> Enum.concat([Gamification.change_task(%Task{})])
 
     changeset =
-      socket.assigns.changeset
+      changeset
       |> Ecto.Changeset.put_assoc(:tasks, tasks)
 
     {:noreply, assign(socket, changeset: changeset)}
