@@ -78,11 +78,9 @@
         <div x-bind:class="option =='feed' ? 'block' : 'hidden'">
           <%= for {post, index} <- Enum.with_index(@posts) do %>
             <div id={"index-#{index}"} class="py-4 px-4 mx-auto max-w-5xl border-b border-gray-200 sm:px-6 lg:px-8">
-              <div phx-hook="Clock" phx-update="ignore" id={"clock-#{index}"} data-start_date={NaiveDateTime.utc_now()} data-end_date={~N[2022-06-25 04:00:58.861338]} />
+              <div phx-hook="Clock" phx-update="ignore" id={"clock-#{index}"} data-start_date={NaiveDateTime.utc_now()} data-end_date={~N[2023-03-25 23:40:58.861338]} />
               <div>
-                <p>Time for initial bids : <span id={"countdown-for-phase2-#{index}"} phx-update="ignore" phx-hook="Countdown" data-end_date={~N[2022-06-26 01:31:58.861338]} /></p>
-                <p>Time for post to end : <span id={"countdown-for-end-#{index}"} phx-update="ignore" phx-hook="Countdown" data-end_date={~N[2022-06-25 05:31:58.861338]} /></p>
-                <p>Decision Period : <span id={"countdown-for-decision_period-#{index}"} phx-update="ignore" phx-hook="Countdown" data-end_date={~N[2022-10-25 01:31:58.861338]} /></p>
+                <p>Countdown : <span id={"countdown-#{index}"} phx-hook="Countdown" phx-update="ignore" data-end_date={~N[2023-03-25 23:40:58.861338]} /></p>
               </div>
               <div class="flex flex-shrink-0">
                 <%= live_redirect to: Routes.profile_show_path(@socket, :show, post.author), class: "block flex-shrink-0 group" do %>
