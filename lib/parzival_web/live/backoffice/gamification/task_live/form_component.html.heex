@@ -6,7 +6,7 @@
           <h1 class="flex-1 text-lg font-medium">Task</h1>
           <%= if @current_user.role in [:staff, :admin] do %>
             <div class="flex flex-row gap-x-4">
-              <%= if not @is_completed? do %>
+              <%= if not @is_completed do %>
                 <%= submit do %>
                   <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm cursor-pointer xl:w-full bg-secondary hover:bg-primary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
                     Redeem task

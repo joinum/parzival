@@ -19,6 +19,6 @@ defmodule ParzivalWeb.Backoffice.TaskLive.Redeem do
      |> assign(:attendee, Accounts.get_user!(attendee_id, [:missions]))
      |> assign(:task, Gamification.get_task!(task_id))
      |> assign(:return_to, Routes.admin_scanner_index_path(socket, :index))
-     |> assign(:is_completed?, Gamification.is_task_completed?(task_id, attendee_id))}
+     |> assign(:is_completed, Gamification.is_task_completed?(task_id, attendee_id))}
   end
 end
