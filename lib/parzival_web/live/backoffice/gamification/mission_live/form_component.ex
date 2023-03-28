@@ -49,7 +49,7 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
 
   def handle_event("save", %{"mission" => mission_params}, socket) do
     mission_params =
-      if socket.assigns.current_user.role in [:recruter] do
+      if socket.assigns.current_user.role in [:recruiter] do
         mission_params
         |> Map.put("created_by_id", socket.assigns.current_user.company_id)
       else

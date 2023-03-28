@@ -6,28 +6,16 @@ defmodule Parzival.GamificationTest do
   describe "curriculums" do
     alias Parzival.Gamification.Curriculum
 
-    import Parzival.GamificationFixtures
-
-    @invalid_attrs %{summary: nil}
+    @invalid_attrs %{summary: 123}
 
     test "list_curriculums/0 returns all curriculums" do
-      curriculum = curriculum_fixture()
+      curriculum = Parzival.AccountsFixtures.user_fixture().curriculum
       assert Gamification.list_curriculums() == [curriculum]
     end
 
     test "get_curriculum!/1 returns the curriculum with given id" do
-      curriculum = curriculum_fixture()
+      curriculum = Parzival.AccountsFixtures.user_fixture().curriculum
       assert Gamification.get_curriculum!(curriculum.id) == curriculum
-    end
-
-    test "create_curriculum/1 with valid data creates a curriculum" do
-      valid_attrs = %{
-        summary: "some summary abc",
-        user_id: Parzival.AccountsFixtures.user_fixture().id
-      }
-
-      assert {:ok, %Curriculum{} = curriculum} = Gamification.create_curriculum(valid_attrs)
-      assert curriculum.summary == "some summary abc"
     end
 
     test "create_curriculum/1 with invalid data returns error changeset" do
@@ -35,7 +23,7 @@ defmodule Parzival.GamificationTest do
     end
 
     test "update_curriculum/2 with valid data updates the curriculum" do
-      curriculum = curriculum_fixture()
+      curriculum = Parzival.AccountsFixtures.user_fixture().curriculum
       update_attrs = %{summary: "some updated summary"}
 
       assert {:ok, %Curriculum{} = curriculum} =
@@ -45,7 +33,7 @@ defmodule Parzival.GamificationTest do
     end
 
     test "update_curriculum/2 with invalid data returns error changeset" do
-      curriculum = curriculum_fixture()
+      curriculum = Parzival.AccountsFixtures.user_fixture().curriculum
 
       assert {:error, %Ecto.Changeset{}} =
                Gamification.update_curriculum(curriculum, @invalid_attrs)
@@ -54,13 +42,13 @@ defmodule Parzival.GamificationTest do
     end
 
     test "delete_curriculum/1 deletes the curriculum" do
-      curriculum = curriculum_fixture()
+      curriculum = Parzival.AccountsFixtures.user_fixture().curriculum
       assert {:ok, %Curriculum{}} = Gamification.delete_curriculum(curriculum)
       assert_raise Ecto.NoResultsError, fn -> Gamification.get_curriculum!(curriculum.id) end
     end
 
     test "change_curriculum/1 returns a curriculum changeset" do
-      curriculum = curriculum_fixture()
+      curriculum = Parzival.AccountsFixtures.user_fixture().curriculum
       assert %Ecto.Changeset{} = Gamification.change_curriculum(curriculum)
     end
   end

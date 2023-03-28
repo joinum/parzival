@@ -23,7 +23,7 @@
       </a>
       <div x-bind:class="! open ? 'hidden' : 'block'">
         <%= for mission <- elem(level,1) do %>
-          <%= if @current_user.role in [:admin, :staff, :recruter] || mission.level <= @user_lvl do %>
+          <%= if @current_user.role in [:admin, :staff, :recruiter] || mission.level <= @user_lvl do %>
             <%= live_patch to: Routes.mission_show_path(@socket, :show, mission) do %>
               <.mission_list_entry mission={mission} user_lvl={@user_lvl} current_user={@current_user} />
             <% end %>

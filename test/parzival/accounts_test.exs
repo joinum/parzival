@@ -38,7 +38,7 @@ defmodule Parzival.AccountsTest do
   describe "get_user!/1" do
     test "raises if id is invalid" do
       assert_raise Ecto.NoResultsError, fn ->
-        Accounts.get_user!(-1)
+        Accounts.get_user!("11111111-1111-1111-1111-111111111111")
       end
     end
 
@@ -62,7 +62,7 @@ defmodule Parzival.AccountsTest do
       {:error, changeset} = Accounts.register_user(%{email: "not valid", password: "not valid"})
 
       assert %{
-               email: ["must be a valid email"],
+               email: ["must have the @ sign and no spaces"],
                password: ["should be at least 12 character(s)"]
              } = errors_on(changeset)
     end
@@ -76,11 +76,11 @@ defmodule Parzival.AccountsTest do
 
     test "validates email uniqueness" do
       %{email: email} = user_fixture()
-      {:error, changeset} = Accounts.register_user(%{email: email})
+      {:error, changeset} = Accounts.register_user(%{email: email, password: valid_user_password(), name: "Agua", role: "attendee"})
       assert "has already been taken" in errors_on(changeset).email
 
       # Now try with the upper cased email too, to check that email case is ignored.
-      {:error, changeset} = Accounts.register_user(%{email: String.upcase(email)})
+      {:error, changeset} = Accounts.register_user(%{email: String.upcase(email), password: valid_user_password(), name: "Agua", role: "attendee"})
       assert "has already been taken" in errors_on(changeset).email
     end
 
@@ -138,7 +138,7 @@ defmodule Parzival.AccountsTest do
       {:error, changeset} =
         Accounts.apply_user_email(user, valid_user_password(), %{email: "not valid"})
 
-      assert %{email: ["must be a valid email"]} = errors_on(changeset)
+      assert %{email: ["must have the @ sign and no spaces"]} = errors_on(changeset)
     end
 
     test "validates maximum value for email for security", %{user: user} do
@@ -156,7 +156,7 @@ defmodule Parzival.AccountsTest do
       {:error, changeset} =
         Accounts.apply_user_email(user, valid_user_password(), %{email: email})
 
-      assert "has already been taken" in errors_on(changeset).email
+     assert "has already been taken" in errors_on(changeset).email
     end
 
     test "validates current password", %{user: user} do

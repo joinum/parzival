@@ -61,8 +61,6 @@
       "hours": "28/06/2022 02:00 PM",
       "speaker": "Miguel Palhas",
       "company": "Subvisual",
-      "top": 14.2,
-      "left": 35,
       "href": "https://www.eventbrite.pt/e/bilhetes-workshop-intro-to-solidity-374245246607"
     },
     {
@@ -128,9 +126,7 @@
       "hours": "29/06/2022 09:00 AM",
       "speaker": "João Reijota",
       "company": "Checkmarx",
-      "top": 2,
-      "left": 12.8,
-      "href": "/"
+      "href": "https://www.eventbrite.com/e/workshop-securing-cloud-infrastructure-using-kics-tickets-375105930937"
     },
     {
       "title": "☕ Coffee break",

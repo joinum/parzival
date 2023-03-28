@@ -5,7 +5,7 @@ defmodule Parzival.AccountsFixtures do
   """
 
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
-  def valid_user_password, do: "hello world!"
+  def valid_user_password, do: "hello-world!"
 
   def valid_user_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
@@ -30,7 +30,8 @@ defmodule Parzival.AccountsFixtures do
       |> valid_user_attributes()
       |> Parzival.Accounts.register_user()
 
-    user
+    #IO.inspect(user |> Parzival.Repo.preload(:curriculum))
+    user |> Parzival.Repo.preload(:curriculum)
   end
 
   def extract_user_token(fun) do

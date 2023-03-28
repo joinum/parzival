@@ -1,7 +1,9 @@
 <h1>Settings</h1>
 
-<h3>Change email</h3>
-
+<section>
+  <header>
+    <h3>Change email</h3>
+  </header>
 <.form let={f} for={@email_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_email">
   <%= if @email_changeset.action do %>
     <div class="alert alert-danger">
@@ -51,3 +53,4 @@
     <%= submit("Change password") %>
   </div>
 </.form>
+</section>
