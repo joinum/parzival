@@ -17,6 +17,13 @@ defmodule Parzival.Gamification do
   alias Parzival.Gamification.Curriculum.Skill
   alias Parzival.Gamification.Curriculum.Volunteering
 
+  @first_day_start Application.get_env(:parzival, :event)[:first_day_start]
+  @first_day_end Application.get_env(:parzival, :event)[:first_day_end]
+  @second_day_start Application.get_env(:parzival, :event)[:second_day_start]
+  @second_day_end Application.get_env(:parzival, :event)[:second_day_end]
+  @third_day_start Application.get_env(:parzival, :event)[:third_day_start]
+  @third_day_end Application.get_env(:parzival, :event)[:third_day_end]
+
   @doc """
   Returns the list of curriculums.
 
@@ -698,17 +705,17 @@ defmodule Parzival.Gamification do
   def get_leaderboard(params, day, number_entries) do
     case day do
       0 -> get_general_leaderboard(params, number_entries)
-      1 -> get_daily_leaderboard(~N[2022-06-28 00:00:00], ~N[2022-06-28 23:59:59], number_entries)
-      2 -> get_daily_leaderboard(~N[2022-06-29 00:00:00], ~N[2022-06-29 23:59:59], number_entries)
-      3 -> get_daily_leaderboard(~N[2022-06-30 00:00:00], ~N[2022-06-30 23:59:59], number_entries)
+      1 -> get_daily_leaderboard(@first_day_start, @first_day_end, number_entries)
+      2 -> get_daily_leaderboard(@second_day_start, @second_day_start, number_entries)
+      3 -> get_daily_leaderboard(@third_day_start, @third_day_end, number_entries)
     end
   end
 
   def get_exp(user, day) do
     case day do
-      1 -> get_exp(user, ~N[2022-06-28 00:00:00], ~N[2022-06-28 23:59:59])
-      2 -> get_exp(user, ~N[2022-06-29 00:00:00], ~N[2022-06-29 23:59:59])
-      3 -> get_exp(user, ~N[2022-06-30 00:00:00], ~N[2022-06-30 23:59:59])
+      1 -> get_exp(user, @first_day_start, @first_day_end)
+      2 -> get_exp(user, @second_day_start, @second_day_end)
+      3 -> get_exp(user, @third_day_start, @third_day_end)
     end
   end
 
@@ -763,9 +770,9 @@ defmodule Parzival.Gamification do
   def get_user_position(user, day) do
     case day do
       0 -> get_user_position_general(user)
-      1 -> get_user_position_by_day(user, ~N[2022-06-28 00:00:00], ~N[2022-06-28 23:59:59])
-      2 -> get_user_position_by_day(user, ~N[2022-06-29 00:00:00], ~N[2022-06-29 23:59:59])
-      3 -> get_user_position_by_day(user, ~N[2022-06-30 00:00:00], ~N[2022-06-30 23:59:59])
+      1 -> get_user_position_by_day(user, @first_day_start, @second_day_end)
+      2 -> get_user_position_by_day(user, @second_day_start, @second_day_end)
+      3 -> get_user_position_by_day(user, @third_day_start, @third_day_end)
     end
   end
 
