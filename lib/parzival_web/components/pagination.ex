@@ -48,7 +48,7 @@ defmodule ParzivalWeb.Components.Pagination do
           <%= if @meta.has_next_page? do %>
             <%= live_patch to: build_query(@meta.next_page, @params), class: "inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-500 hover:text-gray-700" do %>
               <p class="hidden sm:flex">Next</p>
-               <Heroicons.Solid.arrow_narrow_right class="ml-3 w-5 h-5 text-gray-400" />
+              <Heroicons.Solid.arrow_narrow_right class="ml-3 w-5 h-5 text-gray-400" />
             <% end %>
           <% end %>
         </div>
