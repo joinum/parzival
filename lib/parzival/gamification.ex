@@ -17,9 +17,9 @@ defmodule Parzival.Gamification do
   alias Parzival.Gamification.Curriculum.Position
   alias Parzival.Gamification.Curriculum.Skill
   alias Parzival.Gamification.Curriculum.Volunteering
-  alias Parzival.Store
-  alias Parzival.Gamification.Mission.TaskUser
   alias Parzival.Gamification.Mission.MissionUser
+  alias Parzival.Gamification.Mission.TaskUser
+  alias Parzival.Store
 
   @doc """
   Returns the list of curriculums.
