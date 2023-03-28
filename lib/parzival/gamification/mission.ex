@@ -40,7 +40,7 @@ defmodule Parzival.Gamification.Mission do
 
     belongs_to :difficulty, Difficulty
 
-    has_many :tasks, Task, on_replace: :delete_if_exists
+    has_many :tasks, Task, on_replace: :delete
 
     many_to_many :users, User, join_through: MissionUser, preload_order: [desc: :inserted_at]
 

@@ -29,19 +29,30 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
   end
 
   def handle_event("add-task", _, socket) do
-    existing_tasks =
-      Map.get(
-        socket.assigns.changeset.changes,
-        :tasks,
-        socket.assigns.mission.tasks
-      )
+    changeset = socket.assigns.changeset
 
     tasks =
-      existing_tasks
+      changeset
+      |> Ecto.Changeset.get_field(:tasks)
       |> Enum.concat([Gamification.change_task(%Task{})])
 
     changeset =
-      socket.assigns.changeset
+      changeset
+      |> Ecto.Changeset.put_assoc(:tasks, tasks)
+
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  def handle_event("rm-task", %{"index" => index}, socket) do
+    changeset = socket.assigns.changeset
+
+    tasks =
+      changeset
+      |> Ecto.Changeset.get_field(:tasks)
+      |> List.delete_at(String.to_integer(index))
+
+    changeset =
+      changeset
       |> Ecto.Changeset.put_assoc(:tasks, tasks)
 
     {:noreply, assign(socket, changeset: changeset)}
@@ -81,6 +92,13 @@ defmodule ParzivalWeb.Backoffice.MissionLive.FormComponent do
   end
 
   defp save_mission(socket, :new, mission_params) do
+    tasks =
+      mission_params
+      |> Map.get("tasks")
+      |> Enum.map(fn {_id, task} -> Map.drop(task, ["id", "mission_id"]) end)
+
+    mission_params = Map.replace!(mission_params, "tasks", tasks)
+
     case Gamification.create_mission(mission_params) do
       {:ok, _mission} ->
         {:noreply,
