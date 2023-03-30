@@ -702,9 +702,10 @@ defmodule Parzival.Gamification do
     |> Flop.validate_and_run(flop, for: TaskUser)
   end
 
-  def get_leaderboard(params, day, number_entries) do
+  def get_leaderboard(day, number_entries) do
     case day do
-      0 -> get_general_leaderboard(params, number_entries)
+      # 0 -> get_general_leaderboard(params, number_entries)
+      0 -> get_daily_leaderboard(@first_day_start, @third_day_end, number_entries)
       1 -> get_daily_leaderboard(@first_day_start, @first_day_end, number_entries)
       2 -> get_daily_leaderboard(@second_day_start, @second_day_start, number_entries)
       3 -> get_daily_leaderboard(@third_day_start, @third_day_end, number_entries)
@@ -735,14 +736,6 @@ defmodule Parzival.Gamification do
     end
   end
 
-  defp get_general_leaderboard(params, number_entries) do
-    Accounts.list_users(params,
-      where: [role: :attendee],
-      order_by: [desc: :exp],
-      limir: number_entries
-    )
-  end
-
   defp get_leaderboard_query(start_time, end_time) do
     q1 =
       TaskUser
@@ -751,10 +744,9 @@ defmodule Parzival.Gamification do
       |> join(:inner, [t], u in User, on: u.id == t.user_id)
       |> select([tu, t], %{task: tu.task_id, exp: t.exp, user: tu.user_id})
 
-    q2 =
-      subquery(q1)
-      |> group_by([t], t.user)
-      |> select([t], %{user: t.user, experience: sum(t.exp)})
+    subquery(q1)
+    |> group_by([t], t.user)
+    |> select([t], %{user: t.user, experience: sum(t.exp)})
   end
 
   defp get_daily_leaderboard(start_time, end_time, number_entries) do

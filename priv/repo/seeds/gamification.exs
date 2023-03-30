@@ -199,13 +199,13 @@ defmodule Parzival.Repo.Seeds.Gamification do
             difficulty_id: Enum.random(difficulties).id,
             start:
               Faker.NaiveDateTime.between(
-                ~N[2022-06-28 09:30:00.000000],
-                ~N[2022-06-28 14:00:00.000000]
+                ~N[2023-03-29 09:30:00.000000],
+                ~N[2023-03-29 14:00:00.000000]
               ),
             finish:
               Faker.DateTime.between(
-                ~N[2022-06-28 14:00:00.000000],
-                ~N[2022-06-28 23:59:00.000000]
+                ~N[2023-03-29 14:00:00.000000],
+                ~N[2023-03-29 23:59:00.000000]
               )
           })
           |> Repo.insert!()
