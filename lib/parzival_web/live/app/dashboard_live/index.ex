@@ -21,7 +21,6 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
   end
 
   @impl true
-
   def handle_params(params, _url, socket) do
     user = Accounts.get_user!(socket.assigns.current_user.id, [:company, :curriculum])
 

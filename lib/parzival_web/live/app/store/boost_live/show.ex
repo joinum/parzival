@@ -12,7 +12,7 @@ defmodule ParzivalWeb.App.BoostLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"id" => _id}, _, socket) do
     {:noreply, reload(socket)}
   end
 
