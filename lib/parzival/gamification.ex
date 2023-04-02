@@ -768,13 +768,6 @@ defmodule Parzival.Gamification do
       :task_user,
       TaskUser.changeset(%TaskUser{}, %{user_id: user.id, staff_id: staff.id, task_id: task.id})
     )
-    |> Multi.update(
-      :update_user,
-      User.task_completion_changeset(user, %{
-        balance: user.balance + task.tokens,
-        exp: user.exp + task.exp
-      })
-    )
     |> Multi.run(:mission, fn repo, _change ->
       mission = Parzival.Gamification.get_mission!(task.mission_id, tasks: [:users])
 
@@ -786,14 +779,21 @@ defmodule Parzival.Gamification do
 
           user
           |> User.task_completion_changeset(%{
-            balance: user.balance + mission.tokens,
-            exp: user.exp + mission.exp
+            balance: user.balance + task.tokens + mission.tokens,
+            exp: user.exp + task.exp + mission.exp
           })
           |> repo.update()
 
           {:ok, mission}
 
-        _ ->
+        false ->
+          user
+          |> User.task_completion_changeset(%{
+            balance: user.balance + task.tokens,
+            exp: user.exp + task.exp
+          })
+          |> repo.update()
+
           {:ok, mission}
       end
     end)
