@@ -38,7 +38,7 @@ defmodule Parzival.AccountsTest do
   describe "get_user!/1" do
     test "raises if id is invalid" do
       assert_raise Ecto.NoResultsError, fn ->
-        Accounts.get_user!("11111111-1111-1111-1111-111111111111")
+        Accounts.get_user!(Ecto.UUID.generate())
       end
     end
 

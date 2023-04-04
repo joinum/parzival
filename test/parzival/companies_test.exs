@@ -608,16 +608,19 @@ defmodule Parzival.CompaniesTest do
     end
 
     test "create_connection/1 with valid data creates a connection" do
-      valid_attrs = %{
-        company_id: company_fixture().id,
-        user_id: Parzival.AccountsFixtures.user_fixture().id
-      }
-
-      assert {:ok, %Connection{}} = Companies.create_connection(valid_attrs)
+      assert {:ok, %Connection{}} =
+               Companies.create_connection(
+                 company_fixture(),
+                 Parzival.AccountsFixtures.user_fixture()
+               )
     end
 
     test "create_connection/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Companies.create_connection(@invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} =
+               Companies.create_connection(
+                 %Parzival.Companies.Company{},
+                 %Parzival.Accounts.User{}
+               )
     end
 
     test "update_connection/2 with valid data updates the connection" do

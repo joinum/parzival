@@ -8,13 +8,12 @@ defmodule Parzival.GamificationFixtures do
   @doc """
   Generate a curriculum.
   """
-  def curriculum_fixture(attrs \\ %{}) do
+  def curriculum_fixture do
     {:ok, curriculum} =
-      attrs
-      |> Enum.into(%{
+      %{
         user_id: Parzival.AccountsFixtures.user_fixture().id,
         summary: "some summary"
-      })
+      }
       |> Parzival.Gamification.create_curriculum()
 
     curriculum

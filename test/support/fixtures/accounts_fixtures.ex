@@ -31,7 +31,6 @@ defmodule Parzival.AccountsFixtures do
       |> valid_user_attributes()
       |> Parzival.Accounts.register_user()
 
-    # IO.inspect(user |> Parzival.Repo.preload(:curriculum))
     user |> Parzival.Repo.preload(:curriculum)
   end
 
