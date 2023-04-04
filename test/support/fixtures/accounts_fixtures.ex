@@ -4,6 +4,7 @@ defmodule Parzival.AccountsFixtures do
   entities via the `Parzival.Accounts` context.
   """
 
+  def unique_user_name, do: "user#{System.unique_integer()}"
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
   def valid_user_password, do: "hello-world!"
 

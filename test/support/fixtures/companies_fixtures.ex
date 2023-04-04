@@ -19,7 +19,8 @@ defmodule Parzival.CompaniesFixtures do
         applied: 42,
         company_id: company_fixture().id,
         offer_type_id: offer_type_fixture().id,
-        offer_time_id: offer_time_fixture().id
+        offer_time_id: offer_time_fixture().id,
+        work_model: "remote"
       })
       |> Parzival.Companies.create_offer()
 

@@ -63,7 +63,8 @@ defmodule Parzival.CompaniesTest do
         description: "i like you",
         offer_type_id: offer_type_fixture().id,
         offer_time_id: offer_time_fixture().id,
-        company_id: company_fixture().id
+        company_id: company_fixture().id,
+        work_model: "remote"
       }
 
       assert {:ok, %Offer{} = offer} = Companies.create_offer(valid_attrs)
@@ -446,7 +447,7 @@ defmodule Parzival.CompaniesTest do
         offer_id: offer_fixture().id
       }
 
-      assert {:ok, %Application{} = application} = Companies.create_application(valid_attrs)
+      assert {:ok, %Application{}} = Companies.create_application(valid_attrs)
     end
 
     test "create_application/1 with invalid data returns error changeset" do
@@ -612,7 +613,7 @@ defmodule Parzival.CompaniesTest do
         user_id: Parzival.AccountsFixtures.user_fixture().id
       }
 
-      assert {:ok, %Connection{} = connection} = Companies.create_connection(valid_attrs)
+      assert {:ok, %Connection{}} = Companies.create_connection(valid_attrs)
     end
 
     test "create_connection/1 with invalid data returns error changeset" do
@@ -623,8 +624,7 @@ defmodule Parzival.CompaniesTest do
       connection = connection_fixture()
       update_attrs = %{}
 
-      assert {:ok, %Connection{} = connection} =
-               Companies.update_connection(connection, update_attrs)
+      assert {:ok, %Connection{}} = Companies.update_connection(connection, update_attrs)
     end
 
     test "update_connection/2 with invalid data returns error changeset" do

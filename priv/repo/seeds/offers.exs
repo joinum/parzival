@@ -115,6 +115,7 @@ defmodule Parzival.Repo.Seeds.Offers do
                   title: Faker.Lorem.sentence(2),
                   description: Faker.Lorem.sentence(100..300),
                   location: "#{Faker.Address.En.city()}, #{Faker.Address.En.country()}",
+                  work_model: Enum.random([:remote, :hybrid, :on_site]),
                   offer_time_id: Enum.random(offer_times).id,
                   offer_type_id: Enum.random(offer_types).id,
                   company_id: company.id
