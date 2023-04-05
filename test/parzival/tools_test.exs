@@ -13,40 +13,7 @@ defmodule Parzival.ToolsTest do
     test "list_faqs/0 returns all faq" do
       faq = faq_fixture()
 
-      assert Tools.list_faqs() ==
-               {:ok,
-                {[faq],
-                 %Flop.Meta{
-                   current_offset: 0,
-                   current_page: 1,
-                   end_cursor: nil,
-                   errors: [],
-                   flop: %Flop{
-                     after: nil,
-                     before: nil,
-                     filters: [],
-                     first: nil,
-                     last: nil,
-                     limit: 9,
-                     offset: nil,
-                     order_by: [:inserted_at],
-                     order_directions: [:asc],
-                     page: nil,
-                     page_size: nil
-                   },
-                   has_next_page?: false,
-                   has_previous_page?: false,
-                   next_offset: nil,
-                   next_page: nil,
-                   page_size: 9,
-                   params: %{},
-                   previous_offset: nil,
-                   previous_page: nil,
-                   schema: Parzival.Tools.Faq,
-                   start_cursor: nil,
-                   total_count: 1,
-                   total_pages: 1
-                 }}}
+      assert Tools.list_faqs([]) == [faq]
     end
 
     test "get_faq!/1 returns the faq with given id" do
@@ -103,40 +70,7 @@ defmodule Parzival.ToolsTest do
     test "list_announcements/0 returns all announcements" do
       announcement = announcement_fixture()
 
-      assert Tools.list_announcements() ==
-               {:ok,
-                {[announcement],
-                 %Flop.Meta{
-                   current_offset: 0,
-                   current_page: 1,
-                   end_cursor: nil,
-                   errors: [],
-                   flop: %Flop{
-                     after: nil,
-                     before: nil,
-                     filters: [],
-                     first: nil,
-                     last: nil,
-                     limit: 9,
-                     offset: nil,
-                     order_by: [:inserted_at, :title],
-                     order_directions: [:desc],
-                     page: nil,
-                     page_size: nil
-                   },
-                   has_next_page?: false,
-                   has_previous_page?: false,
-                   next_offset: nil,
-                   next_page: nil,
-                   page_size: 9,
-                   params: %{},
-                   previous_offset: nil,
-                   previous_page: nil,
-                   schema: Parzival.Tools.Announcement,
-                   start_cursor: nil,
-                   total_count: 1,
-                   total_pages: 1
-                 }}}
+      assert Tools.list_announcements([]) == [announcement]
     end
 
     test "get_announcement!/1 returns the announcement with given id" do
@@ -199,40 +133,7 @@ defmodule Parzival.ToolsTest do
     test "list_posts/0 returns all posts" do
       post = post_fixture()
 
-      assert Tools.list_posts() ==
-               {:ok,
-                {[post],
-                 %Flop.Meta{
-                   current_offset: 0,
-                   current_page: 1,
-                   end_cursor: nil,
-                   errors: [],
-                   flop: %Flop{
-                     after: nil,
-                     before: nil,
-                     filters: [],
-                     first: nil,
-                     last: nil,
-                     limit: 9,
-                     offset: nil,
-                     order_by: [:inserted_at],
-                     order_directions: [:desc],
-                     page: nil,
-                     page_size: nil
-                   },
-                   has_next_page?: false,
-                   has_previous_page?: false,
-                   next_offset: nil,
-                   next_page: nil,
-                   page_size: 9,
-                   params: %{},
-                   previous_offset: nil,
-                   previous_page: nil,
-                   schema: Parzival.Tools.Post,
-                   start_cursor: nil,
-                   total_count: 1,
-                   total_pages: 1
-                 }}}
+      assert Tools.list_posts([]) == [post]
     end
 
     test "get_post!/1 returns the post with given id" do
