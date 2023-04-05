@@ -38,7 +38,7 @@ defmodule Parzival.AccountsTest do
   describe "get_user!/1" do
     test "raises if id is invalid" do
       assert_raise Ecto.NoResultsError, fn ->
-        Accounts.get_user!(-1)
+        Accounts.get_user!(Ecto.UUID.generate())
       end
     end
 
@@ -76,11 +76,26 @@ defmodule Parzival.AccountsTest do
 
     test "validates email uniqueness" do
       %{email: email} = user_fixture()
-      {:error, changeset} = Accounts.register_user(%{email: email})
+
+      {:error, changeset} =
+        Accounts.register_user(%{
+          email: email,
+          password: valid_user_password(),
+          name: "Agua",
+          role: "attendee"
+        })
+
       assert "has already been taken" in errors_on(changeset).email
 
       # Now try with the upper cased email too, to check that email case is ignored.
-      {:error, changeset} = Accounts.register_user(%{email: String.upcase(email)})
+      {:error, changeset} =
+        Accounts.register_user(%{
+          email: String.upcase(email),
+          password: valid_user_password(),
+          name: "Agua",
+          role: "attendee"
+        })
+
       assert "has already been taken" in errors_on(changeset).email
     end
 

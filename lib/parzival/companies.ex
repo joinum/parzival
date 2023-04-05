@@ -807,10 +807,7 @@ defmodule Parzival.Companies do
   """
   def create_connection(%Company{} = company, %User{} = user) do
     %Connection{}
-    |> Connection.changeset(%{
-      company_id: company.id,
-      user_id: user.id
-    })
+    |> Connection.changeset(%{company_id: company.id, user_id: user.id})
     |> Repo.insert()
   end
 
