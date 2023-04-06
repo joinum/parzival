@@ -132,6 +132,7 @@ defmodule Parzival.Companies do
     Company
     |> apply_filters(opts)
     |> Repo.all()
+    |> sort_companies()
   end
 
   def list_companies(flop) do
@@ -142,6 +143,21 @@ defmodule Parzival.Companies do
     Company
     |> apply_filters(opts)
     |> Flop.validate_and_run(flop, for: Company)
+  end
+
+  def sort_companies(companies) do
+    level_priority = ["Exclusive", "Gold", "Silver", "Bronze"]
+
+    Enum.sort(companies, fn a, b ->
+      a_level_index = Enum.find_index(level_priority, &(&1 == a.level.name))
+      b_level_index = Enum.find_index(level_priority, &(&1 == b.level.name))
+
+      if a_level_index && b_level_index do
+        a_level_index < b_level_index
+      else
+        a.level.name < b.level.name
+      end
+    end)
   end
 
   @doc """
