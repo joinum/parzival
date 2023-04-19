@@ -45,10 +45,13 @@
             </div>
             <div>
               <label for="password" class="sr-only">Password</label>
-              <div class="relative appearance-none rounded-3xl block w-full border border-white shadow-sm placeholder-gray-400 sm:text-sm">
+              <div x-data="{ hide: true }" class="relative appearance-none rounded-3xl block w-full border border-white shadow-sm placeholder-gray-400 sm:text-sm">
                 <%= password_input(f, :password, placeholder: "Password", required: true, class: "border-white appearance-none rounded-3xl block w-full px-10 py-3  shadow-sm placeholder-gray-400 sm:text-sm focus:outline-none focus:ring-white focus:border-white") %>
-                <div x-on:click="alert('Hello World!')" class="absolute right-5 top-3 cursor-pointer">
+                <div x-show="hide" x-on:click="hide = false; document.getElementById('user_password').type = 'text';" class="absolute right-5 top-3 cursor-pointer">
                   <Ionicons.Filled.eye class="w-5 h-auto fill-black hover:fill-primary"/>
+                </div>
+                <div x-show="!hide" x-on:click="hide = true; document.getElementById('user_password').type = 'password';" class="absolute right-5 top-3 cursor-pointer">
+                  <Ionicons.Filled.eye_off class="w-5 h-auto fill-black hover:fill-primary"/>
                 </div>
               </div>
             </div>
