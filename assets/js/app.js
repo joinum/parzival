@@ -23,8 +23,11 @@ import { LiveSocket } from "phoenix_live_view";
 import "../vendor/alpine.js";
 import topbar from "../vendor/topbar.js";
 import { InitSorting } from "./sorting.js";
+import QrScanner from "../../priv/static/js/qr_reading.js"
 
-let Hooks = {};
+let Hooks = {
+  QrScanner: QrScanner
+};
 
 // Attach sorting hook to LiveView 
 Hooks.InitSorting = InitSorting;
