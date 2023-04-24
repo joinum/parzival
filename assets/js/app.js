@@ -22,8 +22,12 @@ import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import "../vendor/alpine.js";
 import topbar from "../vendor/topbar.js";
+import { InitSorting } from "./sorting.js";
 
 let Hooks = {};
+
+// Attach sorting hook to LiveView 
+Hooks.InitSorting = InitSorting;
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")

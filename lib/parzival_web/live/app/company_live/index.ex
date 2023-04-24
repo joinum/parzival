@@ -24,7 +24,6 @@ defmodule ParzivalWeb.App.CompanyLive.Index do
   defp list_companies(params) do
     case Companies.list_companies(params, preloads: :level) do
       {:ok, {companies, meta}} ->
-        companies = Companies.sort_companies(companies)
         %{companies: companies, meta: meta}
 
       {:error, flop} ->

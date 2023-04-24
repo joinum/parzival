@@ -35,9 +35,9 @@
       </form>
     </div>
   </div>
-  <ul role="list" class="relative z-0">
+  <ul id="sortable-list" phx-hook="InitSorting" role="list" class="relative z-0">
     <%= for level <- @levels do %>
-      <li id={"company-#{level.id}"} class="relative pr-6 border-b border-gray-200">
+      <li id={"level-#{level.id}"} class="relative pr-3 border-b border-gray-200">
         <div class="flex justify-between">
           <div class="py-4 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-6">
             <div class="flex items-center">
@@ -65,6 +65,9 @@
                 data: [confirm: "Are you sure?"],
                 class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
               ) %>
+            </span>
+            <span class="handle cursor-row-resize">
+              <Heroicons.Solid.menu class="w-5 h-5 text-gray-400" />
             </span>
           </div>
         </div>

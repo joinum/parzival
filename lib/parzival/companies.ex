@@ -132,7 +132,6 @@ defmodule Parzival.Companies do
     Company
     |> apply_filters(opts)
     |> Repo.all()
-    |> sort_companies()
   end
 
   def list_companies(flop) do
@@ -141,23 +140,9 @@ defmodule Parzival.Companies do
 
   def list_companies(%{} = flop, opts) when is_list(opts) do
     Company
+    |> join(:left, [o], p in assoc(o, :level), as: :level)
     |> apply_filters(opts)
     |> Flop.validate_and_run(flop, for: Company)
-  end
-
-  def sort_companies(companies) do
-    level_priority = ["Exclusive", "Gold", "Silver", "Bronze"]
-
-    Enum.sort(companies, fn a, b ->
-      a_level_index = Enum.find_index(level_priority, &(&1 == a.level.name))
-      b_level_index = Enum.find_index(level_priority, &(&1 == b.level.name))
-
-      if a_level_index && b_level_index do
-        a_level_index < b_level_index
-      else
-        a.level.name < b.level.name
-      end
-    end)
   end
 
   @doc """
@@ -323,7 +308,13 @@ defmodule Parzival.Companies do
   def create_level(attrs \\ %{}) do
     %Level{}
     |> Level.changeset(attrs)
+    |> Ecto.Changeset.put_change(:sort_order, get_next_level_sort_order(Level))
     |> Repo.insert()
+  end
+
+  defp get_next_level_sort_order(query) do
+    existing_sort_order = Repo.aggregate(from(q in query), :max, :sort_order) || 0
+    existing_sort_order + 1
   end
 
   @doc """
