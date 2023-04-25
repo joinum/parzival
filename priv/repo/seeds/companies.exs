@@ -16,7 +16,8 @@ defmodule Parzival.Repo.Seeds.Companies do
           %Level{},
           %{
             name: "Exclusive",
-            color: "purple"
+            color: "purple",
+            sort_order: 0
           }
         )
         |> Repo.insert!()
@@ -25,7 +26,8 @@ defmodule Parzival.Repo.Seeds.Companies do
           %Level{},
           %{
             name: "Gold",
-            color: "yellow"
+            color: "yellow",
+            sort_order: 1
           }
         )
         |> Repo.insert!()
@@ -34,7 +36,8 @@ defmodule Parzival.Repo.Seeds.Companies do
           %Level{},
           %{
             name: "Silver",
-            color: "gray"
+            color: "gray",
+            sort_order: 2
           }
         )
         |> Repo.insert!()
@@ -43,7 +46,8 @@ defmodule Parzival.Repo.Seeds.Companies do
           %Level{},
           %{
             name: "Bronze",
-            color: "amber"
+            color: "amber",
+            sort_order: 3
           }
         )
         |> Repo.insert!()

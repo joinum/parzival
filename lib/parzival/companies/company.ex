@@ -17,10 +17,18 @@ defmodule Parzival.Companies.Company do
   @derive {
     Flop.Schema,
     filterable: [:search],
-    sortable: [:name],
+    sortable: [:hierarchy, :name],
     compound_fields: [search: [:name]],
-    default_order_by: [:name],
-    default_order_directions: [:asc]
+    default_order_by: [:hierarchy],
+    default_order_directions: [:asc],
+    join_fields: [
+      hierarchy: [
+        binding: :level,
+        field: :sort_order,
+        path: [:level, :sort_order],
+        ecto_type: :integer
+      ]
+    ]
   }
 
   schema "companies" do
