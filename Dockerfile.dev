@@ -1,4 +1,5 @@
-FROM elixir:1.13-alpine
+FROM surnet/alpine-wkhtmltopdf:3.16.2-0.12.6-full as wkhtmltopdf
+FROM elixir:1.14-alpine
 
 # Install build dependencies
 RUN apk add --no-cache build-base git python3
@@ -9,10 +10,22 @@ RUN npm install -g npx
 
 # Install pdf generation dependencies
 RUN apk add --no-cache \
-    libgcc libstdc++ libx11 glib libxrender libxext libintl \
-    ttf-dejavu ttf-droid ttf-freefont ttf-liberation
-COPY --from=madnight/alpine-wkhtmltopdf-builder:0.12.5-alpine3.10-606718795 \
-    /bin/wkhtmltopdf /bin/wkhtmltopdf
+        libstdc++ \
+        libx11 \
+        libxrender \
+        libxext \
+        libssl1.1 \
+        ca-certificates \
+        fontconfig \
+        freetype \
+        ttf-droid \
+        ttf-freefont \
+        ttf-liberation \
+        # more fonts
+        ;
+# wkhtmltopdf copy bins from ext image
+COPY --from=wkhtmltopdf /bin/wkhtmltopdf /bin/libwkhtmltox.so /bin/
+
 
 # Install imagemagick dependencies
 RUN apk add --no-cache file imagemagick
