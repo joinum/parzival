@@ -10,7 +10,7 @@ function parseURL(url) {
   }
 }
 
-const QrScanner = {
+export const QrScanner = {
 
   mounted() {
     const config = { fps: 4, qrbox: (width, height) => {return { width: width * 0.8, height: height * 0.9 }}};
@@ -52,5 +52,3 @@ const QrScanner = {
     });
   }
 }
-
-export default QrScanner;

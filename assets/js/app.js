@@ -23,14 +23,12 @@ import { LiveSocket } from "phoenix_live_view";
 import "../vendor/alpine.js";
 import topbar from "../vendor/topbar.js";
 import { InitSorting } from "./sorting.js";
-import QrScanner from "../../priv/static/js/qr_reading.js"
+import { QrScanner } from "./qr_reading.js"
 
 let Hooks = {
-  QrScanner: QrScanner
+  QrScanner: QrScanner,
+  InitSorting: InitSorting
 };
-
-// Attach sorting hook to LiveView 
-Hooks.InitSorting = InitSorting;
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
