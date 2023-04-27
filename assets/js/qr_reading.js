@@ -22,7 +22,7 @@ export const QrScanner = {
       if (uuid && uuid !== this.lastRead) {
         this.lastRead = uuid;
         if (this.el.dataset.on_success)
-          eval(this.el.dataset.on_success);
+          Function("uuid", this.el.dataset.on_success)(uuid);
       }
     }
 
@@ -30,10 +30,10 @@ export const QrScanner = {
       this.scanner.start({ facingMode: "environment" }, config, onScanSuccess)
       .then((_) => {
         if (this.el.dataset.on_start)
-          eval(this.el.dataset.on_start);
+          Function(this.el.dataset.on_start)();
       }, (e) => {
         if (this.el.dataset.on_error)
-          eval(this.el.dataset.on_error);
+          Function(this.el.dataset.on_error)();
       });
     }
 
@@ -48,7 +48,7 @@ export const QrScanner = {
   destroyed() {
     this.scanner.stop().then((_) => {
       if (this.el.dataset.on_stop)
-        eval(this.el.dataset.on_stop);
+        Function(this.el.dataset.on_stop)();
     });
   }
 }
