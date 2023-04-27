@@ -4,14 +4,7 @@
   </h2>
 
   <div class="my-8 w-full lg:px-6 lg:mx-16">
-    <div id="qr-scanner"
-      phx-hook="QrScanner"
-      ask-perm="perm_button"
-      open-on-mount
-      on-start="document.getElementById('request').style.display = 'none'"
-      on-success="window.location = 'http://localhost:4000/app/profile/' + uuid"
-      class="relative">
-    </div>
+    <div id="qr-scanner" phx-hook="QrScanner" data-ask_perm="perm_button" data-open_on_mount data-on_start="document.getElementById('request').style.display = 'none'" data-on_success="window.location = 'http://localhost:4000/app/profile/' + uuid" class="relative"></div>
 
     <div id="request" class="flex justify-between items-center h-10">
       <div id="loadingMessage" class="inline-flex justify-center py-2 text-base font-medium text-gray-900">
@@ -20,5 +13,4 @@
       <button id="perm_button" type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm bg-secondary hover:bg-primary">Request Permission</button>
     </div>
   </div>
-
 </div>

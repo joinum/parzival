@@ -157,13 +157,14 @@
               <div
                 id="qr-scanner"
                 phx-hook="QrScanner"
-                open-on-mount
-                ask-perm="perm_button"
-                on-start="document.getElementById('loadingMessageWrapper').style.display = 'none'"
-                on-success="const input = document.getElementById('qr_input');
+                data-open_on_mount
+                data-ask_perm="perm_button"
+                data-on_start="document.getElementById('loadingMessageWrapper').style.display = 'none'"
+                data-on_success="const input = document.getElementById('qr_input');
                   input.value = uuid;
                   input.classList.remove('hidden')"
-                class="relative">
+                class="relative"
+              >
               </div>
             </div>
           </div>
