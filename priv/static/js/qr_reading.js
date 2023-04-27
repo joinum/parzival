@@ -22,23 +22,19 @@ const QrScanner = {
   
       if (uuid && uuid !== this.lastRead) {
         this.lastRead = uuid;
-        if (typeof onSuccess === "function") {
-          onSuccess(uuid);
-        }
+        if (this.el.getAttribute("on-success"))
+          eval(this.el.getAttribute("on-success"));
       }
     }
 
     const startScanner = () => {
       this.scanner.start({ facingMode: "environment" }, config, onScanSuccess)
       .then((_) => {
-        console.log(onStart);
-        if (typeof onStart === "function") {
-          onStart();
-        }
+        if (this.el.getAttribute("on-start"))
+          eval(this.el.getAttribute("on-start"));
       }, (e) => {
-        if (typeof onError === "function") {
-          onError();
-        }
+        if (this.el.getAttribute("on-error"))
+          eval(this.el.getAttribute("on-error"));
       });
     }
 
@@ -53,9 +49,8 @@ const QrScanner = {
 
   destroyed() {
     this.scanner.stop().then((_) => {
-      if (typeof onStop === "function") {
-        onStop();
-      }
+      if (this.el.getAttribute("on-stop"))
+      eval(this.el.getAttribute("on-stop"));
     });
   }
 }
