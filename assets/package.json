@@ -1,6 +1,8 @@
 {
+  "dependencies": {
+    "html5-qrcode": "^2.3.7"
+  },
   "devDependencies": {
-    "html5-qrcode": "^2.3.7",
     "rustywind": "^0.15.0"
   }
 }
