@@ -12,7 +12,8 @@ defmodule Parzival.ToolsTest do
 
     test "list_faqs/0 returns all faq" do
       faq = faq_fixture()
-      assert Tools.list_faqs() == [faq]
+
+      assert Tools.list_faqs([]) == [faq]
     end
 
     test "get_faq!/1 returns the faq with given id" do
@@ -68,7 +69,8 @@ defmodule Parzival.ToolsTest do
 
     test "list_announcements/0 returns all announcements" do
       announcement = announcement_fixture()
-      assert Tools.list_announcements() == [announcement]
+
+      assert Tools.list_announcements([]) == [announcement]
     end
 
     test "get_announcement!/1 returns the announcement with given id" do
@@ -77,7 +79,11 @@ defmodule Parzival.ToolsTest do
     end
 
     test "create_announcement/1 with valid data creates a announcement" do
-      valid_attrs = %{text: "some text", title: "some title"}
+      valid_attrs = %{
+        text: "some text",
+        title: "some title",
+        author_id: Parzival.AccountsFixtures.user_fixture().id
+      }
 
       assert {:ok, %Announcement{} = announcement} = Tools.create_announcement(valid_attrs)
       assert announcement.text == "some text"
@@ -126,7 +132,8 @@ defmodule Parzival.ToolsTest do
 
     test "list_posts/0 returns all posts" do
       post = post_fixture()
-      assert Tools.list_posts() == [post]
+
+      assert Tools.list_posts([]) == [post]
     end
 
     test "get_post!/1 returns the post with given id" do
@@ -135,7 +142,7 @@ defmodule Parzival.ToolsTest do
     end
 
     test "create_post/1 with valid data creates a post" do
-      valid_attrs = %{text: "some text"}
+      valid_attrs = %{text: "some text", author_id: Parzival.AccountsFixtures.user_fixture().id}
 
       assert {:ok, %Post{} = post} = Tools.create_post(valid_attrs)
       assert post.text == "some text"

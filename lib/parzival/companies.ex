@@ -140,6 +140,7 @@ defmodule Parzival.Companies do
 
   def list_companies(%{} = flop, opts) when is_list(opts) do
     Company
+    |> join(:left, [o], p in assoc(o, :level), as: :level)
     |> apply_filters(opts)
     |> Flop.validate_and_run(flop, for: Company)
   end
@@ -307,7 +308,13 @@ defmodule Parzival.Companies do
   def create_level(attrs \\ %{}) do
     %Level{}
     |> Level.changeset(attrs)
+    |> Ecto.Changeset.put_change(:sort_order, get_next_level_sort_order(Level))
     |> Repo.insert()
+  end
+
+  defp get_next_level_sort_order(query) do
+    existing_sort_order = Repo.aggregate(from(q in query), :max, :sort_order) || 0
+    existing_sort_order + 1
   end
 
   @doc """
@@ -807,10 +814,7 @@ defmodule Parzival.Companies do
   """
   def create_connection(%Company{} = company, %User{} = user) do
     %Connection{}
-    |> Connection.changeset(%{
-      company_id: company.id,
-      user_id: user.id
-    })
+    |> Connection.changeset(%{company_id: company.id, user_id: user.id})
     |> Repo.insert()
   end
 

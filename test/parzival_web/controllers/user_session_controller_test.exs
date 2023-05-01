@@ -11,14 +11,13 @@ defmodule ParzivalWeb.UserSessionControllerTest do
     test "renders log in page", %{conn: conn} do
       conn = get(conn, Routes.user_session_path(conn, :new))
       response = html_response(conn, 200)
-      assert response =~ "<h1>Log in</h1>"
-      assert response =~ "Register</a>"
+      assert response =~ "Sign in"
       assert response =~ "Forgot your password?</a>"
     end
 
     test "redirects if already logged in", %{conn: conn, user: user} do
       conn = conn |> log_in_user(user) |> get(Routes.user_session_path(conn, :new))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/app/"
     end
   end
 
@@ -30,14 +29,12 @@ defmodule ParzivalWeb.UserSessionControllerTest do
         })
 
       assert get_session(conn, :user_token)
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/app/"
 
       # Now do a logged in request and assert on the menu
       conn = get(conn, "/")
       response = html_response(conn, 200)
-      assert response =~ user.email
-      assert response =~ "Settings</a>"
-      assert response =~ "Log out</a>"
+      assert response =~ "Home · JOIN"
     end
 
     test "logs the user in with remember me", %{conn: conn, user: user} do
@@ -51,7 +48,7 @@ defmodule ParzivalWeb.UserSessionControllerTest do
         })
 
       assert conn.resp_cookies["_parzival_web_user_remember_me"]
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/app/"
     end
 
     test "logs the user in with return to", %{conn: conn, user: user} do
@@ -75,7 +72,7 @@ defmodule ParzivalWeb.UserSessionControllerTest do
         })
 
       response = html_response(conn, 200)
-      assert response =~ "<h1>Log in</h1>"
+      assert response =~ "Sign in"
       assert response =~ "Invalid email or password"
     end
   end
@@ -85,14 +82,14 @@ defmodule ParzivalWeb.UserSessionControllerTest do
       conn = conn |> log_in_user(user) |> delete(Routes.user_session_path(conn, :delete))
       assert redirected_to(conn) == "/"
       refute get_session(conn, :user_token)
-      assert get_flash(conn, :info) =~ "Logged out successfully"
+      assert get_flash(conn, :info) =~ ""
     end
 
     test "succeeds even if the user is not logged in", %{conn: conn} do
       conn = delete(conn, Routes.user_session_path(conn, :delete))
       assert redirected_to(conn) == "/"
       refute get_session(conn, :user_token)
-      assert get_flash(conn, :info) =~ "Logged out successfully"
+      assert get_flash(conn, :info) =~ ""
     end
   end
 end

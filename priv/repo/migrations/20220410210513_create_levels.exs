@@ -7,6 +7,7 @@ defmodule Parzival.Repo.Migrations.CreateLevels do
 
       add :name, :string
       add :color, :string
+      add :sort_order, :integer
 
       timestamps()
     end

@@ -55,6 +55,18 @@ defmodule ParzivalWeb.Backoffice.LevelLive.Index do
     {:noreply, push_patch(socket, to: Routes.admin_level_index_path(socket, :index, params))}
   end
 
+  def handle_event("update-sorting", %{"ids" => ids}, socket) do
+    ids
+    |> Enum.with_index(0)
+    |> Enum.each(fn {"level-" <> id, sort_order} ->
+      id
+      |> Companies.get_level!()
+      |> Companies.update_level(%{sort_order: sort_order})
+    end)
+
+    {:noreply, socket}
+  end
+
   defp build_search_map(params, text) do
     filters =
       (params["filters"] || %{})
