@@ -4,7 +4,7 @@
   </h2>
 
   <div class="my-8 w-full lg:px-6 lg:mx-16">
-    <div id="qr-scanner" phx-hook="QrScanner" data-ask_perm="perm_button" data-open_on_mount data-on_start="document.getElementById('request').style.display = 'none'" data-on_success="window.location.pathname = '/app/profile/' + uuid" class="relative"></div>
+    <div id="qr-scanner" phx-hook="QrScanner" data-ask_perm="perm_button" data-open_on_mount data-on_start="document.getElementById('request').style.display = 'none'" data-on_success="hook.pushEvent('scan', pathname)" class="relative"></div>
 
     <div id="request" class="flex justify-between items-center h-10">
       <div id="loadingMessage" class="inline-flex justify-center py-2 text-base font-medium text-gray-900">

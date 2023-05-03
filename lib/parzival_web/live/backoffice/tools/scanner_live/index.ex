@@ -1,3 +1,5 @@
+
+
 defmodule ParzivalWeb.Backoffice.ScannerLive.Index do
   @moduledoc false
   use ParzivalWeb, :live_view
@@ -13,5 +15,9 @@ defmodule ParzivalWeb.Backoffice.ScannerLive.Index do
      socket
      |> assign(:current_page, :scanner)
      |> assign(:page_title, "Scan QR")}
+  end
+
+  def handle_event("scan", pathname, socket) do
+    {:noreply, push_redirect(socket, to: "/#{pathname}")}
   end
 end

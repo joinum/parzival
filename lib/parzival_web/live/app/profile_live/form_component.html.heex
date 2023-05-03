@@ -161,7 +161,7 @@
                 data-ask_perm="perm_button"
                 data-on_start="document.getElementById('loadingMessageWrapper').style.display = 'none'"
                 data-on_success="const input = document.getElementById('qr_input');
-                  input.value = uuid;
+                  input.value = pathname.split('/').at(-1);
                   input.classList.remove('hidden')"
                 class="relative"
               >

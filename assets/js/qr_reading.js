@@ -3,8 +3,8 @@ import { Html5Qrcode, Html5QrcodeSupportedFormats } from "../vendor/html5-qrcode
 function parseURL(url) {
   try {
     const url_obj = new URL(url);
-    if (url_obj.host !== window.location.host) return null;
-    return url_obj.pathname.split("/").at(-1);
+    //if (url_obj.host !== window.location.host) return null;
+    return url_obj.pathname.split("/").splice(1).join("/");
   } catch {
     return null;
   }
@@ -17,12 +17,12 @@ export const QrScanner = {
     this.scanner = new Html5Qrcode(this.el.id, { formatsToSupport: [ Html5QrcodeSupportedFormats.QR_CODE ] });
 
     const onScanSuccess = (decodedText, decodedResult) => {
-      const uuid = parseURL(decodedText);
+      const pathname = parseURL(decodedText);
   
-      if (uuid && uuid !== this.lastRead) {
-        this.lastRead = uuid;
+      if (pathname != null && pathname !== this.lastRead) {
+        this.lastRead = pathname;
         if (this.el.dataset.on_success)
-          Function("uuid", this.el.dataset.on_success)(uuid);
+          Function("hook", "pathname", this.el.dataset.on_success)(this, pathname);
       }
     }
 
@@ -30,10 +30,10 @@ export const QrScanner = {
       this.scanner.start({ facingMode: "environment" }, config, onScanSuccess)
       .then((_) => {
         if (this.el.dataset.on_start)
-          Function(this.el.dataset.on_start)();
+          Function("hook", this.el.dataset.on_start)(this);
       }, (e) => {
         if (this.el.dataset.on_error)
-          Function(this.el.dataset.on_error)();
+          Function("hook", this.el.dataset.on_error)(this);
       });
     }
 
@@ -48,7 +48,7 @@ export const QrScanner = {
   destroyed() {
     this.scanner.stop().then((_) => {
       if (this.el.dataset.on_stop)
-        Function(this.el.dataset.on_stop)();
+        Function("hook", this.el.dataset.on_stop)(this);
     });
   }
 }
