@@ -15,6 +15,7 @@ defmodule ParzivalWeb.Backoffice.ScannerLive.Index do
      |> assign(:page_title, "Scan QR")}
   end
 
+  @impl true
   def handle_event("scan", pathname, socket) do
     {:noreply, push_redirect(socket, to: "/#{pathname}")}
   end
