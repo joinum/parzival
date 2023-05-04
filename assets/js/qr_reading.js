@@ -3,7 +3,7 @@ import { Html5Qrcode, Html5QrcodeSupportedFormats } from "../vendor/html5-qrcode
 function parseURL(url) {
   try {
     const url_obj = new URL(url);
-    //if (url_obj.host !== window.location.host) return null;
+    if (url_obj.host !== window.location.host) return null;
     return url_obj.pathname.split("/").splice(1).join("/");
   } catch {
     return null;
