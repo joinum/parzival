@@ -1,4 +1,16 @@
 defmodule Mix.Tasks.Export.Attendees.Entries do
+  @moduledoc """
+  Task to export the entries for the final draw to a CSV.
+
+  Run it as mix export.attendees.entries data/entries.csv Aggregate
+  to have one row per attendee (with the number of entries in it)
+  Run it as mix export.attendees.entries data/entries.csv Separate to have
+  one row per entry (this is needed to run the draw in random.org, for example)
+
+  As this script writes to a file, you need to run it in your local machine pointing
+  to the production database.
+  """
+
   use Mix.Task
   alias Parzival.Accounts
   alias Parzival.Gamification
@@ -19,7 +31,7 @@ defmodule Mix.Tasks.Export.Attendees.Entries do
         write_csv(List.first(args), :separate)
 
       true ->
-        Mix.shell().info("Second argument must be equal to \"Aggregate\" and \"Separate\"")
+        Mix.shell().info("Second argument must be equal to Aggregate or Separate")
     end
   end
 
