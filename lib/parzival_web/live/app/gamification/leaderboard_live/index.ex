@@ -53,8 +53,6 @@ defmodule ParzivalWeb.App.LeaderboardLive.Index do
     two = extract_value(Gamification.get_leaderboard(2, @page_size))
     three = extract_value(Gamification.get_leaderboard(3, @page_size))
 
-    IO.inspect(general)
-
     %{
       general: general,
       one: one,

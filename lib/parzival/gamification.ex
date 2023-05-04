@@ -5,6 +5,7 @@ defmodule Parzival.Gamification do
 
   use Parzival.Context
 
+  alias Ecto.Migration
   alias Ecto.Multi
 
   alias Parzival.Accounts
@@ -737,16 +738,31 @@ defmodule Parzival.Gamification do
   end
 
   defp get_leaderboard_query(start_time, end_time) do
-    q1 =
+    task_users =
       TaskUser
       |> where([tu], tu.inserted_at <= ^end_time and tu.inserted_at >= ^start_time)
       |> join(:inner, [tu], t in Task, on: t.id == tu.task_id)
       |> join(:inner, [t], u in User, on: u.id == t.user_id)
-      |> select([tu, t], %{task: tu.task_id, exp: t.exp, user: tu.user_id})
+      |> select([tu, t], %{exp: t.exp, user: tu.user_id})
 
-    subquery(q1)
-    |> group_by([t], t.user)
-    |> select([t], %{user: t.user, experience: sum(t.exp)})
+    mission_users =
+      MissionUser
+      |> where([mu], mu.inserted_at <= ^end_time and mu.inserted_at >= ^start_time)
+      |> join(:inner, [mu], m in Mission, on: m.id == mu.mission_id)
+      |> join(:inner, [m], u in User, on: u.id == m.user_id)
+      |> select([mu, m], %{exp: m.exp, user: mu.user_id})
+
+    sub_task_users = subquery(task_users)
+                     |> group_by([t], t.user)
+                     |> select([t], %{user: t.user, task_exp: sum(t.exp)})
+
+    sub_mission_users = subquery(mission_users)
+                        |> group_by([m], m.user)
+                        |> select([m], %{user: m.user, mission_exp: sum(m.exp)})
+    
+    subquery(sub_task_users)
+    |> join(:inner, [t], m in subquery(sub_mission_users), on: t.user == m.user)
+    |> select([t, m], %{experience: fragment("task_exp + mission_exp"), user: t.user})
   end
 
   defp get_daily_leaderboard(start_time, end_time, number_entries) do

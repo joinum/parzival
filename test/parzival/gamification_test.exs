@@ -104,5 +104,27 @@ defmodule Parzival.GamificationTest do
       assert attendee.balance == task0.tokens + task1.tokens + mission.tokens
       assert attendee.exp == task0.exp + task1.exp + mission.exp
     end
+
+    test "get_exp/2 returns the exp of the given user on a specific day" do
+      attendee = user_fixture()
+      staff = user_fixture(%{role: :staff})
+
+      mission =
+        mission_fixture(2)
+        |> Repo.preload(:tasks)
+
+      task0 = Enum.at(mission.tasks, 0)
+      task1 = Enum.at(mission.tasks, 1)
+
+      assert {:ok, %Mission{}} = Gamification.redeem_task(attendee, task0, staff)
+
+      assert Gamification.get_exp(attendee, 3) == task0.exp
+      IO.puts "task0.exp: #{task0.exp} + task1.exp: #{task1.exp} + mission.exp: #{mission.exp}"
+      IO.puts "exp: #{Gamification.get_exp(attendee, 3)}"
+
+      assert {:ok, mission = %Mission{}} = Gamification.redeem_task(attendee, task1, staff)
+
+      assert Gamification.get_exp(attendee, 3) == task0.exp + task1.exp + mission.exp
+    end
   end
 end
