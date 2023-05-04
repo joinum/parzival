@@ -71,11 +71,7 @@ defmodule Mix.Tasks.Export.Attendees.Entries do
     end
   end
 
-  defp add_header(list, :aggregate) do
-    ["id,name,email,entries" | list]
-  end
-
-  defp add_header(list, :separate) do
+  defp add_header(list, _) do
     ["id,name,email,entries" | list]
   end
 end
