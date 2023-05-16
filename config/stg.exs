@@ -11,6 +11,24 @@ import Config
 # before starting your staging server.
 config :parzival, ParzivalWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :waffle,
+  storage: Waffle.Storage.S3,
+  bucket: {:system, "AWS_S3_BUCKET"},
+  asset_host: {:system, "ASSET_HOST"}
+
+config :ex_aws,
+  json_codec: Jason,
+  access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
+  secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"},
+  region: "eu-west-2",
+  s3: [
+    scheme: "https://",
+    host: "s3.eu-west-2.amazonaws.com",
+    region: "eu-west-2",
+    access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
+    secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"}
+  ]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

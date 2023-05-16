@@ -53,6 +53,8 @@ defmodule Parzival.MixProject do
       {:ecto_psql_extras, "~> 0.6"},
 
       # uploads
+      {:ex_aws, "~> 2.1"},
+      {:ex_aws_s3, "~> 2.0"},
       {:waffle, "~> 1.1"},
       {:waffle_ecto, "~> 0.0"},
 

@@ -2,12 +2,10 @@
 
 app = "parzival-stg"
 primary_region = "mad"
-kill_signal = "SIGTERM"
 
 [env]
   FLY_APP_NAME ="parzival-stg"
   PHX_HOST = "parzival-stg.fly.dev"
-  MIX_ENV = "stg"
 
 [deploy]
     release_command = "/app/bin/migrate"
