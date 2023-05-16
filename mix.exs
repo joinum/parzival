@@ -82,6 +82,8 @@ defmodule Parzival.MixProject do
       {:timex, "~> 3.0"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
+      {:sweet_xml, "~> 0.7.1"},
+      {:hackney, "~> 1.18"},
 
       # monitoring
       {:telemetry_metrics, "~> 0.6"},
