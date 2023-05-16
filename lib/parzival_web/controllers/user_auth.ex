@@ -4,10 +4,10 @@ defmodule ParzivalWeb.UserAuth do
   import Phoenix.Controller
 
   alias Parzival.Accounts
-  alias Parzival.Gamification
-  alias ParzivalWeb.Router.Helpers, as: Routes
-  alias Parzival.Store
   alias Parzival.Companies
+  alias Parzival.Gamification
+  alias Parzival.Store
+  alias ParzivalWeb.Router.Helpers, as: Routes
 
   # Make the remember me cookie valid for 60 days.
   # If you want bump or reduce this value, also change
@@ -137,7 +137,6 @@ defmodule ParzivalWeb.UserAuth do
       conn
     end
   end
-
 
   def require_admin_or_staff(conn, _opts) do
     if conn.assigns[:current_user].role in [:staff, :admin] do
