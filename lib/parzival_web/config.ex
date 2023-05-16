@@ -120,10 +120,22 @@ defmodule ParzivalWeb.Config do
         tabs: []
       },
       %{
-        key: :announcements,
-        title: "Announcements",
-        url: Routes.announcement_index_path(conn, :index),
-        tabs: []
+        key: :tools,
+        title: "Tools",
+        url: Routes.admin_faqs_index_path(conn, :index),
+        tabs: [
+          %{
+            key: :faqs,
+            title: "FAQs",
+            url: Routes.admin_faqs_index_path(conn, :index)
+          },
+          %{
+            key: :announcements,
+            title: "Announcements",
+            url: Routes.announcement_index_path(conn, :index),
+            tabs: []
+          }
+        ]
       }
     ]
   end
