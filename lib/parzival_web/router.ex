@@ -123,6 +123,9 @@ defmodule ParzivalWeb.Router do
         live "/store/:id/edit", ProductLive.Edit, :edit
         live "/order/:id/redeem", OrderLive.Edit, :edit
 
+        live "/boosts/new", BoostLive.New, :new
+        live "/boosts/:id/edit", BoostLive.Edit, :edit
+
         scope "/missions" do
           live "/new", MissionLive.New, :new
           live "/:id/edit", MissionLive.Edit, :edit

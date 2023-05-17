@@ -4,6 +4,8 @@ defmodule Parzival.StoreFixtures do
   entities via the `Parzival.Store` context.
   """
 
+  alias Parzival.AccountsFixtures
+
   @doc """
   Generate a product.
   """
@@ -45,7 +47,14 @@ defmodule Parzival.StoreFixtures do
     {:ok, boost} =
       attrs
       |> Enum.into(%{
-        finish: ~N[2022-06-18 01:07:00]
+        name: "some name",
+        description: "some description",
+        start: ~N[2022-06-17 01:07:00],
+        finish: ~N[2022-06-18 01:07:00],
+        price: 42,
+        type: "exp",
+        multiplier: 1.5,
+        item: Parzival.StoreFixtures.item_fixture()
       })
       |> Parzival.Store.create_boost()
 
@@ -58,7 +67,11 @@ defmodule Parzival.StoreFixtures do
   def item_fixture(attrs \\ %{}) do
     {:ok, item} =
       attrs
-      |> Enum.into(%{})
+      |> Enum.into(%{
+        expires_at: ~N[2022-06-18 01:07:00],
+        user_id: AccountsFixtures.user_fixture().id,
+        boost_id: boost_fixture().id
+      })
       |> Parzival.Store.create_item()
 
     item

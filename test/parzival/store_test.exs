@@ -2,6 +2,7 @@ defmodule Parzival.StoreTest do
   use Parzival.DataCase
 
   alias Parzival.Store
+  alias Parzival.StoreFixtures
 
   describe "products" do
     alias Parzival.Store.Product
@@ -156,7 +157,17 @@ defmodule Parzival.StoreTest do
     end
 
     test "create_boost/1 with valid data creates a boost" do
-      valid_attrs = %{finish: ~N[2022-06-18 01:07:00]}
+      valid_attrs = %{
+        finish: ~N[2022-06-18 01:07:00],
+        multiplier: 2,
+        name: "some name",
+        price: 42,
+        start: ~N[2022-06-17 01:07:00],
+        stock: 42,
+        type: "exp",
+        description: "some description",
+        item: StoreFixtures.product_fixture()
+      }
 
       assert {:ok, %Boost{} = boost} = Store.create_boost(valid_attrs)
       assert boost.finish == ~N[2022-06-18 01:07:00]
@@ -209,25 +220,20 @@ defmodule Parzival.StoreTest do
       assert Store.get_item!(item.id) == item
     end
 
-    test "create_item/1 with valid data creates a item" do
-      valid_attrs = %{}
-
-      assert {:ok, %Item{} = item} = Store.create_item(valid_attrs)
-    end
-
     test "create_item/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Store.create_item(@invalid_attrs)
     end
 
     test "update_item/2 with valid data updates the item" do
       item = item_fixture()
-      update_attrs = %{}
+      update_attrs = %{expires_at: ~N[2022-06-19 01:07:00]}
 
       assert {:ok, %Item{} = item} = Store.update_item(item, update_attrs)
     end
 
     test "update_item/2 with invalid data returns error changeset" do
       item = item_fixture()
+
       assert {:error, %Ecto.Changeset{}} = Store.update_item(item, @invalid_attrs)
       assert item == Store.get_item!(item.id)
     end
