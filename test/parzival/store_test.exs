@@ -5,14 +5,15 @@ defmodule Parzival.StoreTest do
 
   describe "products" do
     alias Parzival.Store.Product
-
+    import Parzival.AccountsFixtures
     import Parzival.StoreFixtures
 
     @invalid_attrs %{description: nil, max_per_user: nil, name: nil, price: nil, stock: nil}
 
     test "list_products/0 returns all products" do
       product = product_fixture()
-      assert Store.list_products() == [product]
+
+      assert Store.list_products([]) == [product]
     end
 
     test "get_product!/1 returns the product with given id" do
@@ -80,14 +81,15 @@ defmodule Parzival.StoreTest do
 
   describe "orders" do
     alias Parzival.Store.Order
-
+    import Parzival.AccountsFixtures
     import Parzival.StoreFixtures
 
-    @invalid_attrs %{quantity: nil, redeemed: nil}
+    @invalid_attrs %{redeemed: nil, user_id: -1}
 
     test "list_orders/0 returns all orders" do
       order = order_fixture()
-      assert Store.list_orders() == [order]
+
+      assert Store.list_orders([]) == [order]
     end
 
     test "get_order!/1 returns the order with given id" do
@@ -96,11 +98,14 @@ defmodule Parzival.StoreTest do
     end
 
     test "create_order/1 with valid data creates a order" do
-      valid_attrs = %{quantity: 42, redeemed: 42}
+      valid_attrs = %{
+        user_id: user_fixture().id,
+        product_id: product_fixture().id,
+        redeemed: false
+      }
 
       assert {:ok, %Order{} = order} = Store.create_order(valid_attrs)
-      assert order.quantity == 42
-      assert order.redeemed == 42
+      assert order.redeemed == false
     end
 
     test "create_order/1 with invalid data returns error changeset" do
@@ -109,11 +114,10 @@ defmodule Parzival.StoreTest do
 
     test "update_order/2 with valid data updates the order" do
       order = order_fixture()
-      update_attrs = %{quantity: 43, redeemed: 43}
+      update_attrs = %{redeemed: true}
 
       assert {:ok, %Order{} = order} = Store.update_order(order, update_attrs)
-      assert order.quantity == 43
-      assert order.redeemed == 43
+      assert order.redeemed == true
     end
 
     test "update_order/2 with invalid data returns error changeset" do

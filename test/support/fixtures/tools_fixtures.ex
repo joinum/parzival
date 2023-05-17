@@ -26,6 +26,7 @@ defmodule Parzival.ToolsFixtures do
     {:ok, announcement} =
       attrs
       |> Enum.into(%{
+        author_id: Parzival.AccountsFixtures.user_fixture().id,
         text: "some text",
         title: "some title"
       })
@@ -41,6 +42,7 @@ defmodule Parzival.ToolsFixtures do
     {:ok, post} =
       attrs
       |> Enum.into(%{
+        author_id: Parzival.AccountsFixtures.user_fixture().id,
         text: "some text"
       })
       |> Parzival.Tools.create_post()

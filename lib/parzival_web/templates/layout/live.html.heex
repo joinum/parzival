@@ -100,13 +100,13 @@
           <%= if @current_user.role == :attendee do %>
             <div class="flex flex-col gap-y-1">
               <span class="text-lg">
-                LVL <%= Gamification.calc_level(@current_user.exp) %>
+                LVL <%= Parzival.Gamification.calc_level(@current_user.exp) %>
               </span>
               <div class="overflow-hidden w-full h-6 rounded-md bg-quaternary">
-                <div style={"width: #{@current_user.exp / Gamification.calc_next_level_exp(@current_user.exp) * 100}%; transition: width 0.6s"} class="h-full bg-secondary" />
+                <div style={"width: #{@current_user.exp / Parzival.Gamification.calc_next_level_exp(@current_user.exp) * 100}%; transition: width 0.6s"} class="h-full bg-secondary" />
               </div>
               <span class="text-sm font-light text-right text-gray-300">
-                <%= @current_user.exp %>/<%= Gamification.calc_next_level_exp(@current_user.exp) %> EXP
+                <%= @current_user.exp %>/<%= Parzival.Gamification.calc_next_level_exp(@current_user.exp) %> EXP
               </span>
             </div>
             <span>
