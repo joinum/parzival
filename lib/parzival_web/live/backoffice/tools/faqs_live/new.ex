@@ -14,7 +14,7 @@ defmodule ParzivalWeb.Backoffice.FaqsLive.New do
     {:noreply,
      socket
      |> assign(:current_page, :faq)
-     |> assign(:page_title, "New Fq")
+     |> assign(:page_title, "New Faq")
      |> assign(:faq, %Faq{})}
   end
 end

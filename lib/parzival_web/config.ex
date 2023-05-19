@@ -127,7 +127,8 @@ defmodule ParzivalWeb.Config do
           %{
             key: :faqs,
             title: "FAQs",
-            url: Routes.admin_faqs_index_path(conn, :index)
+            url: Routes.admin_faqs_index_path(conn, :index),
+            tabs: []
           },
           %{
             key: :announcements,

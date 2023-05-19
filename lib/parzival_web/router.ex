@@ -89,15 +89,16 @@ defmodule ParzivalWeb.Router do
 
         pipe_through [:require_order_attendee]
         live "/vault/:id", OrderLive.Show, :show
+
         pipe_through [:require_curriculum_attendee]
         live "/profile/:id/edit", ProfileLive.Edit, :edit
         live "/dashboard/curriculum", DashboardLive.Edit, :edit
 
-        pipe_through [:require_admin_or_company_recruiter]
-        live "/companies/new", CompanyLive.New, :new
+        pipe_through [:require_admin]
+        live "/companies_new/new", CompanyLive.New, :new
         live "/companies/:id/edit", CompanyLive.Edit, :edit
         live "/offers/:id/edit", OfferLive.Edit, :edit
-        live "/offers/new", OfferLive.New, :new
+        live "/offers_new/new", OfferLive.New, :new
       end
 
       scope "/admin", Backoffice, as: :admin do
@@ -112,11 +113,11 @@ defmodule ParzivalWeb.Router do
 
         scope "/jobs" do
           live "/types/", OfferTypeLive.Index, :index
-          live "/types/new", OfferTypeLive.Index, :new
+          live "/offer_type/new", OfferTypeLive.Index, :new
           live "/types/:id/edit", OfferTypeLive.Index, :edit
 
           live "/times/", OfferTimeLive.Index, :index
-          live "/times/new", OfferTimeLive.Index, :new
+          live "/offer_time/new", OfferTimeLive.Index, :new
           live "/times/:id/edit", OfferTimeLive.Index, :edit
         end
 
@@ -142,7 +143,7 @@ defmodule ParzivalWeb.Router do
         end
 
         scope "/tools" do
-          live "/faqs/new", FaqsLive.New, :new
+          live "/new", FaqsLive.New, :new
           live "/faqs/:id/edit", FaqsLive.Edit, :edit
           live "/announcements/new", AnnouncementLive.New, :new
           live "/announcements/:id/edit", AnnouncementLive.Edit, :edit
