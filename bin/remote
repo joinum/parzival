@@ -21,8 +21,8 @@ function display_help() {
     ${PROGRAM} [options] <command>
 
   $(help_title_section Commands)
-    prod              Deploy to production environment.
-    stg               Deploy to staging environment [default command].
+    prod              Start production remote console.
+    stg               Start staging remote console [default command].
 
   $(help_title_section Options)
     -h --help         Show this screen.
@@ -30,24 +30,20 @@ function display_help() {
 EOF
 }
 
-function deploy() {
+function start_remote_console() {
   local file
-  local env
 
   env=${1:-stg}
   file="fly-${env}.toml"
 
-  load_env_file ".env.${env}"
-  export MIX_ENV="${env}"
+  export TERM="xterm-256color"
 
   if ! command -v flyctl &>/dev/null; then
     log_error "flyctl is not installed. Please install it and authenticate."
     exit 1
   fi
 
-  fly deploy --config "${file}"
-
-  log_success "Successfully deployed ${env} to fly.io"
+  fly --config "${file}" ssh console --pty -C "app/bin/parzival remote"
 }
 
 case ${1:-stg} in
@@ -58,7 +54,7 @@ case ${1:-stg} in
     display_version "${VERSION}" "${PROGRAM}"
     ;;
   prod | stg)
-    deploy "${1:-stg}"
+    start_remote_console "${1:-stg}"
     ;;
   *)
     display_help >&2
