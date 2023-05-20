@@ -713,6 +713,16 @@ defmodule Parzival.Gamification do
     end
   end
 
+  def get_leaderboard(%{} = flop, day, number_entries) do
+    IO.puts "get_leaderboard"
+    case day do
+      0 -> get_daily_leaderboard(flop, @first_day_start, @third_day_end, number_entries)
+      1 -> get_daily_leaderboard(flop, @first_day_start, @first_day_end, number_entries)
+      2 -> get_daily_leaderboard(flop, @second_day_start, @second_day_start, number_entries)
+      3 -> get_daily_leaderboard(flop, @third_day_start, @third_day_end, number_entries)
+    end
+  end
+
   def get_exp(user, day) do
     case day do
       1 -> get_exp(user, @first_day_start, @first_day_end)
@@ -773,6 +783,16 @@ defmodule Parzival.Gamification do
     |> limit(^number_entries)
     |> join(:inner, [t], u in User, on: t.user == u.id)
     |> Repo.all()
+  end
+
+  defp get_daily_leaderboard(%{} = flop, start_time, end_time, number_entries) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    subquery(q2)
+    |> order_by([t], desc: t.experience)
+    |> limit(^number_entries)
+    |> join(:inner, [t], u in User, on: t.user == u.id)
+    |> Flop.validate_and_run(flop)
   end
 
   def get_user_position(user, day) do

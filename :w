@@ -1,7 +1,7 @@
 defmodule ParzivalWeb.App.LeaderboardLive.Index do
   @moduledoc false
 
-  @page_size 1000
+  @page_size 8
 
   use ParzivalWeb, :live_view
 
@@ -45,15 +45,15 @@ defmodule ParzivalWeb.App.LeaderboardLive.Index do
     }
   end
 
-  defp get_leaderboard(_params) do
+  defp get_leaderboard(params) do
     # params =
     #   params
     #   |> Map.put("page_size", @page_size)
 
-    general = extract_value(Gamification.get_leaderboard(%{}, 0, @page_size))
-    one = extract_value(Gamification.get_leaderboard(%{}, 1, @page_size))
-    two = extract_value(Gamification.get_leaderboard(%{}, 2, @page_size))
-    three = extract_value(Gamification.get_leaderboard(%{}, 3, @page_size))
+    general = extract_value(Gamification.get_leaderboard(0, @page_size))
+    one = extract_value(Gamification.get_leaderboard(1, @page_size))
+    two = extract_value(Gamification.get_leaderboard(2, @page_size))
+    three = extract_value(Gamification.get_leaderboard(3, @page_size))
 
     %{
       general: general,
@@ -63,16 +63,10 @@ defmodule ParzivalWeb.App.LeaderboardLive.Index do
     }
   end
 
-  defp extract_value({:ok, {data, meta}}) do
-    data = Enum.map(data, fn %{experience: exp, user: user} ->
+  defp extract_value(data) do
+    Enum.map(data, fn %{experience: exp, user: user} ->
       {Accounts.get_user!(user), exp}
     end)
-
-    %{data: data, meta: meta}
-  end
-
-  defp extract_value({:error, flop}) do
-    %{data: [], meta: flop}
   end
 
   # TODO remove this code

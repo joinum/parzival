@@ -41,7 +41,7 @@
   </div>
   <div x-bind:class="option =='general' ? 'block' : 'hidden'">
     <ul role="list" class="relative z-0">
-      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.general) do %>
+      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.general.data) do %>
         <%= live_patch(to: Routes.profile_show_path(@socket, :show, user)) do %>
           <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
             <div class="flex justify-between">
@@ -129,11 +129,12 @@
         <% end %>
       <% end %>
     </ul>
+    <.pagination items={@leaderboard.general.data} meta={@leaderboard.general.meta} params={@params} class="flex justify-between items-center w-full" />
   </div>
 
   <div x-bind:class="option =='1' ? 'block' : 'hidden'">
     <ul role="list" class="relative z-0">
-      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.one) do %>
+      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.one.data) do %>
         <%= live_patch(to: Routes.profile_show_path(@socket, :show, user)) do %>
           <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
             <div class="flex justify-between">
@@ -221,11 +222,12 @@
         <% end %>
       <% end %>
     </ul>
+    <.pagination items={@leaderboard.one.data} meta={@leaderboard.one.meta} params={@params} class="flex justify-between items-center w-full" />
   </div>
 
   <div x-bind:class="option =='2' ? 'block' : 'hidden'">
     <ul role="list" class="relative z-0">
-      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.two) do %>
+      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.two.data) do %>
         <%= live_patch(to: Routes.profile_show_path(@socket, :show, user)) do %>
           <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
             <div class="flex justify-between">
@@ -313,11 +315,12 @@
         <% end %>
       <% end %>
     </ul>
+    <.pagination items={@leaderboard.two.data} meta={@leaderboard.two.meta} params={@params} class="flex justify-between items-center w-full" />
   </div>
 
   <div x-bind:class="option =='3' ? 'block' : 'hidden'">
     <ul role="list" class="relative z-0">
-      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.three) do %>
+      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.three.data) do %>
         <%= live_patch(to: Routes.profile_show_path(@socket, :show, user)) do %>
           <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
             <div class="flex justify-between">
@@ -405,5 +408,6 @@
         <% end %>
       <% end %>
     </ul>
+    <.pagination items={@leaderboard.three.data} meta={@leaderboard.three.meta} params={@params} class="flex justify-between items-center w-full" />
   </div>
 </div>
