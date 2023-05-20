@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content={csrf_token_value()} />
+    <%= live_title_tag(assigns[:page_title] || "Home", suffix: " · JOIN") %>
+    <link rel="apple-touch-icon" sizes="180x180" href={Routes.static_path(@conn, "/favicon/apple-touch-icon.png")} />
+    <link rel="icon" type="image/png" sizes="32x32" href={Routes.static_path(@conn, "/favicon/favicon-32x32.png")} />
+    <link rel="icon" type="image/png" sizes="16x16" href={Routes.static_path(@conn, "/favicon/favicon-16x16.png")} />
+    <link rel="manifest" href={Routes.static_path(@conn, "/favicon/site.webmanifest")} />
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")} />
+  </head>
+  <body class="overflow-x-hidden bg-gradient-to-l from-primary via-secondary to-primary">
+    <div class="py-16 px-4 sm:py-24 sm:px-6 md:grid md:place-items-center lg:px-8">
+      <img class="mx-auto h-72 sm:my-24" src={Routes.static_path(@conn, "/images/logo.svg")} />
+      <div class="mx-auto max-w-max">
+        <main class="sm:flex">
+          <p class="text-4xl font-extrabold sm:text-5xl text-quaternary">500</p>
+          <div class="sm:ml-6">
+            <div class="sm:pl-6 sm:border-l sm:border-gray-200">
+              <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Oops! It appears that something went wrong on our end.</h1>
+              <p class="mt-1 text-base text-red-200">Rest assured, we value your presence and are working diligently to resolve the issue. Please try again later or contact our support team for further assistance. In the mean time, you can return to JOIN homepage.</p>
+            </div>
+            <div class="flex mt-10 space-x-3 sm:pl-6 sm:border-l sm:border-transparent">
+              <a href="/" class="inline-flex items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm hover:bg-red-800 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none bg-primary">Go back home</a>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
