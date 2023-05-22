@@ -70,12 +70,12 @@ config :tailwind,
 # configure event dates 
 config :parzival,
   event: %{
-    first_day_start: ~N[2023-05-19 00:00:00],
-    first_day_end: ~N[2023-05-19 23:59:59],
-    second_day_start: ~N[2023-05-20 00:00:00],
-    second_day_end: ~N[2023-05-20 23:59:59],
-    third_day_start: ~N[2023-05-21 00:00:00],
-    third_day_end: ~N[2023-05-21 23:59:59]
+    first_day_start: ~N[2023-05-20 00:00:00],
+    first_day_end: ~N[2023-05-20 23:59:59],
+    second_day_start: ~N[2023-05-21 00:00:00],
+    second_day_end: ~N[2023-05-21 23:59:59],
+    third_day_start: ~N[2023-05-22 00:00:00],
+    third_day_end: ~N[2023-05-22 23:59:59]
   }
 
 # Import environment specific config. This must remain at the bottom

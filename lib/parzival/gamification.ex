@@ -703,35 +703,52 @@ defmodule Parzival.Gamification do
     |> Flop.validate_and_run(flop, for: TaskUser)
   end
 
-  def get_leaderboard(day, number_entries) do
-    case day do
-      # 0 -> get_general_leaderboard(params, number_entries)
-      0 -> get_daily_leaderboard(@first_day_start, @third_day_end, number_entries)
-      1 -> get_daily_leaderboard(@first_day_start, @first_day_end, number_entries)
-      2 -> get_daily_leaderboard(@second_day_start, @second_day_start, number_entries)
-      3 -> get_daily_leaderboard(@third_day_start, @third_day_end, number_entries)
-    end
+  # def get_leaderboard(day) do
+  #   case day do
+  #     # 0 -> get_general_leaderboard(params, number_entries)
+  #     0 -> get_daily_leaderboard(@first_day_start, @third_day_end, number_entries)
+  #     1 -> get_daily_leaderboard(@first_day_start, @first_day_end, number_entries)
+  #     2 -> get_daily_leaderboard(@second_day_start, @second_day_start, number_entries)
+  #     3 -> get_daily_leaderboard(@third_day_start, @third_day_end, number_entries)
+  #   end
+  # end
+
+  # def get_leaderboard(%{} = flop, day) do
+  #   case day do
+  #     0 -> get_daily_leaderboard(flop, @first_day)
+  #     1 -> get_daily_leaderboard(flop, @first_day)
+  #     2 -> get_daily_leaderboard(flop, @second_day)
+  #     3 -> get_daily_leaderboard(flop, @third_day)
+  #   end
+  # end
+
+  # def get_exp(user, day) do
+  #   case day do
+  #     1 -> get_exp(user, @first_day_start, @first_day_end)
+  #     2 -> get_exp(user, @second_day_start, @second_day_end)
+  #     3 -> get_exp(user, @third_day_start, @third_day_end)
+  #   end
+  # end
+
+  def get_leaderboard(start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    subquery(q2)
+    |> order_by([t], desc: t.experience)
+    |> join(:inner, [t], u in User, on: t.user == u.id)
+    |> Repo.all()
   end
 
-  def get_leaderboard(%{} = flop, day, number_entries) do
-    IO.puts "get_leaderboard"
-    case day do
-      0 -> get_daily_leaderboard(flop, @first_day_start, @third_day_end, number_entries)
-      1 -> get_daily_leaderboard(flop, @first_day_start, @first_day_end, number_entries)
-      2 -> get_daily_leaderboard(flop, @second_day_start, @second_day_start, number_entries)
-      3 -> get_daily_leaderboard(flop, @third_day_start, @third_day_end, number_entries)
-    end
+  def get_leaderboard(%{} = flop, start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    subquery(q2)
+    |> order_by([t], desc: t.experience)
+    |> join(:inner, [t], u in User, on: t.user == u.id)
+    |> Flop.validate_and_run(flop)
   end
 
-  def get_exp(user, day) do
-    case day do
-      1 -> get_exp(user, @first_day_start, @first_day_end)
-      2 -> get_exp(user, @second_day_start, @second_day_end)
-      3 -> get_exp(user, @third_day_start, @third_day_end)
-    end
-  end
-
-  defp get_exp(user, start_time, end_time) do
+  def get_exp(user, start_time, end_time) do
     q2 = get_leaderboard_query(start_time, end_time)
 
     res =
@@ -744,6 +761,45 @@ defmodule Parzival.Gamification do
       0
     else
       res
+    end
+  end
+
+  # def get_user_position(user, day) do
+  #   case day do
+  #     0 -> get_user_position_general(user)
+  #     1 -> get_user_position_by_day(user, @first_day_start, @second_day_end)
+  #     2 -> get_user_position_by_day(user, @second_day_start, @second_day_end)
+  #     3 -> get_user_position_by_day(user, @third_day_start, @third_day_end)
+  #   end
+  # end
+
+  def get_user_position_general(user) do
+    x =
+      User
+      |> where([u], u.exp > ^user.exp)
+      |> Repo.aggregate(:count, :id)
+
+    x + 1
+  end
+
+  def get_user_position_by_day(user, start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    exp =
+      subquery(q2)
+      |> where([t], t.user == ^user.id)
+      |> select([t], t.experience)
+      |> Repo.one()
+
+    if exp == nil do
+      '-'
+    else
+      x =
+        subquery(q2)
+        |> where([t], t.experience > ^exp)
+        |> Repo.aggregate(:count, :user)
+
+      x + 1
     end
   end
 
@@ -771,67 +827,11 @@ defmodule Parzival.Gamification do
                         |> select([m], %{user: m.user, mission_exp: sum(m.exp)})
     
     subquery(sub_task_users)
-    |> join(:inner, [t], m in subquery(sub_mission_users), on: t.user == m.user)
-    |> select([t, m], %{experience: fragment("task_exp + mission_exp"), user: t.user})
-  end
-
-  defp get_daily_leaderboard(start_time, end_time, number_entries) do
-    q2 = get_leaderboard_query(start_time, end_time)
-
-    subquery(q2)
-    |> order_by([t], desc: t.experience)
-    |> limit(^number_entries)
-    |> join(:inner, [t], u in User, on: t.user == u.id)
-    |> Repo.all()
-  end
-
-  defp get_daily_leaderboard(%{} = flop, start_time, end_time, number_entries) do
-    q2 = get_leaderboard_query(start_time, end_time)
-
-    subquery(q2)
-    |> order_by([t], desc: t.experience)
-    |> limit(^number_entries)
-    |> join(:inner, [t], u in User, on: t.user == u.id)
-    |> Flop.validate_and_run(flop)
-  end
-
-  def get_user_position(user, day) do
-    case day do
-      0 -> get_user_position_general(user)
-      1 -> get_user_position_by_day(user, @first_day_start, @second_day_end)
-      2 -> get_user_position_by_day(user, @second_day_start, @second_day_end)
-      3 -> get_user_position_by_day(user, @third_day_start, @third_day_end)
-    end
-  end
-
-  defp get_user_position_general(user) do
-    x =
-      User
-      |> where([u], u.exp > ^user.exp)
-      |> Repo.aggregate(:count, :id)
-
-    x + 1
-  end
-
-  defp get_user_position_by_day(user, start_time, end_time) do
-    q2 = get_leaderboard_query(start_time, end_time)
-
-    exp =
-      subquery(q2)
-      |> where([t], t.user == ^user.id)
-      |> select([t], t.experience)
-      |> Repo.one()
-
-    if exp == nil do
-      '-'
-    else
-      x =
-        subquery(q2)
-        |> where([t], t.experience > ^exp)
-        |> Repo.aggregate(:count, :user)
-
-      x + 1
-    end
+    |> join(:left, [t], m in subquery(sub_mission_users), on: t.user == m.user)
+    |> select([t, m], %{
+      experience: fragment("COALESCE(task_exp, 0) + COALESCE(mission_exp, 0)"),
+      user: t.user
+    })
   end
 
   @doc """

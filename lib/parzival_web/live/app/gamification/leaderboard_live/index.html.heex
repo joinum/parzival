@@ -4,40 +4,68 @@
   <div class="pt-5 pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
     <h1 class="flex-1 text-lg font-medium">Leaderboard</h1>
     <!-- Tabs -->
-    <div class="flex justify-between items-center mt-2 2xl:mt-5">
+    <div class="mt-2 2xl:mt-5">
       <div class="flex justify-between items-center">
-        <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-          <button
-            x-on:click="option = 'general'"
-            x-bind:class="option =='general' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-            class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
-          >
-            General
-          </button>
-          <button
-            x-on:click="option = '1'"
-            x-bind:class="option =='1' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-            class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
-          >
-            Day 1
-          </button>
-          <button
-            x-on:click="option = '2'"
-            x-bind:class="option =='2' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-            class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
-          >
-            Day 2
-          </button>
-          <button
-            x-on:click="option = '3'"
-            x-bind:class="option =='3' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-            class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
-          >
-            Day 3
-          </button>
-        </nav>
+        <%= if @current_user.role in [:attendee] do %>
+          <nav class="flex -mb-px space-x-8" aria-label="Tabs">
+            <button x-on:click="option = 'general'" x-bind:class="option =='general' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
+              <%= live_patch to: "?tab=general", class: "#{@current_tab == "general" && "border-b-2 border-red-500 text-gray-900" || "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
+                <%= "General" %>
+              <% end %>
+            </button>
+            <button x-on:click="option = '1'" x-bind:class="option =='1' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
+              <%= live_patch to: "?tab=day1", class: "#{@current_tab == "day1" && "border-b-2 border-red-500 text-gray-900" || "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
+                <%= "Day 1" %>
+              <% end %>
+            </button>
+            <button x-on:click="option = '2'" x-bind:class="option =='2' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
+              <%= live_patch to: "?tab=day2", class: "#{@current_tab == "day2" && "border-b-2 border-red-500 text-gray-900" || "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
+                <%= "Day 2" %>
+              <% end %>
+            </button>
+            <button x-on:click="option = '3'" x-bind:class="option =='3' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
+              <%= live_patch to: "?tab=day3", class: "#{@current_tab == "day3" && "border-b-2 border-red-500 text-gray-900" || "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" do %>
+                <%= "Day 3" %>
+              <% end %>
+            </button>
+          </nav>
+        <% end %>
       </div>
     </div>
+    <%# <div class="flex justify-between items-center mt-2 2xl:mt-5"> %>
+    <%#   <div class="flex justify-between items-center"> %>
+    <%#     <nav class="flex -mb-px space-x-8" aria-label="Tabs"> %>
+    <%#       <button %>
+    <%#         x-on:click="option = 'general'" %>
+    <%#         x-bind:class="option =='general' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" %>
+    <%#         class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" %>
+    <%#       > %>
+    <%#         General %>
+    <%#       </button> %>
+    <%#       <button %>
+    <%#         x-on:click="option = '1'" %>
+    <%#         x-bind:class="option =='1' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" %>
+    <%#         class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" %>
+    <%#       > %>
+    <%#         Day 1 %>
+    <%#       </button> %>
+    <%#       <button %>
+    <%#         x-on:click="option = '2'" %>
+    <%#         x-bind:class="option =='2' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" %>
+    <%#         class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" %>
+    <%#       > %>
+    <%#         Day 2 %>
+    <%#       </button> %>
+    <%#       <button %>
+    <%#         x-on:click="option = '3'" %>
+    <%#         x-bind:class="option =='3' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" %>
+    <%#         class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300" %>
+    <%#       > %>
+    <%#         Day 3 %>
+    <%#       </button> %>
+    <%#     </nav> %>
+    <%#   </div> %>
+    <%# </div> %>
   </div>
   <div x-bind:class="option =='general' ? 'block' : 'hidden'">
     <ul role="list" class="relative z-0">
@@ -208,10 +236,10 @@
                     </div>
                     <div class="flex">
                       <div class="text-gray-500">
-                        LVL <%= calc_level(calc_exp(@current_user, 1)) %>
+                        LVL <%= calc_level(Gamification.get_exp(@current_user, @event_days.first_day_start, @event_days.first_day_end)) %>
                       </div>
                       <div class="ml-2 text-gray-400">
-                        <%= calc_exp(@current_user, 1) %> EXP
+                        <%= Gamification.get_exp(@current_user, @event_days.first_day_start, @event_days.first_day_end) %> EXP
                       </div>
                     </div>
                   </div>
@@ -301,10 +329,10 @@
                     </div>
                     <div class="flex">
                       <div class="text-gray-500">
-                        LVL <%= calc_level(calc_exp(@current_user, 2)) %>
+                        LVL <%= calc_level(Gamification.get_exp(@current_user, @event_days.second_day_start, @event_days.second_day_end)) %>
                       </div>
                       <div class="ml-2 text-gray-400">
-                        <%= calc_exp(@current_user, 2) %> EXP
+                        <%= Gamification.get_exp(@current_user, @event_days.second_day_start, @event_days.second_day_end) %> EXP
                       </div>
                     </div>
                   </div>
@@ -394,10 +422,10 @@
                     </div>
                     <div class="flex">
                       <div class="text-gray-500">
-                        LVL <%= calc_level(calc_exp(@current_user, 3)) %>
+                        LVL <%= calc_level(Gamification.get_exp(@current_user, @event_days.third_day_start, @event_days.third_day_end)) %>
                       </div>
                       <div class="ml-2 text-gray-400">
-                        <%= calc_exp(@current_user, 3) %> EXP
+                        <%= Gamification.get_exp(@current_user, @event_days.third_day_start, @event_days.third_day_end) %> EXP
                       </div>
                     </div>
                   </div>

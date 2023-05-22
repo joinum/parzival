@@ -3,6 +3,13 @@ defmodule Parzival.GamificationTest do
 
   alias Parzival.Gamification
 
+  @first_day_start Application.get_env(:parzival, :event)[:first_day_start]
+  @first_day_end Application.get_env(:parzival, :event)[:first_day_end]
+  @second_day_start Application.get_env(:parzival, :event)[:second_day_start]
+  @second_day_end Application.get_env(:parzival, :event)[:second_day_end]
+  @third_day_start Application.get_env(:parzival, :event)[:third_day_start]
+  @third_day_end Application.get_env(:parzival, :event)[:third_day_end]
+
   describe "curriculums" do
     alias Parzival.Gamification.Curriculum
 
@@ -105,7 +112,12 @@ defmodule Parzival.GamificationTest do
       assert attendee.exp == task0.exp + task1.exp + mission.exp
     end
 
-    test "get_exp/2 returns the exp of the given user on a specific day" do
+    test "get_exp/3 returns the exp of the given user on a specific day" do
+      start_time = DateTime.utc_now()
+      end_time = DateTime.utc_now() |> DateTime.add(3600 * 2, :second)
+      # IO.puts("start_time is #{start_time}")
+      # IO.puts("end_time is #{end_time}")
+
       attendee = user_fixture()
       staff = user_fixture(%{role: :staff})
 
@@ -116,15 +128,52 @@ defmodule Parzival.GamificationTest do
       task0 = Enum.at(mission.tasks, 0)
       task1 = Enum.at(mission.tasks, 1)
 
+
       assert {:ok, %Mission{}} = Gamification.redeem_task(attendee, task0, staff)
 
-      assert Gamification.get_exp(attendee, 3) == task0.exp
-      IO.puts "task0.exp: #{task0.exp} + task1.exp: #{task1.exp} + mission.exp: #{mission.exp}"
-      IO.puts "exp: #{Gamification.get_exp(attendee, 3)}"
+      assert Gamification.get_exp(attendee, start_time, end_time) == task0.exp
 
-      assert {:ok, mission = %Mission{}} = Gamification.redeem_task(attendee, task1, staff)
+      assert {:ok, %Mission{}} = Gamification.redeem_task(attendee, task1, staff)
 
-      assert Gamification.get_exp(attendee, 3) == task0.exp + task1.exp + mission.exp
+      assert Gamification.get_exp(attendee, start_time, end_time) == task0.exp + task1.exp + mission.exp
+    end
+
+    test "get_leaderboard/2 returns the leaderboard for given dates" do
+      start_time = DateTime.utc_now()
+      end_time = DateTime.utc_now() |> DateTime.add(3600 * 2, :second)
+
+      attendee_1 = user_fixture()
+      attendee_2 = user_fixture()
+      attendee_3 = user_fixture()
+      staff = user_fixture(%{role: :staff})
+
+      mission =
+        mission_fixture(3)
+        |> Repo.preload(:tasks)
+
+      task0 = Enum.at(mission.tasks, 0)
+      task1 = Enum.at(mission.tasks, 1)
+      task2 = Enum.at(mission.tasks, 2)
+
+      assert {:ok, %Mission{}} = Gamification.redeem_task(attendee_1, task0, staff)
+      assert {:ok, %Mission{}} = Gamification.redeem_task(attendee_1, task1, staff)
+      assert {:ok, %Mission{}} = Gamification.redeem_task(attendee_1, task2, staff)
+
+      assert {:ok, %Mission{}} = Gamification.redeem_task(attendee_2, task0, staff)
+      assert {:ok, %Mission{}} = Gamification.redeem_task(attendee_2, task1, staff)
+
+      assert {:ok, %Mission{}} = Gamification.redeem_task(attendee_3, task0, staff)
+
+      leaderboard = Gamification.get_leaderboard(start_time, end_time)
+
+      assert Enum.at(leaderboard, 0).user == attendee_1.id
+      assert Enum.at(leaderboard, 0).experience == task0.exp + task1.exp + task2.exp + mission.exp
+
+      assert Enum.at(leaderboard, 1).user == attendee_2.id
+      assert Enum.at(leaderboard, 1).experience == task0.exp + task1.exp
+
+      assert Enum.at(leaderboard, 2).user == attendee_3.id
+      assert Enum.at(leaderboard, 2).experience == task0.exp
     end
   end
 end
