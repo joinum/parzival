@@ -69,7 +69,7 @@ defmodule ParzivalWeb.Router do
         live "/companies/:id", CompanyLive.Show, :show
         live "/companies/:id/edit", CompanyLive.Edit, :edit
 
-        live "/leaderboard/", LeaderboardLive.Index, :index
+        live "/leaderboard", LeaderboardLive.Index, :index
 
         live "/store/", ProductLive.Index, :index
         live "/store/:id", ProductLive.Show, :show
