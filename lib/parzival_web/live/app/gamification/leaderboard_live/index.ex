@@ -32,45 +32,12 @@ defmodule ParzivalWeb.App.LeaderboardLive.Index do
      |> assign(:current_page, :leaderboard)
      |> assign(:current_tab, params["tab"] || "general")
      |> assign(:params, params)
-     |> assign(:page_title,  "Leaderboard - #{String.capitalize(params["tab"])}")
+     |> assign(:page_title,  "Leaderboard - #{if(params["tab"]) do String.capitalize(params["tab"]) end}")
      |> assign(:current_user, user)
      |> assign(:leaderboard, get_leaderboard(params))
      |> assign(:page_size, @page_size)
      |> assign(:position, get_positions(user))}
   end
-
-  # defp list_offers(params, socket) do
-  #   params =
-  #     params
-  #     |> Map.put("page_size", @page_size)
-
-  #     case params["tab"] do
-  #       "general" ->
-  #         case Gamification.get_leaderboard(%{}, @first_day_start, @third_day_end) do
-  #           {:ok, {applications, meta}} ->
-  #             offers =
-  #               applications
-  #               |> Enum.map(fn application -> application.offer end)
-
-  #             %{offers: offers, meta: meta}
-
-  #           {:error, flop} ->
-  #             %{offers: [], meta: flop}
-  #         end
-
-  #       _ ->
-  #         case Companies.list_offers(
-  #                params,
-  #                preloads: [:company, :offer_type, :offer_time]
-  #              ) do
-  #           {:ok, {offers, meta}} ->
-  #             %{offers: offers, meta: meta}
-
-  #           {:error, flop} ->
-  #             %{offers: [], meta: flop}
-  #         end
-  #     end
-  # end
 
   defp get_event_days() do
     %{
