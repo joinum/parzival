@@ -4,7 +4,6 @@ defmodule ParzivalWeb.Backoffice.UserLive.Index do
   use ParzivalWeb, :live_view
 
   import ParzivalWeb.Components.Pagination
-
   alias Parzival.Accounts
 
   @impl true
