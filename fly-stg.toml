@@ -3,12 +3,19 @@
 app = "parzival-stg"
 primary_region = "mad"
 
+[build]
+  dockerfile = "Dockerfile"
+
+[build.args]
+  MIX_ENV = "stg"
+
 [env]
-  FLY_APP_NAME ="parzival-stg"
+  FLY_APP_NAME = "parzival-stg"
   PHX_HOST = "parzival-stg.fly.dev"
+  MIX_ENV = "stg"
 
 [deploy]
-    release_command = "/app/bin/migrate"
+  release_command = "/app/bin/migrate"
 
 [[services]]
   internal_port = 4000
@@ -29,7 +36,7 @@ primary_region = "mad"
     port = 443
 
   [[services.tcp_checks]]
-    grace_period = "30s" # allow some time for startup
+    grace_period = "10s"
     interval = "15s"
     restart_limit = 0
     timeout = "2s"

@@ -86,23 +86,29 @@ if config_env() in [:prod, :stg] do
     ],
     secret_key_base: secret_key_base
 
-  if config_env() == :prod do
-    mailgun_domain =
-      System.get_env("MAILGUN_DOMAIN") ||
-        raise """
-        environment variable MAILGUN_DOMAIN is missing
-        """
+  aws_smtp_username =
+    System.get_env("AWS_SMTP_USERNAME") ||
+      raise """
+      environment variable AWS_SMTP_USERNAME is missing
+      """
 
-    mailgun_api_key =
-      System.get_env("MAILGUN_API_KEY") ||
-        raise """
-        environment variable MAILGUN_API_KEY is missing
-        """
+  aws_smtp_password =
+    System.get_env("AWS_SMTP_PASSWORD") ||
+      raise """
+      environment variable AWS_SMTP_PASSWORD is missing
+      """
 
-    config :parzival,
-      mailgun_domain: mailgun_domain,
-      mailgun_key: mailgun_api_key
-  end
+  config :parzival, Parzival.Mailer,
+    adapter: Swoosh.Adapters.SMTP,
+    relay: "email-smtp.eu-west-2.amazonaws.com",
+    username: aws_smtp_username,
+    password: aws_smtp_password,
+    ssl: false,
+    tls: :always,
+    auth: :always,
+    port: 587,
+    retries: 2,
+    no_mx_lookups: false
 
   # ## Using releases
   #

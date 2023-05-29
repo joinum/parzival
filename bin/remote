@@ -43,7 +43,7 @@ function start_remote_console() {
     exit 1
   fi
 
-  fly --config "${file}" ssh console --pty -C "app/bin/parzival remote"
+  fly --config "${file}" ssh console --pty -C "/app/bin/parzival remote"
 }
 
 case ${1:-stg} in
