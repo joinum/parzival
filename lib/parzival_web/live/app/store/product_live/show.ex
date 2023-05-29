@@ -24,19 +24,10 @@ defmodule ParzivalWeb.App.ProductLive.Show do
 
   def redeem_quantity(user_id, product_id) do
     order_quantity =
-      Enum.count(Store.list_orders(where: [user_id: user_id, product_id: product_id]))
+      Store.list_orders(where: [user_id: user_id, product_id: product_id])
+      |> Enum.count()
 
-    quantity =
-      case order_quantity do
-        0 -> Store.get_product!(product_id).max_per_user
-        _ -> Store.get_product!(product_id).max_per_user - order_quantity
-      end
-
-    if quantity < 0 do
-      0
-    else
-      quantity
-    end
+    max(Store.get_product!(product_id).max_per_user - order_quantity, 0)
   end
 
   @impl true
