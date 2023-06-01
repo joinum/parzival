@@ -312,11 +312,16 @@ defmodule Parzival.Gamification do
   end
 
   def calc_level(exp) do
-    :math.floor((:math.sqrt(2500 + 200 * exp) - 50) / 100) |> trunc()
+    :math.floor((:math.sqrt(2500 + 200 * exp) - 50) / 100)
+    |> trunc()
+    |> case do
+      0 -> 1
+      lvl -> lvl
+    end
   end
 
   def calc_next_level_exp(exp) do
-    next_lvl = calc_level(exp) + 1
+    next_lvl = calc_level(exp)
 
     (100 * next_lvl * (1 + next_lvl))
     |> trunc()
