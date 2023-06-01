@@ -72,7 +72,7 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
      |> assign(:params, params)
      |> assign(:user, user)
      |> handle_user_role(user)
-     |> handle_user_role(socket.assigns.current_user)}
+     |> handle_current_user_role(socket.assigns.current_user)}
   end
 
   defp handle_user_role(socket, user) do
@@ -89,6 +89,33 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
       :attendee ->
         socket
         |> assign(:curriculum, Gamification.get_user_curriculum(user))
+
+      _ ->
+        socket
+    end
+  end
+
+  defp handle_current_user_role(socket, user) do
+    case user.role do
+      :staff ->
+        socket
+        |> assign(
+          :connections,
+          Companies.list_connections(
+            where: [user_id: socket.assigns.user.id],
+            preloads: :company
+          )
+        )
+
+      :admin ->
+        socket
+        |> assign(
+          :connections,
+          Companies.list_connections(
+            where: [user_id: socket.assigns.user.id],
+            preloads: :company
+          )
+        )
 
       _ ->
         socket
