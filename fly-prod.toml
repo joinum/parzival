@@ -1,0 +1,42 @@
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+
+app = "parzival-prod"
+primary_region = "mad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[build.args]
+  MIX_ENV = "prod"
+
+[env]
+  FLY_APP_NAME = "parzival-prod"
+  PHX_HOST = "parzival-prod.fly.dev"
+  MIX_ENV = "prod"
+
+[deploy]
+  release_command = "/app/bin/migrate"
+
+[[services]]
+  internal_port = 4000
+  processes = ["app"]
+  protocol = "tcp"
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "10s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
