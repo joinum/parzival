@@ -22,7 +22,7 @@ if config_env() in [:dev, :test] do
     # The MIX_TEST_PARTITION environment variable can be used
     # to provide built-in test partitioning in CI environment.
     database:
-      env!("DB_NAME", :string, "join_#{config_env()}#{System.get_env("MIX_TEST_PARTITION")}"),
+      env!("DB_NAME", :string, "parzival-#{config_env()}-db"),
     hostname: env!("DB_HOST", :string, "localhost"),
     port: env!("DB_PORT", :integer, 5432)
 end
