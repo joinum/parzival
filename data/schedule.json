@@ -1,120 +1,177 @@
 {
-  "tuesday": [
+  "monday": [
     {
       "title": "Acreditação",
-      "hours": "28/06/2022 8:30 AM",
+      "hours": "05/06/2022 9:30 AM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "Sessão de abertura",
-      "hours": "28/06/2022 9:00 AM",
+      "hours": "05/06/2022 10:00 AM",
       "speaker": null,
       "company": null,
-      "href": null
-    },
-    {
-      "title": "[Talk] Set the stage",
-      "hours": "28/06/2022 10:00 AM",
-      "speaker": "Roberto Machado",
-      "company": "Subvisual",
-      "href": null
-    },
-    {
-      "title": "[Talk] Intro to the blockchain",
-      "hours": "28/06/2022 10:30 AM",
-      "speaker": "Mário Gago",
-      "company": "Pink Room",
       "href": null
     },
     {
       "title": "☕ Coffee break",
-      "hours": "28/06/2022 11:00 AM",
+      "hours": "05/06/2022 11:00 AM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Talk] An Ethereum Network Explorer using Elixir and Neo4J",
-      "hours": "28/06/2022 11:30 AM",
-      "speaker": "Diogo Viana",
-      "company": "Finiam",
-      "href": null
-    },
-    {
-      "title": "[Talk] Mobile development for the web3",
-      "hours": "28/06/2022 12:00 PM",
-      "speaker": "André Maximino",
-      "company": "Pink Room",
+      "title": "[Talk] Do algoritmo ao impacto: uma viagem pela disrupção da IA",
+      "hours": "05/06/2022 11:30 AM",
+      "speaker": "Michel Ozzello",
+      "company": "Agentifai",
       "href": null
     },
     {
       "title": "🍝 Almoço",
-      "hours": "28/06/2022 12:30 PM",
+      "hours": "05/06/2022 12:30 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Workshop] Intro to Solidity",
-      "hours": "28/06/2022 02:00 PM",
-      "speaker": "Miguel Palhas",
-      "company": "Subvisual",
-      "href": "https://www.eventbrite.pt/e/bilhetes-workshop-intro-to-solidity-374245246607"
+      "title": "[Pitch] AgentifAI",
+      "hours": "05/06/2022 02:00 AM",
+      "speaker": null,
+      "company": null,
+      "href": null
     },
     {
-      "title": "[Talk] TBA",
-      "hours": "28/06/2022 02:00 PM",
+      "title": "[Talk] Functional Web Development",
+      "hours": "05/06/2022 02:15 AM",
+      "speaker": "Nélson Estevão",
+      "company": "Marmela",
+      "href": null
+    },
+    {
+      "title": "[Pitch] Bliss",
+      "hours": "05/06/2022 03:10 PM",
       "speaker": null,
-      "company": "Accenture",
+      "company": null,
+      "href": null
+    },
+    {
+      "title": "[Talk] Web and Mobile Development in 2023",
+      "hours": "05/06/2022 03:20 PM",
+      "speaker": "Nuno Pereira",
+      "company": "Bliss",
       "href": null
     },
     {
       "title": "☕ Coffee break",
-      "hours": "28/06/2022 04:00 PM",
+      "hours": "05/06/2022 04:20 AM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Pitch] Continental",
-      "hours": "28/06/2022 04:30 PM",
+      "title": "[Pitch] DTx CoLAB",
+      "hours": "05/06/2022 04:50 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Pitch] Mercedes Benz IO",
-      "hours": "28/06/2022 04:45 PM",
+      "title": "[Pitch] Accenture READY! SET! CLOUD!",
+      "hours": "05/06/2022 05:00 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Pitch] Optare Solutions",
-      "hours": "28/06/2022 05:00 PM",
+      "title": "Board Game Night",
+      "hours": "05/06/2022 09:30 PM",
+      "speaker": null,
+      "company": null,
+      "href": null
+    }
+  ],
+  "tuesday": [
+    {
+      "title": "[Workshop] Kick-Start a React Project",
+      "hours": "06/06/2022 09:00 AM",
+      "speaker": "Rui Rigueira",
+      "company": "Bliss",
+      "href": ""
+    },
+    {
+      "title": "☕ Coffee break",
+      "hours": "06/06/2022 11:00 AM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Pitch] TBA",
-      "hours": "28/06/2022 05:15 PM",
+      "title": "[Talk] Mobile Development and MEO Go Showcase",
+      "hours": "06/06/2022 11:30 AM",
+      "speaker": "Romeu Gomes",
+      "company": "Bliss"
+    },
+    {
+      "title": "🍝 Almoço",
+      "hours": "06/06/2022 12:30 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Pitch] TBA",
-      "hours": "28/06/2022 05:30 PM",
+      "title": "[Talk] Inteligência Artificial nos nossos dias",
+      "hours": "06/06/2022 02:00 PM",
+      "speaker": "Paulo Novais",
+      "company": "Professor Universitário",
+      "href": null
+    },
+    {
+      "title": "[Pitch] Retail Consult",
+      "hours": "06/06/2022 03:00 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "Braga, Blockchain Meetup",
-      "hours": "28/06/2022 06:30 PM",
+      "title": "Concurso de Programação",
+      "hours": "06/06/2022 03:10 PM",
+      "speaker": null,
+      "company": null,
+      "href": null
+    },
+    {
+      "title": "☕ Coffee break",
+      "hours": "06/06/2022 04:10 PM",
+      "speaker": null,
+      "company": null,
+      "href": null
+    },
+    {
+      "title": "[Pitch] Accenture",
+      "hours": "06/06/2022 04:40 PM",
+      "speaker": null,
+      "company": null,
+      "href": null
+    },
+    {
+      "title": "[Talk] CI/CD > Build/Deploy Automation",
+      "hours": "06/06/2022 04:50 PM",
+      "speaker": null,
+      "company": null,
+      "href": null
+    },
+    {
+      "title": "[Pitch] Altice Labs",
+      "hours": "06/06/2022 05:15 PM",
+      "speaker": null,
+      "company": null,
+      "href": null
+    },
+    {
+      "title": "Board Game Night",
+      "hours": "05/06/2022 09:30 PM",
       "speaker": null,
       "company": null,
       "href": null
@@ -122,191 +179,64 @@
   ],
   "wednesday": [
     {
-      "title": "[Workshop] Securing Cloud Infrastructure using KICS",
-      "hours": "29/06/2022 09:00 AM",
-      "speaker": "João Reijota",
-      "company": "Checkmarx",
-      "href": "https://www.eventbrite.com/e/workshop-securing-cloud-infrastructure-using-kics-tickets-375105930937"
-    },
-    {
-      "title": "☕ Coffee break",
-      "hours": "29/06/2022 11:00 AM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "[Talk] Combining professional success and well-being in Portugal",
-      "hours": "29/06/2022 11:30 AM",
-      "speaker": null,
-      "company": "Catedra Proef/Dstelecom/IB-S"
-    },
-    {
-      "title": "🍝 Almoço",
-      "hours": "29/06/2022 12:30 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "[Talk] Digital Solutions",
-      "hours": "29/06/2022 02:00 PM",
-      "speaker": null,
-      "company": "Continental",
-      "href": null
-    },
-    {
-      "title": "[Talk] TBA",
-      "hours": "29/06/2022 03:00 PM",
-      "speaker": null,
-      "company": null,
+      "title": "[Workshop] Testa ou detesta o teu código (Testes unitários)",
+      "hours": "07/06/2022 09:00 AM",
+      "speaker": "Hugo Cardoso",
+      "company": "Agentifai",
       "href": null
     },
     {
       "title": "☕ Coffee break",
-      "hours": "29/06/2022 04:00 PM",
+      "hours": "07/06/2022 11:00 AM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Pitch] Catedra Proef/Dstelecom/IB-S",
-      "hours": "29/06/2022 04:30 PM",
-      "speaker": null,
-      "company": null,
+      "title": "[Talk] Gerando novas moléculas adoçantes com Inteligência Artificial",
+      "hours": "07/06/2022 11:30 AM",
+      "speaker": "João Capela",
+      "company": "CEB",
       "href": null
     },
     {
-      "title": "[Pitch] Inovaria",
-      "hours": "29/06/2022 04:45 PM",
+      "title": "[Pitch] Algoritmi",
+      "hours": "06/06/2022 12:10 PM",
       "speaker": null,
       "company": null,
-      "href": null
-    },
-    {
-      "title": "[Pitch] TBA",
-      "hours": "29/06/2022 05:00 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "[Pitch] ANO",
-      "hours": "29/06/2022 05:15 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "[Pitch] TBA",
-      "hours": "29/06/2022 05:30 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "[Pitch] TBA",
-      "hours": "29/06/2022 05:45 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    }
-  ],
-  "thursday": [
-    {
-      "title": "[Workshop] Containers & Terraform na Google Cloud",
-      "hours": "30/06/2022 09:00 AM",
-      "speaker": "Carlos Mendes",
-      "company": "Kelvin",
-      "href": "/"
-    },
-    {
-      "title": "[Workshop] TBA",
-      "hours": "30/06/2022 09:00 AM",
-      "speaker": null,
-      "company": "Deloitte",
-      "href": "/"
-    },
-    {
-      "title": "☕ Coffee break",
-      "hours": "30/06/2022 11:00 AM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "[Talk] Pago para jogar",
-      "hours": "30/06/2022 11:30 AM",
-      "speaker": "Pedro Nunes",
-      "company": "Miniclip",
       "href": null
     },
     {
       "title": "🍝 Almoço",
-      "hours": "30/06/2022 12:30 PM",
+      "hours": "07/06/2022 12:30 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Talk] Desafios de um Game Developer (Remote)",
-      "hours": "30/06/2022 02:00 PM",
-      "speaker": "António Pacheco",
-      "company": "Miniclip",
+      "title": "[Talk] Regulamentação e Futuro da IA na Comunidade Europeia",
+      "hours": "07/06/2022 02:00 PM",
+      "speaker": "Alexandra Oliveira",
+      "company": "Retail Consult",
       "href": null
     },
     {
-      "title": "[Talk] A tecnologia ao serviço do negócio ou o negócio ao serviço da tecnologia? Uma visão da Optare",
-      "hours": "30/06/2022 03:00 PM",
-      "speaker": "José Cunha, Rafael Cunha e Roberto Pérez",
-      "company": "Optare Solutions",
-      "href": null
-    },
-    {
-      "title": "☕ Coffee break",
-      "hours": "30/06/2022 04:00 PM",
-      "speaker": null,
+      "title": "[Talk] What is quantum computing … and why you should care",
+      "hours": "07/06/2022 03:00 PM",
+      "speaker": "Prof. Luis Soares Barbosa e Investiagor / HasLab",
       "company": null,
       "href": null
     },
     {
-      "title": "[Pitch] Eurotux",
-      "hours": "30/06/2022 04:30 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "[Pitch] Wintouch",
-      "hours": "30/06/2022 04:45 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "[Pitch] TBA",
-      "hours": "30/06/2022 05:00 PM",
+      "title": "[Pitch] INESCTEC",
+      "hours": "07/06/2022 04:00 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "Cerimónia de encerramento",
-      "hours": "30/06/2022 05:15 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "Entrega de prémios",
-      "hours": "30/06/2022 05:45 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "Jantar de enceramento",
-      "hours": "30/06/2022 08:30 PM",
+      "hours": "07/06/2022 04:10 PM",
       "speaker": null,
       "company": null,
       "href": null

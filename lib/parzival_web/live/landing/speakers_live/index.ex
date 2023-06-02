@@ -6,56 +6,98 @@ defmodule ParzivalWeb.Landing.SpeakersLive.Index do
 
   @days [
     %{
-      day: "28 de Junho",
+      day: "5 de Junho",
       speakers: [
         %{
-          name: "Roberto Machado",
-          photo: "roberto",
-          job: "Co-Founder & CEO",
-          company: "Subvisual"
-        },
-        %{name: "Mário Gago", photo: "mario_gago", job: "CEO", company: "Pink Room"},
-        %{
-          name: "Diogo Viana",
-          photo: "diogo_viana",
+          name: "TBA",
+          photo: "join",
           job: "",
-          company: "Full Stack Software Engineer"
-        },
-        %{name: "André Maximino", photo: "join", job: "", company: "Pink Room"},
-        %{
-          name: "Miguel Palhas",
-          photo: "miguel_palhas",
-          job: "Blockchain Developer",
-          company: "Subvisual"
+          company: ""
         },
         %{
-          name: "Diogo Teixeira",
-          photo: "diogo_teixeira",
-          job: "Advanced Application Specialist",
-          company: "Accenture"
-        }
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },
+        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },
+        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },
+        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },
+        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },
+      ]
+    },
+    %{
+      day: "6 de Junho",
+      speakers: [
+        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },
+      ]
+    },
+    %{
+      day: "7 de Junho",
+      speakers: [
+        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },
       ]
     }
-    # %{
-    #   day: "29 de Junho",
-    #   speakers: [
-    #     %{name: "Luis Araújo", photo: "luis", job: "Organizer", company: "CeSIUM"},
-    #     %{name: "Luis Araújo", photo: "luis", job: "Organizer", company: "CeSIUM"},
-    #     %{name: "Luis Araújo", photo: "luis", job: "Organizer", company: "CeSIUM"},
-    #     %{name: "Filipe Felício", photo: "luis", job: "Organizer", company: "CeSIUM"},
-    #     %{name: "Filipe Felício", photo: "luis", job: "Organizer", company: "CeSIUM"}
-    #   ]
-    # },
-    # %{
-    #   day: "30 de Junho",
-    #   speakers: [
-    #     %{name: "Luis Araújo", photo: "luis", job: "Organizer", company: "CeSIUM"},
-    #     %{name: "Luis Araújo", photo: "luis", job: "Organizer", company: "CeSIUM"},
-    #     %{name: "Luis Araújo", photo: "luis", job: "Organizer", company: "CeSIUM"},
-    #     %{name: "Filipe Felício", photo: "luis", job: "Organizer", company: "CeSIUM"},
-    #     %{name: "Filipe Felício", photo: "luis", job: "Organizer", company: "CeSIUM"}
-    #   ]
-    # }
   ]
 
   @impl true

@@ -1,23 +1,23 @@
 <div class="flex flex-col justify-center items-center pt-28 lg:pt-40">
   <img class="h-auto w-[500px]" src={Routes.static_path(@socket, "/images/logo.svg")} alt="JOIN Logo" />
-  <p class="pt-4 font-semibold text-center text-white tracking-[6px] sm:tracking-[12px] md:tracking-[14px]">28, 29 e 30 de junho</p>
+  <p class="pt-4 font-semibold text-center text-white tracking-[6px] sm:tracking-[12px] md:tracking-[14px]">05, 06 e 07 de junho</p>
 </div>
 
 <div class="flex flex-col justify-between pt-0 lg:flex-row lg:pt-40">
   <div class="flex flex-col-reverse gap-y-8 px-8 pt-20 pb-10 -mt-2 text-center sm:px-24 md:px-32 lg:hidden">
     <div>
-      <p class="text-sm font-bold text-white">3. Game Development</p>
-      <p class="pt-2 text-xs font-light text-white">Game Development is the art of creating games and describes the design, development and release of a game.</p>
+      <p class="text-sm font-bold text-white">3. Quantum Computing</p>
+      <p class="pt-2 text-xs font-light text-white"></p>
     </div>
 
     <div>
-      <p class="text-sm font-bold text-white">2. Cryptography and Security</p>
-      <p class="pt-2 text-xs font-light text-white">Cybersecurity is the protection of internet-connected systems such as hardware, software and data from cyberthreats.</p>
+      <p class="text-sm font-bold text-white">2. Web and Mobile Development</p>
+      <p class="pt-2 text-xs font-light text-white"></p>
     </div>
 
     <div>
-      <p class="text-sm font-bold text-white">1. Web3</p>
-      <p class="pt-2 text-xs font-light text-white">Web3 represents the next phase of the internet. Web3 refers to a decentralized online ecosystem based on the blockchain.</p>
+      <p class="text-sm font-bold text-white">1. Artificial Intelligence</p>
+      <p class="pt-2 text-xs font-light text-white"></p>
     </div>
   </div>
   <div class="flex flex-row justify-center space-x-6 w-full lg:flex-col lg:space-y-6 lg:space-x-0 lg:w-auto">
@@ -35,24 +35,24 @@
     <img class="absolute -right-2 h-auto w-[900px]" src={Routes.static_path(@socket, "/images/cords/hero_cords.svg")} alt="hero cords" />
 
     <div class="absolute right-12 pt-7 w-[200px]">
-      <p class="text-sm font-bold text-white">3. Game Development</p>
-      <p class="pt-2 text-xs font-light text-white">Game Development is the art of creating games and describes the design, development and release of a game.</p>
+      <p class="text-sm font-bold text-white">3. Quantum Computing</p>
+      <p class="pt-2 text-xs font-light text-white"></p>
     </div>
 
     <div class="absolute right-[350px] pt-[65px] w-[220px]">
-      <p class="text-sm font-bold text-white">2. Cryptography and Security</p>
-      <p class="pt-2 text-xs font-light text-white">Cybersecurity is the protection of internet-connected systems such as hardware, software and data from cyberthreats.</p>
+      <p class="text-sm font-bold text-white">2. Web and Mobile Development</p>
+      <p class="pt-2 text-xs font-light text-white"></p>
     </div>
 
     <div class="absolute right-[630px] pt-[65px] w-[220px]">
-      <p class="text-sm font-bold text-white">1. Web3</p>
-      <p class="pt-2 text-xs font-light text-white">Web3 represents the next phase of the internet. Web3 refers to a decentralized online ecosystem based on the blockchain.</p>
+      <p class="text-sm font-bold text-white">1. Artificial Intelligence</p>
+      <p class="pt-2 text-xs font-light text-white"></p>
     </div>
   </div>
 </div>
 
 <div
-  x-data={"{ date: new Date().toISOString() >= '#{hd(Map.get(@schedule, "tuesday"))["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(Map.get(@schedule, "thursday"))["hours"]}.to_iso8601!()' ? new Date().getDay() : 2 }"}
+  x-data={"{ date: new Date().toISOString() >= '#{hd(Map.get(@schedule, "monday"))["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(Map.get(@schedule, "wednesday"))["hours"]}.to_iso8601!()' ? new Date().getDay() : 2 }"}
   class="flex flex-row mt-10 h-auto sm:mt-20 lg:mt-48 1.5xl:h-[1000px]"
 >
   <div class="absolute transform -rotate-90 -translate-x-40 translate-y-48 md:-translate-x-44">
@@ -64,7 +64,7 @@
   <div class="hidden relative w-full 1.5xl:block">
     <img class="absolute -right-24 w-[1200px] h-[740px] -z-40" src={Routes.static_path(@socket, "/images/cords/schedule_cords.svg")} alt="hero cords" />
 
-    <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
+    <%= for {day, index} <- Enum.with_index(["monday","tuesday","wednesday"]) do %>
       <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F] font-bold' : 'bg-[#BB2A22]' "} class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do
             "right-[704px]"
           else
@@ -77,7 +77,7 @@
         <%= Calendar.strftime(hd(Map.get(@schedule, day))["hours"], "%d of %B") %>
       </button>
     <% end %>
-    <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
+    <%= for {day, index} <- Enum.with_index(["monday","tuesday","wednesday"]) do %>
       <div x-show={"date == #{index + 2}"} class="grid absolute right-0 top-32 grid-cols-5 gap-y-6 gap-x-8 p-10">
         <% next_activity =
           if Calendar.strftime(NaiveDateTime.utc_now(), "%j") == Calendar.strftime(hd(Map.get(@schedule, day))["hours"], "%j") do
@@ -132,7 +132,7 @@
     <% end %>
   </div>
   <div class="flex relative flex-row-reverse mt-10 w-full 1.5xl:hidden">
-    <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
+    <%= for {day, index} <- Enum.with_index(["monday","tuesday","wednesday"]) do %>
       <div x-show={"date == #{index + 2}"} class="flex flex-col w-full sm:w-96 md:w-[450px] lg:w-[500px]">
         <div class="flex flex-row justify-between items-center px-0 pt-4 pb-10 sm:px-6">
           <button @click="date = date > 2 ? date - 1 : date">
@@ -384,11 +384,6 @@
 </div>
 
 <div class="flex flex-row mt-14 h-96 sm:mt-24 lg:mt-48 xl:h-[550px]">
-  <div class="absolute transform -rotate-90 -translate-x-40 translate-y-40 md:-translate-x-44">
-    <span class="title">
-      Partners
-    </span>
-  </div>
   <div class="grid relative grid-cols-1 gap-y-12 mt-12 ml-20 w-full sm:grid-cols-2 sm:ml-28 h-min">
     <div class="grid grid-cols-2 auto-rows-min gap-6 justify-items-center sm:grid-cols-1">
       <%= for partner <- @partners do %>
