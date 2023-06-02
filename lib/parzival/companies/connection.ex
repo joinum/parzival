@@ -1,6 +1,6 @@
 defmodule Parzival.Companies.Connection do
   @moduledoc """
-  A connection between a company and a attendee.
+  A connection between a company and an attendee.
   """
   use Parzival.Schema
 
