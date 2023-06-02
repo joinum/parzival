@@ -43,7 +43,7 @@ defmodule ParzivalWeb.Landing.SpeakersLive.Index do
           photo: "join",
           job: "",
           company: ""
-        },
+        }
       ]
     },
     %{
@@ -54,27 +54,31 @@ defmodule ParzivalWeb.Landing.SpeakersLive.Index do
           photo: "join",
           job: "",
           company: ""
-        },        %{
-          name: "TBA",
-          photo: "join",
-          job: "",
-          company: ""
-        },        %{
-          name: "TBA",
-          photo: "join",
-          job: "",
-          company: ""
-        },        %{
-          name: "TBA",
-          photo: "join",
-          job: "",
-          company: ""
-        },        %{
+        },
+        %{
           name: "TBA",
           photo: "join",
           job: "",
           company: ""
         },
+        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },
+        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        },
+        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        }
       ]
     },
     %{
@@ -85,17 +89,19 @@ defmodule ParzivalWeb.Landing.SpeakersLive.Index do
           photo: "join",
           job: "",
           company: ""
-        },        %{
-          name: "TBA",
-          photo: "join",
-          job: "",
-          company: ""
-        },        %{
+        },
+        %{
           name: "TBA",
           photo: "join",
           job: "",
           company: ""
         },
+        %{
+          name: "TBA",
+          photo: "join",
+          job: "",
+          company: ""
+        }
       ]
     }
   ]
