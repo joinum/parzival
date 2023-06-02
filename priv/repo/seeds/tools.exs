@@ -24,8 +24,7 @@ defmodule Parzival.Repo.Seeds.Tools do
           },
           %{
             question: "Is JOIN free?",
-            answer:
-              "Yes, it's free to all attendees!"
+            answer: "Yes, it's free to all attendees!"
           },
           %{
             question: "Can I participate, even if I'm not a student?",
