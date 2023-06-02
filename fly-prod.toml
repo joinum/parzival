@@ -11,7 +11,7 @@ primary_region = "mad"
 
 [env]
   FLY_APP_NAME = "parzival-prod"
-  PHX_HOST = "parzival-prod.fly.dev"
+  PHX_HOST = "join.di.uminho.pt"
   MIX_ENV = "prod"
 
 [deploy]
