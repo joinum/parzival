@@ -18,34 +18,29 @@ defmodule Parzival.Repo.Seeds.Tools do
       [] ->
         [
           %{
-            question: "How do you make holy water?",
+            question: "When and where does JOIN take place?",
             answer:
-              "You boil the hell out of it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat. "
+              "JOIN takes place from June 5th to June 7th, at Universidade do Minho in Braga."
           },
           %{
-            question: "What's the best thing about Switzerland?",
+            question: "Is JOIN free?",
             answer:
-              "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat."
+              "Yes, it's free to all attendees!"
           },
           %{
-            question: "What do you call someone with no body and no nose?",
+            question: "Can I participate, even if I'm not a student?",
             answer:
-              "Nobody knows. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat."
+              "Of course! JOIN is open to everyone, regardless if you're a student or not. Everyone is welcome to participate in our workshops and our talks."
           },
           %{
-            question: "Why do you never see elephants hiding in trees?",
+            question: "Where can I register to participate?",
             answer:
-              "Because they're so good at it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat."
+              "You can participate by registering in this year's edition through the link below."
           },
           %{
-            question: "Why can't you hear a pterodactyl go to the bathroom?",
+            question: "How can I contact JOIN's team?",
             answer:
-              "Because the pee is silent. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, quas voluptatibus ex culpa ipsum, aspernatur blanditiis fugiat ullam magnam suscipit deserunt illum natus facilis atque vero consequatur! Quisquam, debitis error."
-          },
-          %{
-            question: "Why did the invisible man turn down the job offer?",
-            answer:
-              "He couldn't see himself doing it. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet perspiciatis officiis corrupti tenetur. Temporibus ut voluptatibus, perferendis sed unde rerum deserunt eius."
+              "You can email us at join.di.uminho@gmail.com or send us a message through our social media accounts."
           }
         ]
         |> Enum.each(&Repo.insert!(Faq.changeset(%Faq{}, &1)))
