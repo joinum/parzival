@@ -321,11 +321,16 @@ defmodule Parzival.Gamification do
   end
 
   def calc_level(exp) do
-    :math.floor((:math.sqrt(2500 + 200 * exp) - 50) / 100) |> trunc()
+    :math.floor((:math.sqrt(2500 + 200 * exp) - 50) / 100)
+    |> trunc()
+    |> case do
+      0 -> 1
+      lvl -> lvl
+    end
   end
 
   def calc_next_level_exp(exp) do
-    next_lvl = calc_level(exp) + 1
+    next_lvl = calc_level(exp)
 
     (100 * next_lvl * (1 + next_lvl))
     |> trunc()
@@ -818,14 +823,16 @@ defmodule Parzival.Gamification do
       |> join(:inner, [m], u in User, on: u.id == m.user_id)
       |> select([mu, m], %{exp: m.exp, user: mu.user_id})
 
-    sub_task_users = subquery(task_users)
-                     |> group_by([t], t.user)
-                     |> select([t], %{user: t.user, task_exp: sum(t.exp)})
+    sub_task_users =
+      subquery(task_users)
+      |> group_by([t], t.user)
+      |> select([t], %{user: t.user, task_exp: sum(t.exp)})
 
-    sub_mission_users = subquery(mission_users)
-                        |> group_by([m], m.user)
-                        |> select([m], %{user: m.user, mission_exp: sum(m.exp)})
-    
+    sub_mission_users =
+      subquery(mission_users)
+      |> group_by([m], m.user)
+      |> select([m], %{user: m.user, mission_exp: sum(m.exp)})
+
     subquery(sub_task_users)
     |> join(:left, [t], m in subquery(sub_mission_users), on: t.user == m.user)
     |> select([t, m], %{

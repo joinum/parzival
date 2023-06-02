@@ -41,7 +41,15 @@
                 <div class="flex items-center">
                   <div class="flex items-center">
                     <div class="mr-10 w-5 text-xl">
-                      <span class={if @current_user.id == user.id do "text-secondary" else "text-gray-900" end}><%= index + 1 %></span>
+                      <span class={
+                        if @current_user.id == user.id do
+                          "text-secondary"
+                        else
+                          "text-gray-900"
+                        end
+                      }>
+                        <%= index + 1 %>
+                      </span>
                     </div>
                     <div class="flex-shrink-0 w-10 h-10">
                       <%= if is_nil(user.picture) do %>
@@ -59,7 +67,7 @@
                   </div>
                   <div class="ml-4">
                     <div class="font-medium text-gray-900">
-                      <%= user.name %> 
+                      <%= user.name %>
                     </div>
                     <div class="flex">
                       <div class="text-gray-500">
@@ -136,7 +144,15 @@
                 <div class="flex items-center">
                   <div class="flex items-center">
                     <div class="mr-10 w-5 text-xl">
-                      <span class={if @current_user.id == user.id do "text-secondary" else "text-gray-900" end}><%= index + 1 %></span>
+                      <span class={
+                        if @current_user.id == user.id do
+                          "text-secondary"
+                        else
+                          "text-gray-900"
+                        end
+                      }>
+                        <%= index + 1 %>
+                      </span>
                     </div>
                     <div class="flex-shrink-0 w-10 h-10">
                       <%= if is_nil(user.picture) do %>
@@ -212,8 +228,8 @@
               </div>
             </div>
           </li>
-          <% end %>
         <% end %>
+      <% end %>
     </ul>
     <.pagination items={@leaderboard.one.data} meta={@leaderboard.one.meta} params={@params} class="flex justify-between items-center w-full" />
   </div>
@@ -228,7 +244,15 @@
                 <div class="flex items-center">
                   <div class="flex items-center">
                     <div class="mr-10 w-5 text-xl">
-                      <span class={if @current_user.id == user.id do "text-secondary" else "text-gray-900" end}><%= index + 1 %></span>
+                      <span class={
+                        if @current_user.id == user.id do
+                          "text-secondary"
+                        else
+                          "text-gray-900"
+                        end
+                      }>
+                        <%= index + 1 %>
+                      </span>
                     </div>
                     <div class="flex-shrink-0 w-10 h-10">
                       <%= if is_nil(user.picture) do %>
@@ -321,7 +345,15 @@
                 <div class="flex items-center">
                   <div class="flex items-center">
                     <div class="mr-10 w-5 text-xl">
-                      <span class={if @current_user.id == user.id do "text-secondary" else "text-gray-900" end}><%= index + 1 %></span>
+                      <span class={
+                        if @current_user.id == user.id do
+                          "text-secondary"
+                        else
+                          "text-gray-900"
+                        end
+                      }>
+                        <%= index + 1 %>
+                      </span>
                     </div>
                     <div class="flex-shrink-0 w-10 h-10">
                       <%= if is_nil(user.picture) do %>

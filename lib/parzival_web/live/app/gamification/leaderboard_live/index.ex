@@ -32,7 +32,9 @@ defmodule ParzivalWeb.App.LeaderboardLive.Index do
      |> assign(:current_page, :leaderboard)
      |> assign(:current_tab, params["tab"] || "general")
      |> assign(:params, params)
-     |> assign(:page_title,  "Leaderboard - #{if(params["tab"]) do String.capitalize(params["tab"]) end}")
+     |> assign(:page_title, "Leaderboard - #{if(params["tab"]) do
+       String.capitalize(params["tab"])
+     end}")
      |> assign(:current_user, user)
      |> assign(:leaderboard, get_leaderboard(params))
      |> assign(:page_size, @page_size)
@@ -65,10 +67,17 @@ defmodule ParzivalWeb.App.LeaderboardLive.Index do
   end
 
   defp get_leaderboard(params) do
-    general = extract_value(Gamification.get_leaderboard(%{}, @first_day_start, @third_day_end),params)
-    one = extract_value(Gamification.get_leaderboard(%{}, @first_day_start, @first_day_end),params)
-    two = extract_value(Gamification.get_leaderboard(%{}, @second_day_start, @second_day_end),params)
-    three = extract_value(Gamification.get_leaderboard(%{}, @third_day_start, @third_day_end),params)
+    general =
+      extract_value(Gamification.get_leaderboard(%{}, @first_day_start, @third_day_end), params)
+
+    one =
+      extract_value(Gamification.get_leaderboard(%{}, @first_day_start, @first_day_end), params)
+
+    two =
+      extract_value(Gamification.get_leaderboard(%{}, @second_day_start, @second_day_end), params)
+
+    three =
+      extract_value(Gamification.get_leaderboard(%{}, @third_day_start, @third_day_end), params)
 
     %{
       general: general,
@@ -79,31 +88,39 @@ defmodule ParzivalWeb.App.LeaderboardLive.Index do
   end
 
   # TODO: remove case params["tab"]
-  defp extract_value({:ok, {data, meta}},params) do
+  defp extract_value({:ok, {data, meta}}, params) do
     case params["tab"] do
       "day1" ->
-                data = Enum.map(data, fn %{experience: exp, user: user} ->
-          {Accounts.get_user!(user), exp}
-        end)
+        data =
+          Enum.map(data, fn %{experience: exp, user: user} ->
+            {Accounts.get_user!(user), exp}
+          end)
+
         %{data: data, meta: meta}
 
       "day2" ->
-                data = Enum.map(data, fn %{experience: exp, user: user} ->
-          {Accounts.get_user!(user), exp}
-        end)
+        data =
+          Enum.map(data, fn %{experience: exp, user: user} ->
+            {Accounts.get_user!(user), exp}
+          end)
+
         %{data: data, meta: meta}
 
       "day3" ->
-                data = Enum.map(data, fn %{experience: exp, user: user} ->
-          {Accounts.get_user!(user), exp}
-        end)
+        data =
+          Enum.map(data, fn %{experience: exp, user: user} ->
+            {Accounts.get_user!(user), exp}
+          end)
+
         %{data: data, meta: meta}
 
       _ ->
-          data = Enum.map(data, fn %{experience: exp, user: user} ->
+        data =
+          Enum.map(data, fn %{experience: exp, user: user} ->
             {Accounts.get_user!(user), exp}
           end)
-          %{data: data, meta: meta}
+
+        %{data: data, meta: meta}
     end
   end
 

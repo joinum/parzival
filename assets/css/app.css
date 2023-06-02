@@ -354,3 +354,7 @@ body {
 .calc-top {
   top: calc(50% - 80px);
 }
+
+.phx-no-feedback {
+  display: none;
+}
