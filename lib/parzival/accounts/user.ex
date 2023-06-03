@@ -109,7 +109,12 @@ defmodule Parzival.Accounts.User do
 
   def changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, @required_fields ++ (@optional_fields -- [:password]))
+    |> cast(attrs, [
+      :name,
+      :email,
+      :role,
+      :qrcode_id
+    ])
     |> cast_attachments(attrs, [:picture])
     |> validate_required([:name])
     |> validate_email()
@@ -123,6 +128,16 @@ defmodule Parzival.Accounts.User do
     |> cast_attachments(attrs, [:picture])
     |> validate_required([:name])
     |> validate_email()
+  end
+
+  def user_no_password_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, @required_fields ++ (@optional_fields -- [:password]))
+    |> cast_attachments(attrs, [:picture])
+    |> validate_required([:name])
+    |> validate_email()
+    |> validate_qr()
+    |> generate_random_password(opts)
   end
 
   defp validate_qr(%{params: params} = changeset) do
