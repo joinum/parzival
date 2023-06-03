@@ -5,7 +5,6 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   alias Parzival.Accounts
   alias Parzival.Accounts.User
   alias Parzival.Companies
-  alias Parzival.Companies.Company
 
   @extensions_whitelist ~w(.jpg .jpeg .gif .png)
   @cycles [:Bachelors, :Masters, :Phd]
@@ -68,19 +67,42 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   end
 
   defp save_user(socket, :new, user_params) do
-    case Accounts.admin_create_user(
-           user_params,
-           &consume_picture_data(socket, &1),
-           socket.assigns.role
-         ) do
-      {:ok, _user} ->
-        {:noreply,
-         socket
-         |> put_flash(:success, "User created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+    if String.length(user_params["company_id"]) != 0 do
+      company =
+        Companies.list_companies([])
+        |> Enum.find(fn company -> company.name == user_params["company_id"] end)
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, :changeset, changeset)}
+      user_params = Map.put(user_params, "company_id", company.id)
+
+      case Accounts.admin_create_user(
+             user_params,
+             &consume_picture_data(socket, &1),
+             socket.assigns.role
+           ) do
+        {:ok, _user} ->
+          {:noreply,
+           socket
+           |> put_flash(:success, "User created successfully")
+           |> push_redirect(to: socket.assigns.return_to)}
+
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign(socket, :changeset, changeset)}
+      end
+    else
+      case Accounts.admin_create_user(
+             user_params,
+             &consume_picture_data(socket, &1),
+             socket.assigns.role
+           ) do
+        {:ok, _user} ->
+          {:noreply,
+           socket
+           |> put_flash(:success, "User created successfully")
+           |> push_redirect(to: socket.assigns.return_to)}
+
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign(socket, :changeset, changeset)}
+      end
     end
   end
 
@@ -103,7 +125,7 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
     end
   end
 
-  defp get_names (companies) do
+  defp get_names(companies) do
     Enum.map(companies, fn company -> company.name end)
   end
 end

@@ -109,12 +109,7 @@ defmodule Parzival.Accounts.User do
 
   def changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [
-      :name,
-      :email,
-      :role,
-      :qrcode_id
-    ])
+    |> cast(attrs, @required_fields ++ (@optional_fields -- [:password]))
     |> cast_attachments(attrs, [:picture])
     |> validate_required([:name])
     |> validate_email()
