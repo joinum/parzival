@@ -2,91 +2,91 @@
   "monday": [
     {
       "title": "Acreditação",
-      "hours": "05/06/2022 9:30 AM",
+      "hours": "05/06/2023 9:30 AM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "Sessão de abertura",
-      "hours": "05/06/2022 10:00 AM",
+      "hours": "05/06/2023 10:00 AM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "☕ Coffee break",
-      "hours": "05/06/2022 11:00 AM",
+      "hours": "05/06/2023 11:00 AM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "[Talk] Do algoritmo ao impacto: uma viagem pela disrupção da IA",
-      "hours": "05/06/2022 11:30 AM",
+      "hours": "05/06/2023 11:30 AM",
       "speaker": "Michel Ozzello",
       "company": "Agentifai",
       "href": null
     },
     {
       "title": "🍝 Almoço",
-      "hours": "05/06/2022 12:30 PM",
+      "hours": "05/06/2023 12:30 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "[Pitch] AgentifAI",
-      "hours": "05/06/2022 02:00 AM",
+      "title": "[Pitch] Agentifai",
+      "hours": "05/06/2023 02:00 PM",
       "speaker": null,
-      "company": null,
+      "company": "Agentifai",
       "href": null
     },
     {
       "title": "[Talk] Functional Web Development",
-      "hours": "05/06/2022 02:15 AM",
-      "speaker": "Nélson Estevão",
-      "company": "Marmela",
+      "hours": "05/06/2023 02:10 PM",
+      "speaker": "Nelson Estevão",
+      "company": "Marmelasoft",
       "href": null
     },
     {
       "title": "[Pitch] Bliss",
-      "hours": "05/06/2022 03:10 PM",
+      "hours": "05/06/2023 03:10 PM",
       "speaker": null,
-      "company": null,
+      "company": "Bliss",
       "href": null
     },
     {
       "title": "[Talk] Web and Mobile Development in 2023",
-      "hours": "05/06/2022 03:20 PM",
+      "hours": "05/06/2023 03:20 PM",
       "speaker": "Nuno Pereira",
       "company": "Bliss",
       "href": null
     },
     {
       "title": "☕ Coffee break",
-      "hours": "05/06/2022 04:20 AM",
+      "hours": "05/06/2023 04:20 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "[Pitch] DTx CoLAB",
-      "hours": "05/06/2022 04:50 PM",
+      "hours": "05/06/2023 04:50 PM",
       "speaker": null,
-      "company": null,
+      "company": "DTx CoLAB",
       "href": null
     },
     {
       "title": "[Pitch] Accenture READY! SET! CLOUD!",
-      "hours": "05/06/2022 05:00 PM",
-      "speaker": null,
-      "company": null,
+      "hours": "05/06/2023 05:00 PM",
+      "speaker": "Zeeshan Hurmat",
+      "company": "Accenture",
       "href": null
     },
     {
-      "title": "Board Game Night",
-      "hours": "05/06/2022 09:30 PM",
+      "title": "Board Games Night",
+      "hours": "05/06/2023 09:30 PM",
       "speaker": null,
       "company": null,
       "href": null
@@ -95,83 +95,90 @@
   "tuesday": [
     {
       "title": "[Workshop] Kick-Start a React Project",
-      "hours": "06/06/2022 09:00 AM",
+      "hours": "06/06/2023 09:00 AM",
       "speaker": "Rui Rigueira",
       "company": "Bliss",
-      "href": ""
+      "href": "https://www.eventbrite.pt/e/workshop-kick-start-a-react-project-tickets-648159040137"
     },
     {
       "title": "☕ Coffee break",
-      "hours": "06/06/2022 11:00 AM",
+      "hours": "06/06/2023 11:00 AM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
+      "title": "[Pitch] Atice Labs",
+      "hours": "06/06/2023 11:20 AM",
+      "speaker": null,
+      "company": "Altice Labs",
+      "href": null
+    },
+    {
       "title": "[Talk] Mobile Development and MEO Go Showcase",
-      "hours": "06/06/2022 11:30 AM",
+      "hours": "06/06/2023 11:30 AM",
       "speaker": "Romeu Gomes",
-      "company": "Bliss"
+      "company": "Altice Labs"
     },
     {
       "title": "🍝 Almoço",
-      "hours": "06/06/2022 12:30 PM",
+      "hours": "06/06/2023 12:30 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "[Talk] Inteligência Artificial nos nossos dias",
-      "hours": "06/06/2022 02:00 PM",
+      "hours": "06/06/2023 02:00 PM",
       "speaker": "Paulo Novais",
       "company": "Professor Universitário",
       "href": null
     },
     {
       "title": "[Pitch] Retail Consult",
-      "hours": "06/06/2022 03:00 PM",
+      "hours": "06/06/2023 03:00 PM",
       "speaker": null,
-      "company": null,
+      "company": "Retail Consult",
+      "href": null
+    },
+    {
+      "title": "[Pitch] Wintouch",
+      "hours": "06/06/2023 03:10 PM",
+      "speaker": null,
+      "company": "Wintouch",
       "href": null
     },
     {
       "title": "Concurso de Programação",
-      "hours": "06/06/2022 03:10 PM",
+      "hours": "06/06/2023 03:20 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "☕ Coffee break",
-      "hours": "06/06/2022 04:10 PM",
+      "hours": "06/06/2023 04:20 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "[Pitch] Accenture",
-      "hours": "06/06/2022 04:40 PM",
+      "hours": "06/06/2023 04:50 PM",
       "speaker": null,
-      "company": null,
+      "company": "Accenture",
       "href": null
     },
     {
       "title": "[Talk] CI/CD > Build/Deploy Automation",
-      "hours": "06/06/2022 04:50 PM",
-      "speaker": null,
-      "company": null,
+      "hours": "06/06/2023 5:00 PM",
+      "speaker": "Riardo Castro",
+      "company": "Blip.pt",
       "href": null
     },
     {
-      "title": "[Pitch] Altice Labs",
-      "hours": "06/06/2022 05:15 PM",
-      "speaker": null,
-      "company": null,
-      "href": null
-    },
-    {
-      "title": "Board Game Night",
-      "hours": "05/06/2022 09:30 PM",
+      "title": "Geek Night",
+      "hours": "06/06/2023 08:00 PM",
       "speaker": null,
       "company": null,
       "href": null
@@ -180,63 +187,77 @@
   "wednesday": [
     {
       "title": "[Workshop] Testa ou detesta o teu código (Testes unitários)",
-      "hours": "07/06/2022 09:00 AM",
+      "hours": "07/06/2023 09:00 AM",
       "speaker": "Hugo Cardoso",
       "company": "Agentifai",
-      "href": null
+      "href": "https://www.eventbrite.pt/e/workshop-kick-start-a-react-project-tickets-648159040137"
     },
     {
       "title": "☕ Coffee break",
-      "hours": "07/06/2022 11:00 AM",
+      "hours": "07/06/2023 11:00 AM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "[Talk] Gerando novas moléculas adoçantes com Inteligência Artificial",
-      "hours": "07/06/2022 11:30 AM",
+      "hours": "07/06/2023 11:30 AM",
       "speaker": "João Capela",
       "company": "CEB",
       "href": null
     },
     {
       "title": "[Pitch] Algoritmi",
-      "hours": "06/06/2022 12:10 PM",
+      "hours": "06/06/2023 12:10 PM",
       "speaker": null,
-      "company": null,
+      "company": "Algoritmi",
       "href": null
     },
     {
       "title": "🍝 Almoço",
-      "hours": "07/06/2022 12:30 PM",
+      "hours": "07/06/2023 12:30 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
       "title": "[Talk] Regulamentação e Futuro da IA na Comunidade Europeia",
-      "hours": "07/06/2022 02:00 PM",
+      "hours": "07/06/2023 02:00 PM",
       "speaker": "Alexandra Oliveira",
       "company": "Retail Consult",
       "href": null
     },
     {
       "title": "[Talk] What is quantum computing … and why you should care",
-      "hours": "07/06/2022 03:00 PM",
-      "speaker": "Prof. Luis Soares Barbosa e Investiagor / HasLab",
-      "company": null,
+      "hours": "07/06/2023 03:00 PM",
+      "speaker": "Luís Soares Barbosa",
+      "company": "Professor Universitário",
       "href": null
     },
     {
-      "title": "[Pitch] INESCTEC",
-      "hours": "07/06/2022 04:00 PM",
+      "title": "[Pitch] INESC TEC",
+      "hours": "07/06/2023 04:00 PM",
+      "speaker": null,
+      "company": "INESC TEC + Universidade do Minho",
+      "href": null
+    },
+    {
+      "title": "☕ Coffee break",
+      "hours": "07/06/2023 04:10 PM",
       "speaker": null,
       "company": null,
       "href": null
     },
     {
-      "title": "Cerimónia de encerramento",
-      "hours": "07/06/2022 04:10 PM",
+      "title": "Mesa redonda",
+      "hours": "07/06/2023 04:30 PM",
+      "speaker": null,
+      "company": null,
+      "href": null
+    },
+    {
+      "title": "🏆 Cerimónia de encerramento + Entrega de prémios",
+      "hours": "07/06/2023 05:30 PM",
       "speaker": null,
       "company": null,
       "href": null

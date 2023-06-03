@@ -3,6 +3,6 @@ defmodule ParzivalWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "05, 06 e 07 de junho"
+    assert html_response(conn, 200) =~ "5, 6 e 7 de junho"
   end
 end
