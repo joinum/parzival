@@ -97,6 +97,7 @@ defmodule ParzivalWeb.Router do
         pipe_through [:require_admin]
         live "/companies_new/new", CompanyLive.New, :new
         live "/companies/:id/edit", CompanyLive.Edit, :edit
+        pipe_through [:require_admin_or_recruiter]
         live "/offers/:id/edit", OfferLive.Edit, :edit
         live "/offers_new/new", OfferLive.New, :new
       end
@@ -107,6 +108,10 @@ defmodule ParzivalWeb.Router do
           live "/faqs/:id", FaqsLive.Show, :show
         end
 
+        pipe_through [:require_admin_or_staff]
+        live "/missions/:id/edit", MissionLive.Edit, :edit
+        live "/missions_new/new", MissionLive.New, :new
+        live "/scanner", ScannerLive.Index, :index
         pipe_through [:require_admin]
         live "/accounts/", UserLive.Index, :index
         live "/accounts/new", UserLive.New, :new
@@ -148,8 +153,6 @@ defmodule ParzivalWeb.Router do
           live "/announcements/new", AnnouncementLive.New, :new
           live "/announcements/:id/edit", AnnouncementLive.Edit, :edit
         end
-
-        live "/scanner", ScannerLive.Index, :index
       end
 
       get "/settings", UserSettingsController, :edit
