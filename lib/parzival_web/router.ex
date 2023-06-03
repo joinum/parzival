@@ -109,10 +109,10 @@ defmodule ParzivalWeb.Router do
         end
 
         pipe_through [:require_admin_or_staff]
+          live "/scanner", ScannerLive.Index, :index
+        pipe_through [:require_admin]
         live "/missions/:id/edit", MissionLive.Edit, :edit
         live "/missions_new/new", MissionLive.New, :new
-        live "/scanner", ScannerLive.Index, :index
-        pipe_through [:require_admin]
         live "/accounts/", UserLive.Index, :index
         live "/accounts/new", UserLive.New, :new
 
