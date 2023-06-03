@@ -241,15 +241,15 @@
               <tr class="mt-10 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-4 text-2xl font-bold tracking-wider">SKILLS</p>
-                    <div class="flex flex-wrap">
-                      <%= for skill <- @curriculum.skills do %>
-                        <div class="pr-8 pb-2">
-                          <span style="border-bottom: rgb(234,59,45) 1.5px solid;">
-                            <%= skill.name %>
-                          </span>
-                        </div>
-                      <% end %>
-                    </div>
+                  <div class="flex flex-wrap">
+                    <%= for skill <- @curriculum.skills do %>
+                      <div class="pr-8 pb-2">
+                        <span style="border-bottom: rgb(234,59,45) 1.5px solid;">
+                          <%= skill.name %>
+                        </span>
+                      </div>
+                    <% end %>
+                  </div>
                 </td>
               </tr>
             <% end %>
