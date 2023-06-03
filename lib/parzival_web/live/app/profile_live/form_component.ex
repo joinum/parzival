@@ -4,6 +4,8 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
 
   alias Parzival.Accounts
   alias Parzival.Accounts.User
+  alias Parzival.Companies
+  alias Parzival.Companies.Company
 
   @extensions_whitelist ~w(.jpg .jpeg .gif .png)
   @cycles [:Bachelors, :Masters, :Phd]
@@ -21,11 +23,13 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   @impl true
   def update(%{user: user} = assigns, socket) do
     changeset = Accounts.change_user(user)
+    companies = Companies.list_companies([]) |> get_names()
 
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:user, user)
+     |> assign(:companies, companies)
      |> assign(:cycles, @cycles)
      |> assign(:changeset, changeset)}
   end
@@ -97,5 +101,9 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
       _errors ->
         {:ok, user}
     end
+  end
+
+  defp get_names (companies) do
+    Enum.map(companies, fn company -> company.name end)
   end
 end
