@@ -1,11 +1,15 @@
 [
-  ["subvisual"],
-  ["accenture","aptiv", "proefdstelecom", "deloitte", "continental", "optaresolutions"],
-  ["eurotux", "anosoftware", "mercedesbenz"],
+  ["agentifai"],
+  ["accenture","alticelabs", "retailconsult", "bliss"],
+  ["anosoftware", "deloitte", "ebankit"],
   [
-    "inovaria",
+    "wintouch",
     "konkcultsing",
-    "miniclip",
-    "kelvin"
+    "dtxcolab",
+    "aptiv",
+    "eurotux",
+    "clevainetum",
+    "glintt",
+    "optaresolutions"
   ]
 ]

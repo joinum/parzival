@@ -17,8 +17,6 @@ defmodule ParzivalWeb.Landing.HomeLive.Index do
 
   @speakers Jason.decode!(File.read!("data/speakers.json"))
 
-  @partners Jason.decode!(File.read!("data/partners.json"))
-
   @sponsors_table @sponsors
                   |> Stream.with_index()
                   |> Enum.reduce([[], []], fn {x, i}, [evens, odds] ->
@@ -36,6 +34,6 @@ defmodule ParzivalWeb.Landing.HomeLive.Index do
      |> assign(:sponsors, @sponsors)
      |> assign(:sponsors_table, @sponsors_table)
      |> assign(:speakers, @speakers)
-     |> assign(:partners, @partners)}
+     |> assign(:partners, [])}
   end
 end
