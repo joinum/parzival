@@ -89,7 +89,7 @@
       "hours": "05/06/2023 09:30 PM",
       "speaker": null,
       "company": null,
-      "href": null
+      "href": "https://forms.gle/6g1SU3Wbuuk5tU8P8"
     }
   ],
   "tuesday": [
@@ -181,7 +181,7 @@
       "hours": "06/06/2023 08:00 PM",
       "speaker": null,
       "company": null,
-      "href": null
+      "href": "https://forms.gle/HvkxrC975dksmSnm9"
     }
   ],
   "wednesday": [
@@ -190,7 +190,7 @@
       "hours": "07/06/2023 09:00 AM",
       "speaker": "Hugo Cardoso",
       "company": "Agentifai",
-      "href": "https://www.eventbrite.pt/e/workshop-kick-start-a-react-project-tickets-648159040137"
+      "href": "https://www.eventbrite.pt/e/workshop-testa-ou-detesta-o-teu-codigo-testes-unitarios-tickets-648169491397"
     },
     {
       "title": "☕ Coffee break",
