@@ -35,9 +35,10 @@ config :ex_aws,
 # to the previous section and set your `:url` port to 443:
 #
 config :parzival, ParzivalWeb.Endpoint,
-  url: [scheme: "https", host: "parzival-prod.fly.dev", port: 443],
+  url: [scheme: "https", host: "join.di.uminho.pt", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  check_origin: ["//*.join.di.uminho.pt"]
 
 #       https: [
 #         ...,
