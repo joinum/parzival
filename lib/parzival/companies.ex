@@ -165,6 +165,12 @@ defmodule Parzival.Companies do
     |> Repo.get!(id)
   end
 
+  def get_company_by_name(name) do
+    Company
+    |> where(name: ^name)
+    |> Repo.one!()
+  end
+
   @doc """
   Creates a company.
 

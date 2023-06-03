@@ -234,7 +234,7 @@ defmodule Parzival.Accounts do
     end
 
     user
-    |> User.changeset(attrs)
+    |> User.user_no_password_changeset(attrs)
     |> Repo.insert()
     |> after_save(after_save)
     |> case do
