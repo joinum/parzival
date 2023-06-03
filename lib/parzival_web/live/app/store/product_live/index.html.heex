@@ -24,7 +24,7 @@
               <%= product.name %>
             </h3>
             <p class="mt-1 text-sm text-gray-500">
-              <%= product.description %>
+              <%= String.slice(product.description, 0, 30) <> if String.length(product.description) > 30 do "..." else "" end %>
             </p>
             <p class="relative right-1 text-sm font-medium text-gray-900">
               💰 <span class="relative top-0.5"><%= product.price %></span>
