@@ -233,6 +233,23 @@ defmodule Parzival.Accounts do
       |> Map.put(:qrcode_id, qrcode.id)
     end
 
+    case user.role do
+      :recruiter ->
+        insert_recruiter(user, attrs, after_save)
+
+      _ ->
+        insert_user(user, attrs, after_save, role)
+    end
+  end
+
+  defp insert_recruiter(user, attrs, after_save) do
+    user
+    |> User.registration_changeset(attrs)
+    |> Repo.insert()
+    |> after_save(after_save)
+  end
+
+  defp insert_user(user, attrs, after_save, role) do
     user
     |> User.user_no_password_changeset(attrs)
     |> Repo.insert()

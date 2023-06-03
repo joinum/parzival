@@ -67,7 +67,7 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   end
 
   defp save_user(socket, :new, user_params) do
-    if String.length(user_params["company_id"]) != 0 do
+    if !is_nil(user_params["company_id"]) and String.length(user_params["company_id"]) != 0 do
       company =
         Companies.list_companies([])
         |> Enum.find(fn company -> company.name == user_params["company_id"] end)
