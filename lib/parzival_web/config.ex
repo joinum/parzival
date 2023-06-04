@@ -401,6 +401,12 @@ defmodule ParzivalWeb.Config do
               })
           }
         ]
+      },
+      %{
+        key: :scanner,
+        title: "Scan",
+        url: Routes.admin_scanner_index_path(conn, :index),
+        tabs: []
       }
     ]
   end
