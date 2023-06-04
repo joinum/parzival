@@ -20,7 +20,12 @@ defmodule Parzival.Repo.Seeds.Tools do
           %{
             question: "When and where does JOIN take place?",
             answer:
-              "JOIN takes place from June 5th to June 7th, at Universidade do Minho in Braga."
+              "JOIN takes place from June 5th to June 7th, in the CP1 building at Universidade do Minho in Braga."
+          },
+          %{
+            question: "Where will all the activities take place?",
+            answer:
+              "All the talks/pitches/workshops will take place at the auditorium A2/0.20 in the CP1 building."
           },
           %{
             question: "Is JOIN free?",

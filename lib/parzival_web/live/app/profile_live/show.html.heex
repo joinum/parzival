@@ -3,7 +3,7 @@
     <!-- Profile header -->
     <div>
       <div>
-        <img class="object-cover w-full h-32 lg:h-48" src={Routes.static_path(@socket, "/images/banner.svg")} alt="" />
+        <img class="object-cover w-full h-32 lg:h-48" src={Routes.static_path(@socket, "/images/banner_2023.png")} alt="" />
       </div>
       <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
         <div class="-mt-12 sm:flex sm:items-end sm:-mt-16 sm:space-x-5">
@@ -87,6 +87,14 @@
               >
                 Curriculum
               </button>
+
+              <button
+                x-on:click="option = 'qrcode'"
+                x-bind:class="option =='qrcode' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+              >
+                QR Code
+              </button>
             <% end %>
 
             <%= if @user.role == :recruiter do %>
@@ -166,6 +174,13 @@
           </div>
         <% end %>
       </dl>
+    </div>
+    <!-- QR Code -->
+    <div x-bind:class="option =='qrcode' ? 'block' : 'hidden'" class="flex flex-col justify-center items-center px-4 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
+      <div class="lg:col-span-2 lg:justify-end lg:items-center lg:space-x-4">
+        <%= elem(draw_qr_code(@user), 0) |> raw %>
+      </div>
+      <p><%= elem(draw_qr_code(@user), 1) %></p>
     </div>
     <!-- Curriculum -->
     <%= if @user.role in [:attendee] do %>
