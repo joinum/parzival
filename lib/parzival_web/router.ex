@@ -108,8 +108,10 @@ defmodule ParzivalWeb.Router do
           live "/faqs/:id", FaqsLive.Show, :show
         end
 
-        pipe_through [:require_admin_or_staff]
+        pipe_through [:require_not_attendee]
         live "/scanner", ScannerLive.Index, :index
+        live "/task_redeem/:task_id/:attendee_id", TaskLive.Redeem, :redeem
+
         pipe_through [:require_admin]
         live "/missions/:id/edit", MissionLive.Edit, :edit
         live "/missions_new/new", MissionLive.New, :new
@@ -143,8 +145,6 @@ defmodule ParzivalWeb.Router do
           live "/difficulty/", DifficultyLive.Index, :index
           live "/difficulty/new", DifficultyLive.Index, :new
           live "/difficulty/:id/edit", DifficultyLive.Index, :edit
-
-          live "/task/:task_id/redeem/:attendee_id", TaskLive.Redeem, :redeem
         end
 
         scope "/tools" do

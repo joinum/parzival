@@ -767,48 +767,75 @@ defmodule Parzival.Gamification do
     Repo.delete(task_user)
   end
 
+  # Determines if the current user is authorized
+  # to redeem a task for an attendee
+  defp can_redeem_task(%User{} = user, %Task{} = task) do
+    mission =
+      Mission
+      |> where([m], m.id == ^task.mission_id)
+      |> Repo.one()
+
+    case user.role do
+      :staff ->
+        is_nil(mission.created_by_id)
+
+      :recruiter ->
+        user.company_id == mission.created_by_id
+
+      :admin ->
+        true
+
+      :attendee ->
+        false
+    end
+  end
+
   def redeem_task(%User{} = user, %Task{} = task, %User{} = staff) do
-    Multi.new()
-    |> Multi.insert(
-      :task_user,
-      TaskUser.changeset(%TaskUser{}, %{user_id: user.id, staff_id: staff.id, task_id: task.id})
-    )
-    |> Multi.run(:mission, fn repo, _change ->
-      mission = Parzival.Gamification.get_mission!(task.mission_id, tasks: [:users])
+    if can_redeem_task(staff, task) do
+      Multi.new()
+      |> Multi.insert(
+        :task_user,
+        TaskUser.changeset(%TaskUser{}, %{user_id: user.id, staff_id: staff.id, task_id: task.id})
+      )
+      |> Multi.run(:mission, fn repo, _change ->
+        mission = Parzival.Gamification.get_mission!(task.mission_id, tasks: [:users])
 
-      case Enum.all?(mission.tasks, fn task -> Enum.any?(task.users, &(&1.id == user.id)) end) do
-        true ->
-          %MissionUser{}
-          |> MissionUser.changeset(%{mission_id: mission.id, user_id: user.id})
-          |> repo.insert()
+        case Enum.all?(mission.tasks, fn task -> Enum.any?(task.users, &(&1.id == user.id)) end) do
+          true ->
+            %MissionUser{}
+            |> MissionUser.changeset(%{mission_id: mission.id, user_id: user.id})
+            |> repo.insert()
 
-          user
-          |> User.task_completion_changeset(%{
-            balance: user.balance + task.tokens + mission.tokens,
-            exp: user.exp + task.exp + mission.exp
-          })
-          |> repo.update()
+            user
+            |> User.task_completion_changeset(%{
+              balance: user.balance + task.tokens + mission.tokens,
+              exp: user.exp + task.exp + mission.exp
+            })
+            |> repo.update()
 
-          {:ok, mission}
+            {:ok, mission}
 
-        false ->
-          user
-          |> User.task_completion_changeset(%{
-            balance: user.balance + task.tokens,
-            exp: user.exp + task.exp
-          })
-          |> repo.update()
+          false ->
+            user
+            |> User.task_completion_changeset(%{
+              balance: user.balance + task.tokens,
+              exp: user.exp + task.exp
+            })
+            |> repo.update()
 
-          {:ok, mission}
+            {:ok, mission}
+        end
+      end)
+      |> Repo.transaction()
+      |> case do
+        {:ok, transaction} ->
+          broadcast({:ok, transaction.mission}, :updated)
+
+        {:error, _transaction, changeset, _} ->
+          {:error, changeset}
       end
-    end)
-    |> Repo.transaction()
-    |> case do
-      {:ok, transaction} ->
-        broadcast({:ok, transaction.mission}, :updated)
-
-      {:error, _transaction, changeset, _} ->
-        {:error, changeset}
+    else
+      {:error, :unauthorized}
     end
   end
 
