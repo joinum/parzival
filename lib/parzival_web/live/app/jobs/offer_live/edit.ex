@@ -16,17 +16,14 @@ defmodule ParzivalWeb.App.OfferLive.Edit do
      |> assign(:current_page, :jobs)
      |> assign(:page_title, "Edit Offer")
      |> assign(list_companies(params))
-     |> assign(
-       :offer,
-       Companies.get_offer!(id, preloads: [:company, :offer_type, :offer_time, :level])
-     )}
+     |> assign(:offer, Companies.get_offer!(id, preloads: [:company, :offer_type, :offer_time]))
+    }
   end
 
   defp list_companies(params) do
     case Companies.list_companies(params) do
       {:ok, {companies, meta}} ->
         %{companies: companies, meta: meta}
-
       {:error, flop} ->
         %{companies: [], meta: flop}
     end
