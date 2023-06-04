@@ -94,7 +94,6 @@ defmodule ParzivalWeb.Router do
           live "/:id/tasks/:task_id/redeem", TaskLive.Show, :redeem
         end
 
-
         pipe_through [:require_order_attendee]
         live "/vault/:id", OrderLive.Show, :show
 
