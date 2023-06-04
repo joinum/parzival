@@ -5,10 +5,8 @@ defmodule Parzival.Gamification do
 
   use Parzival.Context
 
-  alias Ecto.Migration
   alias Ecto.Multi
 
-  alias Parzival.Accounts
   alias Parzival.Accounts.User
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Curriculum.Education
@@ -17,13 +15,6 @@ defmodule Parzival.Gamification do
   alias Parzival.Gamification.Curriculum.Position
   alias Parzival.Gamification.Curriculum.Skill
   alias Parzival.Gamification.Curriculum.Volunteering
-
-  @first_day_start Application.get_env(:parzival, :event)[:first_day_start]
-  @first_day_end Application.get_env(:parzival, :event)[:first_day_end]
-  @second_day_start Application.get_env(:parzival, :event)[:second_day_start]
-  @second_day_end Application.get_env(:parzival, :event)[:second_day_end]
-  @third_day_start Application.get_env(:parzival, :event)[:third_day_start]
-  @third_day_end Application.get_env(:parzival, :event)[:third_day_end]
 
   @doc """
   Returns the list of curriculums.
@@ -708,33 +699,6 @@ defmodule Parzival.Gamification do
     |> Flop.validate_and_run(flop, for: TaskUser)
   end
 
-  # def get_leaderboard(day) do
-  #   case day do
-  #     # 0 -> get_general_leaderboard(params, number_entries)
-  #     0 -> get_daily_leaderboard(@first_day_start, @third_day_end, number_entries)
-  #     1 -> get_daily_leaderboard(@first_day_start, @first_day_end, number_entries)
-  #     2 -> get_daily_leaderboard(@second_day_start, @second_day_start, number_entries)
-  #     3 -> get_daily_leaderboard(@third_day_start, @third_day_end, number_entries)
-  #   end
-  # end
-
-  # def get_leaderboard(%{} = flop, day) do
-  #   case day do
-  #     0 -> get_daily_leaderboard(flop, @first_day)
-  #     1 -> get_daily_leaderboard(flop, @first_day)
-  #     2 -> get_daily_leaderboard(flop, @second_day)
-  #     3 -> get_daily_leaderboard(flop, @third_day)
-  #   end
-  # end
-
-  # def get_exp(user, day) do
-  #   case day do
-  #     1 -> get_exp(user, @first_day_start, @first_day_end)
-  #     2 -> get_exp(user, @second_day_start, @second_day_end)
-  #     3 -> get_exp(user, @third_day_start, @third_day_end)
-  #   end
-  # end
-
   def get_leaderboard(start_time, end_time) do
     q2 = get_leaderboard_query(start_time, end_time)
 
@@ -768,15 +732,6 @@ defmodule Parzival.Gamification do
       res
     end
   end
-
-  # def get_user_position(user, day) do
-  #   case day do
-  #     0 -> get_user_position_general(user)
-  #     1 -> get_user_position_by_day(user, @first_day_start, @second_day_end)
-  #     2 -> get_user_position_by_day(user, @second_day_start, @second_day_end)
-  #     3 -> get_user_position_by_day(user, @third_day_start, @third_day_end)
-  #   end
-  # end
 
   def get_user_position_general(user) do
     x =

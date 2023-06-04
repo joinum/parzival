@@ -3,13 +3,6 @@ defmodule Parzival.GamificationTest do
 
   alias Parzival.Gamification
 
-  @first_day_start Application.get_env(:parzival, :event)[:first_day_start]
-  @first_day_end Application.get_env(:parzival, :event)[:first_day_end]
-  @second_day_start Application.get_env(:parzival, :event)[:second_day_start]
-  @second_day_end Application.get_env(:parzival, :event)[:second_day_end]
-  @third_day_start Application.get_env(:parzival, :event)[:third_day_start]
-  @third_day_end Application.get_env(:parzival, :event)[:third_day_end]
-
   describe "curriculums" do
     alias Parzival.Gamification.Curriculum
 
