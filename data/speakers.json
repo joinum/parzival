@@ -1,38 +1,38 @@
 [
   {
-    "name": "Roberto Machado",
-    "photo": "roberto",
-    "job": "Co-Founder & CEO",
-    "company": "Subvisual"
-  },
-  {
-    "name": "Mário Gago",
-    "photo": "mario",
-    "job": "CEO",
-    "company": "Pink Room"
-  },
-  {
-    "name": "Diogo Viana",
-    "photo": "diogo_viana",
-    "job": "Full Stack Software Engineer",
-    "company": "Finiam"
-  },
-  {
-    "name": "André Maximino",
-    "photo": "andre_maximino",
+    "name": "TBA",
+    "photo": "join",
     "job": "",
-    "company": "Pink Room"
+    "company": ""
   },
   {
-    "name": "Miguel Palhas",
-    "photo": "miguel_palhas",
-    "job": "Blockchain Developer",
-    "company": "Subvisual"
+    "name": "TBA",
+    "photo": "join",
+    "job": "",
+    "company": ""
   },
   {
-    "name": "Diogo Teixeira",
-    "photo": "diogo_teixeira",
-    "job": "Advanced Application Specialist",
-    "company": "Accenture"
+    "name": "TBA",
+    "photo": "join",
+    "job": "",
+    "company": ""
+  },
+  {
+    "name": "TBA",
+    "photo": "join",
+    "job": "",
+    "company": ""
+  },
+  {
+    "name": "TBA",
+    "photo": "join",
+    "job": "",
+    "company": ""
+  },
+  {
+    "name": "TBA",
+    "photo": "join",
+    "job": "",
+    "company": ""
   }
 ]

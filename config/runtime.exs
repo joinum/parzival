@@ -27,7 +27,7 @@ if config_env() in [:dev, :test] do
     port: env!("DB_PORT", :integer, 5432)
 end
 
-if config_env() == :prod do
+if config_env() in [:prod, :stg] do
   database_url =
     System.get_env("DATABASE_URL") ||
       raise """
@@ -35,11 +35,27 @@ if config_env() == :prod do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
+  %URI{host: database_host} = URI.parse(database_url)
+
+  # Location of root certificates to verify database SSL connection.
+  database_ca_cert_filepath =
+    System.get_env("DATABASE_CA_CERT_FILEPATH") || "/etc/ssl/certs/ca-certificates.crt"
+
   maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
   config :parzival, Parzival.Repo,
-    ssl: true,
     url: database_url,
+    # Our production/staging database requires SSL to be enabled to connect. This enables verifying the Postgres server has a valid certificate.
+    ssl: true,
+    ssl_opts: [
+      verify: :verify_peer,
+      cacertfile: database_ca_cert_filepath,
+      server_name_indication: to_charlist(database_host),
+      customize_hostname_check: [
+        # Our hosting provider uses a wildcard certificate. By default, Erlang does not support wildcard certificates. This function supports validating wildcard hosts.
+        match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+      ]
+    ],
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
 
@@ -70,21 +86,29 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
-  mailgun_domain =
-    System.get_env("MAILGUN_DOMAIN") ||
+  aws_smtp_username =
+    System.get_env("AWS_SMTP_USERNAME") ||
       raise """
-      environment variable MAILGUN_DOMAIN is missing
+      environment variable AWS_SMTP_USERNAME is missing
       """
 
-  mailgun_api_key =
-    System.get_env("MAILGUN_API_KEY") ||
+  aws_smtp_password =
+    System.get_env("AWS_SMTP_PASSWORD") ||
       raise """
-      environment variable MAILGUN_API_KEY is missing
+      environment variable AWS_SMTP_PASSWORD is missing
       """
 
-  config :parzival,
-    mailgun_domain: mailgun_domain,
-    mailgun_key: mailgun_api_key
+  config :parzival, Parzival.Mailer,
+    adapter: Swoosh.Adapters.SMTP,
+    relay: "email-smtp.eu-west-2.amazonaws.com",
+    username: aws_smtp_username,
+    password: aws_smtp_password,
+    ssl: false,
+    tls: :always,
+    auth: :always,
+    port: 587,
+    retries: 2,
+    no_mx_lookups: false
 
   # ## Using releases
   #

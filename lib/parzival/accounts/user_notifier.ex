@@ -11,13 +11,15 @@ defmodule Parzival.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"MyApp", "contact@example.com"})
+      |> from({"[JOIN'23]", "join.uminho.di@gmail.com"})
       |> subject(subject)
       |> text_body(body)
 
-    with {:ok, _metadata} <- Mailer.deliver(email) do
-      {:ok, email}
-    end
+    Task.start(fn ->
+      {:ok, _metadata} = Mailer.deliver(email)
+    end)
+
+    {:ok, email}
   end
 
   @doc """
