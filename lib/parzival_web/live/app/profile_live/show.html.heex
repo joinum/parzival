@@ -178,9 +178,9 @@
     <!-- QR Code -->
     <div x-bind:class="option =='qrcode' ? 'block' : 'hidden'" class="flex flex-col justify-center items-center px-4 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
       <div class="lg:col-span-2 lg:justify-end lg:items-center lg:space-x-4">
-        <%= draw_qr_code(@user) |> raw %>
+        <%= elem(draw_qr_code(@user), 0) |> raw %>
       </div>
-      <p>http://join.di.uminho.pt/app/profile/<%= @user.id %></p>
+      <p><%= elem(draw_qr_code(@user), 1) %></p>
     </div>
     <!-- Curriculum -->
     <%= if @user.role in [:attendee] do %>
