@@ -149,6 +149,17 @@ defmodule ParzivalWeb.UserAuth do
     end
   end
 
+  def require_not_attendee(conn, _opts) do
+    if conn.assigns[:current_user].role != :attendee do
+      conn
+    else
+      conn
+      |> redirect(to: signed_in_path(conn))
+      |> put_flash(:error, "You don't have access to be here!")
+      |> halt()
+    end
+  end
+
   def require_admin_or_recruiter(conn, _opts) do
     if conn.assigns[:current_user].role in [:recruiter, :admin] do
       conn
