@@ -99,7 +99,13 @@ defmodule ParzivalWeb.Config do
         key: :jobs,
         title: "Jobs",
         url: Routes.offer_index_path(conn, :index),
-        tabs: []
+        tabs: [
+          %{
+            key: :jobs,
+            title: "Offers",
+            url: Routes.offer_index_path(conn, :index)
+          }
+        ]
       },
       %{
         key: :companies,
@@ -120,23 +126,10 @@ defmodule ParzivalWeb.Config do
         tabs: []
       },
       %{
-        key: :tools,
-        title: "Tools",
-        url: Routes.admin_faqs_index_path(conn, :index),
-        tabs: [
-          %{
-            key: :faqs,
-            title: "FAQs",
-            url: Routes.admin_faqs_index_path(conn, :index),
-            tabs: []
-          },
-          %{
-            key: :announcements,
-            title: "Announcements",
-            url: Routes.announcement_index_path(conn, :index),
-            tabs: []
-          }
-        ]
+        key: :announcements,
+        title: "Announcements",
+        url: Routes.announcement_index_path(conn, :index),
+        tabs: []
       }
     ]
   end
@@ -163,6 +156,52 @@ defmodule ParzivalWeb.Config do
       },
       %{
         key: :announcements,
+        title: "Announcements",
+        url: Routes.announcement_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :scanner,
+        title: "Scan",
+        url: Routes.admin_scanner_index_path(conn, :index),
+        tabs: []
+      }
+    ]
+  end
+
+  def staff_pages(conn) do
+    [
+      %{
+        key: :missions,
+        title: "Missions",
+        url: Routes.mission_index_path(conn, :index)
+      },
+      %{
+        key: :missions,
+        title: "Leaderboard",
+        url: Routes.leaderboard_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :jobs,
+        title: "Jobs",
+        url: Routes.offer_index_path(conn, :index),
+        tabs: [
+          %{
+            key: :jobs,
+            title: "Offers",
+            url: Routes.offer_index_path(conn, :index)
+          }
+        ]
+      },
+      %{
+        key: :companies,
+        title: "Companies",
+        url: Routes.company_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :annoucements,
         title: "Announcements",
         url: Routes.announcement_index_path(conn, :index),
         tabs: []
@@ -225,7 +264,7 @@ defmodule ParzivalWeb.Config do
       },
       %{
         key: :companies,
-        title: "Sponsors",
+        title: "Companies",
         url: Routes.company_index_path(conn, :index),
         tabs: [
           %{
@@ -302,103 +341,6 @@ defmodule ParzivalWeb.Config do
             key: :announcements,
             title: "Announcements",
             url: Routes.announcement_index_path(conn, :index)
-          }
-        ]
-      },
-      %{
-        key: :scanner,
-        title: "Scan",
-        url: Routes.admin_scanner_index_path(conn, :index),
-        tabs: []
-      }
-    ]
-  end
-
-  def staff_pages(conn) do
-    [
-      %{
-        key: :missions,
-        title: "Gamification",
-        url: Routes.mission_index_path(conn, :index),
-        tabs: [
-          %{
-            key: :missions,
-            title: "Missions",
-            url: Routes.mission_index_path(conn, :index)
-          },
-          %{
-            key: :missions,
-            title: "Leaderboard",
-            url: Routes.leaderboard_index_path(conn, :index),
-            tabs: []
-          },
-          %{
-            key: :missions,
-            title: "Difficulties",
-            url: Routes.admin_difficulty_index_path(conn, :index)
-          }
-        ]
-      },
-      %{
-        key: :jobs,
-        title: "Jobs",
-        url: Routes.offer_index_path(conn, :index),
-        tabs: [
-          %{
-            key: :jobs,
-            title: "Offers",
-            url: Routes.offer_index_path(conn, :index)
-          },
-          %{
-            key: :jobs,
-            title: "Types",
-            url: Routes.admin_offer_type_index_path(conn, :index)
-          },
-          %{
-            key: :jobs,
-            title: "Times",
-            url: Routes.admin_offer_time_index_path(conn, :index)
-          }
-        ]
-      },
-      %{
-        key: :companies,
-        title: "Sponsors",
-        url: Routes.company_index_path(conn, :index),
-        tabs: [
-          %{
-            key: :companies,
-            title: "Companies",
-            url: Routes.company_index_path(conn, :index)
-          },
-          %{
-            key: :levels,
-            title: "Levels",
-            url: Routes.admin_level_index_path(conn, :index)
-          }
-        ]
-      },
-      %{
-        key: :store,
-        title: "Store",
-        url: Routes.product_index_path(conn, :index),
-        tabs: []
-      },
-      %{
-        key: :accounts,
-        title: "Accounts",
-        url:
-          Routes.admin_user_index_path(conn, :index, %{
-            "filters" => %{"0" => %{"field" => "role", "value" => "attendee"}}
-          }),
-        tabs: [
-          %{
-            key: :student,
-            title: "Attendees",
-            url:
-              Routes.admin_user_index_path(conn, :index, %{
-                "filters" => %{"0" => %{"field" => "role", "value" => "attendee"}}
-              })
           }
         ]
       },
