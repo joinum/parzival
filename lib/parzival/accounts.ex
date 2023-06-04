@@ -222,12 +222,36 @@ defmodule Parzival.Accounts do
       {:error, %Ecto.Changeset{}}
   """
   def admin_create_user(attrs \\ %{}, after_save \\ &{:ok, &1}, role) do
-    qrcode = get_qr_code(attrs["qr"])
+    user =
+      %User{}
+      |> Map.put(:role, role)
 
-    %User{}
-    |> Map.put(:role, role)
-    |> Map.put(:qrcode_id, qrcode.id)
-    |> User.changeset(attrs)
+    if role in [:attendee] do
+      qrcode = get_qr_code(attrs["qr"])
+
+      user
+      |> Map.put(:qrcode_id, qrcode.id)
+    end
+
+    case user.role do
+      :recruiter ->
+        insert_recruiter(user, attrs, after_save)
+
+      _ ->
+        insert_user(user, attrs, after_save, role)
+    end
+  end
+
+  defp insert_recruiter(user, attrs, after_save) do
+    user
+    |> User.registration_changeset(attrs)
+    |> Repo.insert()
+    |> after_save(after_save)
+  end
+
+  defp insert_user(user, attrs, after_save, role) do
+    user
+    |> User.user_no_password_changeset(attrs)
     |> Repo.insert()
     |> after_save(after_save)
     |> case do

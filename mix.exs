@@ -53,6 +53,8 @@ defmodule Parzival.MixProject do
       {:ecto_psql_extras, "~> 0.6"},
 
       # uploads
+      {:ex_aws, "~> 2.1"},
+      {:ex_aws_s3, "~> 2.0"},
       {:waffle, "~> 1.1"},
       {:waffle_ecto, "~> 0.0"},
 
@@ -73,6 +75,8 @@ defmodule Parzival.MixProject do
 
       # mailer
       {:swoosh, "~> 1.3"},
+      {:gen_smtp, "~> 1.0"},
+      {:ex_aws_ses, "~> 2.4.1"},
 
       # utilities
       {:pdf_generator, "~> 0.6.2"},
@@ -81,6 +85,9 @@ defmodule Parzival.MixProject do
       {:timex, "~> 3.0"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
+      {:sweet_xml, "~> 0.7.1"},
+      {:hackney, "~> 1.18"},
+      {:configparser_ex, "~> 4.0.0"},
 
       # monitoring
       {:telemetry_metrics, "~> 0.6"},

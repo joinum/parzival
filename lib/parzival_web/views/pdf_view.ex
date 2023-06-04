@@ -10,8 +10,9 @@ defmodule ParzivalWeb.PdfView do
     |> PdfGenerator.generate_binary!(
       delete_temporary: true,
       page_size: "A4",
-      filename: "attendee_#{Ecto.UUID.generate()}.pdf",
+      filename: "attendee_#{Ecto.UUID.generate()}",
       shell_params: [
+        "--disable-smart-shrinking",
         "--margin-top",
         "0",
         "--margin-left",
