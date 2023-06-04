@@ -15,7 +15,7 @@ defmodule ParzivalWeb.Config do
       :admin -> admin_pages(conn)
       :attendee -> attendee_pages(conn)
       :recruiter -> recruiter_pages(conn, user.company)
-      :staff -> admin_pages(conn)
+      :staff -> staff_pages(conn)
     end
   end
 
@@ -105,7 +105,13 @@ defmodule ParzivalWeb.Config do
         key: :jobs,
         title: "Jobs",
         url: Routes.offer_index_path(conn, :index),
-        tabs: []
+        tabs: [
+          %{
+            key: :jobs,
+            title: "Offers",
+            url: Routes.offer_index_path(conn, :index)
+          }
+        ]
       },
       %{
         key: :companies,
@@ -169,6 +175,53 @@ defmodule ParzivalWeb.Config do
     ]
   end
 
+  def staff_pages(conn) do
+    [
+      %{
+        key: :missions,
+        title: "Missions",
+        url: Routes.mission_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :missions,
+        title: "Leaderboard",
+        url: Routes.leaderboard_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :jobs,
+        title: "Jobs",
+        url: Routes.offer_index_path(conn, :index),
+        tabs: [
+          %{
+            key: :jobs,
+            title: "Offers",
+            url: Routes.offer_index_path(conn, :index)
+          }
+        ]
+      },
+      %{
+        key: :companies,
+        title: "Companies",
+        url: Routes.company_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :annoucements,
+        title: "Announcements",
+        url: Routes.announcement_index_path(conn, :index),
+        tabs: []
+      },
+      %{
+        key: :scanner,
+        title: "Scan",
+        url: Routes.admin_scanner_index_path(conn, :index),
+        tabs: []
+      }
+    ]
+  end
+
   def admin_pages(conn) do
     [
       %{
@@ -190,7 +243,8 @@ defmodule ParzivalWeb.Config do
           %{
             key: :missions,
             title: "Difficulties",
-            url: Routes.admin_difficulty_index_path(conn, :index)
+            url: Routes.admin_difficulty_index_path(conn, :index),
+            tabs: []
           }
         ]
       },
@@ -218,7 +272,7 @@ defmodule ParzivalWeb.Config do
       },
       %{
         key: :companies,
-        title: "Sponsors",
+        title: "Companies",
         url: Routes.company_index_path(conn, :index),
         tabs: [
           %{

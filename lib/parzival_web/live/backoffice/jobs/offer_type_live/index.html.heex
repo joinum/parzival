@@ -1,6 +1,10 @@
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={Routes.admin_offer_type_index_path(@socket, :index)}>
-    <h2 class="mb-5 text-2xl font-bold text-left text-gray-900">Edit type</h2>
+    <%= if @live_action == :new do %>
+      <h2 class="mb-5 text-2xl font-bold text-left text-gray-900">New type</h2>
+    <% else %>
+      <h2 class="mb-5 text-2xl font-bold text-left text-gray-900">Edit type</h2>
+    <% end %>
     <.live_component module={ParzivalWeb.Backoffice.OfferTypeLive.FormComponent} id={@offer_type.id || :new} title={@page_title} action={@live_action} offer_type={@offer_type} return_to={Routes.admin_offer_type_index_path(@socket, :index)} />
   </.modal>
 <% end %>
