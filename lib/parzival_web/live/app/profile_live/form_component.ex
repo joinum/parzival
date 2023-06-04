@@ -59,7 +59,7 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
         {:noreply,
          socket
          |> put_flash(:success, "User updated successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> push_redirect(to: build_return_to(socket))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
@@ -67,7 +67,7 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   end
 
   defp save_user(socket, :new, user_params) do
-    if String.length(user_params["company_id"]) != 0 do
+    if not is_nil(user_params["company_id"]) and String.length(user_params["company_id"]) != 0 do
       company =
         Companies.list_companies([])
         |> Enum.find(fn company -> company.name == user_params["company_id"] end)
@@ -83,7 +83,7 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
           {:noreply,
            socket
            |> put_flash(:success, "User created successfully")
-           |> push_redirect(to: socket.assigns.return_to)}
+           |> push_redirect(to: build_return_to(socket))}
 
         {:error, %Ecto.Changeset{} = changeset} ->
           {:noreply, assign(socket, :changeset, changeset)}
@@ -98,11 +98,43 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
           {:noreply,
            socket
            |> put_flash(:success, "User created successfully")
-           |> push_redirect(to: socket.assigns.return_to)}
+           |> push_redirect(to: build_return_to(socket))}
 
         {:error, %Ecto.Changeset{} = changeset} ->
           {:noreply, assign(socket, :changeset, changeset)}
       end
+    end
+  end
+
+  defp build_return_to(socket) do
+    if String.starts_with?(socket.assigns.return_to, "/app/profile") do
+      socket.assigns.return_to
+    else
+      build_return_to_path(socket)
+    end
+  end
+
+  defp build_return_to_path(socket) do
+    case socket.assigns.role do
+      :recruiter ->
+        Routes.admin_user_index_path(socket, :index, %{
+          "filters" => %{"0" => %{"field" => "role", "value" => "recruiter"}}
+        })
+
+      :staff ->
+        Routes.admin_user_index_path(socket, :index, %{
+          "filters" => %{"0" => %{"field" => "role", "value" => "staff"}}
+        })
+
+      :admin ->
+        Routes.admin_user_index_path(socket, :index, %{
+          "filters" => %{"0" => %{"field" => "role", "value" => "admin"}}
+        })
+
+      _ ->
+        Routes.admin_user_index_path(socket, :index, %{
+          "filters" => %{"0" => %{"field" => "role", "value" => "attendee"}}
+        })
     end
   end
 

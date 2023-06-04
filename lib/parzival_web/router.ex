@@ -56,6 +56,7 @@ defmodule ParzivalWeb.Router do
     live_session :logged_in, on_mount: [{ParzivalWeb.Hooks, :current_user}] do
       scope "/app", App do
         live "/", DashboardLive.Index, :index
+        live "/profile/:id", ProfileLive.Show, :show
 
         pipe_through [:require_admin]
         live "/companies/new", CompanyLive.New, :new
@@ -92,8 +93,6 @@ defmodule ParzivalWeb.Router do
           live "/:id/tasks/:task_id", TaskLive.Show, :show
           live "/:id/tasks/:task_id/redeem", TaskLive.Show, :redeem
         end
-
-        live "/profile/:id", ProfileLive.Show, :show
 
         pipe_through [:require_order_attendee]
         live "/vault/:id", OrderLive.Show, :show
