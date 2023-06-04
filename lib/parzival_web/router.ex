@@ -119,11 +119,11 @@ defmodule ParzivalWeb.Router do
 
         scope "/jobs" do
           live "/types/", OfferTypeLive.Index, :index
-          live "/offer_type/new", OfferTypeLive.Index, :new
+          live "/types/new", OfferTypeLive.Index, :new
           live "/types/:id/edit", OfferTypeLive.Index, :edit
 
           live "/times/", OfferTimeLive.Index, :index
-          live "/offer_time/new", OfferTimeLive.Index, :new
+          live "/times/new", OfferTimeLive.Index, :new
           live "/times/:id/edit", OfferTimeLive.Index, :edit
         end
 
