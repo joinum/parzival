@@ -107,6 +107,14 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
   end
 
   defp build_return_to(socket) do
+    if String.starts_with?(socket.assigns.return_to, "/app/profile") do
+      socket.assigns.return_to
+    else
+      build_return_to_path(socket)
+    end
+  end
+
+  defp build_return_to_path(socket) do
     case socket.assigns.role do
       :recruiter ->
         Routes.admin_user_index_path(socket, :index, %{
