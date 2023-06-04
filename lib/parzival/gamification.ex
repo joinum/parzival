@@ -782,7 +782,10 @@ defmodule Parzival.Gamification do
       :recruiter ->
         user.company_id == mission.created_by_id
 
-      _ ->
+      :admin ->
+        true
+
+      :attendee ->
         false
     end
   end
