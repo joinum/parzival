@@ -57,6 +57,14 @@ defmodule ParzivalWeb.Router do
       scope "/app", App do
         live "/", DashboardLive.Index, :index
 
+        pipe_through [:require_admin]
+        live "/companies/new", CompanyLive.New, :new
+        live "/companies/:id/edit", CompanyLive.Edit, :edit
+
+        pipe_through [:require_admin_or_recruiter]
+        live "/offers/new", OfferLive.New, :new
+        live "/offers/:id/edit", OfferLive.Edit, :edit
+
         live "/offers/", OfferLive.Index, :index
         live "/offers/:id", OfferLive.Show, :show
 
@@ -93,13 +101,6 @@ defmodule ParzivalWeb.Router do
         pipe_through [:require_curriculum_attendee]
         live "/profile/:id/edit", ProfileLive.Edit, :edit
         live "/dashboard/curriculum", DashboardLive.Edit, :edit
-
-        pipe_through [:require_admin]
-        live "/companies_new/new", CompanyLive.New, :new
-        live "/companies/:id/edit", CompanyLive.Edit, :edit
-        pipe_through [:require_admin_or_recruiter]
-        live "/offers/:id/edit", OfferLive.Edit, :edit
-        live "/offers_new/new", OfferLive.New, :new
       end
 
       scope "/admin", Backoffice, as: :admin do
