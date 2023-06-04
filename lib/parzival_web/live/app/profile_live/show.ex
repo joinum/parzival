@@ -141,4 +141,10 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
       where: [company_id: id]
     )
   end
+
+  defp draw_qr_code(profile) do
+    Routes.profile_show_path(ParzivalWeb.Endpoint, :show, profile.id)
+    |> QRCodeEx.encode()
+    |> QRCodeEx.svg(color: "#1F2937", width: 295, background_color: :transparent)
+  end
 end
