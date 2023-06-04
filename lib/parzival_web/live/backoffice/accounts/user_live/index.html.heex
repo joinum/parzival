@@ -8,7 +8,7 @@
     url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "staff"}}})
   },
   attendee: %{
-    title: "Ateendees",
+    title: "Attendees",
     url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "attendee"}}})
   },
   recruiter: %{
@@ -21,11 +21,13 @@
   <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
     <div class="flex justify-between items-center h-10">
       <h1 class="flex-1 text-lg font-medium"><%= roles[@current_tab].title %></h1>
-      <div class="flex flex-col sm:flex-row xl:flex-col">
-        <%= link to: Routes.csv_path(@socket, :create), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full", method: :get do %>
-          Export Attendees
-        <% end %>
-      </div>
+      <%= if roles[@current_tab].title == "Attendees" do %>
+        <div class="flex flex-col sm:flex-row xl:flex-col">
+          <%= link to: Routes.csv_path(@socket, :create), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full", method: :get do %>
+            Export Attendees
+          <% end %>
+        </div>
+      <% end %>
       <div class="flex flex-col ml-5 sm:flex-row xl:flex-col">
         <%= live_patch("New", to: Routes.admin_user_new_path(@socket, :new, %{role: @current_tab}), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
       </div>
