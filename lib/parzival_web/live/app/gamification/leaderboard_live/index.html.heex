@@ -84,7 +84,6 @@
           </li>
         <% end %>
       <% end %>
-      <.pagination items={@leaderboard.general.data} meta={@leaderboard.general.meta} params={@params} class="flex justify-between items-center w-full" />
     </ul>
 
     <ul role="list" class="relative z-0">
@@ -231,7 +230,6 @@
         <% end %>
       <% end %>
     </ul>
-    <.pagination items={@leaderboard.one.data} meta={@leaderboard.one.meta} params={@params} class="flex justify-between items-center w-full" />
   </div>
 
   <div x-bind:class="option =='2' ? 'block' : 'hidden'">
@@ -332,7 +330,6 @@
         <% end %>
       <% end %>
     </ul>
-    <.pagination items={@leaderboard.two.data} meta={@leaderboard.two.meta} params={@params} class="flex justify-between items-center w-full" />
   </div>
 
   <div x-bind:class="option =='3' ? 'block' : 'hidden'">
@@ -433,6 +430,5 @@
         <% end %>
       <% end %>
     </ul>
-    <.pagination items={@leaderboard.three.data} meta={@leaderboard.three.meta} params={@params} class="flex justify-between items-center w-full" />
   </div>
 </div>
