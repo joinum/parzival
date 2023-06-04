@@ -174,7 +174,8 @@ defmodule ParzivalWeb.Config do
       %{
         key: :missions,
         title: "Missions",
-        url: Routes.mission_index_path(conn, :index)
+        url: Routes.mission_index_path(conn, :index),
+        tabs: []
       },
       %{
         key: :missions,
@@ -236,7 +237,8 @@ defmodule ParzivalWeb.Config do
           %{
             key: :missions,
             title: "Difficulties",
-            url: Routes.admin_difficulty_index_path(conn, :index)
+            url: Routes.admin_difficulty_index_path(conn, :index),
+            tabs: []
           }
         ]
       },
