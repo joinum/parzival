@@ -45,7 +45,7 @@
             </div>
             <div>
               <label for="password" class="sr-only">Password</label>
-              <div x-data="{ hide: true }" class="block relative w-full placeholder-gray-400 rounded-3xl border border-white shadow-sm appearance-none sm:text-sm">
+              <div x-data="{ hide: true }" class="block relative w-full rounded-3xl border border-white shadow-sm appearance-none sm:text-sm">
                 <%= password_input(f, :password, placeholder: "Password", required: true, class: "border-white appearance-none rounded-3xl block w-full px-10 py-3  shadow-sm placeholder-gray-400 sm:text-sm focus:outline-none focus:ring-white focus:border-white") %>
                 <div x-show="hide" x-on:click="hide = false; document.getElementById('user_password').type = 'text';" class="absolute top-3 right-5 cursor-pointer">
                   <Ionicons.Filled.eye class="w-5 h-auto fill-black hover:fill-primary" />
