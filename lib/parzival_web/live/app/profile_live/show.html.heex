@@ -37,6 +37,9 @@
                 <span class="text-sm font-light text-right text-gray-300">
                   <%= @user.exp %>/<%= Parzival.Gamification.calc_next_level_exp(@user.exp) %> EXP
                 </span>
+                <span class="text-sm font-light text-right text-gray-300">
+                  💰 <%= @current_user.balance %>
+                </span>
               </div>
               <.social_icons twitter={@user.twitter} github={@user.github} linkedin={@user.linkedin} />
             </div>
