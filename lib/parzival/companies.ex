@@ -145,7 +145,6 @@ defmodule Parzival.Companies do
     |> Flop.validate_and_run(flop, for: Company)
   end
 
-
   def get_company_level(company_id) do
     company = get_company!(company_id) |> Repo.preload(:level)
 
@@ -153,11 +152,9 @@ defmodule Parzival.Companies do
   end
 
   def get_company_connections(company_id) do
-    company= get_company!(company_id) |> Repo.preload(:connections) |> IO.inspect()
+    company = get_company!(company_id) |> Repo.preload(:connections)
 
-  IO.inspect(company)
-
-  company
+    company
     |> Repo.preload(:connections)
     |> Repo.one!()
     |> Map.get(:connections)
@@ -824,13 +821,12 @@ defmodule Parzival.Companies do
   """
   def get_connection!(id), do: Repo.get!(Connection, id)
 
-
-
   def get_company_connections!(company) do
     Connection
     |> where(company_id: ^company.id)
     |> Repo.all()
   end
+
   @doc """
   Creates a connection.
 

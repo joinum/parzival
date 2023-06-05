@@ -155,10 +155,14 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   end
 
   defp build_url do
-    if Mix.env == :dev do
+    if Mix.env() == :dev do
       "http://localhost:4000"
     else
-    "https://#{Application.fetch_env!(:parzival, ParzivalWeb.Endpoint)[:url][:host]}"
+      "https://#{Application.fetch_env!(:parzival, ParzivalWeb.Endpoint)[:url][:host]}"
     end
+  end
+
+  defp get_company_level(company) do
+    Companies.get_company_level(company)
   end
 end

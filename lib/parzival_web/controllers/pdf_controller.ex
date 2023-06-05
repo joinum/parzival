@@ -5,7 +5,6 @@ defmodule ParzivalWeb.PdfController do
 
   alias Parzival.Accounts
   alias Parzival.Gamification
-  alias Parzival.Companies
   alias Parzival.Uploaders.ProfilePicture
 
   defguard is_attendee?(conn) when conn.assigns.current_user.role == :attendee
@@ -56,18 +55,5 @@ defmodule ParzivalWeb.PdfController do
     # No live nor app layout for document
     |> put_layout({ParzivalWeb.LayoutView, :pdf})
     |> render("#{name}.html")
-  end
-
-  def download_pdfs(conn, company_id) do
-    IO.inspect(company_id)
-    users = Companies.get_company_connections(company_id)
-    IO.inspect(users)
-    # get all users with a cv
-    users_with_cv = Enum.filter(users, fn user ->
-      Gamification.get_user_curriculum(user) != nil
-    end)
-
-    IO.inspect(users_with_cv)
-
   end
 end
