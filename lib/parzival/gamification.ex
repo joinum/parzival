@@ -706,6 +706,7 @@ defmodule Parzival.Gamification do
     |> order_by([t], desc: t.experience)
     |> join(:inner, [t], u in User, on: t.user == u.id)
     |> Repo.all()
+    |> Enum.take(10)
   end
 
   def get_leaderboard(%{} = flop, start_time, end_time) do
