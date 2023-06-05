@@ -61,12 +61,12 @@ defmodule ParzivalWeb.Config do
       #   url: Routes.landing_team_index_path(@conn, :index),
       #   tabs: []
       # },
-      # %{
-      #   key: :login,
-      #   title: "Login",
-      #   url: Routes.user_session_path(@conn, :new),
-      #   tabs: []
-      # },
+      %{
+        key: :login,
+        title: "Login",
+        url: Routes.user_session_path(@conn, :new),
+        tabs: []
+      },
       %{
         key: :enroll_yourself,
         title: "Enroll Yourself",
