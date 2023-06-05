@@ -29,7 +29,14 @@ defmodule ParzivalWeb.App.LeaderboardLive.Index do
     {:noreply,
      socket
      |> assign(:event_days, get_event_days())
-     |> assign(:current_page, if user.role == :attendee do :leaderboard else :missions end)
+     |> assign(
+       :current_page,
+       if user.role == :attendee do
+         :leaderboard
+       else
+         :missions
+       end
+     )
      |> assign(:params, params)
      |> assign(:current_user, user)
      |> assign(:leaderboard, get_leaderboard())
