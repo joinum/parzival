@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center items-center pt-28 select-none	pointer-events-none lg:pt-40">
+<div class="flex flex-col justify-center items-center pt-28 pointer-events-none select-none lg:pt-40">
   <img class="h-auto w-[500px]" src={Routes.static_path(@socket, "/images/logo.svg")} alt="JOIN Logo" />
   <p class="pt-4 font-semibold text-center text-white tracking-[6px] sm:tracking-[12px] md:tracking-[14px]">5, 6 and 7 of June</p>
 </div>
@@ -58,7 +58,7 @@
 </div>
 
 <div
-  x-data={"{ date: new Date().toISOString() >= '#{hd(Map.get(@schedule, "monday"))["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(Map.get(@schedule, "wednesday"))["hours"]}.to_iso8601!()' ? new Date().getDay() : 2 }"}
+  x-data={"{ date: new Date().toISOString() >= '#{hd(Map.get(@schedule, "monday"))["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(Map.get(@schedule, "wednesday"))["hours"]}.to_iso8601!()' ? new Date().getDay() +1 : 2 }"}
   class="flex flex-row mt-10 h-auto sm:mt-20 lg:mt-48 1.5xl:h-[1000px]"
 >
   <div class="hidden absolute transform -rotate-90 -translate-x-40 translate-y-48 md:-translate-x-44 1.5xl:block">
@@ -207,7 +207,7 @@
 </div>
 
 <div class="flex flex-row mt-20 lg:mt-48 min-h-[500px]">
-  <div class="absolute transform -rotate-90 -translate-x-40 translate-y-40 md:-translate-x-44 select-none">
+  <div class="absolute transform -rotate-90 -translate-x-40 translate-y-40 select-none md:-translate-x-44">
     <span class="title">
       Sponsors
     </span>
@@ -321,7 +321,7 @@
 </div>
 
 <div class="flex flex-row mt-10 sm:mt-20 lg:mt-48 min-h-[500px]">
-  <div class="absolute transform -rotate-90 translate-y-40 -translate-x-[100px] md:-translate-x-[100px] select-none">
+  <div class="absolute transform -rotate-90 translate-y-40 select-none -translate-x-[100px] md:-translate-x-[100px]">
     <span class="title">
       Find us
     </span>
@@ -356,7 +356,7 @@
 </div>
 
 <div class="flex flex-row mt-10 sm:mt-20 lg:mt-48">
-  <div class="absolute transform -rotate-90 -translate-x-40 translate-y-40 md:-translate-x-44 select-none">
+  <div class="absolute transform -rotate-90 -translate-x-40 translate-y-40 select-none md:-translate-x-44">
     <span class="title">
       Speakers
     </span>
