@@ -23,8 +23,8 @@
       <h1 class="flex-1 text-lg font-medium"><%= roles[@current_tab].title %></h1>
       <%= if roles[@current_tab].title == "Attendees" do %>
         <div class="flex flex-col sm:flex-row xl:flex-col">
-          <%= link to: Routes.csv_path(@socket, :create), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full", method: :get do %>
-            Export Attendees
+          <%= link to: Routes.csv_path(@socket, :create), class: "inline-flex items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50", method: :get do %>
+            <Heroicons.Solid.cloud_download class="mr-2 -ml-1 w-5 h-5 text-gray-500" /> Export Attendees
           <% end %>
         </div>
       <% end %>

@@ -24,9 +24,17 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
     changeset = Accounts.change_user(user)
     companies = Companies.list_companies([]) |> get_names()
 
+    role =
+      if Map.has_key?(assigns, :role) do
+        assigns.role
+      else
+        user.role
+      end
+
     {:ok,
      socket
      |> assign(assigns)
+     |> assign(:role, role)
      |> assign(:companies, companies)
      |> assign(:cycles, @cycles)
      |> assign(:changeset, changeset)}

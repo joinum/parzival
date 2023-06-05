@@ -113,8 +113,8 @@ defmodule ParzivalWeb.Router do
         live "/task_redeem/:task_id/:attendee_id", TaskLive.Redeem, :redeem
 
         pipe_through [:require_admin]
+        live "/missions/new", MissionLive.New, :new
         live "/missions/:id/edit", MissionLive.Edit, :edit
-        live "/missions_new/new", MissionLive.New, :new
         live "/accounts/", UserLive.Index, :index
         live "/accounts/new", UserLive.New, :new
 
