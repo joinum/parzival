@@ -102,8 +102,8 @@
             else
               "bg-[#BB2A22]"
             end} w-36 h-44 rounded-3xl relative -z-50"}>
-            <span class="text-white">
-              <p class="absolute left-3 top-4 w-32 text-sm font-light">
+            <span class="inline-block py-3 px-3 text-white">
+              <p class="text-sm font-light">
                 <%= if String.length(activity["title"]) < 50 do
                   activity["title"]
                 else
@@ -111,11 +111,11 @@
                 end %>
               </p>
               <%= if activity["location"] do %>
-                <p class="absolute left-3 w-32 font-bold text-md top-[88px]">
-                  <%= if String.length(activity["location"]) < 12 do
+                <p class="text-md">
+                  <%= if String.length(activity["location"]) < 15 do
                     activity["location"]
-                  else
-                    String.slice(activity["location"], 0..10) <> "... "
+                  else 
+                    String.slice(activity["location"], 0..13) <> "... "
                   end %>
                 </p>
               <% end %>
