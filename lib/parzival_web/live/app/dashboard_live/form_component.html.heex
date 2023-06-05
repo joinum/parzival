@@ -91,7 +91,7 @@
                               <div x-bind:class="! show ? 'hidden' : 'block space-y-2'" x-data="{ show: true }">
                                 <div class="w-full">
                                   <div class="flex relative mt-1">
-                                    <%= text_input(fp, :title, placeholder: "Add a institution, e.g. 'CeSIUM'", class: "w-full block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
+                                    <%= text_input(fp, :title, placeholder: "Add a position, e.g. 'Fullstack Developer'", class: "w-full block border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 text-xs") %>
                                     <%= if length(fe.data.positions) > 1 do %>
                                       <%= if is_nil(fp.data.id) do %>
                                         <a class="absolute right-2 cursor-pointer" phx-click="rm-position" phx-target={@myself} phx-value-index={fp.index} phx-value-experience_index={fe.index}>
