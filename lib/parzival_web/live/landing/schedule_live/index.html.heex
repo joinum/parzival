@@ -57,6 +57,15 @@
                     String.slice(activity["title"], 0..48) <> "... "
                   end %>
                 </p>
+                <%= if activity["location"] do %>
+                  <p class="absolute left-3 w-32 font-bold text-md top-[88px]">
+                    <%= if String.length(activity["location"]) < 12 do
+                      activity["location"]
+                    else
+                      String.slice(activity["location"], 0..10) <> "... "
+                    end %>
+                  </p>
+                <% end %>
                 <p class="absolute left-3 w-32 font-bold text-md top-[105px]">
                   <%= Calendar.strftime(activity["hours"], "%Hh%M") %>
                 </p>
@@ -141,6 +150,11 @@
                         <%= activity["company"] %>
                       </span>
                     <% end %>
+                    <%= if activity["location"] do %>
+                      <span class="text-sm">
+                        <%= activity["location"] %>
+                      </span>
+                    <% end %> 
                   </div>
                   <span class="font-normal text-center w-[60px] md:w-[70px]">
                     <%= Calendar.strftime(activity["hours"], "%Hh%M") %>

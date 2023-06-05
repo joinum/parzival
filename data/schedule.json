@@ -3,6 +3,7 @@
     {
       "title": "Acreditação",
       "hours": "05/06/2023 9:30 AM",
+      "location": "location",
       "speaker": null,
       "company": null,
       "href": null
@@ -10,6 +11,7 @@
     {
       "title": "Sessão de abertura",
       "hours": "05/06/2023 10:00 AM",
+      "location": "location",
       "speaker": null,
       "company": null,
       "href": null
@@ -17,6 +19,7 @@
     {
       "title": "☕ Coffee break",
       "hours": "05/06/2023 11:00 AM",
+      "location": "location",
       "speaker": null,
       "company": null,
       "href": null
@@ -24,6 +27,7 @@
     {
       "title": "[Talk] Do algoritmo ao impacto: uma viagem pela disrupção da IA",
       "hours": "05/06/2023 11:30 AM",
+      "location": "location",
       "speaker": "Michel Ozzello",
       "company": "Agentifai",
       "href": null
@@ -59,6 +63,7 @@
     {
       "title": "[Talk] Web and Mobile Development in 2023",
       "hours": "05/06/2023 03:20 PM",
+      "location": "location",
       "speaker": "Nuno Pereira",
       "company": "Bliss",
       "href": null
