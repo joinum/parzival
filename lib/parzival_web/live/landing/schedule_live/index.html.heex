@@ -10,7 +10,7 @@
     </div>
   </div>
   <div
-    x-data={"{ date: new Date().toISOString() >= '#{hd(@schedule["monday"])["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(@schedule["wednesday"])["hours"]}.to_iso8601!()' ? new Date().getDay() : 2 }"}
+    x-data={"{ date: new Date().toISOString() >= '#{hd(@schedule["monday"])["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(@schedule["wednesday"])["hours"]}.to_iso8601!()' ? new Date().getDay() + 1 : 2 }"}
     class="flex flex-row my-10 h-auto lg:my-20 1.5xl:min-h-[1000px] xl:min-h-[900px]"
   >
     <div class="hidden relative w-full 1.5xl:block">
