@@ -781,7 +781,7 @@ defmodule Parzival.Gamification do
         is_nil(mission.created_by_id)
 
       :recruiter ->
-        recruiter_can_redeem_task(user, task, mission)
+        recruiter_can_redeem_task(user, mission)
 
       :admin ->
         true
@@ -791,7 +791,7 @@ defmodule Parzival.Gamification do
     end
   end
 
-  defp recruiter_can_redeem_task(%User{} = user, %Task{} = task, %Mission{} = mission) do
+  defp recruiter_can_redeem_task(%User{} = user, %Mission{} = mission) do
     # A bronze company cannot sponsor a mission, but the task has its name
     if is_nil(mission.created_by_id) do
       company = Companies.get_company!(user.company_id)
