@@ -90,7 +90,7 @@
               <%= error_tag(f, :name) %>
             </div>
           </div>
-          <%= if @user.role in [:attendee, :staff, :admin] do %>
+          <%= if @role in [:attendee, :staff, :admin] do %>
             <div class="sm:col-span-1">
               <dt class="text-sm font-medium text-gray-500">Course</dt>
               <dd class="flex flex-row gap-x-4 mt-1 text-sm text-gray-900">
@@ -121,7 +121,7 @@
             </dd>
           </div>
           <!-- Only an admin can change the role of a recruiter -->
-          <%= if @current_user.role == :admin and @user.role == :recruiter do %>
+          <%= if @current_user.role == :admin and @role == :recruiter do %>
             <div class="sm:col-span-1">
               <dt class="text-sm font-medium text-gray-500">Company</dt>
               <dd class="flex flex-row gap-x-4 mt-1 text-sm text-gray-900">
