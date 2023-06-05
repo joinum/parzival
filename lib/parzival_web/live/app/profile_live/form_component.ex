@@ -27,7 +27,6 @@ defmodule ParzivalWeb.App.ProfileLive.FormComponent do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:user, user)
      |> assign(:companies, companies)
      |> assign(:cycles, @cycles)
      |> assign(:changeset, changeset)}
