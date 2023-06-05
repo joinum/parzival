@@ -129,10 +129,16 @@
               </dd>
             </div>
             <div class="sm:col-span-1">
-              <dt class="text-sm font-medium text-gray-500">Password</dt>
-              <dd class="flex flex-row gap-x-4 mt-1 text-sm text-gray-900">
-                <%= password_input(f, :password, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm text-sm border-gray-300 rounded-md") %>
-              </dd>
+              <label for="password" class="">Password</label>
+              <div x-data="{ hide: true }" class="block relative w-full rounded-3xl border border-white shadow-sm appearance-none sm:text-sm">
+                <%= password_input(f, :password, required: true, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+                <div x-show="hide" x-on:click="hide = false; document.getElementById('user-form_password').type = 'text';" class="absolute top-3 right-5 cursor-pointer">
+                  <Ionicons.Filled.eye class="w-5 h-auto fill-black hover:fill-primary" />
+                </div>
+                <div x-show="!hide" x-on:click="hide = true; document.getElementById('user-form_password').type = 'password';" class="absolute top-3 right-5 cursor-pointer">
+                  <Ionicons.Filled.eye_off class="w-5 h-auto fill-black hover:fill-primary" />
+                </div>
+              </div>
             </div>
           <% end %>
         </dl>
