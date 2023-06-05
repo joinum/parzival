@@ -27,6 +27,20 @@
               <h1 class="text-2xl font-bold text-gray-900 truncate">
                 <%= @user.name %>
               </h1>
+              <div class="flex flex-col gap-y-1 lg:hidden">
+                <span class="text-lg">
+                  LVL <%= Parzival.Gamification.calc_level(@user.exp) %>
+                </span>
+                <div class="overflow-hidden w-full h-6 rounded-md bg-quaternary">
+                  <div style={"width: #{@user.exp / Parzival.Gamification.calc_next_level_exp(@user.exp) * 100}%; transition: width 0.6s"} class="h-full bg-secondary" />
+                </div>
+                <span class="text-sm font-light text-right text-gray-300">
+                  <%= @user.exp %>/<%= Parzival.Gamification.calc_next_level_exp(@user.exp) %> EXP
+                </span>
+                <span class="text-sm font-light text-right text-gray-300">
+                  💰 <%= @current_user.balance %>
+                </span>
+              </div>
               <.social_icons twitter={@user.twitter} github={@user.github} linkedin={@user.linkedin} />
             </div>
             <div class="flex flex-col mt-6 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
