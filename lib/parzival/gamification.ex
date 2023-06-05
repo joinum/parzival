@@ -778,7 +778,7 @@ defmodule Parzival.Gamification do
 
     case user.role do
       :staff ->
-        is_nil(mission.created_by_id)
+        true
 
       :recruiter ->
         recruiter_can_redeem_task(user, task, mission)
