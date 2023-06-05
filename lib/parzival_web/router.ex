@@ -160,7 +160,6 @@ defmodule ParzivalWeb.Router do
       get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
       get "/cv/:attendee_id", PdfController, :download_cv
       get "/cv/preview", PdfController, :preview_cv
-      get "/pdfs", PdfController, :download_pdfs
 
       pipe_through [:require_admin]
       get "/export_atteendes", CsvController, :create

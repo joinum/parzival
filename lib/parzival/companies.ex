@@ -821,12 +821,6 @@ defmodule Parzival.Companies do
   """
   def get_connection!(id), do: Repo.get!(Connection, id)
 
-  def get_company_connections!(company) do
-    Connection
-    |> where(company_id: ^company.id)
-    |> Repo.all()
-  end
-
   @doc """
   Creates a connection.
 

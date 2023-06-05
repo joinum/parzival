@@ -80,7 +80,6 @@ defmodule Parzival.MixProject do
 
       # utilities
       {:pdf_generator, "~> 0.6.2"},
-      {:zstream, "~> 0.6"},
       {:csv, "~> 2.4"},
       {:earmark, "~> 1.4.0"},
       {:timex, "~> 3.0"},
