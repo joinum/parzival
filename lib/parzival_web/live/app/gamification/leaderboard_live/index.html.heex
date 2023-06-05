@@ -12,27 +12,33 @@
           >
             General
           </button>
-          <button
-            x-on:click="option = '1'"
-            x-bind:class="option =='1' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-            class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
-          >
-            Day 1
-          </button>
-          <button
-            x-on:click="option = '2'"
-            x-bind:class="option =='2' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-            class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
-          >
-            Day 2
-          </button>
-          <button
-            x-on:click="option = '3'"
-            x-bind:class="option =='3' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
-            class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
-          >
-            Day 3
-          </button>
+          <%= if NaiveDateTime.compare(NaiveDateTime.utc_now(), @event_days.first_day_start) != :lt do %>
+            <button
+              x-on:click="option = '1'"
+              x-bind:class="option =='1' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+              class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+            >
+              Day 1
+            </button>
+          <% end %>
+          <%= if NaiveDateTime.compare(NaiveDateTime.utc_now(), @event_days.second_day_start) != :lt do %>
+            <button
+              x-on:click="option = '2'"
+              x-bind:class="option =='2' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+              class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+            >
+              Day 2
+            </button>
+          <% end %>
+          <%= if NaiveDateTime.compare(NaiveDateTime.utc_now(), @event_days.third_day_start) != :lt do %>
+            <button
+              x-on:click="option = '3'"
+              x-bind:class="option =='3' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+              class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+            >
+              Day 3
+            </button>
+          <% end %>
         </nav>
       </div>
     </div>
@@ -120,10 +126,7 @@
                       <%= @current_user.name %>
                     </div>
                     <div class="flex">
-                      <div class="text-gray-500">
-                        LVL <%= calc_level(@current_user.exp) %>
-                      </div>
-                      <div class="ml-2 text-gray-400">
+                      <div class="text-gray-400">
                         <%= @current_user.exp %> EXP
                       </div>
                     </div>
@@ -176,10 +179,7 @@
                       <%= user.name %>
                     </div>
                     <div class="flex">
-                      <div class="text-gray-500">
-                        LVL <%= calc_level(exp) %>
-                      </div>
-                      <div class="ml-2 text-gray-400">
+                      <div class="text-gray-400">
                         <%= exp %> EXP
                       </div>
                     </div>
@@ -220,10 +220,7 @@
                       <%= @current_user.name %>
                     </div>
                     <div class="flex">
-                      <div class="text-gray-500">
-                        LVL <%= calc_level(calc_exp(@current_user, @event_days.first_day_start, @event_days.first_day_end)) %>
-                      </div>
-                      <div class="ml-2 text-gray-400">
+                      <div class="text-gray-400">
                         <%= calc_exp(@current_user, @event_days.first_day_start, @event_days.first_day_end) %> EXP
                       </div>
                     </div>
@@ -276,10 +273,7 @@
                       <%= user.name %>
                     </div>
                     <div class="flex">
-                      <div class="text-gray-500">
-                        LVL <%= calc_level(exp) %>
-                      </div>
-                      <div class="ml-2 text-gray-400">
+                      <div class="text-gray-400">
                         <%= exp %> EXP
                       </div>
                     </div>
@@ -320,10 +314,7 @@
                       <%= @current_user.name %>
                     </div>
                     <div class="flex">
-                      <div class="text-gray-500">
-                        LVL <%= calc_level(calc_exp(@current_user, @event_days.second_day_start, @event_days.second_day_end)) %>
-                      </div>
-                      <div class="ml-2 text-gray-400">
+                      <div class="text-gray-400">
                         <%= calc_exp(@current_user, @event_days.second_day_start, @event_days.second_day_end) %> EXP
                       </div>
                     </div>
@@ -376,10 +367,7 @@
                       <%= user.name %>
                     </div>
                     <div class="flex">
-                      <div class="text-gray-500">
-                        LVL <%= calc_level(exp) %>
-                      </div>
-                      <div class="ml-2 text-gray-400">
+                      <div class="text-gray-400">
                         <%= exp %> EXP
                       </div>
                     </div>
@@ -420,10 +408,7 @@
                       <%= @current_user.name %>
                     </div>
                     <div class="flex">
-                      <div class="text-gray-500">
-                        LVL <%= calc_level(calc_exp(@current_user, @event_days.third_day_start, @event_days.third_day_end)) %>
-                      </div>
-                      <div class="ml-2 text-gray-400">
+                      <div class="text-gray-400">
                         <%= calc_exp(@current_user, @event_days.third_day_start, @event_days.third_day_end) %> EXP
                       </div>
                     </div>

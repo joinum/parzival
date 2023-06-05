@@ -67,7 +67,7 @@ config :tailwind,
     cd: Path.expand("../assets", __DIR__)
   ]
 
-# configure event dates 
+# configure event dates
 config :parzival,
   event: %{
     first_day_start: ~N[2023-06-05 00:00:00],
