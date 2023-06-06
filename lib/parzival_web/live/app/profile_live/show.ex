@@ -58,6 +58,16 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
            |> push_redirect(to: Routes.profile_show_path(socket, :show, user.id))}
         end
       end
+    else
+      if is_nil(user) do
+        {:noreply,
+         socket
+         |> push_redirect(to: Routes.user_registration_path(socket, :new, qr))}
+      else
+        {:noreply,
+         socket
+         |> push_redirect(to: Routes.profile_show_path(socket, :show, user.id))}
+      end
     end
   end
 
