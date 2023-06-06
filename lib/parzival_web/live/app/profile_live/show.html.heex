@@ -66,7 +66,7 @@
                   <span>Message</span>
                 </a>
               <% end %>
-              <%= if @user.role in [:attendee] && @current_user.role in [:admin, :recruiter] && get_company_level(@current_user.company_id) != "Bronze" do %>
+              <%= if (@user.role in [:attendee] && @current_user.role in [:admin]) or (@user.role in [:attendee] && @current_user.role in [:recruiter] && get_company_level(@current_user.company_id) != "Bronze")   do %>
                 <%= link("Download CV",
                   to: Routes.pdf_path(@socket, :download_cv, @user),
                   class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
