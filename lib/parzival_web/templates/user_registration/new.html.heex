@@ -52,9 +52,6 @@
               <%= text_input(f, :name, placeholder: "Name", required: true, class: "appearance-none rounded-3xl block w-full px-10 py-3 border border-gray-300 shadow-sm placeholder-gray-400 sm:text-sm focus:outline-none focus:ring-white focus:border-white") %>
               <%= error_tag(f, :name) %>
             </div>
-            <div class="flex justify-center w-full">
-              <%= link("Log in", class: "hover:underline mr-2 text-white", to: Routes.user_session_path(@conn, :new)) %>
-            </div>
             <div>
               <%= submit("Register", class: "w-full flex justify-center py-3 px-4 rounded-3xl shadow-sm text-xl font-bold text-white bg-tertiary border-2 border-tertiary hover:border-white focus:outline-none focus:ring-white focus:border-white") %>
             </div>
