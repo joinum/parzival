@@ -157,4 +157,8 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   defp build_url do
     "https://#{Application.fetch_env!(:parzival, ParzivalWeb.Endpoint)[:url][:host]}"
   end
+
+  defp get_company_level(company) do
+    Companies.get_company_level(company)
+  end
 end

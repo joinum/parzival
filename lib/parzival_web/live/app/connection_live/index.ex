@@ -36,4 +36,8 @@ defmodule ParzivalWeb.App.ConnectionLive.Index do
         %{connections: [], meta: flop}
     end
   end
+
+  defp get_company_level(company) do
+    Companies.get_company_level(company)
+  end
 end
