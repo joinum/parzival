@@ -8,6 +8,12 @@ defmodule Parzival.Repo.Seeds.Gamification do
   alias Parzival.Gamification.Mission
   alias Parzival.Gamification.Mission.Difficulty
   alias Parzival.Gamification.Mission.Task
+  alias Parzival.Tools.EventDays
+
+  @first_day_start EventDays.get_first_day_start()
+  @first_day_end EventDays.get_first_day_end()
+  @third_day_start EventDays.get_third_day_start()
+  @third_day_end EventDays.get_third_day_end()
 
   @education_titles File.read!("priv/fake/uminho_courses.txt") |> String.split("\n")
   @languages File.read!("priv/fake/languages.txt") |> String.split("\n")
@@ -199,13 +205,13 @@ defmodule Parzival.Repo.Seeds.Gamification do
             difficulty_id: Enum.random(difficulties).id,
             start:
               Faker.NaiveDateTime.between(
-                ~N[2022-06-28 09:30:00.000000],
-                ~N[2022-06-28 14:00:00.000000]
+                @first_day_start,
+                @first_day_end
               ),
             finish:
               Faker.DateTime.between(
-                ~N[2022-06-28 14:00:00.000000],
-                ~N[2022-06-28 23:59:00.000000]
+                @third_day_start,
+                @third_day_end
               )
           })
           |> Repo.insert!()

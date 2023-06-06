@@ -700,6 +700,104 @@ defmodule Parzival.Gamification do
     |> Flop.validate_and_run(flop, for: TaskUser)
   end
 
+  def get_leaderboard(start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    subquery(q2)
+    |> order_by([t], desc: t.experience)
+    |> join(:inner, [t], u in User, on: t.user == u.id)
+    |> Repo.all()
+    |> Enum.take(10)
+  end
+
+  def get_leaderboard(%{} = flop, start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    subquery(q2)
+    |> order_by([t], desc: t.experience)
+    |> join(:inner, [t], u in User, on: t.user == u.id)
+    |> Flop.validate_and_run(flop)
+  end
+
+  def get_exp(user, start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    res =
+      subquery(q2)
+      |> where([t], t.user == ^user.id)
+      |> select([t], t.experience)
+      |> Repo.one()
+
+    if res == nil do
+      0
+    else
+      res
+    end
+  end
+
+  def get_user_position_general(user) do
+    x =
+      User
+      |> where([u], u.exp > ^user.exp)
+      |> Repo.aggregate(:count, :id)
+
+    x + 1
+  end
+
+  def get_user_position_by_day(user, start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    exp =
+      subquery(q2)
+      |> where([t], t.user == ^user.id)
+      |> select([t], t.experience)
+      |> Repo.one()
+
+    if exp == nil do
+      '-'
+    else
+      x =
+        subquery(q2)
+        |> where([t], t.experience > ^exp)
+        |> Repo.aggregate(:count, :user)
+
+      x + 1
+    end
+  end
+
+  defp get_leaderboard_query(start_time, end_time) do
+    task_users =
+      TaskUser
+      |> where([tu], tu.inserted_at <= ^end_time and tu.inserted_at >= ^start_time)
+      |> join(:inner, [tu], t in Task, on: t.id == tu.task_id)
+      |> join(:inner, [t], u in User, on: u.id == t.user_id)
+      |> select([tu, t], %{exp: t.exp, user: tu.user_id})
+
+    mission_users =
+      MissionUser
+      |> where([mu], mu.inserted_at <= ^end_time and mu.inserted_at >= ^start_time)
+      |> join(:inner, [mu], m in Mission, on: m.id == mu.mission_id)
+      |> join(:inner, [m], u in User, on: u.id == m.user_id)
+      |> select([mu, m], %{exp: m.exp, user: mu.user_id})
+
+    sub_task_users =
+      subquery(task_users)
+      |> group_by([t], t.user)
+      |> select([t], %{user: t.user, task_exp: sum(t.exp)})
+
+    sub_mission_users =
+      subquery(mission_users)
+      |> group_by([m], m.user)
+      |> select([m], %{user: m.user, mission_exp: sum(m.exp)})
+
+    subquery(sub_task_users)
+    |> join(:left, [t], m in subquery(sub_mission_users), on: t.user == m.user)
+    |> select([t, m], %{
+      experience: fragment("COALESCE(task_exp, 0) + COALESCE(mission_exp, 0)"),
+      user: t.user
+    })
+  end
+
   @doc """
   Gets a single task_user.
 

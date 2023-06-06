@@ -16,8 +16,8 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
   end
 
   @impl true
-  def handle_params(%{"qr" => qr}, _url, socket) do
-    user = Accounts.get_user_by_qr(qr)
+  def handle_params(%{"qr" => qr} = params, _url, socket) do
+    user = Accounts.get_user_by_qr(qr) |> Parzival.Repo.preload([:company])
 
     if Map.has_key?(socket.assigns, :current_user) and not is_nil(user) do
       if socket.assigns.current_user.role == :recruiter && user.role == :attendee do
@@ -27,21 +27,36 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
           {:ok, _connection} ->
             {:noreply,
              socket
-             |> put_flash(:success, gettext("New Connection!"))}
+             |> put_flash(:success, gettext("New Connection!"))
+             |> assign(:current_page, :profile)
+             |> assign(:current_tab, user.role)
+             |> assign(:page_title, "Show User")
+             |> assign(:params, params)
+             |> assign(:user, user)
+             |> handle_user_role(user)
+             |> handle_current_user_role(socket.assigns.current_user)}
 
           {:error, _error} ->
-            {:noreply, socket}
+            {:noreply,
+             socket
+             |> assign(:current_page, :profile)
+             |> assign(:current_tab, user.role)
+             |> assign(:page_title, "Show User")
+             |> assign(:params, params)
+             |> assign(:user, user)
+             |> handle_user_role(user)
+             |> handle_current_user_role(socket.assigns.current_user)}
         end
-      end
-    else
-      if is_nil(user) do
-        {:noreply,
-         socket
-         |> push_redirect(to: Routes.user_registration_path(socket, :new, qr))}
       else
-        {:noreply,
-         socket
-         |> push_redirect(to: Routes.profile_show_path(socket, :show, user.id))}
+        if is_nil(user) do
+          {:noreply,
+           socket
+           |> push_redirect(to: Routes.user_registration_path(socket, :new, qr))}
+        else
+          {:noreply,
+           socket
+           |> push_redirect(to: Routes.profile_show_path(socket, :show, user.id))}
+        end
       end
     end
   end
@@ -57,7 +72,8 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
         {:ok, _connection} ->
           {:noreply,
            socket
-           |> put_flash(:success, gettext("New Connection!"))}
+           |> put_flash(:success, gettext("New Connection!"))
+           |> assign(:current_page, :profile)}
 
         {:error, _error} ->
           {:noreply, socket}
@@ -156,5 +172,9 @@ defmodule ParzivalWeb.App.ProfileLive.Show do
 
   defp build_url do
     "https://#{Application.fetch_env!(:parzival, ParzivalWeb.Endpoint)[:url][:host]}"
+  end
+
+  defp get_company_level(company) do
+    Companies.get_company_level(company)
   end
 end

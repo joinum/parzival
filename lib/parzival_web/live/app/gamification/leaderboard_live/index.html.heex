@@ -1,56 +1,51 @@
-<div class="block h-full bg-white border-r border-gray-200">
-  <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
-    <div class="flex justify-between items-center h-10">
-      <h1 class="flex-1 text-lg font-medium">
-        Leaderboard
-      </h1>
-      <div class="flex flex-col sm:flex-row xl:flex-col"></div>
+<div x-data="{option: 'general'}" class="block h-full bg-white border-r border-gray-200">
+  <div class="pt-5 pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
+    <h1 class="flex-1 text-lg font-medium">Leaderboard</h1>
+    <!-- Tabs -->
+    <div class="flex justify-between items-center mt-2 2xl:mt-5">
+      <div class="flex justify-between items-center">
+        <nav class="flex -mb-px space-x-8" aria-label="Tabs">
+          <button
+            x-on:click="option = 'general'"
+            x-bind:class="option =='general' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+            class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+          >
+            General
+          </button>
+          <%= if NaiveDateTime.compare(NaiveDateTime.utc_now(), @event_days.first_day_start) != :lt do %>
+            <button
+              x-on:click="option = '1'"
+              x-bind:class="option =='1' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+              class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+            >
+              Day 1
+            </button>
+          <% end %>
+          <%= if NaiveDateTime.compare(NaiveDateTime.utc_now(), @event_days.second_day_start) != :lt do %>
+            <button
+              x-on:click="option = '2'"
+              x-bind:class="option =='2' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+              class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+            >
+              Day 2
+            </button>
+          <% end %>
+          <%= if NaiveDateTime.compare(NaiveDateTime.utc_now(), @event_days.third_day_start) != :lt do %>
+            <button
+              x-on:click="option = '3'"
+              x-bind:class="option =='3' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+              class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+            >
+              Day 3
+            </button>
+          <% end %>
+        </nav>
+      </div>
     </div>
   </div>
-
-  <ul role="list" class="relative z-0">
-    <%= for {user, index} <- Enum.with_index(@users) do %>
-      <%= if @position == index + 1 do %>
-        <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6">
-          <div class="flex justify-between">
-            <div class="py-4 text-sm whitespace-nowrap">
-              <div class="flex items-center">
-                <div class="flex items-center">
-                  <div class="mr-10 w-5 text-xl">
-                    <span class="text-secondary"><%= index + 1 %></span>
-                  </div>
-                  <div class="flex-shrink-0 w-10 h-10">
-                    <%= if is_nil(user.picture) do %>
-                      <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
-                        <span class="text-lg font-medium leading-none text-white">
-                          <%= extract_initials(user.name) %>
-                        </span>
-                      </span>
-                    <% else %>
-                      <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
-                        <img src={Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)} class="object-center w-10 h-10 rounded-full" />
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-                <div class="ml-4">
-                  <div class="font-medium text-gray-900">
-                    <%= user.name %>
-                  </div>
-                  <div class="flex">
-                    <div class="text-gray-500">
-                      LVL <%= calc_level(user) %>
-                    </div>
-                    <div class="ml-2 text-gray-400">
-                      <%= user.exp %> EXP
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-      <% else %>
+  <div x-bind:class="option =='general' ? 'block' : 'hidden'">
+    <ul role="list" class="relative z-0">
+      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.general) do %>
         <%= live_patch(to: Routes.profile_show_path(@socket, :show, user)) do %>
           <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
             <div class="flex justify-between">
@@ -58,7 +53,15 @@
                 <div class="flex items-center">
                   <div class="flex items-center">
                     <div class="mr-10 w-5 text-xl">
-                      <span class="text-gray-900"><%= index + 1 %></span>
+                      <span class={
+                        if @current_user.id == user.id do
+                          "text-secondary"
+                        else
+                          "text-gray-900"
+                        end
+                      }>
+                        <%= index + 1 %>
+                      </span>
                     </div>
                     <div class="flex-shrink-0 w-10 h-10">
                       <%= if is_nil(user.picture) do %>
@@ -80,10 +83,10 @@
                     </div>
                     <div class="flex">
                       <div class="text-gray-500">
-                        LVL <%= calc_level(user) %>
+                        LVL <%= calc_level(exp) %>
                       </div>
                       <div class="ml-2 text-gray-400">
-                        <%= user.exp %> EXP
+                        <%= exp %> EXP
                       </div>
                     </div>
                   </div>
@@ -93,50 +96,329 @@
           </li>
         <% end %>
       <% end %>
-    <% end %>
 
-    <%= if @position > @page_size do %>
-      <%= if @current_user.role in [:attendee] do %>
-        <li id={"user-#{@current_user.id}"} class="relative pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 border-y">
-          <div class="flex justify-between">
-            <div class="py-4 text-sm whitespace-nowrap">
-              <div class="flex items-center">
+      <%= if @position.general > @page_size do %>
+        <%= if @current_user.role in [:attendee] do %>
+          <li id={"user-#{@current_user.id}"} class="relative pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 border-y">
+            <div class="flex justify-between">
+              <div class="py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center">
-                  <div class="mr-10 text-xl text-secondary">
-                    <%= @position %>
-                  </div>
-                  <div class="flex-shrink-0 w-10 h-10">
-                    <%= if is_nil(@current_user.picture) do %>
-                      <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
-                        <span class="text-lg font-medium leading-none text-white">
-                          <%= extract_initials(@current_user.name) %>
-                        </span>
-                      </span>
-                    <% else %>
-                      <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
-                        <img src={Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :medium)} class="object-center w-10 h-10 rounded-full" />
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-                <div class="ml-4">
-                  <div class="font-medium text-gray-900">
-                    <%= @current_user.name %>
-                  </div>
-                  <div class="flex">
-                    <div class="text-gray-500">
-                      LVL <%= calc_level(@current_user) %>
+                  <div class="flex items-center">
+                    <div class="mr-10 text-xl text-secondary">
+                      <%= @position.general %>
                     </div>
-                    <div class="ml-2 text-gray-400">
-                      <%= @current_user.exp %> EXP
+                    <div class="flex-shrink-0 w-10 h-10">
+                      <%= if is_nil(@current_user.picture) do %>
+                        <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                          <span class="text-lg font-medium leading-none text-white">
+                            <%= extract_initials(@current_user.name) %>
+                          </span>
+                        </span>
+                      <% else %>
+                        <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                          <img src={Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :medium)} class="object-center w-10 h-10 rounded-full" />
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="ml-4">
+                    <div class="font-medium text-gray-900">
+                      <%= @current_user.name %>
+                    </div>
+                    <div class="flex">
+                      <div class="text-gray-400">
+                        <%= @current_user.exp %> EXP
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </li>
+          </li>
+        <% end %>
       <% end %>
-    <% end %>
-  </ul>
+    </ul>
+  </div>
+
+  <div x-bind:class="option =='1' ? 'block' : 'hidden'">
+    <ul role="list" class="relative z-0">
+      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.one) do %>
+        <%= live_patch(to: Routes.profile_show_path(@socket, :show, user)) do %>
+          <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
+            <div class="flex justify-between">
+              <div class="py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex items-center">
+                    <div class="mr-10 w-5 text-xl">
+                      <span class={
+                        if @current_user.id == user.id do
+                          "text-secondary"
+                        else
+                          "text-gray-900"
+                        end
+                      }>
+                        <%= index + 1 %>
+                      </span>
+                    </div>
+                    <div class="flex-shrink-0 w-10 h-10">
+                      <%= if is_nil(user.picture) do %>
+                        <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                          <span class="text-lg font-medium leading-none text-white">
+                            <%= extract_initials(user.name) %>
+                          </span>
+                        </span>
+                      <% else %>
+                        <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                          <img src={Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)} class="object-center w-10 h-10 rounded-full" />
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="ml-4">
+                    <div class="font-medium text-gray-900">
+                      <%= user.name %>
+                    </div>
+                    <div class="flex">
+                      <div class="text-gray-400">
+                        <%= exp %> EXP
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+
+      <%= if @position.one > @page_size do %>
+        <%= if @current_user.role in [:attendee] do %>
+          <li id={"user-#{@current_user.id}"} class="relative pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 border-y">
+            <div class="flex justify-between">
+              <div class="py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex items-center">
+                    <div class="mr-10 text-xl text-secondary">
+                      <%= @position.one %>
+                    </div>
+                    <div class="flex-shrink-0 w-10 h-10">
+                      <%= if is_nil(@current_user.picture) do %>
+                        <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                          <span class="text-lg font-medium leading-none text-white">
+                            <%= extract_initials(@current_user.name) %>
+                          </span>
+                        </span>
+                      <% else %>
+                        <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                          <img src={Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :medium)} class="object-center w-10 h-10 rounded-full" />
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="ml-4">
+                    <div class="font-medium text-gray-900">
+                      <%= @current_user.name %>
+                    </div>
+                    <div class="flex">
+                      <div class="text-gray-400">
+                        <%= calc_exp(@current_user, @event_days.first_day_start, @event_days.first_day_end) %> EXP
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+
+  <div x-bind:class="option =='2' ? 'block' : 'hidden'">
+    <ul role="list" class="relative z-0">
+      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.two) do %>
+        <%= live_patch(to: Routes.profile_show_path(@socket, :show, user)) do %>
+          <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
+            <div class="flex justify-between">
+              <div class="py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex items-center">
+                    <div class="mr-10 w-5 text-xl">
+                      <span class={
+                        if @current_user.id == user.id do
+                          "text-secondary"
+                        else
+                          "text-gray-900"
+                        end
+                      }>
+                        <%= index + 1 %>
+                      </span>
+                    </div>
+                    <div class="flex-shrink-0 w-10 h-10">
+                      <%= if is_nil(user.picture) do %>
+                        <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                          <span class="text-lg font-medium leading-none text-white">
+                            <%= extract_initials(user.name) %>
+                          </span>
+                        </span>
+                      <% else %>
+                        <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                          <img src={Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)} class="object-center w-10 h-10 rounded-full" />
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="ml-4">
+                    <div class="font-medium text-gray-900">
+                      <%= user.name %>
+                    </div>
+                    <div class="flex">
+                      <div class="text-gray-400">
+                        <%= exp %> EXP
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+
+      <%= if @position.two > @page_size do %>
+        <%= if @current_user.role in [:attendee] do %>
+          <li id={"user-#{@current_user.id}"} class="relative pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 border-y">
+            <div class="flex justify-between">
+              <div class="py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex items-center">
+                    <div class="mr-10 text-xl text-secondary">
+                      <%= @position.two %>
+                    </div>
+                    <div class="flex-shrink-0 w-10 h-10">
+                      <%= if is_nil(@current_user.picture) do %>
+                        <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                          <span class="text-lg font-medium leading-none text-white">
+                            <%= extract_initials(@current_user.name) %>
+                          </span>
+                        </span>
+                      <% else %>
+                        <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                          <img src={Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :medium)} class="object-center w-10 h-10 rounded-full" />
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="ml-4">
+                    <div class="font-medium text-gray-900">
+                      <%= @current_user.name %>
+                    </div>
+                    <div class="flex">
+                      <div class="text-gray-400">
+                        <%= calc_exp(@current_user, @event_days.second_day_start, @event_days.second_day_end) %> EXP
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+
+  <div x-bind:class="option =='3' ? 'block' : 'hidden'">
+    <ul role="list" class="relative z-0">
+      <%= for {{user, exp}, index} <- Enum.with_index(@leaderboard.three) do %>
+        <%= live_patch(to: Routes.profile_show_path(@socket, :show, user)) do %>
+          <li id={"user-#{user.id}"} class="relative pr-6 pl-4 border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 hover:bg-gray-50">
+            <div class="flex justify-between">
+              <div class="py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex items-center">
+                    <div class="mr-10 w-5 text-xl">
+                      <span class={
+                        if @current_user.id == user.id do
+                          "text-secondary"
+                        else
+                          "text-gray-900"
+                        end
+                      }>
+                        <%= index + 1 %>
+                      </span>
+                    </div>
+                    <div class="flex-shrink-0 w-10 h-10">
+                      <%= if is_nil(user.picture) do %>
+                        <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                          <span class="text-lg font-medium leading-none text-white">
+                            <%= extract_initials(user.name) %>
+                          </span>
+                        </span>
+                      <% else %>
+                        <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                          <img src={Parzival.Uploaders.ProfilePicture.url({user.picture, user}, :medium)} class="object-center w-10 h-10 rounded-full" />
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="ml-4">
+                    <div class="font-medium text-gray-900">
+                      <%= user.name %>
+                    </div>
+                    <div class="flex">
+                      <div class="text-gray-400">
+                        <%= exp %> EXP
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+
+      <%= if @position.three > @page_size do %>
+        <%= if @current_user.role in [:attendee] do %>
+          <li id={"user-#{@current_user.id}"} class="relative pr-6 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 border-y">
+            <div class="flex justify-between">
+              <div class="py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex items-center">
+                    <div class="mr-10 text-xl text-secondary">
+                      <%= @position.three %>
+                    </div>
+                    <div class="flex-shrink-0 w-10 h-10">
+                      <%= if is_nil(@current_user.picture) do %>
+                        <span class="inline-flex justify-center items-center w-10 h-10 rounded-full bg-secondary">
+                          <span class="text-lg font-medium leading-none text-white">
+                            <%= extract_initials(@current_user.name) %>
+                          </span>
+                        </span>
+                      <% else %>
+                        <div class="relative flex-shrink-0 w-10 h-10 bg-white rounded-full">
+                          <img src={Parzival.Uploaders.ProfilePicture.url({@current_user.picture, @current_user}, :medium)} class="object-center w-10 h-10 rounded-full" />
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="ml-4">
+                    <div class="font-medium text-gray-900">
+                      <%= @current_user.name %>
+                    </div>
+                    <div class="flex">
+                      <div class="text-gray-400">
+                        <%= calc_exp(@current_user, @event_days.third_day_start, @event_days.third_day_end) %> EXP
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
 </div>
