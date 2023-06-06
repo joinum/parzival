@@ -40,7 +40,7 @@
   <body style="background-color: white; margin: 0;">
     <div style="background-color: rgb(234,59,45); height: 1460px; top: 0mm; left: 0mm; z-index: -20;" class="absolute py-16 px-10 w-1/3">
       <div class="relative mx-auto w-48 h-48">
-        <%= if is_nil(@avatar) do %>
+        <%= if is_nil(@user.picture) do %>
           <div style="background-color: rgb(234,59,45); border-width: 5px; border-color: white;" class="w-48 h-48 rounded-full border-white">
             <div style="color: white; font-size: 72px; line-height: 1; text-align: center; padding-top: 58px;" class="font-bold">
               <%= extract_initials(@user.name) %>
@@ -48,7 +48,7 @@
           </div>
         <% else %>
           <div style="background-color: white;" class="relative rounded-full border-white ring-4 w-[204px] h-[204px]">
-            <img src={"http://localhost:4000/#{@avatar}"} width="192px" height="192px" class="object-cover object-center absolute rounded-full border top-[6px] left-[6px]" />
+            <img src={@avatar} width="192px" height="192px" class="object-cover object-center absolute rounded-full border top-[6px] left-[6px]" />
           </div>
         <% end %>
       </div>
