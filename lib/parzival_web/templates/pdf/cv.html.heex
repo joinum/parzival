@@ -60,56 +60,56 @@
           <% end %>
         </p>
         <div style="background-color: white;" class="my-12 mx-auto w-full rounded-full h-[1px]" />
-        <div class="flexrow">
-          <Heroicons.Solid.mail width="32px" height="32px" fill="white" />
-          <span class="ml-3">
-            <%= if @user.email do
-              @user.email
-            end %>
-          </span>
-        </div>
-        <div class="mt-5 flexrow">
-          <Heroicons.Solid.phone width="32px" height="32px" fill="white" />
-          <span class="ml-3">
-            <%= if @user.cellphone do
-              @user.cellphone
-            end %>
-          </span>
-        </div>
-        <div class="mt-5 flexrow">
-          <Heroicons.Solid.globe_alt width="32px" height="32px" fill="white" />
-          <span class="ml-3">
-            <%= if @user.website do
-              @user.website
-            end %>
-          </span>
-        </div>
+        <%= if @user.email do %>
+          <div class="flexrow">
+            <Heroicons.Solid.mail width="32px" height="32px" fill="white" />
+            <span class="ml-3">
+                <%= @user.email %>
+            </span>
+          </div>
+        <% end %>
+        <%= if @user.cellphone do %>
+          <div class="mt-5 flexrow">
+            <Heroicons.Solid.phone width="32px" height="32px" fill="white" />
+            <span class="ml-3">
+                <%= @user.cellphone %>
+            </span>
+          </div>
+        <% end %>
+        <%= if @user.website do %>
+          <div class="mt-5 flexrow">
+            <Heroicons.Solid.globe_alt width="32px" height="32px" fill="white" />
+            <span class="ml-3">
+                <%= @user.website %>
+            </span>
+          </div>
+        <% end %>
         <div style="background-color: white;" class="my-12 mx-auto w-full rounded-full h-[1px]" />
         <div>
-          <div class="flexrow">
-            <Ionicons.Filled.logo_linkedin width="32px" height="32px" fill="white" />
-            <span class="ml-3">
-              <%= if @user.linkedin do
-                @user.linkedin
-              end %>
-            </span>
-          </div>
-          <div class="mt-5 flexrow">
-            <Ionicons.Filled.logo_github width="32px" height="32px" fill="white" />
-            <span class="ml-3">
-              <%= if @user.github do
-                @user.github
-              end %>
-            </span>
-          </div>
-          <div class="mt-5 flexrow">
-            <Ionicons.Filled.logo_twitter width="32px" height="32px" fill="white" />
-            <span class="ml-3">
-              <%= if @user.twitter do
-                @user.twitter
-              end %>
-            </span>
-          </div>
+          <%= if @user.linkedin do %>
+            <div class="flexrow">
+              <Ionicons.Filled.logo_linkedin width="32px" height="32px" fill="white" />
+              <span class="ml-3">
+                  <%= @user.linkedin %>
+              </span>
+            </div>
+          <% end %>
+          <%= if @user.github do %>
+            <div class="mt-5 flexrow">
+              <Ionicons.Filled.logo_github width="32px" height="32px" fill="white" />
+              <span class="ml-3">
+                  <%= @user.github %>
+              </span>
+            </div>
+          <% end %>
+          <%= if @user.twitter do %>
+            <div class="mt-5 flexrow">
+              <Ionicons.Filled.logo_twitter width="32px" height="32px" fill="white" />
+              <span class="ml-3">
+                  <%= @user.twitter %>
+              </span>
+            </div>
+          <% end %>
         </div>
       </div>
       <img class="absolute w-36 left-[90px] bottom-[64px]" src="http://localhost:4000/images/logo.png" alt="JOIN Logo" />

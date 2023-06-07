@@ -77,7 +77,9 @@
                   <div class="text-gray-500">
                     <%= case @current_tab do %>
                       <% :attendee -> %>
-                        <%= user.cycle %> in <%= user.course %>
+                        <%= if not is_nil(user.cycle) and not is_nil(user.course) do %>
+                          <%= user.cycle %> in <%= user.course %>
+                        <% end %>
                       <% :recruiter -> %>
                         <%= user.company.name %>
                       <% _ -> %>
