@@ -99,13 +99,7 @@ defmodule ParzivalWeb.Config do
         key: :jobs,
         title: "Jobs",
         url: Routes.offer_index_path(conn, :index),
-        tabs: [
-          %{
-            key: :jobs,
-            title: "Offers",
-            url: Routes.offer_index_path(conn, :index)
-          }
-        ]
+        tabs: []
       },
       %{
         key: :companies,
