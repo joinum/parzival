@@ -9,6 +9,7 @@ defmodule Parzival.Gamification do
 
   alias Parzival.Accounts
   alias Parzival.Accounts.User
+  alias Parzival.Companies
   alias Parzival.Gamification
   alias Parzival.Gamification.Curriculum
   alias Parzival.Gamification.Curriculum.Education
@@ -317,11 +318,16 @@ defmodule Parzival.Gamification do
   end
 
   def calc_level(exp) do
-    :math.floor((:math.sqrt(2500 + 200 * exp) - 50) / 100) |> trunc()
+    :math.floor((:math.sqrt(2500 + 200 * exp) - 50) / 100)
+    |> trunc()
+    |> case do
+      0 -> 1
+      lvl -> lvl
+    end
   end
 
   def calc_next_level_exp(exp) do
-    next_lvl = calc_level(exp) + 1
+    next_lvl = calc_level(exp)
 
     (100 * next_lvl * (1 + next_lvl))
     |> trunc()
@@ -751,6 +757,104 @@ defmodule Parzival.Gamification do
     |> Flop.validate_and_run(flop, for: TaskUser)
   end
 
+  def get_leaderboard(start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    subquery(q2)
+    |> order_by([t], desc: t.experience)
+    |> join(:inner, [t], u in User, on: t.user == u.id)
+    |> Repo.all()
+    |> Enum.take(10)
+  end
+
+  def get_leaderboard(%{} = flop, start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    subquery(q2)
+    |> order_by([t], desc: t.experience)
+    |> join(:inner, [t], u in User, on: t.user == u.id)
+    |> Flop.validate_and_run(flop)
+  end
+
+  def get_exp(user, start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    res =
+      subquery(q2)
+      |> where([t], t.user == ^user.id)
+      |> select([t], t.experience)
+      |> Repo.one()
+
+    if res == nil do
+      0
+    else
+      res
+    end
+  end
+
+  def get_user_position_general(user) do
+    x =
+      User
+      |> where([u], u.exp > ^user.exp)
+      |> Repo.aggregate(:count, :id)
+
+    x + 1
+  end
+
+  def get_user_position_by_day(user, start_time, end_time) do
+    q2 = get_leaderboard_query(start_time, end_time)
+
+    exp =
+      subquery(q2)
+      |> where([t], t.user == ^user.id)
+      |> select([t], t.experience)
+      |> Repo.one()
+
+    if exp == nil do
+      '-'
+    else
+      x =
+        subquery(q2)
+        |> where([t], t.experience > ^exp)
+        |> Repo.aggregate(:count, :user)
+
+      x + 1
+    end
+  end
+
+  defp get_leaderboard_query(start_time, end_time) do
+    task_users =
+      TaskUser
+      |> where([tu], tu.inserted_at <= ^end_time and tu.inserted_at >= ^start_time)
+      |> join(:inner, [tu], t in Task, on: t.id == tu.task_id)
+      |> join(:inner, [t], u in User, on: u.id == t.user_id)
+      |> select([tu, t], %{exp: t.exp, user: tu.user_id})
+
+    mission_users =
+      MissionUser
+      |> where([mu], mu.inserted_at <= ^end_time and mu.inserted_at >= ^start_time)
+      |> join(:inner, [mu], m in Mission, on: m.id == mu.mission_id)
+      |> join(:inner, [m], u in User, on: u.id == m.user_id)
+      |> select([mu, m], %{exp: m.exp, user: mu.user_id})
+
+    sub_task_users =
+      subquery(task_users)
+      |> group_by([t], t.user)
+      |> select([t], %{user: t.user, task_exp: sum(t.exp)})
+
+    sub_mission_users =
+      subquery(mission_users)
+      |> group_by([m], m.user)
+      |> select([m], %{user: m.user, mission_exp: sum(m.exp)})
+
+    subquery(sub_task_users)
+    |> join(:left, [t], m in subquery(sub_mission_users), on: t.user == m.user)
+    |> select([t, m], %{
+      experience: fragment("COALESCE(task_exp, 0) + COALESCE(mission_exp, 0)"),
+      user: t.user
+    })
+  end
+
   @doc """
   Gets a single task_user.
 
@@ -819,48 +923,86 @@ defmodule Parzival.Gamification do
     Repo.delete(task_user)
   end
 
+  # Determines if the current user is authorized
+  # to redeem a task for an attendee
+  defp can_redeem_task(%User{} = user, %Task{} = task) do
+    mission =
+      Mission
+      |> where([m], m.id == ^task.mission_id)
+      |> Repo.one()
+
+    case user.role do
+      :staff ->
+        is_nil(mission.created_by_id)
+
+      :recruiter ->
+        recruiter_can_redeem_task(user, task, mission)
+
+      :admin ->
+        true
+
+      :attendee ->
+        false
+    end
+  end
+
+  defp recruiter_can_redeem_task(%User{} = user, %Task{} = task, %Mission{} = mission) do
+    # A bronze company cannot sponsor a mission, but the task has its name
+    if is_nil(mission.created_by_id) do
+      company = Companies.get_company!(user.company_id)
+      String.contains?(String.downcase(task.title), String.downcase(company.name))
+    else
+      user.company_id == mission.created_by_id
+    end
+  end
+
   def redeem_task(%User{} = user, %Task{} = task, %User{} = staff) do
-    Multi.new()
-    |> Multi.insert(
-      :task_user,
-      TaskUser.changeset(%TaskUser{}, %{user_id: user.id, staff_id: staff.id, task_id: task.id})
-    )
-    |> Multi.run(:mission, fn repo, _change ->
-      mission = Gamification.get_mission!(task.mission_id, tasks: [:users])
 
-      case Enum.all?(mission.tasks, fn task -> Enum.any?(task.users, &(&1.id == user.id)) end) do
-        true ->
-          %MissionUser{}
-          |> MissionUser.changeset(%{mission_id: mission.id, user_id: user.id})
-          |> repo.insert()
+    if can_redeem_task(staff, task) do
+      Multi.new()
+      |> Multi.insert(
+        :task_user,
+        TaskUser.changeset(%TaskUser{}, %{user_id: user.id, staff_id: staff.id, task_id: task.id})
+      )
+      |> Multi.run(:mission, fn repo, _change ->
+        mission = Gamification.get_mission!(task.mission_id, tasks: [:users])
 
-          user
-          |> User.task_completion_changeset(%{
-            balance: user.balance + task.tokens + mission.tokens,
-            exp: user.exp + task.exp + mission.exp
-          })
-          |> repo.update()
+        case Enum.all?(mission.tasks, fn task -> Enum.any?(task.users, &(&1.id == user.id)) end) do
+          true ->
+            %MissionUser{}
+            |> MissionUser.changeset(%{mission_id: mission.id, user_id: user.id})
+            |> repo.insert()
 
-          {:ok, mission}
+            user
+            |> User.task_completion_changeset(%{
+              balance: user.balance + task.tokens + mission.tokens,
+              exp: user.exp + task.exp + mission.exp
+            })
+            |> repo.update()
 
-        false ->
-          user
-          |> User.task_completion_changeset(%{
-            balance: user.balance + task.tokens,
-            exp: user.exp + task.exp
-          })
-          |> repo.update()
+            {:ok, mission}
 
-          {:ok, mission}
+          false ->
+            user
+            |> User.task_completion_changeset(%{
+              balance: user.balance + task.tokens,
+              exp: user.exp + task.exp
+            })
+            |> repo.update()
+
+            {:ok, mission}
+        end
+      end)
+      |> Repo.transaction()
+      |> case do
+        {:ok, transaction} ->
+          broadcast({:ok, transaction.mission}, :updated)
+
+        {:error, _transaction, changeset, _} ->
+          {:error, changeset}
       end
-    end)
-    |> Repo.transaction()
-    |> case do
-      {:ok, transaction} ->
-        broadcast({:ok, transaction.mission}, :updated)
-
-      {:error, _transaction, changeset, _} ->
-        {:error, changeset}
+    else
+      {:error, :unauthorized}
     end
   end
 

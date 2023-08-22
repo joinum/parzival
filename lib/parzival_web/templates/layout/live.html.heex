@@ -129,7 +129,7 @@
                 <%= if i > length(@inventory) do %>
                   <div class="w-12 h-12 border border-gray-200" />
                 <% else %>
-                  <.live_component module={ParzivalWeb.Components.Boost} id={Enum.at(@inventory, i - 1).id} item={Enum.at(@inventory, i - 1)} />
+                  <.live_component module={ParzivalWeb.Components.Boost} id={Enum.at(@inventory, i - 1).id} item={Enum.at(@inventory, i - 1)} flash={@flash} />
                 <% end %>
               <% end %>
             </div>
@@ -212,7 +212,7 @@
                                 </div>
                                 <div class="flex">
                                   <div class="text-gray-500">
-                                    LVL <%= calc_level(user) %>
+                                    LVL <%= calc_level(user.exp) %>
                                   </div>
                                   <div class="ml-2 text-gray-400">
                                     <%= user.exp %> EXP
@@ -246,7 +246,16 @@
                             <%= announcement.title %>
                           </h3>
                           <article class="mt-1 text-sm text-gray-600 line-clamp-4">
-                            <%= raw(Earmark.as_html!(String.slice(announcement.text, 0, 200) <> "...")) %>
+                            <%= raw(
+                              Earmark.as_html!(
+                                String.slice(announcement.text, 0, 200) <>
+                                  if String.length(announcement.text) > 200 do
+                                    "..."
+                                  else
+                                    ""
+                                  end
+                              )
+                            ) %>
                           </article>
                           <div class="flex flex-shrink-0 justify-between mt-4">
                             <div class="flex items-center">

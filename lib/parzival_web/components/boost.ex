@@ -30,8 +30,9 @@ defmodule ParzivalWeb.Components.Boost do
     user_id = socket.assigns.item.user_id
 
     if Store.already_has_active_boost?(user_id) do
-      send(self(), {:error, "You already have an active boost!"})
-      {:noreply, socket}
+      {:noreply,
+      socket
+      |> put_flash(:error, "You already have an active boost!")}
     else
       item = Store.get_item!(item_id)
       Store.update_item(item, %{expires_at: Timex.shift(NaiveDateTime.utc_now(), minutes: 60)})

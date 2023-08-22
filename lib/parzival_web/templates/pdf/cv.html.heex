@@ -37,10 +37,10 @@
     </style>
   </head>
 
-  <body style="background-color: white">
-    <div style="background-color: rgb(234,59,45); height: 37.13cm; z-index: -20;" class="absolute py-16 px-10 w-1/3">
+  <body style="background-color: white; margin: 0;">
+    <div style="background-color: rgb(234,59,45); height: 1460px; top: 0mm; left: 0mm; z-index: -20;" class="absolute py-16 px-10 w-1/3">
       <div class="relative mx-auto w-48 h-48">
-        <%= if is_nil(@avatar) do %>
+        <%= if is_nil(@user.picture) do %>
           <div style="background-color: rgb(234,59,45); border-width: 5px; border-color: white;" class="w-48 h-48 rounded-full border-white">
             <div style="color: white; font-size: 72px; line-height: 1; text-align: center; padding-top: 58px;" class="font-bold">
               <%= extract_initials(@user.name) %>
@@ -48,7 +48,7 @@
           </div>
         <% else %>
           <div style="background-color: white;" class="relative rounded-full border-white ring-4 w-[204px] h-[204px]">
-            <img src={"http://localhost:4000/#{@avatar}"} width="192px" height="192px" class="object-cover object-center absolute rounded-full border top-[6px] left-[6px]" />
+            <img src={@avatar} width="192px" height="192px" class="object-cover object-center absolute rounded-full border top-[6px] left-[6px]" />
           </div>
         <% end %>
       </div>
@@ -60,56 +60,56 @@
           <% end %>
         </p>
         <div style="background-color: white;" class="my-12 mx-auto w-full rounded-full h-[1px]" />
-        <div class="flexrow">
-          <Heroicons.Solid.mail width="32px" height="32px" fill="white" />
-          <span class="ml-3">
-            <%= if @user.email do
-              @user.email
-            end %>
-          </span>
-        </div>
-        <div class="mt-5 flexrow">
-          <Heroicons.Solid.phone width="32px" height="32px" fill="white" />
-          <span class="ml-3">
-            <%= if @user.cellphone do
-              @user.cellphone
-            end %>
-          </span>
-        </div>
-        <div class="mt-5 flexrow">
-          <Heroicons.Solid.globe_alt width="32px" height="32px" fill="white" />
-          <span class="ml-3">
-            <%= if @user.website do
-              @user.website
-            end %>
-          </span>
-        </div>
+        <%= if @user.email do %>
+          <div class="flexrow">
+            <Heroicons.Solid.mail width="32px" height="32px" fill="white" />
+            <span class="ml-3">
+                <%= @user.email %>
+            </span>
+          </div>
+        <% end %>
+        <%= if @user.cellphone do %>
+          <div class="mt-5 flexrow">
+            <Heroicons.Solid.phone width="32px" height="32px" fill="white" />
+            <span class="ml-3">
+                <%= @user.cellphone %>
+            </span>
+          </div>
+        <% end %>
+        <%= if @user.website do %>
+          <div class="mt-5 flexrow">
+            <Heroicons.Solid.globe_alt width="32px" height="32px" fill="white" />
+            <span class="ml-3">
+                <%= @user.website %>
+            </span>
+          </div>
+        <% end %>
         <div style="background-color: white;" class="my-12 mx-auto w-full rounded-full h-[1px]" />
         <div>
-          <div class="flexrow">
-            <Ionicons.Filled.logo_linkedin width="32px" height="32px" fill="white" />
-            <span class="ml-3">
-              <%= if @user.linkedin do
-                @user.linkedin
-              end %>
-            </span>
-          </div>
-          <div class="mt-5 flexrow">
-            <Ionicons.Filled.logo_github width="32px" height="32px" fill="white" />
-            <span class="ml-3">
-              <%= if @user.github do
-                @user.github
-              end %>
-            </span>
-          </div>
-          <div class="mt-5 flexrow">
-            <Ionicons.Filled.logo_twitter width="32px" height="32px" fill="white" />
-            <span class="ml-3">
-              <%= if @user.twitter do
-                @user.twitter
-              end %>
-            </span>
-          </div>
+          <%= if @user.linkedin do %>
+            <div class="flexrow">
+              <Ionicons.Filled.logo_linkedin width="32px" height="32px" fill="white" />
+              <span class="ml-3">
+                  <%= @user.linkedin %>
+              </span>
+            </div>
+          <% end %>
+          <%= if @user.github do %>
+            <div class="mt-5 flexrow">
+              <Ionicons.Filled.logo_github width="32px" height="32px" fill="white" />
+              <span class="ml-3">
+                  <%= @user.github %>
+              </span>
+            </div>
+          <% end %>
+          <%= if @user.twitter do %>
+            <div class="mt-5 flexrow">
+              <Ionicons.Filled.logo_twitter width="32px" height="32px" fill="white" />
+              <span class="ml-3">
+                  <%= @user.twitter %>
+              </span>
+            </div>
+          <% end %>
         </div>
       </div>
       <img class="absolute w-36 left-[90px] bottom-[64px]" src="http://localhost:4000/images/logo.png" alt="JOIN Logo" />
@@ -241,25 +241,15 @@
               <tr class="mt-10 w-full">
                 <td>
                   <p style="color: rgb(234,59,45);" class="mb-4 text-2xl font-bold tracking-wider">SKILLS</p>
-                  <table>
-                    <tbody>
-                      <%= for chunk <- Enum.chunk_every(@curriculum.skills,4,4,[]) do %>
-                        <tr class="mt-1">
-                          <%= for skill <- chunk do %>
-                            <td class="w-36">
-                              <span style="border-bottom: rgb(234,59,45) 1.5px solid; border-top-style: none; border-left-style: none; border-right-style: none;">
-                                <%= if String.length(skill.name) <= 11 do %>
-                                  <%= skill.name %>
-                                <% else %>
-                                  <%= String.slice(skill.name, 0..10) <> "..." %>
-                                <% end %>
-                              </span>
-                            </td>
-                          <% end %>
-                        </tr>
-                      <% end %>
-                    </tbody>
-                  </table>
+                  <div class="flex flex-wrap">
+                    <%= for skill <- @curriculum.skills do %>
+                      <div class="pr-8 pb-2">
+                        <span style="border-bottom: rgb(234,59,45) 1.5px solid;">
+                          <%= skill.name %>
+                        </span>
+                      </div>
+                    <% end %>
+                  </div>
                 </td>
               </tr>
             <% end %>

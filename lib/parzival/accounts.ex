@@ -226,12 +226,36 @@ defmodule Parzival.Accounts do
       {:error, %Ecto.Changeset{}}
   """
   def admin_create_user(attrs \\ %{}, after_save \\ &{:ok, &1}, role) do
-    qrcode = get_qr_code(attrs["qr"])
+    user =
+      %User{}
+      |> Map.put(:role, role)
 
-    %User{}
-    |> Map.put(:role, role)
-    |> Map.put(:qrcode_id, qrcode.id)
-    |> User.changeset(attrs)
+    if role in [:attendee] do
+      qrcode = get_qr_code(attrs["qr"])
+
+      user
+      |> Map.put(:qrcode_id, qrcode.id)
+    end
+
+    case user.role do
+      :recruiter ->
+        insert_recruiter(user, attrs, after_save)
+
+      _ ->
+        insert_user(user, attrs, after_save, role)
+    end
+  end
+
+  defp insert_recruiter(user, attrs, after_save) do
+    user
+    |> User.registration_changeset(attrs)
+    |> Repo.insert()
+    |> after_save(after_save)
+  end
+
+  defp insert_user(user, attrs, after_save, role) do
+    user
+    |> User.user_no_password_changeset(attrs)
     |> Repo.insert()
     |> after_save(after_save)
     |> case do
@@ -521,27 +545,5 @@ defmodule Parzival.Accounts do
     user
     |> User.exp_changeset(%{exp: user.exp + 500})
     |> Repo.update()
-  end
-
-  @doc """
-  Gets the position of a user in the leaderboard.
-
-  In case of a tie, the user has the highest (best) position amongst those who have that score (i.e., is tied for x-th place).any()
-
-  This means the same position can appear for multiple users at the same time
-
-  ## Examples
-
-      iex> get_user_position(user)
-      1
-
-  """
-  def get_user_position(user) do
-    x =
-      User
-      |> where([u], u.exp > ^user.exp)
-      |> Repo.aggregate(:count, :id)
-
-    x + 1
   end
 end

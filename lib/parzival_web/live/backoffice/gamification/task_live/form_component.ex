@@ -25,10 +25,16 @@ defmodule ParzivalWeb.Backoffice.TaskLive.FormComponent do
          |> put_flash(:success, "Task redeemed successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, :unauthorized} ->
         {:noreply,
          socket
-         |> assign(changeset: changeset)}
+         |> put_flash(:error, "You cannot redeem this task")
+         |> push_redirect(to: socket.assigns.return_to)}
+
+      {:error, changeset} ->
+        {:noreply,
+         socket
+         |> assign(:changeset, changeset)}
     end
   end
 end

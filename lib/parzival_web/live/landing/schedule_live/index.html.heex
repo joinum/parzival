@@ -10,13 +10,13 @@
     </div>
   </div>
   <div
-    x-data={"{ date: new Date().toISOString() >= '#{hd(@schedule["tuesday"])["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(@schedule["thursday"])["hours"]}.to_iso8601!()' ? new Date().getDay() : 2 }"}
+    x-data={"{ date: new Date().toISOString() >= '#{hd(@schedule["monday"])["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(@schedule["wednesday"])["hours"]}.to_iso8601!()' ? new Date().getDay() + 1 : 2 }"}
     class="flex flex-row my-10 h-auto lg:my-20 1.5xl:min-h-[1000px] xl:min-h-[900px]"
   >
     <div class="hidden relative w-full 1.5xl:block">
       <img class="absolute -right-24 w-[1200px] h-[740px] -z-40" src={Routes.static_path(@socket, "/images/cords/schedule_cords.svg")} alt="hero cords" />
 
-      <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
+      <%= for {day, index} <- Enum.with_index(["monday","tuesday","wednesday"]) do %>
         <button @click={" date = #{index + 2} "} :class={" date == #{index + 2} ? 'bg-[#E0483F] font-bold' : 'bg-[#BB2A22]' "} class={"absolute select-none w-40 py-2 text-lg  text-center text-white border-4 border-white rounded-full h-14 #{if index == 0 do
               "right-[704px]"
             else
@@ -30,7 +30,7 @@
         </button>
       <% end %>
 
-      <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
+      <%= for {day, index} <- Enum.with_index(["monday","tuesday","wednesday"]) do %>
         <div x-show={"date == #{index + 2}"} class="grid absolute right-0 top-32 grid-cols-5 gap-y-6 gap-x-8 p-10">
           <% next_activity =
             if Calendar.strftime(NaiveDateTime.utc_now(), "%j") == Calendar.strftime(hd(Map.get(@schedule, day))["hours"], "%j") do
@@ -86,11 +86,11 @@
     </div>
 
     <div class="flex relative flex-row-reverse mt-10 w-full 1.5xl:hidden">
-      <%= for {day, index} <- Enum.with_index(["tuesday","wednesday","thursday"]) do %>
+      <%= for {day, index} <- Enum.with_index(["monday","tuesday","wednesday"]) do %>
         <div x-show={"date == #{index + 2}"} class="flex flex-col w-full sm:w-96 md:w-[450px] lg:w-[500px]">
           <div class="flex flex-row justify-between items-center px-0 pt-4 pb-10 sm:px-6">
             <button @click="date = date > 2 ? date - 1 : date">
-              <Heroicons.Solid.chevron_left class={"#{if day == :tuesday do
+              <Heroicons.Solid.chevron_left class={"#{if day == :monday do
                   'fill-transparent'
                 else
                   'fill-white'

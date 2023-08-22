@@ -20,30 +20,34 @@
       <% end %>
     </div>
   </div>
-  <div class="min-h-full bg-white border-r border-gray-200">
-    <ul class="grid grid-cols-1 gap-x-6 px-10 pt-8 sm:grid-cols-2 lg:grid-cols-3 lg:px-4">
-      <%= for product <- @products do %>
-        <%= live_patch to: Routes.product_show_path(@socket, :show, product) do %>
-          <li class="relative mb-6 group" id={"product-#{product.id}"}>
-            <div class="overflow-hidden w-full bg-gray-50 rounded-md lg:h-80 group-hover:opacity-75 min-h-80 aspect-w-1 aspect-h-1 lg:aspect-none">
-              <img src={Uploaders.ProductImage.url({product.image, product}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full" />
-            </div>
-            <div class="flex flex-col justify-between pl-1 mt-4">
-              <h3 class="text-sm text-gray-700">
-                <span aria-hidden="true" class="absolute inset-0"></span>
-                <%= product.name %>
-              </h3>
-              <p class="mt-1 text-sm text-gray-500">
-                <%= product.description %>
-              </p>
-              <p class="relative right-1 text-sm font-medium text-gray-900">
-                💰 <span class="relative top-0.5"><%= product.price %></span>
-              </p>
-            </div>
-          </li>
-        <% end %>
+
+  <ul class="grid grid-cols-1 gap-x-6 px-10 pt-8 sm:grid-cols-2 lg:grid-cols-3 lg:px-4">
+    <%= for product <- @products do %>
+      <%= live_patch to: Routes.product_show_path(@socket, :show, product) do %>
+        <li class="relative mb-6 group" id={"product-#{product.id}"}>
+          <div class="overflow-hidden w-full bg-gray-50 rounded-md lg:h-80 group-hover:opacity-75 min-h-80 aspect-w-1 aspect-h-1 lg:aspect-none">
+            <img src={Uploaders.ProductImage.url({product.image, product}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full" />
+          </div>
+          <div class="flex flex-col justify-between pl-1 mt-4">
+            <h3 class="text-sm text-gray-700">
+              <span aria-hidden="true" class="absolute inset-0"></span>
+              <%= product.name %>
+            </h3>
+            <p class="mt-1 text-sm text-gray-500">
+              <%= String.slice(product.description, 0, 30) <>
+                if String.length(product.description) > 30 do
+                  "..."
+                else
+                  ""
+                end %>
+            </p>
+            <p class="relative right-1 text-sm font-medium text-gray-900">
+              💰 <span class="relative top-0.5"><%= product.price %></span>
+            </p>
+          </div>
+        </li>
       <% end %>
-    </ul>
-    <.pagination items={@products} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
-  </div>
+    <% end %>
+  </ul>
+  <.pagination items={@products} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
 </div>

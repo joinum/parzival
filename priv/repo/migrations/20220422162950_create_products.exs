@@ -6,7 +6,7 @@ defmodule Parzival.Repo.Migrations.CreateProducts do
       add :id, :binary_id, primary_key: true
 
       add :name, :string
-      add :description, :string
+      add :description, :text
       add :price, :integer
       add :stock, :integer
       add :max_per_user, :integer

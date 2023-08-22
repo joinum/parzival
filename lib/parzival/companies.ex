@@ -145,6 +145,21 @@ defmodule Parzival.Companies do
     |> Flop.validate_and_run(flop, for: Company)
   end
 
+  def get_company_level(company_id) do
+    company = get_company!(company_id) |> Repo.preload(:level)
+
+    company.level.name
+  end
+
+  def get_company_connections(company_id) do
+    company = get_company!(company_id) |> Repo.preload(:connections)
+
+    company
+    |> Repo.preload(:connections)
+    |> Repo.one!()
+    |> Map.get(:connections)
+  end
+
   @doc """
   Gets a single company.
 
@@ -163,6 +178,12 @@ defmodule Parzival.Companies do
     Company
     |> apply_filters(opts)
     |> Repo.get!(id)
+  end
+
+  def get_company_by_name(name) do
+    Company
+    |> where(name: ^name)
+    |> Repo.one!()
   end
 
   @doc """

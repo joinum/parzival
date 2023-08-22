@@ -1,6 +1,6 @@
 defmodule Parzival.Gamification.Mission.MissionUser do
   @moduledoc """
-  Connection betteween a Mission and an User.
+  Connection between a Mission and an User.
   """
   use Parzival.Schema
 

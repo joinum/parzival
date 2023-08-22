@@ -31,7 +31,7 @@
       </button>
     </div>
 
-    <div class="flex flex-col items-center w-full mx-auto overflow-scroll gap-y-8 my-6 h-[75%]">
+    <div class="flex flex-col items-center w-full mx-auto overflow-y-scroll gap-y-8 my-6 h-[75%]">
       <%= for page <- ParzivalWeb.Config.pages() do %>
         <%= if page.key != :login || ! assigns[:current_user] do %>
           <%= live_redirect to: page.url do %>

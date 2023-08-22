@@ -3,7 +3,7 @@
     <!-- Profile header -->
     <div>
       <div>
-        <img class="object-cover w-full h-32 lg:h-48" src={Routes.static_path(@socket, "/images/banner.svg")} alt="" />
+        <img class="object-cover w-full h-32 lg:h-48" src={Routes.static_path(@socket, "/images/banner_2023.png")} alt="" />
       </div>
       <div class="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
         <div class="-mt-12 sm:flex sm:items-end sm:-mt-16 sm:space-x-5">
@@ -27,6 +27,22 @@
               <h1 class="text-2xl font-bold text-gray-900 truncate">
                 <%= @user.name %>
               </h1>
+              <%= if @user.role in [:attendee] do %>
+                <div class="flex flex-col gap-y-1 lg:hidden">
+                  <span class="text-lg">
+                    LVL <%= Parzival.Gamification.calc_level(@user.exp) %>
+                  </span>
+                  <div class="overflow-hidden w-full h-6 rounded-md bg-quaternary">
+                    <div style={"width: #{@user.exp / Parzival.Gamification.calc_next_level_exp(@user.exp) * 100}%; transition: width 0.6s"} class="h-full bg-secondary" />
+                  </div>
+                  <span class="text-sm font-light text-right text-gray-300">
+                    <%= @user.exp %>/<%= Parzival.Gamification.calc_next_level_exp(@user.exp) %> EXP
+                  </span>
+                  <span class="text-sm font-light text-right text-gray-300">
+                    💰 <%= @current_user.balance %>
+                  </span>
+                </div>
+              <% end %>
               <.social_icons twitter={@user.twitter} github={@user.github} linkedin={@user.linkedin} />
             </div>
             <div class="flex flex-col mt-6 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 justify-stretch">
@@ -45,12 +61,12 @@
                 </div>
               <% end %>
               <%= if @user.id != @current_user.id do %>
-                <a href={"mailto:#{@user.name}"} type="button" class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50">
+                <a href={"mailto:#{@user.email}"} type="button" class="inline-flex justify-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50">
                   <Heroicons.Solid.mail class="mr-2 -ml-1 w-5 h-5 text-gray-400" />
                   <span>Message</span>
                 </a>
               <% end %>
-              <%= if @user.role in [:attendee] && @current_user.role in [:admin, :recruiter] || @current_user.role in [:attendee] && @user.id == @current_user.id do %>
+              <%= if @user.role in [:attendee] && @current_user.role in [:admin, :recruiter] && get_company_level(@current_user.company_id) != "Bronze" do %>
                 <%= link("Download CV",
                   to: Routes.pdf_path(@socket, :download_cv, @user),
                   class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full"
@@ -86,6 +102,14 @@
                 class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
               >
                 Curriculum
+              </button>
+
+              <button
+                x-on:click="option = 'qrcode'"
+                x-bind:class="option =='qrcode' ? 'border-b-2 border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                class="py-4 px-1 text-sm font-medium text-gray-500 whitespace-nowrap border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300"
+              >
+                QR Code
               </button>
             <% end %>
 
@@ -166,6 +190,13 @@
           </div>
         <% end %>
       </dl>
+    </div>
+    <!-- QR Code -->
+    <div x-bind:class="option =='qrcode' ? 'block' : 'hidden'" class="flex flex-col justify-center items-center px-4 mx-auto mt-6 max-w-5xl sm:px-6 lg:px-8">
+      <div class="lg:col-span-2 lg:justify-end lg:items-center lg:space-x-4">
+        <%= elem(draw_qr_code(@user), 0) |> raw %>
+      </div>
+      <p><%= elem(draw_qr_code(@user), 1) %></p>
     </div>
     <!-- Curriculum -->
     <%= if @user.role in [:attendee] do %>

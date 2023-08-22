@@ -67,7 +67,7 @@
         <h2 class="text-lg font-medium text-gray-900">
           Description
         </h2>
-        <p class="mt-2 text-sm text-gray-600 line-clamp-3">
+        <p class="mt-2 text-sm text-gray-600">
           <%= @offer.description %>
         </p>
       </div>
@@ -114,56 +114,60 @@
             </span>
           </h2>
         </div>
-        <!-- Stacked list -->
-        <ul role="list" class="mt-5 border-t border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
-          <%= for application <- @applications do %>
-            <li>
-              <%= live_patch to: Routes.profile_show_path(@socket, :show, application.user), class: "group" do %>
-                <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0">
-                  <div class="flex flex-1 items-center min-w-0">
-                    <div class="flex-shrink-0">
-                      <%= if is_nil(application.user.picture) do %>
-                        <span class="inline-flex justify-center items-center mr-2 w-12 h-12 rounded-full group-hover:opacity-75 bg-secondary">
-                          <span class="text-lg font-medium leading-none text-white">
-                            <%= extract_initials(application.user.name) %>
+        <%= if length(@applications) > 0 do %>
+          <!-- Stacked list -->
+          <ul role="list" class="mt-5 border-t border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
+            <%= for application <- @applications do %>
+              <li>
+                <%= live_patch to: Routes.profile_show_path(@socket, :show, application.user), class: "group" do %>
+                  <div class="flex items-center py-5 px-4 sm:py-6 sm:px-0">
+                    <div class="flex flex-1 items-center min-w-0">
+                      <div class="flex-shrink-0">
+                        <%= if is_nil(application.user.picture) do %>
+                          <span class="inline-flex justify-center items-center mr-2 w-12 h-12 rounded-full group-hover:opacity-75 bg-secondary">
+                            <span class="text-lg font-medium leading-none text-white">
+                              <%= extract_initials(application.user.name) %>
+                            </span>
                           </span>
-                        </span>
-                      <% else %>
-                        <div class="relative flex-shrink-0 w-12 h-12 bg-white rounded-full">
-                          <img src={Parzival.Uploaders.ProfilePicture.url({application.user.picture, application.user}, :medium)} class="object-center w-12 h-12 rounded-full" />
-                        </div>
-                      <% end %>
-                    </div>
-                    <div class="flex-1 px-4 min-w-0 md:grid md:grid-cols-2 md:gap-4">
-                      <div>
-                        <p class="text-sm font-medium text-red-600 truncate">
-                          <%= application.user.name %>
-                        </p>
-                        <p class="flex items-center mt-2 text-sm text-gray-500">
-                          <Heroicons.Solid.mail class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
-                          <span class="truncate">
-                            <%= application.user.email %>
-                          </span>
-                        </p>
+                        <% else %>
+                          <div class="relative flex-shrink-0 w-12 h-12 bg-white rounded-full">
+                            <img src={Parzival.Uploaders.ProfilePicture.url({application.user.picture, application.user}, :medium)} class="object-center w-12 h-12 rounded-full" />
+                          </div>
+                        <% end %>
                       </div>
-                      <div class="hidden md:block">
-                        <div class="flex items-center h-full">
-                          <p class="text-sm text-gray-900">
-                            Applied <%= relative_datetime(application.inserted_at) %>
+                      <div class="flex-1 px-4 min-w-0 md:grid md:grid-cols-2 md:gap-4">
+                        <div>
+                          <p class="text-sm font-medium text-red-600 truncate">
+                            <%= application.user.name %>
+                          </p>
+                          <p class="flex items-center mt-2 text-sm text-gray-500">
+                            <Heroicons.Solid.mail class="flex-shrink-0 mr-1.5 w-5 h-5 text-gray-400" />
+                            <span class="truncate">
+                              <%= application.user.email %>
+                            </span>
                           </p>
                         </div>
+                        <div class="hidden md:block">
+                          <div class="flex items-center h-full">
+                            <p class="text-sm text-gray-900">
+                              Applied <%= relative_datetime(application.inserted_at) %>
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
+                    <div>
+                      <Heroicons.Solid.chevron_right class="w-5 h-5 text-gray-400 group-hover:text-gray-700" />
+                    </div>
                   </div>
-                  <div>
-                    <Heroicons.Solid.chevron_right class="w-5 h-5 text-gray-400 group-hover:text-gray-700" />
-                  </div>
-                </div>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-        <.pagination items={@applications} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+          <.pagination items={@applications} meta={@meta} params={@params} class="flex justify-between items-center w-full" />
+        <% else %>
+          <p class="py-2 text-center w-100">No candidates have applied for this job offer yet.</p>
+        <% end %>
       <% end %>
     </div>
   </div>

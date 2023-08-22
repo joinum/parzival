@@ -36,7 +36,7 @@ config :waffle,
 config :parzival, Parzival.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
-config :swoosh, :api_client, false
+config :swoosh, :api_client, Swoosh.ApiClient.Hackney
 
 # Configure esbuild (the version is required)
 config :esbuild,
@@ -66,6 +66,17 @@ config :tailwind,
     ),
     cd: Path.expand("../assets", __DIR__)
   ]
+
+# configure event dates
+config :parzival,
+  event: %{
+    first_day_start: ~N[2023-06-05 00:00:00],
+    first_day_end: ~N[2023-06-05 23:59:59],
+    second_day_start: ~N[2023-06-06 00:00:00],
+    second_day_end: ~N[2023-06-06 23:59:59],
+    third_day_start: ~N[2023-06-07 00:00:00],
+    third_day_end: ~N[2023-06-07 23:59:59]
+  }
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

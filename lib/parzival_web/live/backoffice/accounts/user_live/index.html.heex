@@ -8,7 +8,7 @@
     url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "staff"}}})
   },
   attendee: %{
-    title: "Ateendees",
+    title: "Attendees",
     url: Routes.admin_user_index_path(@socket, :index, %{"filters" => %{"0" => %{"field" => "role", "value" => "attendee"}}})
   },
   recruiter: %{
@@ -21,7 +21,14 @@
   <div class="pt-5 pr-6 pb-5 pl-4 border-gray-200 sm:pl-6 lg:pl-8 xl:pt-6 xl:pl-6 border-y">
     <div class="flex justify-between items-center h-10">
       <h1 class="flex-1 text-lg font-medium"><%= roles[@current_tab].title %></h1>
-      <div class="flex flex-col sm:flex-row xl:flex-col">
+      <%= if roles[@current_tab].title == "Attendees" do %>
+        <div class="flex flex-col sm:flex-row xl:flex-col">
+          <%= link to: Routes.csv_path(@socket, :create), class: "inline-flex items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-50", method: :get do %>
+            <Heroicons.Solid.cloud_download class="mr-2 -ml-1 w-5 h-5 text-gray-500" /> Export Attendees
+          <% end %>
+        </div>
+      <% end %>
+      <div class="flex flex-col ml-5 sm:flex-row xl:flex-col">
         <%= live_patch("New", to: Routes.admin_user_new_path(@socket, :new, %{role: @current_tab}), class: "inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-primary xl:w-full") %>
       </div>
     </div>
@@ -70,7 +77,9 @@
                   <div class="text-gray-500">
                     <%= case @current_tab do %>
                       <% :attendee -> %>
-                        <%= user.cycle %> in <%= user.course %>
+                        <%= if not is_nil(user.cycle) and not is_nil(user.course) do %>
+                          <%= user.cycle %> in <%= user.course %>
+                        <% end %>
                       <% :recruiter -> %>
                         <%= user.company.name %>
                       <% _ -> %>
