@@ -48,6 +48,7 @@ defmodule ParzivalWeb do
         layout: {ParzivalWeb.LayoutView, "live.html"}
 
       unquote(view_helpers())
+      unquote(error_handling_helpers())
     end
   end
 
@@ -57,6 +58,7 @@ defmodule ParzivalWeb do
         layout: unquote(layout)
 
       unquote(view_helpers())
+      unquote(error_handling_helpers())
     end
   end
 
@@ -111,6 +113,17 @@ defmodule ParzivalWeb do
       alias ParzivalWeb.Router.Helpers, as: Routes
 
       alias Icons.{FontAwesome, Heroicons, Ionicons}
+    end
+  end
+
+  # Injects helpers for error handling in live views
+  defp error_handling_helpers do
+    quote do
+      def handle_info({:error, reason}, socket) do
+        {:noreply,
+         socket
+         |> put_flash(:error, reason)}
+      end
     end
   end
 

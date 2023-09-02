@@ -5,6 +5,7 @@ defmodule ParzivalWeb.Components.Boost do
   alias Parzival.Store
   alias Parzival.Uploaders
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div class="w-12 h-12">
@@ -26,13 +27,13 @@ defmodule ParzivalWeb.Components.Boost do
     """
   end
 
+  @impl true
   def handle_event("activate-boost", %{"item_id" => item_id}, socket) do
     user_id = socket.assigns.item.user_id
 
     if Store.already_has_active_boost?(user_id) do
-      {:noreply,
-      socket
-      |> put_flash(:error, "You already have an active boost!")}
+      send(self(), {:error, "You already have an active boost."})
+      {:noreply, socket}
     else
       item = Store.get_item!(item_id)
       Store.update_item(item, %{expires_at: Timex.shift(NaiveDateTime.utc_now(), minutes: 60)})
@@ -41,7 +42,8 @@ defmodule ParzivalWeb.Components.Boost do
        socket
        |> assign(
          inventory: Store.list_inventory(where: [user_id: item.user_id], preloads: [:boost])
-       )}
+       )
+       |> put_flash(:info, "Boost activated!")}
     end
   end
 end

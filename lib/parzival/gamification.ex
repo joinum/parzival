@@ -957,7 +957,6 @@ defmodule Parzival.Gamification do
   end
 
   def redeem_task(%User{} = user, %Task{} = task, %User{} = staff) do
-
     if can_redeem_task(staff, task) do
       Multi.new()
       |> Multi.insert(
