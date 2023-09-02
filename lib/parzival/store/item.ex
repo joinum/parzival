@@ -8,7 +8,6 @@ defmodule Parzival.Store.Item do
   alias Parzival.Store.Boost
 
   @required_fields ~w(user_id boost_id)a
-
   @optional_fields ~w(expires_at)a
 
   schema "items" do

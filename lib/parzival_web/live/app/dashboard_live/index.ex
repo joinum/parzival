@@ -56,6 +56,11 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
     end
   end
 
+  @impl true
+  def handle_info({event, _post}, socket) when event in [:new_post] do
+    {:noreply, assign(socket, list_posts(socket.assigns.params))}
+  end
+
   defp list_top_users(params) do
     params =
       params
@@ -103,17 +108,5 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
 
   defp list_announcements do
     Tools.list_announcements(preloads: [:author], limit: 2, order_by: [desc: :inserted_at])
-  end
-
-  @impl true
-  def handle_info({event, _post}, socket) when event in [:new_post] do
-    {:noreply, assign(socket, list_posts(socket.assigns.params))}
-  end
-
-  @impl true
-  def handle_info({:error, reason}, socket) do
-    {:noreply,
-     socket
-     |> put_flash(:error, reason)}
   end
 end

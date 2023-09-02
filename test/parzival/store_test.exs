@@ -228,7 +228,7 @@ defmodule Parzival.StoreTest do
       item = item_fixture()
       update_attrs = %{expires_at: ~N[2022-06-19 01:07:00]}
 
-      assert {:ok, %Item{} = item} = Store.update_item(item, update_attrs)
+      assert {:ok, %Item{}} = Store.update_item(item, update_attrs)
     end
 
     test "update_item/2 with invalid data returns error changeset" do

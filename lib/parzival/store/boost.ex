@@ -10,10 +10,7 @@ defmodule Parzival.Store.Boost do
   @types ~w(exp tokens skip_task)a
 
   @required_fields ~w(name description price type)a
-
-  @optional_fields [
-    :multiplier
-  ]
+  @optional_fields ~w(multiplier)a
 
   @derive {
     Flop.Schema,

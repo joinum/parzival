@@ -251,6 +251,17 @@ defmodule Parzival.Store do
     Order.changeset(order, attrs)
   end
 
+  @doc """
+  Purchases a product.
+
+  ## Examples
+
+      iex> purchase_product(user, product)
+      {:ok, %Ecto.Changeset{}}
+
+      iex> purchase_product(user, product)
+      {:error, %Ecto.Changeset{}}
+  """
   def purchase_product(user, product) do
     Multi.new()
     |> Multi.update(
@@ -342,7 +353,19 @@ defmodule Parzival.Store do
   """
   def get_boost!(id), do: Repo.get!(Boost, id)
 
-  # This function assumes the existance of a boost of type skip_task
+  @doc """
+  Gets the :skip_task type boost. This function assumes the existance of a boost of type skip_task.
+
+  Raises `Ecto.NoResultsError` if the Boost does not exist.
+
+  ## Examples
+
+      iex> get_skip_task_boost()
+      %Boost{}
+
+      iex> get_skip_task_boost()
+      ** (Ecto.NoResultsError)
+  """
   def get_skip_task_boost do
     Boost
     |> where([b], b.type == :skip_task)
@@ -416,6 +439,17 @@ defmodule Parzival.Store do
 
   alias Parzival.Store.Item
 
+  @doc """
+  Returns true if the user has an active boost of type exp or tokens, false otherwise.
+
+  ## Examples
+
+      iex> already_has_active_boost?(user_id)
+      true
+
+      iex> already_has_active_boost?(user_id)
+      false
+  """
   def already_has_active_boost?(user_id) do
     Item
     |> where([i], i.user_id == ^user_id)
@@ -425,6 +459,17 @@ defmodule Parzival.Store do
     |> Repo.exists?()
   end
 
+  @doc """
+  Purchases a boost.
+
+  ## Examples
+
+      iex> purchase_boost(user, boost)
+      {:ok, %Ecto.Changeset{}}
+
+      iex> purchase_boost(user, boost)
+      {:error, %Ecto.Changeset{}}
+  """
   def purchase_boost(user, boost) do
     Multi.new()
     |> Multi.update(
@@ -469,6 +514,14 @@ defmodule Parzival.Store do
     |> Flop.validate_and_run(flop, for: Item)
   end
 
+  @doc """
+  Returns the list of items present in the inventory.
+
+  ## Examples
+
+      iex> list_inventory()
+      [%Item{}, ...]
+  """
   def list_inventory(opts) when is_list(opts) do
     from(i in Item,
       where: is_nil(i.expires_at) or i.expires_at > ^NaiveDateTime.utc_now()
@@ -477,6 +530,14 @@ defmodule Parzival.Store do
     |> Repo.all()
   end
 
+  @doc """
+  Returns the item that represents the skip task boost in the user inventory.
+
+  ## Examples
+
+      iex> get_skip_task_from_inventory(user_id)
+      %Item{}
+  """
   def get_skip_task_from_inventory(user_id) do
     Item
     |> where(user_id: ^user_id)
