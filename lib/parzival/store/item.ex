@@ -1,6 +1,6 @@
 defmodule Parzival.Store.Item do
   @moduledoc """
-  A item with a boost that belongs to a user.
+  An item with a boost that belongs to a user.
   """
   use Parzival.Schema
 
@@ -9,9 +9,7 @@ defmodule Parzival.Store.Item do
 
   @required_fields ~w(user_id boost_id)a
 
-  @optional_fields [
-    :expires_at
-  ]
+  @optional_fields ~w(expires_at)a
 
   schema "items" do
     field :expires_at, :naive_datetime

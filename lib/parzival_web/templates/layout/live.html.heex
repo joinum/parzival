@@ -120,28 +120,7 @@
                 </span>
               </div>
             <% end %>
-            <!-- Inventory -->
-            <p class="text-gray-500">
-              <%= "Inventory (#{length(@inventory)}/5)" %>
-            </p>
-            <div class="grid grid-cols-5 gap-2">
-              <%= for i <- 1..5 do %>
-                <%= if i > length(@inventory) do %>
-                  <div class="w-12 h-12 border border-gray-200" />
-                <% else %>
-                  <.live_component module={ParzivalWeb.Components.Boost} id={Enum.at(@inventory, i - 1).id} item={Enum.at(@inventory, i - 1)} flash={@flash} />
-                <% end %>
-              <% end %>
-            </div>
-
-            <%= for item <- @inventory do %>
-              <%= if item.expires_at do %>
-                <div class="flex justify-between items-center mt-2 text-gray-900">
-                  <span><%= item.boost.name %></span>
-                  <span><%= relative_datetime_in_digital_clock_format(item.expires_at) %></span>
-                </div>
-              <% end %>
-            <% end %>
+            <.live_component module={ParzivalWeb.Components.Inventory} id="inventory" inventory={@inventory} />
           <% end %>
         </div>
         <!-- Socials -->

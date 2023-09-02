@@ -566,11 +566,41 @@ defmodule Parzival.Store do
     Item.changeset(item, attrs)
   end
 
+  @doc """
+  Returns true if the user has a skip task boost in their inventory, false otherwise.
+
+  ## Examples
+
+      iex> has_skip_task?(user_id)
+      true
+
+      iex> has_skip_task?(user_id)
+      false
+  """
   def has_skip_task?(user_id) do
     Item
     |> where([i], i.user_id == ^user_id)
     |> join(:inner, [i], b in Boost, on: i.boost_id == b.id)
     |> where([i, b], b.type == :skip_task)
     |> Repo.exists?()
+  end
+
+  @doc """
+  Terminates a boost, by setting its `expires_at` to `nil`. It also deletes the item from the user inventory.
+  """
+  def terminate_boost(item_id) do
+    item = get_item!(item_id)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.update(:update_item, Item.changeset(item, %{expires_at: nil}))
+    |> Ecto.Multi.delete(:delete_item, item)
+    |> Repo.transaction()
+    |> case do
+      {:ok, transaction} ->
+        {:ok, transaction.update_item}
+
+      {:error, _transaction, changeset, _} ->
+        {:error, changeset}
+    end
   end
 end

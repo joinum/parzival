@@ -9,18 +9,18 @@ defmodule ParzivalWeb.Components.Boost do
   def render(assigns) do
     ~H"""
     <div class="w-12 h-12">
-      <%= if !assigns.item.expires_at do %>
-        <%= if assigns.item.boost.type in [:exp, :tokens] do %>
-          <button phx-click="activate-boost" phx-value-item_id={assigns.item.id} phx-target={@myself} data-confirm={"Are you sure you wanna activate #{assigns.item.boost.name}? #{assigns.item.boost.description}."}>
-            <img src={Uploaders.BoostImage.url({assigns.item.boost.image, assigns.item.boost}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full hover:opacity-70" />
+      <%= if ! @item.expires_at do %>
+        <%= if @item.boost.type in [:exp, :tokens] do %>
+          <button phx-click="activate-boost" phx-value-item_id={@item.id} phx-target={@myself} data-confirm={"Are you sure you wanna activate #{assigns.item.boost.name}? #{assigns.item.boost.description}."}>
+            <img src={Uploaders.BoostImage.url({@item.boost.image, @item.boost}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full hover:opacity-70" />
           </button>
         <% else %>
-          <img src={Uploaders.BoostImage.url({assigns.item.boost.image, assigns.item.boost}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full" />
+          <img src={Uploaders.BoostImage.url({@item.boost.image, @item.boost}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full" />
         <% end %>
       <% else %>
         <div class="relative">
           <span class="absolute w-full h-full bg-red-500 opacity-75 animate-ping" />
-          <img src={Uploaders.BoostImage.url({assigns.item.boost.image, assigns.item.boost}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full" />
+          <img src={Uploaders.BoostImage.url({@item.boost.image, @item.boost}, :original)} class="object-cover object-center w-full h-full lg:w-full lg:h-full" />
         </div>
       <% end %>
     </div>
@@ -38,12 +38,13 @@ defmodule ParzivalWeb.Components.Boost do
       item = Store.get_item!(item_id)
       Store.update_item(item, %{expires_at: Timex.shift(NaiveDateTime.utc_now(), minutes: 60)})
 
+      send(self(), {:info, "Boost activated!"})
+
       {:noreply,
        socket
        |> assign(
          inventory: Store.list_inventory(where: [user_id: item.user_id], preloads: [:boost])
-       )
-       |> put_flash(:info, "Boost activated!")}
+       )}
     end
   end
 end

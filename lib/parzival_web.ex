@@ -48,7 +48,7 @@ defmodule ParzivalWeb do
         layout: {ParzivalWeb.LayoutView, "live.html"}
 
       unquote(view_helpers())
-      unquote(error_handling_helpers())
+      unquote(handle_flash_helper())
     end
   end
 
@@ -58,7 +58,7 @@ defmodule ParzivalWeb do
         layout: unquote(layout)
 
       unquote(view_helpers())
-      unquote(error_handling_helpers())
+      unquote(handle_flash_helper())
     end
   end
 
@@ -116,13 +116,13 @@ defmodule ParzivalWeb do
     end
   end
 
-  # Injects helpers for error handling in live views
-  defp error_handling_helpers do
+  # Injects helpers for handling flash messages sent from live components
+  defp handle_flash_helper do
     quote do
-      def handle_info({:error, reason}, socket) do
+      def handle_info({action, reason}, socket) when is_atom(action) do
         {:noreply,
          socket
-         |> put_flash(:error, reason)}
+         |> put_flash(action, reason)}
       end
     end
   end
