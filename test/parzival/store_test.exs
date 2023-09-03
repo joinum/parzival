@@ -144,11 +144,15 @@ defmodule Parzival.StoreTest do
 
     import Parzival.StoreFixtures
 
-    @invalid_attrs %{finish: nil}
+    @invalid_attrs %{type: nil}
 
     test "list_boosts/0 returns all boosts" do
       boost = boost_fixture()
-      assert Store.list_boosts() == [boost]
+
+      case Store.list_boosts() do
+        {:ok, {boosts, _meta}} -> assert hd(boosts) == boost
+        {:error, _} -> assert false
+      end
     end
 
     test "get_boost!/1 returns the boost with given id" do
@@ -158,19 +162,16 @@ defmodule Parzival.StoreTest do
 
     test "create_boost/1 with valid data creates a boost" do
       valid_attrs = %{
-        finish: ~N[2022-06-18 01:07:00],
         multiplier: 2,
         name: "some name",
         price: 42,
-        start: ~N[2022-06-17 01:07:00],
-        stock: 42,
         type: "exp",
         description: "some description",
         item: StoreFixtures.product_fixture()
       }
 
       assert {:ok, %Boost{} = boost} = Store.create_boost(valid_attrs)
-      assert boost.finish == ~N[2022-06-18 01:07:00]
+      assert boost.multiplier == 2
     end
 
     test "create_boost/1 with invalid data returns error changeset" do
@@ -179,10 +180,10 @@ defmodule Parzival.StoreTest do
 
     test "update_boost/2 with valid data updates the boost" do
       boost = boost_fixture()
-      update_attrs = %{finish: ~N[2022-06-19 01:07:00]}
+      update_attrs = %{name: "some updated name"}
 
       assert {:ok, %Boost{} = boost} = Store.update_boost(boost, update_attrs)
-      assert boost.finish == ~N[2022-06-19 01:07:00]
+      assert boost.name == "some updated name"
     end
 
     test "update_boost/2 with invalid data returns error changeset" do
@@ -208,7 +209,7 @@ defmodule Parzival.StoreTest do
 
     import Parzival.StoreFixtures
 
-    @invalid_attrs %{}
+    @invalid_attrs %{user_id: nil}
 
     test "list_items/0 returns all items" do
       item = item_fixture()
@@ -228,7 +229,8 @@ defmodule Parzival.StoreTest do
       item = item_fixture()
       update_attrs = %{expires_at: ~N[2022-06-19 01:07:00]}
 
-      assert {:ok, %Item{}} = Store.update_item(item, update_attrs)
+      assert {:ok, %Item{} = item} = Store.update_item(item, update_attrs)
+      assert item.expires_at == ~N[2022-06-19 01:07:00]
     end
 
     test "update_item/2 with invalid data returns error changeset" do

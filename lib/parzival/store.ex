@@ -92,7 +92,7 @@ defmodule Parzival.Store do
     |> Product.changeset(attrs)
     |> Repo.update()
     |> after_save(after_save)
-    |> broadcast(:updated)
+    |> broadcast(:product_updated)
   end
 
   def update_product_image(%Product{} = product, attrs) do
@@ -121,7 +121,7 @@ defmodule Parzival.Store do
       message: "This product cant be deleted, because users have bought it!"
     )
     |> Repo.delete()
-    |> broadcast(:deleted)
+    |> broadcast(:product_deleted)
   end
 
   @doc """
@@ -496,22 +496,15 @@ defmodule Parzival.Store do
       [%Item{}, ...]
 
   """
-  def list_items(params \\ %{})
+  def list_items do
+    Item
+    |> Repo.all()
+  end
 
   def list_items(opts) when is_list(opts) do
     Item
     |> apply_filters(opts)
     |> Repo.all()
-  end
-
-  def list_items(flop) do
-    Flop.validate_and_run(Item, flop, for: Item)
-  end
-
-  def list_items(%{} = flop, opts) when is_list(opts) do
-    Item
-    |> apply_filters(opts)
-    |> Flop.validate_and_run(flop, for: Item)
   end
 
   @doc """

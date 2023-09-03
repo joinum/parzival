@@ -5,6 +5,7 @@ defmodule Parzival.StoreFixtures do
   """
 
   alias Parzival.AccountsFixtures
+  alias Parzival.StoreFixtures
 
   @doc """
   Generate a product.
@@ -31,8 +32,8 @@ defmodule Parzival.StoreFixtures do
     {:ok, order} =
       attrs
       |> Enum.into(%{
-        product_id: Parzival.StoreFixtures.product_fixture().id,
-        user_id: Parzival.AccountsFixtures.user_fixture().id,
+        product_id: StoreFixtures.product_fixture().id,
+        user_id: AccountsFixtures.user_fixture().id,
         redeemed: false
       })
       |> Parzival.Store.create_order()
@@ -49,12 +50,9 @@ defmodule Parzival.StoreFixtures do
       |> Enum.into(%{
         name: "some name",
         description: "some description",
-        start: ~N[2022-06-17 01:07:00],
-        finish: ~N[2022-06-18 01:07:00],
         price: 42,
         type: "exp",
-        multiplier: 1.5,
-        item: Parzival.StoreFixtures.item_fixture()
+        multiplier: 1.5
       })
       |> Parzival.Store.create_boost()
 
