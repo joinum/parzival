@@ -42,7 +42,7 @@ defmodule ParzivalWeb.App.ProductLive.Show do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply,
          socket
-         |> put_flash(:error, elem(changeset.errors[:orders], 0))
+         |> put_flash(:error, elem(changeset.errors[:error], 0))
          |> assign(:changeset, changeset)}
     end
   end

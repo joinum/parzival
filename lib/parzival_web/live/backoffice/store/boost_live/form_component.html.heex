@@ -21,24 +21,34 @@
           <!-- Boost details -->
           <div class="lg:self-end lg:max-w-lg">
             <div class="">
-              <label for="street-address" class="block text-sm font-medium text-gray-700">Name</label>
+              <label class="block text-sm font-medium text-gray-700">Name</label>
               <%= text_input(f, :name, phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :name) %></p>
 
             <div class="mt-4">
-              <label for="street-address" class="block text-sm font-medium text-gray-700">Price</label>
+              <label class="block text-sm font-medium text-gray-700">Price</label>
               <%= number_input(f, :price, phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
+            <p class="text-xs text-red-500"><%= error_tag(f, :price) %></p>
+
             <div class="mt-4">
-              <label for="street-address" class="block text-sm font-medium text-gray-700">Multiplier</label>
+              <label class="block text-sm font-medium text-gray-700">Multiplier</label>
               <%= number_input(f, :multiplier, phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
-            <p class="text-xs text-red-500"><%= error_tag(f, :price) %></p>
+            <p class="text-xs text-red-500"><%= error_tag(f, :multiplier) %></p>
+
             <div class="mt-4">
-              <label for="street-address" class="block text-sm font-medium text-gray-700">Description</label>
+              <label class="block text-sm font-medium text-gray-700">Type</label>
+              <%= select(f, :type, [[key: "EXP", value: :exp], [key: "Tokens", value: :tokens], [key: "Skip task", value: :skip_task]], prompt: "Choose a type", selected: f.data.type, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+            </div>
+            <p class="text-xs text-red-500"><%= error_tag(f, :type) %></p>
+
+            <div class="mt-4">
+              <label class="block text-sm font-medium text-gray-700">Description</label>
               <%= textarea(f, :description, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
+            <p class="text-xs text-red-500"><%= error_tag(f, :description) %></p>
           </div>
           <!-- Boost image -->
           <div class="mt-10 lg:col-start-2 lg:row-span-2 lg:self-center lg:mt-0">

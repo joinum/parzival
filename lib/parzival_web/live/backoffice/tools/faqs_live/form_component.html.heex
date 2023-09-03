@@ -22,12 +22,12 @@
             <%= live_redirect("< Back", to: @return_to, class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
           </div>
           <div>
-            <label for="street-address" class="block text-sm font-medium text-gray-700">Question</label>
+            <label class="block text-sm font-medium text-gray-700">Question</label>
             <%= text_input(f, :question, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
           </div>
           <p class="text-xs text-red-500"><%= error_tag(f, :question) %></p>
           <div>
-            <label for="street-address" class="block text-sm font-medium text-gray-700">Answer</label>
+            <label class="block text-sm font-medium text-gray-700">Answer</label>
             <%= textarea(f, :answer, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
           </div>
           <p class="text-xs text-red-500"><%= error_tag(f, :answer) %></p>

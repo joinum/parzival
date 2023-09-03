@@ -18,17 +18,17 @@ defmodule ParzivalWeb.App.BoostLive.Show do
 
   @impl true
   def handle_event("delete", _payload, socket) do
-    case Store.delete_product(socket.assigns.product) do
-      {:ok, _product} ->
+    case Store.delete_boost(socket.assigns.boost) do
+      {:ok, _boost} ->
         {:noreply,
          socket
-         |> put_flash(:success, "Product deleted successfully!")
-         |> push_redirect(to: Routes.product_index_path(socket, :index))}
+         |> put_flash(:success, "Boost deleted successfully!")
+         |> push_redirect(to: Routes.boost_index_path(socket, :index))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply,
          socket
-         |> put_flash(:error, elem(changeset.errors[:orders], 0))
+         |> put_flash(:error, elem(changeset.errors[:error], 0))
          |> assign(:changeset, changeset)}
     end
   end

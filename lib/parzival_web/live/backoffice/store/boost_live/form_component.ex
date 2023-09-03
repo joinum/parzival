@@ -3,6 +3,7 @@ defmodule ParzivalWeb.Backoffice.BoostLive.FormComponent do
   use ParzivalWeb, :live_component
 
   alias Parzival.Store
+
   @extensions_whitelist ~w(.jpg .jpeg .gif .png)
 
   @impl true

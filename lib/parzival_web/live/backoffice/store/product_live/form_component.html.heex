@@ -21,28 +21,28 @@
           <!-- Product details -->
           <div class="lg:self-end lg:max-w-lg">
             <div class="">
-              <label for="street-address" class="block text-sm font-medium text-gray-700">Name</label>
+              <label class="block text-sm font-medium text-gray-700">Name</label>
               <%= text_input(f, :name, phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :name) %></p>
 
             <div class="mt-4">
-              <label for="street-address" class="block text-sm font-medium text-gray-700">Price</label>
+              <label class="block text-sm font-medium text-gray-700">Price</label>
               <%= number_input(f, :price, phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :price) %></p>
             <div class="mt-4">
-              <label for="street-address" class="block text-sm font-medium text-gray-700">Description</label>
+              <label class="block text-sm font-medium text-gray-700">Description</label>
               <%= textarea(f, :description, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :description) %></p>
             <div class="mt-4">
-              <label for="street-address" class="block text-sm font-medium text-gray-700">Stock</label>
+              <label class="block text-sm font-medium text-gray-700">Stock</label>
               <%= number_input(f, :stock, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :stock) %></p>
             <div class="mt-4">
-              <label for="street-address" class="block text-sm font-medium text-gray-700">Maximum purchases per user</label>
+              <label class="block text-sm font-medium text-gray-700">Maximum purchases per user</label>
               <%= number_input(f, :max_per_user, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :max_per_user) %></p>
