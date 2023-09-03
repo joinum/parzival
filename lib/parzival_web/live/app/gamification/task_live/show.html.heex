@@ -14,14 +14,30 @@
     <div class="flex justify-between items-center h-10">
       <h1 class="flex-1 text-lg font-medium">Task</h1>
       <%= if @current_user.role in [:attendee] do %>
-        <div class="flex flex-row gap-x-4">
+        <div class="flex flex-row gap-x-4 justify-between items-center whitespace-nowrap">
           <%= if @is_task_completed? do %>
-            <div class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white bg-green-400 rounded-md border border-transparent shadow-sm xl:w-full">
+            <div class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-white bg-green-400 rounded-md border border-transparent shadow-sm">
               Completed
             </div>
           <% else %>
-            <%= live_patch to: Routes.task_show_url(@socket, :redeem, @mission, @task), class: "button" do %>
-              <div type="button" class="inline-flex justify-center items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm cursor-pointer xl:w-full bg-secondary hover:bg-primary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
+            <%= if @has_skip_task? do %>
+              <button phx-click="skip-task" class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-red-600 bg-red-50 rounded-md border border-transparent shadow-sm cursor-pointer hover:bg-red-100">
+                Skip task
+              </button>
+            <% else %>
+              <div x-data="{ open: false }">
+                <button x-on:click="open = ! open" @click.away="open = false" type="button" class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-red-600 bg-red-50 rounded-md border border-transparent shadow-sm opacity-50 hover:bg-red-100">
+                  Skip task
+                </button>
+                <div x-bind:class="! open ? 'hidden' : 'z-50 absolute mt-2 p-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                  <p class="whitespace-normal">
+                    In order to skip this task, you have to purchase a "Skip Task" boost on the <%= live_redirect("store", to: Routes.boost_show_path(@socket, :show, @skip_task_boost), class: "underline text-red-500") %>.
+                  </p>
+                </div>
+              </div>
+            <% end %>
+            <%= live_patch to: Routes.task_show_url(@socket, :redeem, @mission, @task), class: "button relative" do %>
+              <div type="button" class="inline-flex justify-center items-center py-2 px-4 w-full text-sm font-medium text-white rounded-md border border-transparent shadow-sm cursor-pointer bg-secondary text-no hover:bg-primary" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
                 Complete task
               </div>
             <% end %>
@@ -30,6 +46,7 @@
       <% end %>
     </div>
   </div>
+
   <div class="flex flex-col py-6 px-4 mx-auto w-full border-b border-gray-200 sm:px-6 lg:px-8">
     <div>
       <%= live_redirect("< Back", to: Routes.mission_show_path(@socket, :show, @mission), class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>

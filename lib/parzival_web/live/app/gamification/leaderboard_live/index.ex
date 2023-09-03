@@ -24,7 +24,7 @@ defmodule ParzivalWeb.App.LeaderboardLive.Index do
 
   @impl true
   def handle_params(params, _url, socket) do
-    user = Accounts.get_user!(socket.assigns.current_user.id, [:missions])
+    user = Accounts.get_user!(socket.assigns.current_user.id, [:missions, inventory: [:boost]])
 
     {:noreply,
      socket

@@ -48,6 +48,7 @@ defmodule ParzivalWeb do
         layout: {ParzivalWeb.LayoutView, "live.html"}
 
       unquote(view_helpers())
+      unquote(flash_helper())
     end
   end
 
@@ -57,6 +58,7 @@ defmodule ParzivalWeb do
         layout: unquote(layout)
 
       unquote(view_helpers())
+      unquote(flash_helper())
     end
   end
 
@@ -111,6 +113,17 @@ defmodule ParzivalWeb do
       alias ParzivalWeb.Router.Helpers, as: Routes
 
       alias Icons.{FontAwesome, Heroicons, Ionicons}
+    end
+  end
+
+  # Injects an `handle_info` clause into the every live view
+  defp flash_helper do
+    quote do
+      def handle_info({action, reason}, socket) when is_atom(action) do
+        {:noreply,
+         socket
+         |> put_flash(action, reason)}
+      end
     end
   end
 

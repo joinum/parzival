@@ -6,6 +6,7 @@ defmodule ParzivalWeb.App.TaskLive.Show do
 
   alias Parzival.Accounts
   alias Parzival.Gamification
+  alias Parzival.Store
 
   @impl true
   def mount(_params, _session, socket) do
@@ -24,10 +25,30 @@ defmodule ParzivalWeb.App.TaskLive.Show do
        :is_task_completed?,
        Gamification.is_task_completed?(task_id, socket.assigns.current_user.id)
      )
+     |> assign(
+       :has_skip_task?,
+       Store.has_skip_task?(socket.assigns.current_user.id)
+     )
+     |> assign(
+       :skip_task_boost,
+       Store.get_skip_task_boost()
+     )
      |> assign(list_completed_tasks_users(params))
      |> assign(:task, Gamification.get_task!(task_id))
      |> assign(:qrcode, qrcode(socket, task_id))
      |> apply_action(socket.assigns.live_action, params)}
+  end
+
+  @impl true
+  def handle_event("skip-task", _, socket) do
+    task = socket.assigns.task
+    user = socket.assigns.current_user
+
+    Gamification.skip_task(user, task)
+
+    {:noreply,
+     socket
+     |> assign(inventory: Store.list_inventory(where: [user_id: user.id], preloads: [:boost]))}
   end
 
   defp apply_action(socket, :show, _params) do

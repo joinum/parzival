@@ -1,9 +1,9 @@
-<div class="min-h-full border-r border-gray-200">
-  <.form let={f} for={@changeset} id="product-form" phx-target={@myself} phx-submit="save" phx-change="validate">
+<div>
+  <.form let={f} for={@changeset} id="boost-form" phx-target={@myself} phx-change="validate" phx-submit="save">
     <div class="min-h-full bg-white">
       <div class="py-5 pr-6 pl-4 border-gray-200 sm:px-6 lg:px-8 xl:py-6 xl:px-6 border-y">
         <div class="flex justify-between items-center h-10">
-          <h1 class="flex-1 text-lg font-medium">Store</h1>
+          <h1 class="flex-1 text-lg font-medium">Boost</h1>
           <!-- Action buttons -->
           <%= submit do %>
             <div type="button" class="inline-flex justify-center items-center py-2 px-4 w-14 text-sm font-medium text-white rounded-md border-transparent shadow-sm xl:w-full bg-secondary hover:bg:primary">
@@ -18,7 +18,7 @@
           <%= live_redirect("< Back", to: @return_to, class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
         </div>
         <div class="py-1 px-4 mx-auto max-w-2xl sm:px-6 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:max-w-7xl">
-          <!-- Product details -->
+          <!-- Boost details -->
           <div class="lg:self-end lg:max-w-lg">
             <div class="">
               <label class="block text-sm font-medium text-gray-700">Name</label>
@@ -31,23 +31,26 @@
               <%= number_input(f, :price, phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :price) %></p>
+
+            <div class="mt-4">
+              <label class="block text-sm font-medium text-gray-700">Multiplier</label>
+              <%= number_input(f, :multiplier, phx_debounce: "blur", class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+            </div>
+            <p class="text-xs text-red-500"><%= error_tag(f, :multiplier) %></p>
+
+            <div class="mt-4">
+              <label class="block text-sm font-medium text-gray-700">Type</label>
+              <%= select(f, :type, [[key: "EXP", value: :exp], [key: "Tokens", value: :tokens], [key: "Skip task", value: :skip_task]], prompt: "Choose a type", selected: f.data.type, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
+            </div>
+            <p class="text-xs text-red-500"><%= error_tag(f, :type) %></p>
+
             <div class="mt-4">
               <label class="block text-sm font-medium text-gray-700">Description</label>
               <%= textarea(f, :description, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
             </div>
             <p class="text-xs text-red-500"><%= error_tag(f, :description) %></p>
-            <div class="mt-4">
-              <label class="block text-sm font-medium text-gray-700">Stock</label>
-              <%= number_input(f, :stock, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
-            </div>
-            <p class="text-xs text-red-500"><%= error_tag(f, :stock) %></p>
-            <div class="mt-4">
-              <label class="block text-sm font-medium text-gray-700">Maximum purchases per user</label>
-              <%= number_input(f, :max_per_user, rows: 3, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
-            </div>
-            <p class="text-xs text-red-500"><%= error_tag(f, :max_per_user) %></p>
           </div>
-          <!-- Product image -->
+          <!-- Boost image -->
           <div class="mt-10 lg:col-start-2 lg:row-span-2 lg:self-center lg:mt-0">
             <div class="overflow-hidden rounded-lg aspect-w-1 aspect-h-1">
               <div class="flex flex-col 1.5xl:flex-row">
