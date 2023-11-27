@@ -20,13 +20,13 @@
             <%= live_redirect("< Back", to: @return_to, class: "hover:underline inline-flex items-center justify-center whitespace-nowrap") %>
           </div>
           <div>
-            <label for="street-address" class="block text-sm font-medium text-gray-700">Title</label>
+            <label class="block text-sm font-medium text-gray-700">Title</label>
             <%= text_input(f, :title, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
           </div>
           <p class="text-xs text-red-500"><%= error_tag(f, :title) %></p>
 
           <div>
-            <label for="street-address" class="block text-sm font-medium text-gray-700">Description</label>
+            <label class="block text-sm font-medium text-gray-700">Description</label>
             <%= textarea(f, :text, rows: 12, class: "mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") %>
           </div>
           <p class="text-xs text-red-500"><%= error_tag(f, :text) %></p>

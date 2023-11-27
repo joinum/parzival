@@ -17,7 +17,7 @@
           <%= live_redirect to: Routes.order_show_path(@socket, :show, order) do %>
             <li class="flex py-6 px-5 sm:px-10 md:px-20 hover:bg-gray-50">
               <div class="flex-shrink-0">
-                <img src={Uploaders.ProductImage.url({order.product.image, order.product}, :medium)} alt="Front side of mint cotton t-shirt with wavey lines pattern." class="object-cover object-center w-24 h-24 rounded-md sm:w-32 sm:h-32" />
+                <img src={Uploaders.ProductImage.url({order.product.image, order.product}, :original)} class="object-cover object-center w-24 h-24 rounded-md sm:w-32 sm:h-32" />
               </div>
               <div class="flex flex-col flex-1 ml-4 sm:ml-6">
                 <div>
@@ -95,19 +95,6 @@
               </li>
             <% end %>
           </ul>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-lg">
-        <div className="mt-10">
-          <div className="text-center">
-            <h2 className="mt-2 text-lg font-medium text-gray-900"></h2>
-            <p className="mt-1 text-sm text-gray-500"></p>
-          </div>
-        </div>
-        <div className="mt-10">
-          <h3 className="text-xs font-semibold tracking-wide text-gray-500 uppercase"></h3>
-          <ul role="list" className="mt-4 mb-14 border-t border-b border-gray-200 divide-y divide-gray-200"></ul>
         </div>
       </div>
     <% end %>

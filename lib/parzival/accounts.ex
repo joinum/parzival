@@ -213,6 +213,10 @@ defmodule Parzival.Accounts do
     User.changeset(user, attrs, generate_password: false)
   end
 
+  def load_user_fields(user, preloads \\ []) do
+    Repo.preload(user, preloads)
+  end
+
   @doc """
   Creates a user.
   ## Examples

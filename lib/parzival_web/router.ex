@@ -77,6 +77,9 @@ defmodule ParzivalWeb.Router do
         live "/store/", ProductLive.Index, :index
         live "/store/:id", ProductLive.Show, :show
 
+        live "/boosts/", BoostLive.Index, :index
+        live "/boosts/:id", BoostLive.Show, :show
+
         live "/vault", OrderLive.Index, :index
 
         live "/announcements", AnnouncementLive.Index, :index
@@ -137,6 +140,9 @@ defmodule ParzivalWeb.Router do
         live "/store/new", ProductLive.New, :new
         live "/store/:id/edit", ProductLive.Edit, :edit
         live "/order/:id/redeem", OrderLive.Edit, :edit
+
+        live "/boosts/new", BoostLive.New, :new
+        live "/boosts/:id/edit", BoostLive.Edit, :edit
 
         scope "/missions" do
           live "/new", MissionLive.New, :new

@@ -23,8 +23,13 @@ defmodule ParzivalWeb.App.OrderLive.Index do
   end
 
   defp list_products(params) do
-    case Store.list_products(params, limit: 2) do
+    case Store.list_products(params) do
       {:ok, {products, meta}} ->
+        products =
+          products
+          |> Enum.filter(fn product -> product.stock > 0 end)
+          |> Enum.take(3)
+
         %{products: products, meta: meta}
 
       {:error, flop} ->

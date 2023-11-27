@@ -21,7 +21,6 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
   end
 
   @impl true
-
   def handle_params(params, _url, socket) do
     user = Accounts.get_user!(socket.assigns.current_user.id, [:company, :curriculum])
 
@@ -55,6 +54,11 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
          |> assign(:announcements, list_announcements())
          |> assign(:params, params)}
     end
+  end
+
+  @impl true
+  def handle_info({event, _post}, socket) when event in [:new_post] do
+    {:noreply, assign(socket, list_posts(socket.assigns.params))}
   end
 
   defp list_top_users(params) do
@@ -104,10 +108,5 @@ defmodule ParzivalWeb.App.DashboardLive.Index do
 
   defp list_announcements do
     Tools.list_announcements(preloads: [:author], limit: 2, order_by: [desc: :inserted_at])
-  end
-
-  @impl true
-  def handle_info({event, _post}, socket) when event in [:new_post] do
-    {:noreply, assign(socket, list_posts(socket.assigns.params))}
   end
 end
