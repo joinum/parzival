@@ -3,6 +3,7 @@
     {
       "title": "Acreditação",
       "hours": "05/06/2023 9:30 AM",
+      "location": "Acreditação",
       "speaker": null,
       "company": null,
       "href": null
@@ -10,6 +11,7 @@
     {
       "title": "Sessão de abertura",
       "hours": "05/06/2023 10:00 AM",
+      "location": "CP1 A1",
       "speaker": null,
       "company": null,
       "href": null
@@ -24,6 +26,7 @@
     {
       "title": "[Talk] Do algoritmo ao impacto: uma viagem pela disrupção da IA",
       "hours": "05/06/2023 11:30 AM",
+      "location": "CP1 0.20",
       "speaker": "Michel Ozzello",
       "company": "Agentifai",
       "href": null
@@ -38,6 +41,7 @@
     {
       "title": "[Pitch] Agentifai",
       "hours": "05/06/2023 02:00 PM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": "Agentifai",
       "href": null
@@ -45,6 +49,7 @@
     {
       "title": "[Talk] Functional Web Development",
       "hours": "05/06/2023 02:10 PM",
+      "location": "CP1 0.20",
       "speaker": "Nelson Estevão",
       "company": "Marmelasoft",
       "href": null
@@ -52,6 +57,7 @@
     {
       "title": "[Pitch] Bliss",
       "hours": "05/06/2023 03:10 PM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": "Bliss",
       "href": null
@@ -59,6 +65,7 @@
     {
       "title": "[Talk] Web and Mobile Development in 2023",
       "hours": "05/06/2023 03:20 PM",
+      "location": "CP1 0.20",
       "speaker": "Nuno Pereira",
       "company": "Bliss",
       "href": null
@@ -73,6 +80,7 @@
     {
       "title": "[Pitch] DTx CoLAB",
       "hours": "05/06/2023 04:50 PM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": "DTx CoLAB",
       "href": null
@@ -80,6 +88,7 @@
     {
       "title": "[Talk] Accenture READY! SET! CLOUD!",
       "hours": "05/06/2023 05:00 PM",
+      "location": "CP1 0.20",
       "speaker": "Zeeshan Hurmat & Ana Costeira",
       "company": "Accenture",
       "href": null
@@ -96,6 +105,7 @@
     {
       "title": "[Workshop] Kick-Start a React Project",
       "hours": "06/06/2023 09:00 AM",
+      "location": "CP1 0.20",
       "speaker": "Rui Rigueira",
       "company": "Bliss",
       "href": "https://www.eventbrite.pt/e/workshop-kick-start-a-react-project-tickets-648159040137"
@@ -110,6 +120,7 @@
     {
       "title": "[Pitch] Atice Labs",
       "hours": "06/06/2023 11:20 AM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": "Altice Labs",
       "href": null
@@ -117,6 +128,7 @@
     {
       "title": "[Talk] Mobile Development and MEO Go Showcase",
       "hours": "06/06/2023 11:30 AM",
+      "location": "CP1 0.20",
       "speaker": "Romeu Gomes",
       "company": "Altice Labs"
     },
@@ -130,6 +142,7 @@
     {
       "title": "[Talk] Inteligência Artificial nos nossos dias",
       "hours": "06/06/2023 02:00 PM",
+      "location": "CP1 0.20",
       "speaker": "Paulo Novais",
       "company": "Professor Universitário",
       "href": null
@@ -137,6 +150,7 @@
     {
       "title": "[Pitch] Retail Consult",
       "hours": "06/06/2023 03:00 PM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": "Retail Consult",
       "href": null
@@ -144,6 +158,7 @@
     {
       "title": "[Pitch] Wintouch",
       "hours": "06/06/2023 03:10 PM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": "Wintouch",
       "href": null
@@ -151,6 +166,7 @@
     {
       "title": "Concurso de Programação",
       "hours": "06/06/2023 03:20 PM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": null,
       "href": null
@@ -165,6 +181,7 @@
     {
       "title": "[Pitch] Accenture",
       "hours": "06/06/2023 04:50 PM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": "Accenture",
       "href": null
@@ -172,6 +189,7 @@
     {
       "title": "[Talk] CI/CD > Build/Deploy Automation",
       "hours": "06/06/2023 5:00 PM",
+      "location": "CP1 0.20",
       "speaker": "Riardo Castro",
       "company": "Blip.pt",
       "href": null
@@ -188,6 +206,7 @@
     {
       "title": "[Workshop] Testa ou detesta o teu código (Testes unitários)",
       "hours": "07/06/2023 09:00 AM",
+      "location": "CP1 0.20",
       "speaker": "Hugo Cardoso",
       "company": "Agentifai",
       "href": "https://www.eventbrite.pt/e/workshop-kick-start-a-react-project-tickets-648159040137"
@@ -202,6 +221,7 @@
     {
       "title": "[Talk] Gerando novas moléculas adoçantes com Inteligência Artificial",
       "hours": "07/06/2023 11:30 AM",
+      "location": "CP1 0.20",
       "speaker": "João Capela",
       "company": "CEB",
       "href": null
@@ -209,6 +229,7 @@
     {
       "title": "[Pitch] Algoritmi",
       "hours": "06/06/2023 12:10 PM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": "Algoritmi",
       "href": null
@@ -223,6 +244,7 @@
     {
       "title": "[Talk] Regulamentação e Futuro da IA na Comunidade Europeia",
       "hours": "07/06/2023 02:00 PM",
+      "location": "CP1 0.20",
       "speaker": "Alexandra Oliveira",
       "company": "Retail Consult",
       "href": null
@@ -230,6 +252,7 @@
     {
       "title": "[Talk] What is quantum computing … and why you should care",
       "hours": "07/06/2023 03:00 PM",
+      "location": "CP1 0.20",
       "speaker": "Luís Soares Barbosa",
       "company": "Professor Universitário",
       "href": null
@@ -237,6 +260,7 @@
     {
       "title": "[Pitch] INESC TEC",
       "hours": "07/06/2023 04:00 PM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": "INESC TEC + Universidade do Minho",
       "href": null
@@ -251,6 +275,7 @@
     {
       "title": "Mesa redonda",
       "hours": "07/06/2023 04:30 PM",
+      "location": "CP1 0.20",
       "speaker": null,
       "company": null,
       "href": null
@@ -258,6 +283,7 @@
     {
       "title": "🏆 Cerimónia de encerramento + Entrega de prémios",
       "hours": "07/06/2023 05:30 PM",
+      "location": "CP1 A1",
       "speaker": null,
       "company": null,
       "href": null

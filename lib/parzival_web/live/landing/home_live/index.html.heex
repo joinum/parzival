@@ -58,7 +58,7 @@
 </div>
 
 <div
-  x-data={"{ date: new Date().toISOString() >= '#{hd(Map.get(@schedule, "monday"))["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(Map.get(@schedule, "wednesday"))["hours"]}.to_iso8601!()' ? new Date().getDay() +1 : 2 }"}
+  x-data={"{ date: new Date().toISOString() >= '#{hd(Map.get(@schedule, "monday"))["hours"]}.to_iso8601!()' && new Date().toISOString() <= '#{List.last(Map.get(@schedule, "wednesday"))["hours"]}.to_iso8601!()' ? new Date().getDay() + 1 : 2 }"}
   class="flex flex-row mt-10 h-auto sm:mt-20 lg:mt-48 1.5xl:h-[1000px]"
 >
   <div class="hidden absolute transform -rotate-90 -translate-x-40 translate-y-48 md:-translate-x-44 1.5xl:block">
@@ -102,14 +102,23 @@
             else
               "bg-[#BB2A22]"
             end} w-36 h-44 rounded-3xl relative -z-50"}>
-            <span class="text-white">
-              <p class="absolute left-3 top-4 w-32 text-sm font-light">
+            <span class="inline-block py-3 px-3 text-white">
+              <p class="text-sm font-light">
                 <%= if String.length(activity["title"]) < 50 do
                   activity["title"]
                 else
                   String.slice(activity["title"], 0..48) <> "... "
                 end %>
               </p>
+              <%= if activity["location"] do %>
+                <p class="text-md">
+                  <%= if String.length(activity["location"]) < 15 do
+                    activity["location"]
+                  else
+                    String.slice(activity["location"], 0..13) <> "... "
+                  end %>
+                </p>
+              <% end %>
               <p class="absolute left-3 w-32 font-bold text-md top-[105px]">
                 <%= Calendar.strftime(activity["hours"], "%Hh%M") %>
               </p>
@@ -174,8 +183,8 @@
                 else
                   'font-thin text-[12px] md:text-[16px] opacity-70'
                 end} text-white"}>
-                <div class="flex flex-col w-40 text-right sm:w-96 md:w-[420px]">
-                  <span>
+                <div class="flex flex-col w-40 font-semibold text-right opacity-100 sm:w-96 md:w-[420px]">
+                  <span class="text-red-100 opacity-100">
                     <%= activity["title"] %>
                   </span>
                   <%= if activity["href"] do %>
@@ -191,6 +200,11 @@
                   <%= if activity["company"] && activity["hours"] == next_activity do %>
                     <span class="text-sm font-thin">
                       <%= activity["company"] %>
+                    </span>
+                  <% end %>
+                  <%= if activity["location"] do %>
+                    <span class="text-sm">
+                      <%= activity["location"] %>
                     </span>
                   <% end %>
                 </div>
